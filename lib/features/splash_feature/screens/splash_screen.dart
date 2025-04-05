@@ -103,7 +103,8 @@ class SplashScreen extends StatelessWidget {
                           delay: const Duration(milliseconds: 600),
                           child: Text(
                             "For fancy clothes and accessories",
-                            style: Theme.of(context).textTheme.bodyMedium,
+                            style: Theme.of(context).textTheme.bodyMedium!
+                                .copyWith(color: Colors.white),
                           ),
                         ),
                       ],

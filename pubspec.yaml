@@ -36,6 +36,9 @@ dependencies:
   cupertino_icons: ^1.0.8
   auto_route: ^10.0.1
   get_it: ^8.0.3
+  email_validator: ^3.0.0
+  flutter_svg: ^2.0.17
+
 
 dev_dependencies:
   auto_route_generator: ^10.0.1
@@ -62,6 +65,7 @@ flutter:
   uses-material-design: true
   assets:
     - assets/images/
+    - assets/icons/
 
   fonts:
     - family: Montserrat

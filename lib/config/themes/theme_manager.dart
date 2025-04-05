@@ -39,7 +39,11 @@ class ThemeManager {
         ),
         headlineLarge: TextStyle(fontSize: 32, fontWeight: FontWeight.w700),
         headlineMedium: TextStyle(fontSize: 28, fontWeight: FontWeight.w500),
-        headlineSmall: TextStyle(fontSize: 24, fontWeight: FontWeight.w700),
+        headlineSmall: TextStyle(
+          fontSize: 24,
+          fontWeight: FontWeight.w700,
+          color: ColorsManager.lightPrimaryColor,
+        ),
         titleLarge: TextStyle(fontSize: 22, fontWeight: FontWeight.w400),
         titleMedium: TextStyle(
           fontSize: 18,
@@ -48,16 +52,17 @@ class ThemeManager {
         ),
         titleSmall: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
         bodyLarge: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
-        bodyMedium: TextStyle(
+        bodyMedium: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
+        bodySmall: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
+        labelLarge: TextStyle(
           fontSize: 14,
-          fontWeight: FontWeight.w400,
+          fontWeight: FontWeight.w500,
           color: Colors.white,
         ),
-        bodySmall: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
-        labelLarge: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
         labelMedium: TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
         labelSmall: TextStyle(fontSize: 11, fontWeight: FontWeight.w500),
       ),
+      iconTheme: const IconThemeData(color: Colors.black26, size: 24.0),
       bottomNavigationBarTheme: BottomNavigationBarThemeData(
         showSelectedLabels: false,
         showUnselectedLabels: false,
@@ -104,9 +109,13 @@ class ThemeManager {
         ),
         headlineLarge: TextStyle(fontSize: 32, fontWeight: FontWeight.w700),
         headlineMedium: TextStyle(fontSize: 28, fontWeight: FontWeight.w500),
-        headlineSmall: TextStyle(fontSize: 24, fontWeight: FontWeight.w700),
+        headlineSmall: TextStyle(
+          fontSize: 24,
+          fontWeight: FontWeight.w700,
+          color: ColorsManager.darkPrimaryColor,
+        ),
         titleLarge: TextStyle(fontSize: 22, fontWeight: FontWeight.w400),
-        titleMedium: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+        titleMedium: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
         titleSmall: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
         bodyLarge: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
         bodyMedium: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
@@ -115,6 +124,7 @@ class ThemeManager {
         labelMedium: TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
         labelSmall: TextStyle(fontSize: 11, fontWeight: FontWeight.w500),
       ),
+      iconTheme: const IconThemeData(color: Colors.white, size: 24.0),
       bottomNavigationBarTheme: BottomNavigationBarThemeData(
         showSelectedLabels: false,
         showUnselectedLabels: false,
