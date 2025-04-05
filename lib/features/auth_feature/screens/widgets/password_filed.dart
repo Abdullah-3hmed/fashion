@@ -4,9 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class PasswordField extends StatefulWidget {
-  const PasswordField({super.key, required this.onSaved});
+  const PasswordField({super.key, this.onSubmit, this.onSaved});
 
   final void Function(String?)? onSaved;
+  final void Function(String?)? onSubmit;
 
   @override
   State<PasswordField> createState() => _PasswordFieldState();
@@ -43,6 +44,7 @@ class _PasswordFieldState extends State<PasswordField> {
                 : const Icon(Icons.visibility_off, color: Color(0xFFC9CECF)),
       ),
       onSaved: widget.onSaved,
+      onSubmit: widget.onSubmit,
     );
   }
 }

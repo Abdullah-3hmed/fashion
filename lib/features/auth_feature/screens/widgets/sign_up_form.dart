@@ -4,20 +4,19 @@ import 'package:e_fashion_flutter/core/widgets/primary_button.dart';
 import 'package:e_fashion_flutter/features/auth_feature/screens/widgets/auth_custom_check_box.dart';
 import 'package:e_fashion_flutter/features/auth_feature/screens/widgets/password_filed.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 
-class LoginForm extends StatefulWidget {
-  const LoginForm({super.key});
+class SignUpForm extends StatefulWidget {
+  const SignUpForm({super.key});
 
   @override
-  State<LoginForm> createState() => _LoginFormState();
+  State<SignUpForm> createState() => _SignUpFormState();
 }
 
-class _LoginFormState extends State<LoginForm> {
-  late GlobalKey<FormState> _formKey;
+class _SignUpFormState extends State<SignUpForm> {
+  late String name, email, password;
   late AutovalidateMode _autovalidateMode;
-  late String email, password;
+  late GlobalKey<FormState> _formKey;
 
   @override
   void initState() {
@@ -35,19 +34,39 @@ class _LoginFormState extends State<LoginForm> {
         child: Column(
           children: [
             CustomTextFormField(
-              type: TextInputType.emailAddress,
-              isEmail: true,
-              autofillHints: const [AutofillHints.email],
-              hintText: "Email",
-              label: "Email",
+              type: TextInputType.text,
+              hintText: "Name",
+              label: "Name",
+              autofillHints: const [AutofillHints.name],
               prefixIcon: SvgPicture.asset(
                 colorFilter: ColorFilter.mode(
                   Theme.of(context).colorScheme.onPrimaryContainer,
                   BlendMode.srcIn,
                 ),
+                AssetsManager.personIcon,
                 fit: BoxFit.scaleDown,
-                AssetsManager.email,
               ),
+
+              onSaved: (value) {
+                name = value!;
+              },
+            ),
+            const SizedBox(height: 16.0),
+            CustomTextFormField(
+              type: TextInputType.text,
+              hintText: "Email",
+              label: "Email",
+              autofillHints: const [AutofillHints.email],
+              isEmail: true,
+              prefixIcon: SvgPicture.asset(
+                colorFilter: ColorFilter.mode(
+                  Theme.of(context).colorScheme.onPrimaryContainer,
+                  BlendMode.srcIn,
+                ),
+                AssetsManager.email,
+                fit: BoxFit.scaleDown,
+              ),
+              onSubmit: (_) {},
               onSaved: (value) {
                 email = value!;
               },
@@ -61,43 +80,57 @@ class _LoginFormState extends State<LoginForm> {
                 if (_formKey.currentState!.validate()) {
                   _formKey.currentState!.save();
                   debugPrint('Form is valid');
+                  debugPrint(name);
                   debugPrint(email);
-                  debugPrint(password);
                 } else {
                   setState(() {
                     _autovalidateMode = AutovalidateMode.always;
                   });
-                  TextInput.finishAutofillContext();
                 }
               },
             ),
             const SizedBox(height: 24.0),
             Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const AuthCustomCheckBox(),
                 const SizedBox(width: 8.0),
-                Text(
-                  "Remember me",
-                  style: Theme.of(context).textTheme.bodyMedium,
-                ),
-                const Spacer(),
-                TextButton(
-                  onPressed: () {},
-                  child: Text(
-                    "Forget Password",
-                    style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
+                Text.rich(
+                  TextSpan(
+                    children: [
+                      TextSpan(
+                        text: "I Agree with",
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
+                      TextSpan(
+                        text: " Privacy",
+                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
+                      ),
+
+                      TextSpan(
+                        text: " and",
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
+                      TextSpan(
+                        text: " policy",
+                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],
             ),
-            const SizedBox(height: 48.0),
+            const SizedBox(height: 48),
             PrimaryButton(
               onPressed: () {
                 if (_formKey.currentState!.validate()) {
                   _formKey.currentState!.save();
                   debugPrint('Form is valid');
+                  debugPrint(name);
                   debugPrint(email);
                   debugPrint(password);
                 } else {
@@ -106,7 +139,7 @@ class _LoginFormState extends State<LoginForm> {
                   });
                 }
               },
-              text: "Log in",
+              text: "Sign up",
             ),
           ],
         ),
