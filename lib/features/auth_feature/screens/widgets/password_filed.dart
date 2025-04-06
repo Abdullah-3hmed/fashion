@@ -4,10 +4,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class PasswordField extends StatefulWidget {
-  const PasswordField({super.key, this.onSubmit, this.onSaved});
+  const PasswordField({
+    super.key,
+    this.onSubmit,
+    this.onSaved,
+    this.hintText,
+    this.label,
+  });
 
   final void Function(String?)? onSaved;
   final void Function(String?)? onSubmit;
+  final String? hintText;
+  final String? label;
 
   @override
   State<PasswordField> createState() => _PasswordFieldState();
@@ -20,8 +28,8 @@ class _PasswordFieldState extends State<PasswordField> {
   Widget build(BuildContext context) {
     return CustomTextFormField(
       type: TextInputType.visiblePassword,
-      hintText: "Password",
-      label: "Password",
+      hintText: widget.hintText ?? "Password",
+      label: widget.label ?? "Password",
       textInputAction: TextInputAction.done,
       prefixIcon: SvgPicture.asset(
         colorFilter: ColorFilter.mode(

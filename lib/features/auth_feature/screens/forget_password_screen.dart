@@ -82,6 +82,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                     },
                     text: "Recover password",
                   ),
+                  const SizedBox(height: 50.0),
                 ],
               ),
             ),

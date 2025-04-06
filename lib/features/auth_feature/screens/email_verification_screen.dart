@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:e_fashion_flutter/config/router/app_router.dart';
 import 'package:e_fashion_flutter/core/widgets/primary_button.dart';
 import 'package:e_fashion_flutter/features/auth_feature/screens/widgets/auth_background_image_and_logo.dart';
 import 'package:flutter/material.dart';
@@ -31,10 +32,10 @@ class EmailVerificationScreen extends StatelessWidget {
                 Pinput(
                   length: 6,
                   onCompleted: (value) {
-                    print(value);
+                    debugPrint(value);
                   },
                   onSubmitted: (value) {
-                    print(value);
+                    debugPrint(value);
                   },
                   defaultPinTheme: PinTheme(
                     width: 40.0,
@@ -49,7 +50,13 @@ class EmailVerificationScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 74.0),
-                PrimaryButton(onPressed: () {}, text: "Verify and proceed"),
+                PrimaryButton(
+                  onPressed: () {
+                    context.pushRoute(const ResetPasswordRoute());
+                  },
+                  text: "Verify and proceed",
+                ),
+                const SizedBox(height: 50.0),
               ],
             ),
           ),

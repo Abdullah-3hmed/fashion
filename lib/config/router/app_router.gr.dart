@@ -75,6 +75,22 @@ class LoginRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [ResetPasswordScreen]
+class ResetPasswordRoute extends PageRouteInfo<void> {
+  const ResetPasswordRoute({List<PageRouteInfo>? children})
+    : super(ResetPasswordRoute.name, initialChildren: children);
+
+  static const String name = 'ResetPasswordRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const ResetPasswordScreen();
+    },
+  );
+}
+
+/// generated route for
 /// [SignUpScreen]
 class SignUpRoute extends PageRouteInfo<void> {
   const SignUpRoute({List<PageRouteInfo>? children})
