@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:e_fashion_flutter/core/utils/assets_manager.dart';
+import 'package:e_fashion_flutter/features/auth_feature/screens/widgets/auth_clipped_container.dart';
 import 'package:flutter/material.dart';
 
 class AuthBackgroundImageAndLogo extends StatelessWidget {
@@ -27,7 +28,10 @@ class AuthBackgroundImageAndLogo extends StatelessWidget {
               image: AssetImage(AssetsManager.appLogo),
             ),
           ),
-          child,
+          PositionedDirectional(
+            bottom: 0.0,
+            child: AuthClippedContainer(height: 540.0, child: child),
+          ),
         ],
       ),
     );

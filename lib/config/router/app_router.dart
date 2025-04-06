@@ -1,4 +1,6 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:e_fashion_flutter/features/auth_feature/screens/email_verification_screen.dart';
+import 'package:e_fashion_flutter/features/auth_feature/screens/forget_password_screen.dart';
 import 'package:e_fashion_flutter/features/auth_feature/screens/login_screen.dart';
 import 'package:e_fashion_flutter/features/auth_feature/screens/sign_up_screen.dart';
 import 'package:e_fashion_flutter/features/splash_feature/screens/splash_screen.dart';
@@ -28,6 +30,16 @@ class AppRouter extends RootStackRouter {
         ),
         CustomRoute(
           page: SignUpRoute.page,
+          transitionsBuilder: TransitionsBuilders.fadeIn,
+          duration: const Duration(milliseconds: 300),
+        ),
+        CustomRoute(
+          page: ForgetPasswordRoute.page,
+          transitionsBuilder: TransitionsBuilders.fadeIn,
+          duration: const Duration(milliseconds: 300),
+        ),
+        CustomRoute(
+          page: EmailVerificationRoute.page,
           transitionsBuilder: TransitionsBuilders.fadeIn,
           duration: const Duration(milliseconds: 300),
         ),

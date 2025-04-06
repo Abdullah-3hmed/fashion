@@ -4,6 +4,7 @@ import 'package:e_fashion_flutter/core/widgets/primary_button.dart';
 import 'package:e_fashion_flutter/features/auth_feature/screens/widgets/auth_custom_check_box.dart';
 import 'package:e_fashion_flutter/features/auth_feature/screens/widgets/password_filed.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 
 class SignUpForm extends StatefulWidget {
@@ -87,6 +88,7 @@ class _SignUpFormState extends State<SignUpForm> {
                     _autovalidateMode = AutovalidateMode.always;
                   });
                 }
+                TextInput.finishAutofillContext();
               },
             ),
             const SizedBox(height: 24.0),
@@ -137,6 +139,7 @@ class _SignUpFormState extends State<SignUpForm> {
                   setState(() {
                     _autovalidateMode = AutovalidateMode.always;
                   });
+                  TextInput.finishAutofillContext();
                 }
               },
               text: "Sign up",

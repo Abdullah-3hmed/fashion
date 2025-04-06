@@ -38,6 +38,7 @@ dependencies:
   get_it: ^8.0.3
   email_validator: ^3.0.0
   flutter_svg: ^2.0.17
+  pinput: ^5.0.1
 
 
 dev_dependencies:

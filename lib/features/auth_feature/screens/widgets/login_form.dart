@@ -1,3 +1,5 @@
+import 'package:auto_route/auto_route.dart';
+import 'package:e_fashion_flutter/config/router/app_router.dart';
 import 'package:e_fashion_flutter/core/utils/assets_manager.dart';
 import 'package:e_fashion_flutter/core/widgets/custom_text_form_field.dart';
 import 'package:e_fashion_flutter/core/widgets/primary_button.dart';
@@ -82,7 +84,9 @@ class _LoginFormState extends State<LoginForm> {
                 ),
                 const Spacer(),
                 TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    context.pushRoute(const ForgetPasswordRoute());
+                  },
                   child: Text(
                     "Forget Password",
                     style: Theme.of(context).textTheme.bodySmall!.copyWith(
@@ -104,6 +108,7 @@ class _LoginFormState extends State<LoginForm> {
                   setState(() {
                     _autovalidateMode = AutovalidateMode.always;
                   });
+                  TextInput.finishAutofillContext();
                 }
               },
               text: "Log in",
