@@ -128,6 +128,9 @@ class ThemeManager {
       bottomNavigationBarTheme: BottomNavigationBarThemeData(
         showSelectedLabels: false,
         showUnselectedLabels: false,
+        selectedIconTheme: const IconThemeData(
+          color: ColorsManager.darkPrimaryColor,
+        ),
         type: BottomNavigationBarType.fixed,
         backgroundColor: Colors.black.withValues(alpha: 0.8),
         selectedItemColor: ColorsManager.darkPrimaryColor,

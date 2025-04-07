@@ -3,7 +3,7 @@ import 'package:e_fashion_flutter/config/router/app_router.dart';
 import 'package:e_fashion_flutter/core/utils/assets_manager.dart';
 import 'package:e_fashion_flutter/core/widgets/custom_text_form_field.dart';
 import 'package:e_fashion_flutter/core/widgets/primary_button.dart';
-import 'package:e_fashion_flutter/features/auth_feature/screens/widgets/auth_background_image_and_logo.dart';
+import 'package:e_fashion_flutter/features/auth/screens/widgets/auth_background_image_and_logo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 

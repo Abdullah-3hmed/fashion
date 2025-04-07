@@ -1,4 +1,4 @@
-import 'package:e_fashion_flutter/features/auth_feature/screens/widgets/auth_container_clipper.dart';
+import 'package:e_fashion_flutter/features/auth/screens/widgets/auth_container_clipper.dart';
 import 'package:flutter/material.dart';
 
 class AuthClippedContainer extends StatelessWidget {

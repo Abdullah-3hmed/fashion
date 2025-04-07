@@ -20,10 +20,16 @@ class Assets {
   static const String fontsMontserratSemiBold =
       'assets/fonts/Montserrat-SemiBold.ttf';
   static const String fontsMontserratThin = 'assets/fonts/Montserrat-Thin.ttf';
+  static const String iconsCart = 'assets/icons/cart.svg';
   static const String iconsEmail = 'assets/icons/email.svg';
   static const String iconsEye = 'assets/icons/eye.svg';
+  static const String iconsHeart = 'assets/icons/heart.svg';
+  static const String iconsHome = 'assets/icons/home.svg';
   static const String iconsLock = 'assets/icons/lock.svg';
+  static const String iconsNotification = 'assets/icons/notification.svg';
   static const String iconsPerson = 'assets/icons/person.svg';
+  static const String iconsProfile = 'assets/icons/profile.svg';
+  static const String iconsSearch = 'assets/icons/search.svg';
   static const String imagesAppLogo = 'assets/images/app_logo.png';
   static const String imagesBad = 'assets/images/bad.svg';
   static const String imagesCheck = 'assets/images/Check.svg';
@@ -48,6 +54,7 @@ class Assets {
   static const String imagesStepperImage2 = 'assets/images/stepper_image2.png';
   static const String imagesStepperImage3 = 'assets/images/stepper_image3.png';
   static const String imagesSwipeUp = 'assets/images/swipe_up.png';
+  static const String imagesTestImage = 'assets/images/test_image.png';
   static const String imagesWelcomeCircleArrow =
       'assets/images/welcome_circle_arrow.png';
   static const String imagesWelcomeCircleImage =

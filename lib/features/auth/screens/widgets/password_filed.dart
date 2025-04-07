@@ -1,4 +1,5 @@
 import 'package:e_fashion_flutter/core/utils/assets_manager.dart';
+import 'package:e_fashion_flutter/core/utils/svg_default_color.dart';
 import 'package:e_fashion_flutter/core/widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -10,12 +11,14 @@ class PasswordField extends StatefulWidget {
     this.onSaved,
     this.hintText,
     this.label,
+    this.textInputAction,
   });
 
   final void Function(String?)? onSaved;
   final void Function(String?)? onSubmit;
   final String? hintText;
   final String? label;
+  final TextInputAction? textInputAction;
 
   @override
   State<PasswordField> createState() => _PasswordFieldState();
@@ -30,12 +33,9 @@ class _PasswordFieldState extends State<PasswordField> {
       type: TextInputType.visiblePassword,
       hintText: widget.hintText ?? "Password",
       label: widget.label ?? "Password",
-      textInputAction: TextInputAction.done,
+      textInputAction: widget.textInputAction ?? TextInputAction.done,
       prefixIcon: SvgPicture.asset(
-        colorFilter: ColorFilter.mode(
-          Theme.of(context).colorScheme.onPrimaryContainer,
-          BlendMode.srcIn,
-        ),
+        colorFilter: svgColor(context),
         fit: BoxFit.scaleDown,
         AssetsManager.lock,
       ),

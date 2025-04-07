@@ -1,8 +1,9 @@
 import 'package:e_fashion_flutter/core/utils/assets_manager.dart';
+import 'package:e_fashion_flutter/core/utils/svg_default_color.dart';
 import 'package:e_fashion_flutter/core/widgets/custom_text_form_field.dart';
 import 'package:e_fashion_flutter/core/widgets/primary_button.dart';
-import 'package:e_fashion_flutter/features/auth_feature/screens/widgets/auth_custom_check_box.dart';
-import 'package:e_fashion_flutter/features/auth_feature/screens/widgets/password_filed.dart';
+import 'package:e_fashion_flutter/features/auth/screens/widgets/auth_custom_check_box.dart';
+import 'package:e_fashion_flutter/features/auth/screens/widgets/password_filed.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
@@ -40,10 +41,7 @@ class _SignUpFormState extends State<SignUpForm> {
               label: "Name",
               autofillHints: const [AutofillHints.name],
               prefixIcon: SvgPicture.asset(
-                colorFilter: ColorFilter.mode(
-                  Theme.of(context).colorScheme.onPrimaryContainer,
-                  BlendMode.srcIn,
-                ),
+                colorFilter: svgColor(context),
                 AssetsManager.personIcon,
                 fit: BoxFit.scaleDown,
               ),
@@ -60,10 +58,7 @@ class _SignUpFormState extends State<SignUpForm> {
               autofillHints: const [AutofillHints.email],
               isEmail: true,
               prefixIcon: SvgPicture.asset(
-                colorFilter: ColorFilter.mode(
-                  Theme.of(context).colorScheme.onPrimaryContainer,
-                  BlendMode.srcIn,
-                ),
+                colorFilter: svgColor(context),
                 AssetsManager.email,
                 fit: BoxFit.scaleDown,
               ),

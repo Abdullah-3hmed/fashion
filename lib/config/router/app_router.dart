@@ -1,9 +1,14 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:e_fashion_flutter/features/auth_feature/screens/email_verification_screen.dart';
-import 'package:e_fashion_flutter/features/auth_feature/screens/forget_password_screen.dart';
-import 'package:e_fashion_flutter/features/auth_feature/screens/login_screen.dart';
-import 'package:e_fashion_flutter/features/auth_feature/screens/reset_password_screen.dart';
-import 'package:e_fashion_flutter/features/auth_feature/screens/sign_up_screen.dart';
+import 'package:e_fashion_flutter/features/auth/screens/email_verification_screen.dart';
+import 'package:e_fashion_flutter/features/auth/screens/forget_password_screen.dart';
+import 'package:e_fashion_flutter/features/auth/screens/login_screen.dart';
+import 'package:e_fashion_flutter/features/auth/screens/reset_password_screen.dart';
+import 'package:e_fashion_flutter/features/auth/screens/sign_up_screen.dart';
+import 'package:e_fashion_flutter/features/bottom_vav_bar/layout_screen.dart';
+import 'package:e_fashion_flutter/features/cart/screens/cart_screen.dart';
+import 'package:e_fashion_flutter/features/favourite/screens/favorite_screen.dart';
+import 'package:e_fashion_flutter/features/home/screens/home_screen.dart';
+import 'package:e_fashion_flutter/features/profile/screens/profile_screen.dart';
 import 'package:e_fashion_flutter/features/splash_feature/screens/splash_screen.dart';
 
 part 'app_router.gr.dart';
@@ -23,35 +28,37 @@ class AppRouter extends RootStackRouter {
     AutoRoute(
       page: AuthRoute.page,
       children: [
-        CustomRoute(
-          initial: true,
-          page: LoginRoute.page,
-          transitionsBuilder: TransitionsBuilders.fadeIn,
-          duration: const Duration(milliseconds: 300),
-        ),
-        CustomRoute(
-          page: SignUpRoute.page,
-          transitionsBuilder: TransitionsBuilders.fadeIn,
-          duration: const Duration(milliseconds: 300),
-        ),
-        CustomRoute(
-          page: ForgetPasswordRoute.page,
-          transitionsBuilder: TransitionsBuilders.fadeIn,
-          duration: const Duration(milliseconds: 300),
-        ),
-        CustomRoute(
-          page: EmailVerificationRoute.page,
-          transitionsBuilder: TransitionsBuilders.fadeIn,
-          duration: const Duration(milliseconds: 300),
-        ),
-        CustomRoute(
-          page: ResetPasswordRoute.page,
-          transitionsBuilder: TransitionsBuilders.fadeIn,
-          duration: const Duration(milliseconds: 300),
-        ),
+        _buildCustomRoute(initial: true, page: LoginRoute.page),
+        _buildCustomRoute(page: SignUpRoute.page),
+        _buildCustomRoute(page: ForgetPasswordRoute.page),
+        _buildCustomRoute(page: EmailVerificationRoute.page),
+        _buildCustomRoute(page: ResetPasswordRoute.page),
+      ],
+    ),
+    _buildCustomRoute(
+      page: LayoutRoute.page,
+      children: [
+        _buildCustomRoute(initial: true, page: HomeRoute.page),
+        _buildCustomRoute(page: CartRoute.page),
+        _buildCustomRoute(page: FavoriteRoute.page),
+        _buildCustomRoute(page: ProfileRoute.page),
       ],
     ),
   ];
+
+  CustomRoute _buildCustomRoute({
+    bool initial = false,
+    required PageInfo page,
+    List<AutoRoute>? children,
+  }) {
+    return CustomRoute(
+      initial: initial,
+      page: page,
+      transitionsBuilder: TransitionsBuilders.fadeIn,
+      duration: const Duration(milliseconds: 300),
+      children: children,
+    );
+  }
 }
 
 @RoutePage(name: 'SplashTabRoute')
@@ -62,4 +69,24 @@ class Splash extends AutoRouter {
 @RoutePage(name: 'AuthRoute')
 class Auth extends AutoRouter {
   const Auth({super.key});
+}
+
+@RoutePage(name: 'HomeRoute')
+class Home extends AutoRouter {
+  const Home({super.key});
+}
+
+@RoutePage(name: 'CartRoute')
+class Cart extends AutoRouter {
+  const Cart({super.key});
+}
+
+@RoutePage(name: 'FavoriteRoute')
+class Favorite extends AutoRouter {
+  const Favorite({super.key});
+}
+
+@RoutePage(name: 'ProfileRoute')
+class Profile extends AutoRouter {
+  const Profile({super.key});
 }

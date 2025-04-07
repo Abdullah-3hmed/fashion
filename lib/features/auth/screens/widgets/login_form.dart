@@ -1,10 +1,11 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:e_fashion_flutter/config/router/app_router.dart';
 import 'package:e_fashion_flutter/core/utils/assets_manager.dart';
+import 'package:e_fashion_flutter/core/utils/svg_default_color.dart';
 import 'package:e_fashion_flutter/core/widgets/custom_text_form_field.dart';
 import 'package:e_fashion_flutter/core/widgets/primary_button.dart';
-import 'package:e_fashion_flutter/features/auth_feature/screens/widgets/auth_custom_check_box.dart';
-import 'package:e_fashion_flutter/features/auth_feature/screens/widgets/password_filed.dart';
+import 'package:e_fashion_flutter/features/auth/screens/widgets/auth_custom_check_box.dart';
+import 'package:e_fashion_flutter/features/auth/screens/widgets/password_filed.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
@@ -43,10 +44,7 @@ class _LoginFormState extends State<LoginForm> {
               hintText: "Email",
               label: "Email",
               prefixIcon: SvgPicture.asset(
-                colorFilter: ColorFilter.mode(
-                  Theme.of(context).colorScheme.onPrimaryContainer,
-                  BlendMode.srcIn,
-                ),
+                colorFilter: svgColor(context),
                 fit: BoxFit.scaleDown,
                 AssetsManager.email,
               ),
@@ -99,6 +97,8 @@ class _LoginFormState extends State<LoginForm> {
             const SizedBox(height: 48.0),
             PrimaryButton(
               onPressed: () {
+                context.pushRoute(const LayoutRoute());
+                return;
                 if (_formKey.currentState!.validate()) {
                   _formKey.currentState!.save();
                   debugPrint('Form is valid');

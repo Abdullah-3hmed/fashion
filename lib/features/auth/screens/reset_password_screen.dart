@@ -1,7 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:e_fashion_flutter/core/widgets/primary_button.dart';
-import 'package:e_fashion_flutter/features/auth_feature/screens/widgets/auth_background_image_and_logo.dart';
-import 'package:e_fashion_flutter/features/auth_feature/screens/widgets/password_filed.dart';
+import 'package:e_fashion_flutter/features/auth/screens/widgets/auth_background_image_and_logo.dart';
+import 'package:e_fashion_flutter/features/auth/screens/widgets/password_filed.dart';
 import 'package:flutter/material.dart';
 
 @RoutePage()
@@ -50,6 +50,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                   ),
                   const SizedBox(height: 24.0),
                   PasswordField(
+                    textInputAction: TextInputAction.next,
                     onSaved: (value) {
                       _password = value!;
                     },
@@ -64,6 +65,8 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                     onSubmit: (_) {
                       if (_formKey.currentState!.validate()) {
                         _formKey.currentState!.save();
+                        debugPrint("Password: $_password");
+                        debugPrint("Confirm Password: $_confirmPassword");
                       } else {
                         setState(() {
                           _autovalidateMode = AutovalidateMode.always;
@@ -76,6 +79,8 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
                         _formKey.currentState!.save();
+                        debugPrint("Password: $_password");
+                        debugPrint("Confirm Password: $_confirmPassword");
                       } else {
                         setState(() {
                           _autovalidateMode = AutovalidateMode.always;
