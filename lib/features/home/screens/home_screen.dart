@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:e_fashion_flutter/features/home/screens/widgets/filter_section.dart';
 import 'package:e_fashion_flutter/features/home/screens/widgets/home_header.dart';
 import 'package:e_fashion_flutter/features/home/screens/widgets/offers_section.dart';
+import 'package:e_fashion_flutter/features/home/screens/widgets/zara_section.dart';
 import 'package:flutter/material.dart';
 
 @RoutePage()
@@ -15,7 +16,19 @@ class HomeScreen extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: 24.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: [HomeHeader(), FilterSection(), OffersSection()],
+          children: [
+            HomeHeader(),
+            Expanded(
+              child: CustomScrollView(
+                physics: BouncingScrollPhysics(),
+                slivers: [
+                  SliverToBoxAdapter(child: FilterSection()),
+                  SliverToBoxAdapter(child: OffersSection()),
+                  SliverToBoxAdapter(child: ZaraSection()),
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     );

@@ -4,8 +4,6 @@ class AssetsManager {
   static const String check = 'assets/images/Check.svg';
   static const String personIcon = 'assets/icons/person.svg';
 
-  static const String heart = 'assets/images/heart.svg';
-  static const String cart = 'assets/images/cart.svg';
   static const String testImage = 'assets/images/test_image.png';
 
   static const String appLogo = 'assets/images/app_logo.png';
@@ -48,4 +46,6 @@ class AssetsManager {
   static const String profile = 'assets/icons/profile.svg';
   static const String notification = 'assets/icons/notification.svg';
   static const String home = 'assets/icons/home.svg';
+  static const String heart = 'assets/icons/heart.svg';
+  static const String cart = 'assets/icons/cart.svg';
 }

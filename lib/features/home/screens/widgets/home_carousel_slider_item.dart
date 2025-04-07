@@ -1,7 +1,7 @@
 import 'package:e_fashion_flutter/core/utils/assets_manager.dart';
 import 'package:e_fashion_flutter/features/home/screens/widgets/home_clipped_container.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter_svg/svg.dart';
 
 class HomeCarouselSliderItem extends StatelessWidget {
   const HomeCarouselSliderItem({super.key});
@@ -34,11 +34,29 @@ class HomeCarouselSliderItem extends StatelessWidget {
                       context,
                     ).textTheme.bodyLarge!.copyWith(color: Colors.white),
                   ),
-                  Text(
-                    r"$200 $150",
-                    style: Theme.of(
-                      context,
-                    ).textTheme.bodyLarge!.copyWith(color: Colors.white),
+                  Text.rich(
+                    TextSpan(
+                      children: [
+                        TextSpan(
+                          text: r"$200 ",
+                          style: Theme.of(
+                            context,
+                          ).textTheme.bodyLarge!.copyWith(
+                            color: Theme.of(context).colorScheme.primary,
+                            overflow: TextOverflow.ellipsis,
+                            decoration: TextDecoration.lineThrough,
+                            decorationColor:
+                                Theme.of(context).colorScheme.primary,
+                          ),
+                        ),
+                        TextSpan(
+                          text: r"  $150 ",
+                          style: Theme.of(
+                            context,
+                          ).textTheme.bodyLarge!.copyWith(color: Colors.white),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
@@ -46,18 +64,15 @@ class HomeCarouselSliderItem extends StatelessWidget {
             PositionedDirectional(
               bottom: 15.0,
               end: 11.0,
-              child: Icon(
-                FontAwesomeIcons.cartShopping,
-                color: Theme.of(context).colorScheme.primary,
+              child: SvgPicture.asset(
+                AssetsManager.heart,
+                //color: Theme.of(context).colorScheme.primary,
               ),
             ),
             PositionedDirectional(
               top: 12.0,
               end: 12.0,
-              child: Icon(
-                FontAwesomeIcons.heart,
-                color: Theme.of(context).colorScheme.primary,
-              ),
+              child: SvgPicture.asset(AssetsManager.cart),
             ),
           ],
         ),

@@ -29,6 +29,7 @@ class ThirdButton extends StatelessWidget {
         child: Row(
           children: [
             Image.asset(AssetsManager.applyFilter),
+            const SizedBox(width: 4.0),
             Text(
               text,
               style: Theme.of(

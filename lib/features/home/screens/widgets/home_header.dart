@@ -12,16 +12,22 @@ class HomeHeader extends StatefulWidget {
 }
 
 class _HomeHeaderState extends State<HomeHeader> {
-  late final PageController controller;
+  final PageController controller = PageController();
   int activeIndex = 0;
+
   static const List<String> imageList = [
     AssetsManager.testImage,
-    AssetsManager.testImage,
+    AssetsManager.welcomeImage,
   ];
 
   @override
   void initState() {
-    controller = PageController();
+    controller.addListener(() {
+      final page = controller.page?.round() ?? 0;
+      if (page != activeIndex) {
+        setState(() => activeIndex = page);
+      }
+    });
     super.initState();
   }
 
@@ -35,61 +41,59 @@ class _HomeHeaderState extends State<HomeHeader> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
+        // Fade transition
+        AnimatedSwitcher(
+          duration: const Duration(milliseconds: 500),
+          child: ClipRRect(
+            key: ValueKey(activeIndex),
+            borderRadius: const BorderRadiusDirectional.only(
+              bottomStart: Radius.circular(32.0),
+              bottomEnd: Radius.circular(32.0),
+            ),
+            child: Image.asset(
+              imageList[activeIndex],
+              fit: BoxFit.cover,
+              height: 320,
+              width: double.infinity,
+            ),
+          ),
+        ),
+
+        // Transparent PageView فقط لتغيير الصفحة
         SizedBox(
           height: 320,
           width: double.infinity,
           child: PageView.builder(
             controller: controller,
             itemCount: imageList.length,
-            onPageChanged: (index) {
-              setState(() {
-                activeIndex = index;
-              });
-            },
-            itemBuilder: (context, index) {
-              return AnimatedSwitcher(
-                duration: const Duration(milliseconds: 600),
-                switchInCurve: Curves.easeIn,
-                switchOutCurve: Curves.easeOut,
-                transitionBuilder: (child, animation) {
-                  return FadeTransition(opacity: animation, child: child);
-                },
-                child: ClipRRect(
-                  key: ValueKey<String>(imageList[index]),
-                  borderRadius: const BorderRadiusDirectional.only(
-                    bottomStart: Radius.circular(32.0),
-                    bottomEnd: Radius.circular(32.0),
-                  ),
-                  child: Image.asset(
-                    imageList[index],
-                    fit: BoxFit.cover,
-                    width: double.infinity,
-                  ),
-                ),
-              );
-            },
+            itemBuilder: (_, __) => const SizedBox.shrink(),
           ),
         ),
+
+        // Indicator مربوط فعليًا
         PositionedDirectional(
           bottom: 24.0,
           start: 24.0,
-          child: AnimatedSmoothIndicator(
-            activeIndex: activeIndex,
-            count: 5,
+          child: SmoothPageIndicator(
+            controller: controller,
+            count: imageList.length,
             effect: const ExpandingDotsEffect(
               dotWidth: 30.0,
               dotHeight: 4.0,
               activeDotColor: Colors.white,
               expansionFactor: 1.25,
             ),
-            onDotClicked:
-                (index) => controller.animateToPage(
-                  index,
-                  duration: const Duration(milliseconds: 600),
-                  curve: Curves.easeIn,
-                ),
+            onDotClicked: (index) {
+              controller.animateToPage(
+                index,
+                duration: const Duration(milliseconds: 600),
+                curve: Curves.easeInOut,
+              );
+            },
           ),
         ),
+
+        // الباقي زي ما هو: النص، الزرار، الأيقونات
         PositionedDirectional(
           start: 16.0,
           bottom: 66.0,
@@ -122,6 +126,7 @@ class _HomeHeaderState extends State<HomeHeader> {
             ],
           ),
         ),
+
         PositionedDirectional(
           top: 64.0,
           start: 24.0,
@@ -140,6 +145,7 @@ class _HomeHeaderState extends State<HomeHeader> {
             ],
           ),
         ),
+
         PositionedDirectional(
           bottom: 32.0,
           end: 16.0,

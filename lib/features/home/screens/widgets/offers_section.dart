@@ -30,7 +30,6 @@ class OffersSection extends StatelessWidget {
             HomeCarouselSliderItem(),
           ],
           options: CarouselOptions(
-            height: 220.0,
             enlargeCenterPage: true,
             autoPlay: true,
             viewportFraction: 0.7,

@@ -11,7 +11,7 @@ class HomeClippedContainer extends StatelessWidget {
       child: Container(
         height: 72.0,
         width: double.infinity,
-        color: Theme.of(context).colorScheme.secondary,
+        color: const Color(0xFF203343),
         child: child,
       ),
     );
