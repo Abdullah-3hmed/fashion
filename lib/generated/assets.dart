@@ -31,17 +31,18 @@ class Assets {
   static const String iconsProfile = 'assets/icons/profile.svg';
   static const String iconsSearch = 'assets/icons/search.svg';
   static const String imagesAppLogo = 'assets/images/app_logo.png';
+  static const String imagesApplyFilter = 'assets/images/apply_filter.png';
   static const String imagesBad = 'assets/images/bad.svg';
   static const String imagesCheck = 'assets/images/Check.svg';
-  static const String imagesCurvedContainer =
-      'assets/images/curved_container.png';
   static const String imagesGreat = 'assets/images/great.svg';
   static const String imagesGridShape = 'assets/images/grid_shape.png';
   static const String imagesGridShapeReverse =
       'assets/images/grid_shape_reverse.png';
+  static const String imagesJeans = 'assets/images/jeans.png';
   static const String imagesLargeCardShape =
       'assets/images/large_card_shape.png';
   static const String imagesListviewShape = 'assets/images/listview_shape.png';
+  static const String imagesMan = 'assets/images/man.png';
   static const String imagesNoNotifications =
       'assets/images/no_notifications.png';
   static const String imagesNotBad = 'assets/images/not_bad.svg';
@@ -62,4 +63,5 @@ class Assets {
   static const String imagesWelcomeCurvedContainer =
       'assets/images/welcome_curved_container.png';
   static const String imagesWelcomeImage = 'assets/images/welcome_image.jpeg';
+  static const String imagesWoman = 'assets/images/woman.png';
 }

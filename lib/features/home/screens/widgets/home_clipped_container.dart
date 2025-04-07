@@ -1,0 +1,19 @@
+import 'package:e_fashion_flutter/features/home/screens/widgets/home_container_clipper.dart';
+import 'package:flutter/material.dart';
+
+class HomeClippedContainer extends StatelessWidget {
+  const HomeClippedContainer({super.key, required this.child});
+  final Widget child;
+  @override
+  Widget build(BuildContext context) {
+    return ClipPath(
+      clipper: HomeContainerClipper(),
+      child: Container(
+        height: 72.0,
+        width: double.infinity,
+        color: Theme.of(context).colorScheme.secondary,
+        child: child,
+      ),
+    );
+  }
+}
