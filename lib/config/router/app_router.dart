@@ -39,11 +39,17 @@ class AppRouter extends RootStackRouter {
     _buildCustomRoute(
       page: LayoutRoute.page,
       children: [
-        _buildCustomRoute(initial: true, page: HomeRoute.page),
+        _buildCustomRoute(
+          initial: true,
+          page: HomeTabRoute.page,
+          children: [
+            _buildCustomRoute(initial: true, page: HomeRoute.page),
+            _buildCustomRoute(page: CollectionRoute.page),
+          ],
+        ),
         _buildCustomRoute(page: CartRoute.page),
         _buildCustomRoute(page: FavoriteRoute.page),
         _buildCustomRoute(page: ProfileRoute.page),
-        _buildCustomRoute(page: CollectionRoute.page),
       ],
     ),
   ];
@@ -71,6 +77,11 @@ class Splash extends AutoRouter {
 @RoutePage(name: 'AuthRoute')
 class Auth extends AutoRouter {
   const Auth({super.key});
+}
+
+@RoutePage(name: 'HomeTabRoute')
+class HomeTab extends AutoRouter {
+  const HomeTab({super.key});
 }
 
 @RoutePage(name: 'HomeRoute')

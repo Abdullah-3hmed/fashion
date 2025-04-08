@@ -97,7 +97,7 @@ class _LoginFormState extends State<LoginForm> {
             const SizedBox(height: 48.0),
             PrimaryButton(
               onPressed: () {
-                context.pushRoute(const LayoutRoute());
+                context.replaceRoute(const LayoutRoute());
                 return;
                 if (_formKey.currentState!.validate()) {
                   _formKey.currentState!.save();
