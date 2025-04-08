@@ -136,7 +136,9 @@ class _HomeHeaderState extends State<HomeHeader> {
             children: [
               Text(
                 slides[activeIndex]['title']!,
-                style: Theme.of(context).textTheme.titleMedium,
+                style: Theme.of(
+                  context,
+                ).textTheme.titleMedium!.copyWith(color: Colors.white),
               ),
               const SizedBox(height: 8.0),
               Container(
@@ -155,7 +157,9 @@ class _HomeHeaderState extends State<HomeHeader> {
               ),
               Text(
                 slides[activeIndex]['subtitle']!,
-                style: Theme.of(context).textTheme.titleMedium,
+                style: Theme.of(
+                  context,
+                ).textTheme.titleMedium!.copyWith(color: Colors.white),
               ),
             ],
           ),

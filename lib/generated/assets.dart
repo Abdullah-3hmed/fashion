@@ -34,10 +34,14 @@ class Assets {
   static const String imagesApplyFilter = 'assets/images/apply_filter.png';
   static const String imagesBad = 'assets/images/bad.svg';
   static const String imagesCheck = 'assets/images/Check.svg';
+  static const String imagesCollectionClippedContainer =
+      'assets/images/collection_clipped_container.png';
   static const String imagesGreat = 'assets/images/great.svg';
   static const String imagesGridShape = 'assets/images/grid_shape.png';
   static const String imagesGridShapeReverse =
       'assets/images/grid_shape_reverse.png';
+  static const String imagesHomeCurvedContainer =
+      'assets/images/home_curved_container.svg';
   static const String imagesJeans = 'assets/images/jeans.png';
   static const String imagesLargeCardShape =
       'assets/images/large_card_shape.png';

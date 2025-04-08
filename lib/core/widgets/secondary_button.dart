@@ -5,10 +5,12 @@ class SecondaryButton extends StatelessWidget {
     super.key,
     required this.onPressed,
     required this.text,
+    this.backgroundColor,
   });
 
   final void Function() onPressed;
   final String text;
+  final Color? backgroundColor;
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +22,7 @@ class SecondaryButton extends StatelessWidget {
             const EdgeInsets.symmetric(horizontal: 16.0, vertical: 13.0),
           ),
           backgroundColor: WidgetStateProperty.all<Color>(
-            Theme.of(context).colorScheme.secondary,
+            backgroundColor ?? Theme.of(context).colorScheme.secondary,
           ),
           shape: WidgetStateProperty.all<RoundedRectangleBorder>(
             const RoundedRectangleBorder(

@@ -31,6 +31,8 @@ class AssetsManager {
   static const String applyFilter = 'assets/images/apply_filter.png';
 
   static const String greatSvgIcon = 'assets/images/great.svg';
+  static const String collectionClippedContainer =
+      'assets/images/collection_clipped_container.png';
   static const String welcomeCircleImage =
       'assets/images/welcome_circle_image.png';
   static const String welcomeCircleArrow =

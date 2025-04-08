@@ -1,8 +1,8 @@
 import 'package:e_fashion_flutter/core/utils/assets_manager.dart';
 import 'package:flutter/material.dart';
 
-class CollectionItem extends StatelessWidget {
-  const CollectionItem({super.key});
+class ReverseCollectionItem extends StatelessWidget {
+  const ReverseCollectionItem({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -10,10 +10,10 @@ class CollectionItem extends StatelessWidget {
       height: 186.0,
       width: double.infinity,
       padding: const EdgeInsetsDirectional.only(
-        start: 8.0,
+        start: 40.0,
         top: 8.0,
         bottom: 8.0,
-        end: 40.0,
+        end: 8.0,
       ),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16.0),
@@ -21,13 +21,6 @@ class CollectionItem extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Expanded(
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(16.0),
-              child: Image.asset(fit: BoxFit.cover, AssetsManager.welcomeImage),
-            ),
-          ),
-          const SizedBox(width: 16.0),
           Expanded(
             child: SizedBox(
               width: 100.0,
@@ -49,6 +42,13 @@ class CollectionItem extends StatelessWidget {
                   ),
                 ],
               ),
+            ),
+          ),
+          const SizedBox(width: 16.0),
+          Expanded(
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(16.0),
+              child: Image.asset(fit: BoxFit.cover, AssetsManager.welcomeImage),
             ),
           ),
         ],

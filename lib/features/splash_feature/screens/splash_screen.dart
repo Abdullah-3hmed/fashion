@@ -84,7 +84,8 @@ class SplashScreen extends StatelessWidget {
                           delay: const Duration(milliseconds: 900),
                           child: Text(
                             "Start your new",
-                            style: Theme.of(context).textTheme.titleMedium,
+                            style: Theme.of(context).textTheme.titleMedium!
+                                .copyWith(color: Colors.white),
                           ),
                         ),
                         SlideAnimation(
@@ -93,7 +94,8 @@ class SplashScreen extends StatelessWidget {
                           delay: const Duration(milliseconds: 900),
                           child: Text(
                             "Shopping experience",
-                            style: Theme.of(context).textTheme.titleMedium,
+                            style: Theme.of(context).textTheme.titleMedium!
+                                .copyWith(color: Colors.white),
                           ),
                         ),
                         const SizedBox(height: 8.0),

@@ -43,9 +43,9 @@ class AppRouter extends RootStackRouter {
         _buildCustomRoute(page: CartRoute.page),
         _buildCustomRoute(page: FavoriteRoute.page),
         _buildCustomRoute(page: ProfileRoute.page),
+        _buildCustomRoute(page: CollectionRoute.page),
       ],
     ),
-    _buildCustomRoute(page: CollectionRoute.page),
   ];
 
   CustomRoute _buildCustomRoute({
