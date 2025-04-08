@@ -12,13 +12,13 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 24.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            HomeHeader(),
-            Expanded(
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          HomeHeader(),
+          Expanded(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 24.0),
               child: CustomScrollView(
                 physics: BouncingScrollPhysics(),
                 slivers: [
@@ -28,8 +28,8 @@ class HomeScreen extends StatelessWidget {
                 ],
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

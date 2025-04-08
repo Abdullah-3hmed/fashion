@@ -14,10 +14,18 @@ class OffersSection extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text("Offers", style: Theme.of(context).textTheme.bodyMedium),
-            Text(
-              "See All",
-              style: Theme.of(context).textTheme.labelMedium!.copyWith(
-                color: Theme.of(context).colorScheme.primary,
+            TextButton(
+              style: ButtonStyle(
+                padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
+                  EdgeInsets.zero,
+                ),
+              ),
+              onPressed: () {},
+              child: Text(
+                "See All",
+                style: Theme.of(context).textTheme.labelMedium!.copyWith(
+                  color: Theme.of(context).colorScheme.primary,
+                ),
               ),
             ),
           ],

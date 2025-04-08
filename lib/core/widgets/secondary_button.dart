@@ -17,7 +17,7 @@ class SecondaryButton extends StatelessWidget {
       child: ElevatedButton(
         style: ButtonStyle(
           padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
-            const EdgeInsets.symmetric(horizontal: 25.0, vertical: 13.0),
+            const EdgeInsets.symmetric(horizontal: 16.0, vertical: 13.0),
           ),
           backgroundColor: WidgetStateProperty.all<Color>(
             Theme.of(context).colorScheme.secondary,

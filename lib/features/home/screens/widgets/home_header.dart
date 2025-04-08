@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:auto_route/auto_route.dart';
+import 'package:e_fashion_flutter/config/router/app_router.dart';
 import 'package:e_fashion_flutter/core/utils/assets_manager.dart';
 import 'package:e_fashion_flutter/core/widgets/secondary_button.dart';
 import 'package:flutter/material.dart';
@@ -19,11 +21,31 @@ class _HomeHeaderState extends State<HomeHeader> {
 
   Timer? _timer; // ✅ highlight: تعريف تايمر
 
-  static const List<String> imageList = [
-    AssetsManager.testImage,
-    AssetsManager.welcomeImage,
-    AssetsManager.testImage,
-    AssetsManager.welcomeImage,
+  static const List<Map<String, String>> slides = [
+    {
+      'image': AssetsManager.testImage,
+      'title': 'Summer COLLECTION',
+      'discount': '30% OFF',
+      'subtitle': 'On all summer outfits',
+    },
+    {
+      'image': AssetsManager.welcomeImage,
+      'title': 'Spring COLLECTION',
+      'discount': '50% OFF',
+      'subtitle': 'Fresh styles for you',
+    },
+    {
+      'image': AssetsManager.testImage,
+      'title': 'Autumn COLLECTION',
+      'discount': '20% OFF',
+      'subtitle': 'Warm & Stylish',
+    },
+    {
+      'image': AssetsManager.welcomeImage,
+      'title': 'Winter COLLECTION',
+      'discount': '40% OFF',
+      'subtitle': 'Cozy Looks Await',
+    },
   ];
 
   @override
@@ -39,7 +61,7 @@ class _HomeHeaderState extends State<HomeHeader> {
 
     _timer = Timer.periodic(const Duration(seconds: 4), (_) {
       int nextIndex = (controller.page?.round() ?? 0) + 1;
-      if (nextIndex >= imageList.length) nextIndex = 0;
+      if (nextIndex >= slides.length) nextIndex = 0;
 
       controller.animateToPage(
         nextIndex,
@@ -60,7 +82,6 @@ class _HomeHeaderState extends State<HomeHeader> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        // Fade transition
         AnimatedSwitcher(
           duration: const Duration(milliseconds: 500),
           child: ClipRRect(
@@ -70,32 +91,28 @@ class _HomeHeaderState extends State<HomeHeader> {
               bottomEnd: Radius.circular(32.0),
             ),
             child: Image.asset(
-              imageList[activeIndex],
+              slides[activeIndex]['image']!,
               fit: BoxFit.cover,
               height: 320,
               width: double.infinity,
             ),
           ),
         ),
-
-        // Transparent PageView فقط لتغيير الصفحة
         SizedBox(
           height: 320,
           width: double.infinity,
           child: PageView.builder(
             controller: controller,
-            itemCount: imageList.length,
+            itemCount: slides.length,
             itemBuilder: (_, __) => const SizedBox.shrink(),
           ),
         ),
-
-        // Indicator مربوط فعليًا
         PositionedDirectional(
           bottom: 24.0,
           start: 24.0,
           child: SmoothPageIndicator(
             controller: controller,
-            count: imageList.length,
+            count: slides.length,
             effect: const ExpandingDotsEffect(
               dotWidth: 30.0,
               dotHeight: 4.0,
@@ -111,7 +128,6 @@ class _HomeHeaderState extends State<HomeHeader> {
             },
           ),
         ),
-
         PositionedDirectional(
           start: 16.0,
           bottom: 66.0,
@@ -119,7 +135,7 @@ class _HomeHeaderState extends State<HomeHeader> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Hijab COLLECTION",
+                slides[activeIndex]['title']!,
                 style: Theme.of(context).textTheme.titleMedium,
               ),
               const SizedBox(height: 8.0),
@@ -132,13 +148,13 @@ class _HomeHeaderState extends State<HomeHeader> {
               ),
               const SizedBox(height: 8.0),
               Text(
-                "50% OFF",
+                slides[activeIndex]['discount']!,
                 style: Theme.of(
                   context,
                 ).textTheme.displayLarge!.copyWith(color: Colors.white),
               ),
               Text(
-                "For Selected collection",
+                slides[activeIndex]['subtitle']!,
                 style: Theme.of(context).textTheme.titleMedium,
               ),
             ],
@@ -167,7 +183,12 @@ class _HomeHeaderState extends State<HomeHeader> {
         PositionedDirectional(
           bottom: 32.0,
           end: 16.0,
-          child: SecondaryButton(onPressed: () {}, text: "Check it"),
+          child: SecondaryButton(
+            onPressed: () {
+              context.pushRoute(const CollectionRoute());
+            },
+            text: "Check it",
+          ),
         ),
       ],
     );
