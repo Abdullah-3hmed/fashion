@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:e_fashion_flutter/core/utils/assets_manager.dart';
 import 'package:e_fashion_flutter/core/widgets/secondary_button.dart';
 import 'package:flutter/material.dart';
@@ -15,25 +17,42 @@ class _HomeHeaderState extends State<HomeHeader> {
   final PageController controller = PageController();
   int activeIndex = 0;
 
+  Timer? _timer; // ✅ highlight: تعريف تايمر
+
   static const List<String> imageList = [
+    AssetsManager.testImage,
+    AssetsManager.welcomeImage,
     AssetsManager.testImage,
     AssetsManager.welcomeImage,
   ];
 
   @override
   void initState() {
+    super.initState();
+
     controller.addListener(() {
       final page = controller.page?.round() ?? 0;
       if (page != activeIndex) {
         setState(() => activeIndex = page);
       }
     });
-    super.initState();
+
+    _timer = Timer.periodic(const Duration(seconds: 4), (_) {
+      int nextIndex = (controller.page?.round() ?? 0) + 1;
+      if (nextIndex >= imageList.length) nextIndex = 0;
+
+      controller.animateToPage(
+        nextIndex,
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.easeInOut,
+      );
+    });
   }
 
   @override
   void dispose() {
     controller.dispose();
+    _timer?.cancel();
     super.dispose();
   }
 
@@ -93,7 +112,6 @@ class _HomeHeaderState extends State<HomeHeader> {
           ),
         ),
 
-        // الباقي زي ما هو: النص، الزرار، الأيقونات
         PositionedDirectional(
           start: 16.0,
           bottom: 66.0,
