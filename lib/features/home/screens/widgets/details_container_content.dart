@@ -115,86 +115,23 @@ class DetailsContainerContent extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 24.0),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text("1", style: Theme.of(context).textTheme.bodyLarge),
-                const Icon(Icons.star, color: Colors.amber),
-                const SizedBox(width: 16.0),
-                Container(
-                  height: 8.0,
-                  width: 220,
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.onPrimary,
-                    borderRadius: BorderRadius.circular(100.0),
+            for (int i = 1; i <= 5; i++)
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text("$i", style: Theme.of(context).textTheme.bodyLarge),
+                  const Icon(Icons.star, color: Colors.amber),
+                  const SizedBox(width: 16.0),
+                  Container(
+                    height: 8.0,
+                    width: 220,
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.onPrimary,
+                      borderRadius: BorderRadius.circular(100.0),
+                    ),
                   ),
-                ),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text("2", style: Theme.of(context).textTheme.bodyLarge),
-                const Icon(Icons.star, color: Colors.amber),
-                const SizedBox(width: 16.0),
-                Container(
-                  height: 8.0,
-                  width: 220,
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.onPrimary,
-                    borderRadius: BorderRadius.circular(100.0),
-                  ),
-                ),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text("3", style: Theme.of(context).textTheme.bodyLarge),
-                const Icon(Icons.star, color: Colors.amber),
-                const SizedBox(width: 16.0),
-                Container(
-                  height: 8.0,
-                  width: 220,
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.onPrimary,
-                    borderRadius: BorderRadius.circular(100.0),
-                  ),
-                ),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text("4", style: Theme.of(context).textTheme.bodyLarge),
-                const Icon(Icons.star, color: Colors.amber),
-                const SizedBox(width: 16.0),
-                Container(
-                  height: 8.0,
-                  width: 220,
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.onPrimary,
-                    borderRadius: BorderRadius.circular(100.0),
-                  ),
-                ),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text("5", style: Theme.of(context).textTheme.bodyLarge),
-                const Icon(Icons.star, color: Colors.amber),
-                const SizedBox(width: 16.0),
-                Container(
-                  height: 8.0,
-                  width: 220,
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.onPrimary,
-                    borderRadius: BorderRadius.circular(100.0),
-                  ),
-                ),
-              ],
-            ),
+                ],
+              ),
             const SizedBox(height: 40.0),
           ],
         ),
