@@ -43,6 +43,7 @@ dependencies:
   smooth_page_indicator: ^1.2.1
   font_awesome_flutter: ^10.8.0
   solar_icons: ^0.0.5
+  flutter_rating_bar: ^4.0.1
 
 
 dev_dependencies:

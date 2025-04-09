@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 
 class PrimaryButton extends StatelessWidget {
-  const PrimaryButton({super.key, required this.onPressed, required this.text});
+  const PrimaryButton({
+    super.key,
+    required this.onPressed,
+    required this.text,
+    this.icon,
+  });
 
   final VoidCallback onPressed;
   final String text;
+  final Widget? icon;
 
   @override
   Widget build(BuildContext context) {
@@ -19,11 +25,18 @@ class PrimaryButton extends StatelessWidget {
           ),
         ),
         onPressed: onPressed,
-        child: Text(
-          text,
-          style: Theme.of(context).textTheme.labelLarge!.copyWith(
-            color: Theme.of(context).colorScheme.onPrimary,
-          ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            icon ?? const SizedBox.shrink(),
+            const SizedBox(width: 10.0),
+            Text(
+              text,
+              style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                color: Theme.of(context).colorScheme.onPrimary,
+              ),
+            ),
+          ],
         ),
       ),
     );

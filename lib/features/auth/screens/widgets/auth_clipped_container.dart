@@ -2,8 +2,12 @@ import 'package:e_fashion_flutter/features/auth/screens/widgets/auth_container_c
 import 'package:flutter/material.dart';
 
 class AuthClippedContainer extends StatelessWidget {
-  const AuthClippedContainer({super.key, this.height, required this.child});
-  final double? height;
+  const AuthClippedContainer({
+    super.key,
+    required this.height,
+    required this.child,
+  });
+  final double height;
   final Widget child;
   @override
   Widget build(BuildContext context) {

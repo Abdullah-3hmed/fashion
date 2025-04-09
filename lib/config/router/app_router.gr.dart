@@ -59,6 +59,22 @@ class CollectionRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [DetailsScreen]
+class DetailsRoute extends PageRouteInfo<void> {
+  const DetailsRoute({List<PageRouteInfo>? children})
+    : super(DetailsRoute.name, initialChildren: children);
+
+  static const String name = 'DetailsRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const DetailsScreen();
+    },
+  );
+}
+
+/// generated route for
 /// [EmailVerificationScreen]
 class EmailVerificationRoute extends PageRouteInfo<void> {
   const EmailVerificationRoute({List<PageRouteInfo>? children})
