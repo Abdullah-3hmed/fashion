@@ -30,7 +30,7 @@ class AuthBackgroundImageAndLogo extends StatelessWidget {
           ),
           PositionedDirectional(
             bottom: 0.0,
-            child: AuthClippedContainer(height: 540.0, child: child),
+            child: AuthClippedContainer(child: child),
           ),
         ],
       ),

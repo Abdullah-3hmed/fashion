@@ -55,6 +55,7 @@ class Assets {
   static const String imagesPayment3 = 'assets/images/payment3.png';
   static const String imagesPayment4 = 'assets/images/payment4.png';
   static const String imagesPayment5 = 'assets/images/payment5.png';
+  static const String imagesProfileImage = 'assets/images/profile_image.png';
   static const String imagesStepperImage1 = 'assets/images/stepper_image1.png';
   static const String imagesStepperImage2 = 'assets/images/stepper_image2.png';
   static const String imagesStepperImage3 = 'assets/images/stepper_image3.png';

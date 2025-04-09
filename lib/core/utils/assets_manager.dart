@@ -29,6 +29,7 @@ class AssetsManager {
   static const String woman = 'assets/images/woman.png';
   static const String jeans = 'assets/images/jeans.png';
   static const String applyFilter = 'assets/images/apply_filter.png';
+  static const String profileImage = 'assets/images/profile_image.png';
 
   static const String greatSvgIcon = 'assets/images/great.svg';
   static const String collectionClippedContainer =

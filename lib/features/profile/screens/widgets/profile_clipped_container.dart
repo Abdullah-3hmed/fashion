@@ -1,8 +1,8 @@
-import 'package:e_fashion_flutter/features/auth/screens/widgets/auth_container_clipper.dart';
+import 'package:e_fashion_flutter/features/profile/screens/widgets/profile_container_clipper.dart';
 import 'package:flutter/material.dart';
 
-class AuthClippedContainer extends StatelessWidget {
-  const AuthClippedContainer({
+class ProfileClippedContainer extends StatelessWidget {
+  const ProfileClippedContainer({
     super.key,
     // required this.height,
     required this.child,
@@ -12,9 +12,9 @@ class AuthClippedContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ClipPath(
-      clipper: AuthContainerClipper(),
+      clipper: ProfileContainerClipper(),
       child: Container(
-        //  height: height,
+        height: 585.0,
         width: MediaQuery.sizeOf(context).width,
         color: Theme.of(context).colorScheme.onInverseSurface,
         padding: const EdgeInsets.symmetric(horizontal: 24.0),

@@ -21,12 +21,14 @@ class DetailsContainerContent extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(height: 30.0),
-            CircleAvatar(
-              backgroundColor: Theme.of(context).colorScheme.primary,
-              radius: 24.0,
-              child: IconButton(
-                onPressed: () => context.pop(),
-                icon: Icon(
+            InkWell(
+              onTap: () {
+                context.pop();
+              },
+              child: CircleAvatar(
+                backgroundColor: Theme.of(context).colorScheme.primary,
+                radius: 24.0,
+                child: Icon(
                   Icons.arrow_back,
                   color: Theme.of(context).colorScheme.onPrimary,
                 ),
