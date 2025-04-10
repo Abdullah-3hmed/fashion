@@ -10,6 +10,7 @@ import 'package:e_fashion_flutter/features/favourite/screens/favorite_screen.dar
 import 'package:e_fashion_flutter/features/home/screens/collection_screen.dart';
 import 'package:e_fashion_flutter/features/home/screens/details_screen.dart';
 import 'package:e_fashion_flutter/features/home/screens/home_screen.dart';
+import 'package:e_fashion_flutter/features/profile/screens/edit_profile_screen.dart';
 import 'package:e_fashion_flutter/features/profile/screens/profile_screen.dart';
 import 'package:e_fashion_flutter/features/splash_feature/screens/splash_screen.dart';
 
@@ -54,6 +55,7 @@ class AppRouter extends RootStackRouter {
       ],
     ),
     _buildCustomRoute(page: DetailsRoute.page),
+    _buildCustomRoute(page: EditProfileRoute.page),
   ];
 
   CustomRoute _buildCustomRoute({

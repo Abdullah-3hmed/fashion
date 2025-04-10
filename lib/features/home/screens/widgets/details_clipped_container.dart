@@ -17,6 +17,5 @@ class DetailsClippedContainer extends StatelessWidget {
         child: child,
       ),
     );
-    ;
   }
 }

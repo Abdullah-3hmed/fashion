@@ -2,7 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:e_fashion_flutter/core/utils/assets_manager.dart';
 import 'package:e_fashion_flutter/core/widgets/primary_button.dart';
 import 'package:e_fashion_flutter/features/auth/screens/widgets/details_screen_colors.dart';
-import 'package:e_fashion_flutter/features/home/screens/widgets/details_pieces%20available.dart';
+import 'package:e_fashion_flutter/features/home/screens/widgets/details_pieces_available.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/svg.dart';

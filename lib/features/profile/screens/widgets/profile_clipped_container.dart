@@ -4,22 +4,37 @@ import 'package:flutter/material.dart';
 class ProfileClippedContainer extends StatelessWidget {
   const ProfileClippedContainer({
     super.key,
-    // required this.height,
     required this.child,
+    this.isClipped = true,
   });
-  // final double height;
+
   final Widget child;
+  final bool isClipped;
+
   @override
   Widget build(BuildContext context) {
     return ClipPath(
-      clipper: ProfileContainerClipper(),
-      child: Container(
-        height: 585.0,
-        width: MediaQuery.sizeOf(context).width,
-        color: Theme.of(context).colorScheme.onInverseSurface,
-        padding: const EdgeInsets.symmetric(horizontal: 24.0),
-        child: child,
-      ),
+      clipper: isClipped ? ProfileContainerClipper() : null,
+      child:
+          isClipped
+              ? Container(
+                width: MediaQuery.sizeOf(context).width,
+                color: Theme.of(context).colorScheme.onInverseSurface,
+                padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                child: child,
+              )
+              : Container(
+                width: MediaQuery.sizeOf(context).width,
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.onInverseSurface,
+                  borderRadius: BorderRadiusDirectional.only(
+                    topEnd: Radius.circular(isClipped ? 0.0 : 32.0),
+                    topStart: Radius.circular(isClipped ? 0.0 : 32.0),
+                  ),
+                ),
+                padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                child: child,
+              ),
     );
   }
 }

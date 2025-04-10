@@ -67,8 +67,8 @@ class _LoginFormState extends State<LoginForm> {
                   setState(() {
                     _autovalidateMode = AutovalidateMode.always;
                   });
-                  TextInput.finishAutofillContext();
                 }
+                TextInput.finishAutofillContext();
               },
             ),
             const SizedBox(height: 24.0),
