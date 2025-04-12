@@ -30,6 +30,7 @@ class AssetsManager {
   static const String jeans = 'assets/images/jeans.png';
   static const String applyFilter = 'assets/images/apply_filter.png';
   static const String profileImage = 'assets/images/profile_image.png';
+  static const String chatImage = 'assets/images/chat_image.png';
 
   static const String greatSvgIcon = 'assets/images/great.svg';
   static const String collectionClippedContainer =
@@ -51,4 +52,5 @@ class AssetsManager {
   static const String home = 'assets/icons/home.svg';
   static const String heart = 'assets/icons/heart.svg';
   static const String cart = 'assets/icons/cart.svg';
+  static const String send = 'assets/icons/send.svg';
 }

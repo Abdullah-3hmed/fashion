@@ -54,7 +54,9 @@ class ProfileContainerContent extends StatelessWidget {
           ),
           const SizedBox(height: 24.0),
           ProfileInfoItem(
-            onTap: () {},
+            onTap: () {
+              context.pushRoute(const ChatSupportRoute());
+            },
             text: "Chat Support",
             icon: SolarIconsOutline.chatRound,
           ),

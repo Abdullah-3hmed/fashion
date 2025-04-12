@@ -59,6 +59,22 @@ class ChangeMailRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [ChatSupportScreen]
+class ChatSupportRoute extends PageRouteInfo<void> {
+  const ChatSupportRoute({List<PageRouteInfo>? children})
+    : super(ChatSupportRoute.name, initialChildren: children);
+
+  static const String name = 'ChatSupportRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const ChatSupportScreen();
+    },
+  );
+}
+
+/// generated route for
 /// [CollectionScreen]
 class CollectionRoute extends PageRouteInfo<void> {
   const CollectionRoute({List<PageRouteInfo>? children})

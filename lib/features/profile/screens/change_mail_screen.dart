@@ -21,7 +21,7 @@ class _ChangeMailScreenState extends State<ChangeMailScreen> {
   late AutovalidateMode _autovalidateMode;
   late String oldMail;
   late String newMail;
-  late String pasword;
+  late String password;
   @override
   void initState() {
     super.initState();
@@ -89,7 +89,7 @@ class _ChangeMailScreenState extends State<ChangeMailScreen> {
                     const SizedBox(height: 16.0),
                     PasswordField(
                       onSaved: (value) {
-                        pasword = value!;
+                        password = value!;
                       },
                       onSubmit: (_) {
                         _onPressed();
@@ -126,7 +126,7 @@ class _ChangeMailScreenState extends State<ChangeMailScreen> {
       debugPrint('Form is valid');
       debugPrint(oldMail);
       debugPrint(newMail);
-      debugPrint(pasword);
+      debugPrint(password);
     } else {
       setState(() {
         _autovalidateMode = AutovalidateMode.always;
