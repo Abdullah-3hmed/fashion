@@ -43,6 +43,22 @@ class CartRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [ChangeMailScreen]
+class ChangeMailRoute extends PageRouteInfo<void> {
+  const ChangeMailRoute({List<PageRouteInfo>? children})
+    : super(ChangeMailRoute.name, initialChildren: children);
+
+  static const String name = 'ChangeMailRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const ChangeMailScreen();
+    },
+  );
+}
+
+/// generated route for
 /// [CollectionScreen]
 class CollectionRoute extends PageRouteInfo<void> {
   const CollectionRoute({List<PageRouteInfo>? children})

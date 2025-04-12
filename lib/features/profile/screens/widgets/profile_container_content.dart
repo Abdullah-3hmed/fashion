@@ -68,7 +68,9 @@ class ProfileContainerContent extends StatelessWidget {
           ),
           const SizedBox(height: 24.0),
           ProfileInfoItem(
-            onTap: () {},
+            onTap: () {
+              context.pushRoute(const ChangeMailRoute());
+            },
             text: "Change email",
             icon: Icons.email_outlined,
           ),
