@@ -1,8 +1,6 @@
-import 'package:e_fashion_flutter/core/utils/assets_manager.dart';
-import 'package:e_fashion_flutter/core/utils/svg_default_color.dart';
 import 'package:e_fashion_flutter/core/widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:solar_icons/solar_icons.dart';
 
 class PasswordField extends StatefulWidget {
   const PasswordField({
@@ -34,11 +32,7 @@ class _PasswordFieldState extends State<PasswordField> {
       hintText: widget.hintText ?? "Password",
       label: widget.label ?? "Password",
       textInputAction: widget.textInputAction ?? TextInputAction.done,
-      prefixIcon: SvgPicture.asset(
-        colorFilter: svgColor(context),
-        fit: BoxFit.scaleDown,
-        AssetsManager.lock,
-      ),
+      prefixIcon: const Icon(SolarIconsOutline.lockKeyhole),
       autofillHints: const [AutofillHints.password],
       obscureText: _obsecureText,
       suffixIcon: IconButton(

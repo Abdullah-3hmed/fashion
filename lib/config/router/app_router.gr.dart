@@ -219,6 +219,22 @@ class ProfileRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [ProfileChangePasswordScreen]
+class ProfileChangePasswordRoute extends PageRouteInfo<void> {
+  const ProfileChangePasswordRoute({List<PageRouteInfo>? children})
+    : super(ProfileChangePasswordRoute.name, initialChildren: children);
+
+  static const String name = 'ProfileChangePasswordRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const ProfileChangePasswordScreen();
+    },
+  );
+}
+
+/// generated route for
 /// [ResetPasswordScreen]
 class ResetPasswordRoute extends PageRouteInfo<void> {
   const ResetPasswordRoute({List<PageRouteInfo>? children})

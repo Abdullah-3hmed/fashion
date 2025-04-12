@@ -60,7 +60,9 @@ class ProfileContainerContent extends StatelessWidget {
           ),
           const SizedBox(height: 24.0),
           ProfileInfoItem(
-            onTap: () {},
+            onTap: () {
+              context.pushRoute(const ProfileChangePasswordRoute());
+            },
             text: "Change password",
             icon: SolarIconsOutline.lockKeyhole,
           ),

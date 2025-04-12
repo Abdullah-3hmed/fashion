@@ -17,8 +17,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   void initState() {
-    isClipped = true;
     super.initState();
+    isClipped = true;
   }
 
   @override
