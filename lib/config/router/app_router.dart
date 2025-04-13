@@ -13,6 +13,7 @@ import 'package:e_fashion_flutter/features/home/screens/home_screen.dart';
 import 'package:e_fashion_flutter/features/profile/screens/change_mail_screen.dart';
 import 'package:e_fashion_flutter/features/profile/screens/chat_support_screen.dart';
 import 'package:e_fashion_flutter/features/profile/screens/edit_profile_screen.dart';
+import 'package:e_fashion_flutter/features/profile/screens/order_status_screen.dart';
 import 'package:e_fashion_flutter/features/profile/screens/profile_change_password_screen.dart';
 import 'package:e_fashion_flutter/features/profile/screens/profile_screen.dart';
 import 'package:e_fashion_flutter/features/splash_feature/screens/splash_screen.dart';
@@ -62,6 +63,7 @@ class AppRouter extends RootStackRouter {
     _buildCustomRoute(page: ProfileChangePasswordRoute.page),
     _buildCustomRoute(page: ChangeMailRoute.page),
     _buildCustomRoute(page: ChatSupportRoute.page),
+    _buildCustomRoute(page: OrderStatusRoute.page),
   ];
 
   CustomRoute _buildCustomRoute({

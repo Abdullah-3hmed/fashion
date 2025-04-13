@@ -31,6 +31,9 @@ class AssetsManager {
   static const String applyFilter = 'assets/images/apply_filter.png';
   static const String profileImage = 'assets/images/profile_image.png';
   static const String chatImage = 'assets/images/chat_image.png';
+  static const String deliveredImage = 'assets/images/delivered_image.png';
+  static const String onItsWayImage = 'assets/images/on_its_way_image.png';
+  static const String onProgressImage = 'assets/images/on_progress_image.png';
 
   static const String greatSvgIcon = 'assets/images/great.svg';
   static const String collectionClippedContainer =

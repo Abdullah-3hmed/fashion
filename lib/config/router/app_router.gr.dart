@@ -235,6 +235,22 @@ class LoginRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [OrderStatusScreen]
+class OrderStatusRoute extends PageRouteInfo<void> {
+  const OrderStatusRoute({List<PageRouteInfo>? children})
+    : super(OrderStatusRoute.name, initialChildren: children);
+
+  static const String name = 'OrderStatusRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const OrderStatusScreen();
+    },
+  );
+}
+
+/// generated route for
 /// [ProfileScreen]
 class ProfileRoute extends PageRouteInfo<void> {
   const ProfileRoute({List<PageRouteInfo>? children})

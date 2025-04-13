@@ -17,12 +17,14 @@ class MessagesList extends StatelessWidget {
               color: Color(0xFFD4BEE6),
             ),
             const SizedBox(width: 8.0),
-            Text(
-              "Message and calls are end-to end encrypted, no one outside of \n this chat can read them ",
-              textAlign: TextAlign.center,
-              style: Theme.of(
-                context,
-              ).textTheme.labelSmall!.copyWith(fontSize: 8.0),
+            Flexible(
+              child: Text(
+                "Message and calls are end-to end encrypted, no one outside of this chat can read them ",
+                textAlign: TextAlign.center,
+                style: Theme.of(
+                  context,
+                ).textTheme.labelSmall!.copyWith(fontSize: 10.0),
+              ),
             ),
           ],
         ),

@@ -14,7 +14,7 @@ class ChatItem extends StatelessWidget {
               child: Container(
                 padding: const EdgeInsetsDirectional.all(16.0),
                 decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.secondaryContainer,
+                  color: Theme.of(context).colorScheme.surfaceContainerHighest,
                   borderRadius: const BorderRadiusDirectional.only(
                     topStart: Radius.circular(40.0),
                     topEnd: Radius.circular(40.0),
