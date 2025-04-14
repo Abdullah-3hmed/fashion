@@ -15,7 +15,11 @@ class OrderStatusScreen extends StatelessWidget {
           style: Theme.of(context).textTheme.titleMedium,
         ),
       ),
-      body: const OrderItem(),
+      body: ListView.builder(
+        physics: const BouncingScrollPhysics(),
+        itemBuilder: (context, index) => const OrderItem(),
+        itemCount: 10,
+      ),
     );
   }
 }

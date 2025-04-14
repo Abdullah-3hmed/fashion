@@ -14,7 +14,7 @@ class OrderItem extends StatelessWidget {
       ),
       margin: const EdgeInsetsDirectional.symmetric(
         horizontal: 24.0,
-        vertical: 16.0,
+        vertical: 8.0,
       ),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16.0),

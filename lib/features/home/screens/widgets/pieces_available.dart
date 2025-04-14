@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:solar_icons/solar_icons.dart';
 
-class DetailsPiecesAvailable extends StatefulWidget {
-  const DetailsPiecesAvailable({super.key});
-
+class PiecesAvailable extends StatefulWidget {
+  const PiecesAvailable({super.key, required this.onPiecesChanged});
+  final ValueChanged<int> onPiecesChanged;
   @override
-  State<DetailsPiecesAvailable> createState() => _DetailsPiecesAvailableState();
+  State<PiecesAvailable> createState() => _PiecesAvailableState();
 }
 
-class _DetailsPiecesAvailableState extends State<DetailsPiecesAvailable> {
+class _PiecesAvailableState extends State<PiecesAvailable> {
   int _pieces = 1;
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
         Text(
-          "20 Pieces available",
+          "10 Pieces available",
           style: Theme.of(context).textTheme.bodyMedium,
         ),
         IconButton(
@@ -25,6 +25,7 @@ class _DetailsPiecesAvailableState extends State<DetailsPiecesAvailable> {
               setState(() {
                 _pieces--;
               });
+              widget.onPiecesChanged(_pieces);
             }
           },
           icon: const Icon(SolarIconsOutline.minusCircle),
@@ -37,6 +38,7 @@ class _DetailsPiecesAvailableState extends State<DetailsPiecesAvailable> {
               setState(() {
                 _pieces++;
               });
+              widget.onPiecesChanged(_pieces);
             }
           },
           icon: const Icon(SolarIconsOutline.addCircle),
