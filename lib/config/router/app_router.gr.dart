@@ -123,6 +123,43 @@ class EditProfileRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [EditReviewScreen]
+class EditReviewRoute extends PageRouteInfo<EditReviewRouteArgs> {
+  EditReviewRoute({
+    Key? key,
+    required double rating,
+    List<PageRouteInfo>? children,
+  }) : super(
+         EditReviewRoute.name,
+         args: EditReviewRouteArgs(key: key, rating: rating),
+         initialChildren: children,
+       );
+
+  static const String name = 'EditReviewRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<EditReviewRouteArgs>();
+      return EditReviewScreen(key: args.key, rating: args.rating);
+    },
+  );
+}
+
+class EditReviewRouteArgs {
+  const EditReviewRouteArgs({this.key, required this.rating});
+
+  final Key? key;
+
+  final double rating;
+
+  @override
+  String toString() {
+    return 'EditReviewRouteArgs{key: $key, rating: $rating}';
+  }
+}
+
+/// generated route for
 /// [EmailVerificationScreen]
 class EmailVerificationRoute extends PageRouteInfo<void> {
   const EmailVerificationRoute({List<PageRouteInfo>? children})

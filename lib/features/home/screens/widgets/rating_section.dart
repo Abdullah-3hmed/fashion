@@ -1,3 +1,5 @@
+import 'package:auto_route/auto_route.dart';
+import 'package:e_fashion_flutter/config/router/app_router.dart';
 import 'package:e_fashion_flutter/core/utils/assets_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -32,10 +34,15 @@ class _RatingSectionState extends State<RatingSection> {
         ),
         const SizedBox(height: 16.0),
         Align(
-          child: Text(
-            "Write a review",
-            style: Theme.of(context).textTheme.bodySmall!.copyWith(
-              color: Theme.of(context).colorScheme.primary,
+          child: TextButton(
+            onPressed: () {
+              context.pushRoute(EditReviewRoute(rating: rating));
+            },
+            child: Text(
+              rating == 0.0 ? "Write a review" : " Edit review",
+              style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                color: Theme.of(context).colorScheme.primary,
+              ),
             ),
           ),
         ),
@@ -68,7 +75,7 @@ class _RatingSectionState extends State<RatingSection> {
         const SizedBox(height: 24.0),
         Align(
           child: Text(
-            "0 Reviews",
+            rating == 0 ? " 0 Reviews" : " 1 Reviews",
             style: Theme.of(context).textTheme.bodyMedium,
           ),
         ),
