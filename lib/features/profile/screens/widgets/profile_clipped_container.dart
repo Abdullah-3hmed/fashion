@@ -17,14 +17,18 @@ class ProfileClippedContainer extends StatelessWidget {
       clipper: isClipped ? ProfileContainerClipper() : null,
       child:
           isClipped
-              ? Container(
-                width: MediaQuery.sizeOf(context).width,
+              ? AnimatedContainer(
+                duration: const Duration(milliseconds: 600),
+                curve: Curves.easeInOut,
+                width: double.infinity,
                 color: Theme.of(context).colorScheme.onInverseSurface,
                 padding: const EdgeInsets.symmetric(horizontal: 24.0),
                 child: child,
               )
-              : Container(
-                width: MediaQuery.sizeOf(context).width,
+              : AnimatedContainer(
+                duration: const Duration(milliseconds: 600),
+                curve: Curves.easeInOut,
+                width: double.infinity,
                 decoration: BoxDecoration(
                   color: Theme.of(context).colorScheme.onInverseSurface,
                   borderRadius: BorderRadiusDirectional.only(

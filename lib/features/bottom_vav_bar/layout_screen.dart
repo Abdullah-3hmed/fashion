@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:e_fashion_flutter/config/router/app_router.dart';
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:solar_icons/solar_icons.dart';
 
 @RoutePage()
@@ -45,7 +46,7 @@ class LayoutScreen extends StatelessWidget {
                     tabsRouter.setActiveIndex(1);
                   },
                   icon: Icon(
-                    SolarIconsOutline.cart,
+                    Iconsax.bag_2,
                     color:
                         tabsRouter.activeIndex == 1
                             ? Theme.of(context).colorScheme.primary

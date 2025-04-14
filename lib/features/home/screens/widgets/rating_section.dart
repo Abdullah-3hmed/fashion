@@ -1,0 +1,147 @@
+import 'package:e_fashion_flutter/core/utils/assets_manager.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+class RatingSection extends StatefulWidget {
+  const RatingSection({super.key});
+
+  @override
+  State<RatingSection> createState() => _RatingSectionState();
+}
+
+class _RatingSectionState extends State<RatingSection> {
+  double rating = 0.0;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        RatingBar.builder(
+          allowHalfRating: true,
+          itemSize: 32.0,
+          itemPadding: const EdgeInsets.symmetric(horizontal: 18.0),
+          itemBuilder:
+              (context, _) =>
+                  const Icon(FontAwesomeIcons.star, color: Colors.amber),
+          onRatingUpdate: (newRating) {
+            setState(() {
+              rating = newRating;
+            });
+          },
+        ),
+        const SizedBox(height: 16.0),
+        Align(
+          child: Text(
+            "Write a review",
+            style: Theme.of(context).textTheme.bodySmall!.copyWith(
+              color: Theme.of(context).colorScheme.primary,
+            ),
+          ),
+        ),
+        const SizedBox(height: 24.0),
+        Text(
+          "Rating and Reviews",
+          style: Theme.of(context).textTheme.bodyMedium,
+        ),
+        Text(
+          "See what others think about this product",
+          style: Theme.of(context).textTheme.bodyMedium,
+        ),
+        const SizedBox(height: 24.0),
+        Align(
+          child: Text(
+            " $rating",
+            style: Theme.of(context).textTheme.headlineSmall,
+          ),
+        ),
+        const SizedBox(height: 24.0),
+        Align(
+          child: RatingBarIndicator(
+            rating: rating,
+            itemBuilder:
+                (context, index) => const Icon(Icons.star, color: Colors.amber),
+            itemSize: 24.0,
+            itemPadding: const EdgeInsets.symmetric(horizontal: 8.0),
+          ),
+        ),
+        const SizedBox(height: 24.0),
+        Align(
+          child: Text(
+            "0 Reviews",
+            style: Theme.of(context).textTheme.bodyMedium,
+          ),
+        ),
+        const SizedBox(height: 24.0),
+        for (int i = 1; i <= 5; i++)
+          Row(
+            children: [
+              Text("$i", style: Theme.of(context).textTheme.bodyLarge),
+              const SizedBox(width: 4.0),
+              const Icon(Icons.star, color: Colors.amber),
+              const SizedBox(width: 16.0),
+              Expanded(
+                child: LinearProgressIndicator(
+                  value: _calculateRating(i: i),
+                  minHeight: 8,
+                  backgroundColor: Colors.grey[300],
+                  valueColor: const AlwaysStoppedAnimation<Color>(Colors.amber),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              ),
+            ],
+          ),
+        const SizedBox(height: 24.0),
+        Container(
+          padding: const EdgeInsetsDirectional.symmetric(
+            horizontal: 12.0,
+            vertical: 16.0,
+          ),
+          decoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.surfaceContainerHighest,
+            borderRadius: BorderRadius.circular(12.0),
+          ),
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  CircleAvatar(
+                    radius: 20.0,
+                    backgroundImage: Image.asset(AssetsManager.testImage).image,
+                  ),
+                  const SizedBox(width: 16.0),
+                  Text(
+                    "Kira Alan",
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+                ],
+              ),
+              const SizedBox(height: 4.0),
+              Row(
+                children: [
+                  for (int i = 1; i <= rating; i++)
+                    const Icon(Icons.star, color: Colors.amber, size: 16.0),
+                  const SizedBox(width: 11.0),
+                  Text("9/10/22", style: Theme.of(context).textTheme.bodySmall),
+                ],
+              ),
+              const SizedBox(height: 8.0),
+              Text(
+                "Lorem ipsum dolor sit amet consectetur. Elit neque integer enim diam rhoncus rhoncus eu ut. Porttitor elementum arcu gravida adipiscing in. Consequat.",
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  double _calculateRating({required int i}) {
+    if (rating.floor() == i) {
+      return 1.0;
+    } else {
+      return 0.0;
+    }
+  }
+}

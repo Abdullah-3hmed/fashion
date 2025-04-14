@@ -19,7 +19,7 @@ class _HomeHeaderState extends State<HomeHeader> {
   final PageController controller = PageController();
   int activeIndex = 0;
 
-  Timer? _timer; // ✅ highlight: تعريف تايمر
+  Timer? _timer;
 
   static const List<Map<String, String>> slides = [
     {
@@ -191,7 +191,7 @@ class _HomeHeaderState extends State<HomeHeader> {
             onPressed: () {
               context.pushRoute(const CollectionRoute());
             },
-            text: "Check it",
+            text: "Shop now",
           ),
         ),
       ],

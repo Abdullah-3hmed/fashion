@@ -13,55 +13,43 @@ class DetailsScreen extends StatefulWidget {
 }
 
 class _DetailsScreenState extends State<DetailsScreen> {
-  bool _isClipped = true;
-  double _dragOffset = 0;
+  late bool isClipped;
+  @override
+  void initState() {
+    isClipped = true;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SizedBox.expand(
-        child: Stack(
-          children: [
-            Image.asset(fit: BoxFit.cover, AssetsManager.welcomeImage),
-            PositionedDirectional(
-              bottom: 0.0,
-              start: 0.0,
-              end: 0.0,
-              child: GestureDetector(
-                onVerticalDragUpdate: (details) {
-                  _dragOffset += details.delta.dy;
+      body: Stack(
+        children: [
+          Positioned.fill(
+            child: Image.asset(AssetsManager.welcomeImage, fit: BoxFit.cover),
+          ),
+          DraggableScrollableSheet(
+            initialChildSize: 0.47,
+            minChildSize: 0.47,
+            builder: (context, scrollController) {
+              return NotificationListener<DraggableScrollableNotification>(
+                onNotification: (notification) {
+                  final newIsClipped = notification.extent < 0.65;
+                  if (newIsClipped != isClipped) {
+                    setState(() {
+                      isClipped = newIsClipped;
+                    });
+                  }
+                  return true;
                 },
-                onVerticalDragEnd: (_) {
-                  setState(() {
-                    if (_dragOffset < -100) {
-                      _isClipped = false; // سحب لأعلى
-                    } else if (_dragOffset > 100) {
-                      _isClipped = true; // سحب لأسفل
-                    }
-                    _dragOffset = 0;
-                  });
-                },
-                child: AnimatedContainer(
-                  duration: const Duration(milliseconds: 300),
-                  curve: Curves.easeIn,
-                  decoration:
-                      _isClipped
-                          ? null
-                          : BoxDecoration(
-                            color: Theme.of(context).scaffoldBackgroundColor,
-                            borderRadius: BorderRadius.circular(0),
-                          ),
-                  child:
-                      _isClipped
-                          ? const DetailsClippedContainer(
-                            child: DetailsContainerContent(),
-                          )
-                          : const DetailsContainerContent(),
+                child: DetailsClippedContainer(
+                  isClipped: isClipped,
+                  child: DetailsContainerContent(controller: scrollController),
                 ),
-              ),
-            ),
-          ],
-        ),
+              );
+            },
+          ),
+        ],
       ),
     );
   }

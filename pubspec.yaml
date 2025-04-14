@@ -46,6 +46,7 @@ dependencies:
   flutter_rating_bar: ^4.0.1
   easy_stepper: ^0.8.5+1
   iconsax: ^0.0.8
+  percent_indicator: ^4.2.5
 
 
 dev_dependencies:
