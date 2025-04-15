@@ -1,11 +1,10 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:e_fashion_flutter/core/utils/assets_manager.dart';
 import 'package:e_fashion_flutter/core/widgets/primary_button.dart';
 import 'package:e_fashion_flutter/features/home/screens/widgets/colors_available.dart';
 import 'package:e_fashion_flutter/features/home/screens/widgets/pieces_available.dart';
 import 'package:e_fashion_flutter/features/home/screens/widgets/rating_section.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:iconsax/iconsax.dart';
 
 class DetailsContainerContent extends StatelessWidget {
   const DetailsContainerContent({super.key, required this.controller});
@@ -52,7 +51,7 @@ class DetailsContainerContent extends StatelessWidget {
           ),
           const SizedBox(height: 24.0),
           PrimaryButton(
-            icon: SvgPicture.asset(AssetsManager.cart),
+            icon: const Icon(Iconsax.bag_2),
             onPressed: () {},
             text: "Add to bag",
           ),

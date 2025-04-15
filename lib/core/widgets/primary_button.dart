@@ -10,7 +10,7 @@ class PrimaryButton extends StatelessWidget {
 
   final VoidCallback onPressed;
   final String text;
-  final Widget? icon;
+  final Icon? icon;
 
   @override
   Widget build(BuildContext context) {

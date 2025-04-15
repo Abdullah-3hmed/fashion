@@ -53,7 +53,10 @@ class ModalBottomSheetContent extends StatelessWidget {
           PrimaryButton(
             onPressed: () {},
             text: "Add to bag",
-            icon: const Icon(Iconsax.bag_2),
+            icon: Icon(
+              Iconsax.bag_2,
+              color: Theme.of(context).colorScheme.onPrimary,
+            ),
           ),
         ],
       ),

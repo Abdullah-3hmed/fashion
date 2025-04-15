@@ -1,8 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:e_fashion_flutter/config/router/app_router.dart';
 import 'package:e_fashion_flutter/core/utils/assets_manager.dart';
+import 'package:e_fashion_flutter/core/widgets/modal_bottom_sheet_content.dart';
 import 'package:e_fashion_flutter/features/home/screens/widgets/home_clipped_container.dart';
-import 'package:e_fashion_flutter/features/home/screens/widgets/modal_bottom_sheet_content.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 
