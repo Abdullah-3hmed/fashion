@@ -26,17 +26,21 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
         actions: [
           IconButton(
             onPressed: () {
-              setState(() {
-                isGrid = false;
-              });
+              if (isGrid) {
+                setState(() {
+                  isGrid = false;
+                });
+              }
             },
             icon: const Icon(SolarIconsOutline.stop),
           ),
           IconButton(
             onPressed: () {
-              setState(() {
-                isGrid = true;
-              });
+              if (!isGrid) {
+                setState(() {
+                  isGrid = true;
+                });
+              }
             },
             icon: const Icon(SolarIconsOutline.pause),
           ),
