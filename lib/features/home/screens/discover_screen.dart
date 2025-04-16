@@ -1,0 +1,61 @@
+import 'package:auto_route/annotations.dart';
+import 'package:e_fashion_flutter/features/home/screens/widgets/discover_grid_view.dart';
+import 'package:e_fashion_flutter/features/home/screens/widgets/discover_list_view.dart';
+import 'package:flutter/material.dart';
+import 'package:solar_icons/solar_icons.dart';
+
+@RoutePage()
+class DiscoverScreen extends StatefulWidget {
+  const DiscoverScreen({super.key});
+
+  @override
+  State<DiscoverScreen> createState() => _DiscoverScreenState();
+}
+
+class _DiscoverScreenState extends State<DiscoverScreen> {
+  bool isGrid = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          "Discover all zara",
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
+        actions: [
+          IconButton(
+            onPressed: () {
+              setState(() {
+                isGrid = false;
+              });
+            },
+            icon: const Icon(SolarIconsOutline.stop),
+          ),
+          IconButton(
+            onPressed: () {
+              setState(() {
+                isGrid = true;
+              });
+            },
+            icon: const Icon(SolarIconsOutline.pause),
+          ),
+        ],
+      ),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 24.0),
+        child: AnimatedSwitcher(
+          duration: const Duration(milliseconds: 250),
+          transitionBuilder: (child, animation) {
+            final offsetAnimation = Tween<Offset>(
+              begin: const Offset(1.0, 0.0), // Slide from right
+              end: Offset.zero,
+            ).animate(animation);
+            return SlideTransition(position: offsetAnimation, child: child);
+          },
+          child: isGrid ? const DiscoverGridView() : const DiscoverListView(),
+        ),
+      ),
+    );
+  }
+}

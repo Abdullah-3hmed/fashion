@@ -46,12 +46,15 @@ class DetailsContainerContent extends StatelessWidget {
             },
           ),
           Text(
-            "Bellylady Women Overcoat Fashionable Double-sided Faux Cashmere Coat Solid Color Lapel d-length Style Coat color",
+            "Belly lady Women Overcoat Fashionable Double-sided Faux Cashmere Coat Solid Color Lapel d-length Style Coat color",
             style: Theme.of(context).textTheme.bodySmall,
           ),
           const SizedBox(height: 24.0),
           PrimaryButton(
-            icon: const Icon(Iconsax.bag_2),
+            icon: Icon(
+              Iconsax.bag_2,
+              color: Theme.of(context).colorScheme.onPrimary,
+            ),
             onPressed: () {},
             text: "Add to bag",
           ),

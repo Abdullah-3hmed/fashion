@@ -1,4 +1,6 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:e_fashion_flutter/config/router/app_router.dart';
 import 'package:e_fashion_flutter/features/home/screens/widgets/home_carousel_slider_item.dart';
 import 'package:flutter/material.dart';
 
@@ -20,7 +22,9 @@ class OffersSection extends StatelessWidget {
                   EdgeInsets.zero,
                 ),
               ),
-              onPressed: () {},
+              onPressed: () {
+                context.pushRoute(const DiscoverRoute());
+              },
               child: Text(
                 "See All",
                 style: Theme.of(context).textTheme.labelMedium!.copyWith(

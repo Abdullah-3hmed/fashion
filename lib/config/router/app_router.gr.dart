@@ -107,6 +107,22 @@ class DetailsRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [DiscoverScreen]
+class DiscoverRoute extends PageRouteInfo<void> {
+  const DiscoverRoute({List<PageRouteInfo>? children})
+    : super(DiscoverRoute.name, initialChildren: children);
+
+  static const String name = 'DiscoverRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const DiscoverScreen();
+    },
+  );
+}
+
+/// generated route for
 /// [EditProfileScreen]
 class EditProfileRoute extends PageRouteInfo<void> {
   const EditProfileRoute({List<PageRouteInfo>? children})

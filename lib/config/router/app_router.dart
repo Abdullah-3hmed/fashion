@@ -9,6 +9,7 @@ import 'package:e_fashion_flutter/features/cart/screens/cart_screen.dart';
 import 'package:e_fashion_flutter/features/favourite/screens/favorite_screen.dart';
 import 'package:e_fashion_flutter/features/home/screens/collection_screen.dart';
 import 'package:e_fashion_flutter/features/home/screens/details_screen.dart';
+import 'package:e_fashion_flutter/features/home/screens/discover_screen.dart';
 import 'package:e_fashion_flutter/features/home/screens/edit_review_screen.dart';
 import 'package:e_fashion_flutter/features/home/screens/home_screen.dart';
 import 'package:e_fashion_flutter/features/profile/screens/change_mail_screen.dart';
@@ -67,6 +68,7 @@ class AppRouter extends RootStackRouter {
     _buildCustomRoute(page: ChatSupportRoute.page),
     _buildCustomRoute(page: OrderStatusRoute.page),
     _buildCustomRoute(page: EditReviewRoute.page),
+    _buildCustomRoute(page: DiscoverRoute.page),
   ];
 
   CustomRoute _buildCustomRoute({
