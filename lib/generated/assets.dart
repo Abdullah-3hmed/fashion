@@ -30,12 +30,16 @@ class Assets {
   static const String iconsPerson = 'assets/icons/person.svg';
   static const String iconsProfile = 'assets/icons/profile.svg';
   static const String iconsSearch = 'assets/icons/search.svg';
+  static const String iconsSend = 'assets/icons/send.svg';
   static const String imagesAppLogo = 'assets/images/app_logo.png';
   static const String imagesApplyFilter = 'assets/images/apply_filter.png';
   static const String imagesBad = 'assets/images/bad.svg';
+  static const String imagesChatImage = 'assets/images/chat_image.png';
   static const String imagesCheck = 'assets/images/Check.svg';
   static const String imagesCollectionClippedContainer =
       'assets/images/collection_clipped_container.png';
+  static const String imagesDeliveredImage =
+      'assets/images/delivered_image.png';
   static const String imagesGreat = 'assets/images/great.svg';
   static const String imagesGridShape = 'assets/images/grid_shape.png';
   static const String imagesGridShapeReverse =
@@ -50,6 +54,10 @@ class Assets {
   static const String imagesNoNotifications =
       'assets/images/no_notifications.png';
   static const String imagesNotBad = 'assets/images/not_bad.svg';
+  static const String imagesOnItsWayImage =
+      'assets/images/on_its_way_image.png';
+  static const String imagesOnProgressImage =
+      'assets/images/on_progress_image.png';
   static const String imagesPayment1 = 'assets/images/payment1.png';
   static const String imagesPayment2 = 'assets/images/payment2.png';
   static const String imagesPayment3 = 'assets/images/payment3.png';

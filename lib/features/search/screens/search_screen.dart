@@ -1,12 +1,19 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:e_fashion_flutter/features/search/screens/widgets/no_result_search_section.dart';
+import 'package:e_fashion_flutter/features/search/screens/widgets/result_search_section.dart';
 import 'package:e_fashion_flutter/features/search/screens/widgets/search_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:solar_icons/solar_icons.dart';
 
 @RoutePage()
-class SearchScreen extends StatelessWidget {
+class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
+
+  @override
+  State<SearchScreen> createState() => _SearchScreenState();
+}
+
+class _SearchScreenState extends State<SearchScreen> {
+  bool isGrid = false;
 
   @override
   Widget build(BuildContext context) {
@@ -15,11 +22,23 @@ class SearchScreen extends StatelessWidget {
         title: Text("Search", style: Theme.of(context).textTheme.titleMedium),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              if (isGrid) {
+                setState(() {
+                  isGrid = false;
+                });
+              }
+            },
             icon: const Icon(SolarIconsOutline.stop),
           ),
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              if (!isGrid) {
+                setState(() {
+                  isGrid = true;
+                });
+              }
+            },
             icon: const Icon(SolarIconsOutline.pause),
           ),
         ],
@@ -32,7 +51,9 @@ class SearchScreen extends StatelessWidget {
         child: Column(
           children: [
             const SearchTextField(),
-            Expanded(child: const NoResultSearchSection()),
+            const SizedBox(height: 16.0),
+            Expanded(child: ResultSearchSection(isGrid: isGrid)),
+            // Expanded(child: NoResultSearchSection()),
           ],
         ),
       ),

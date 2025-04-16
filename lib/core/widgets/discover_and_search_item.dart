@@ -3,8 +3,8 @@ import 'package:e_fashion_flutter/features/home/screens/widgets/home_clipped_con
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 
-class DiscoverItem extends StatelessWidget {
-  const DiscoverItem({super.key});
+class DiscoverAndSearchItem extends StatelessWidget {
+  const DiscoverAndSearchItem({super.key});
 
   @override
   Widget build(BuildContext context) {

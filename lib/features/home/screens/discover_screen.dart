@@ -1,6 +1,6 @@
 import 'package:auto_route/annotations.dart';
-import 'package:e_fashion_flutter/features/home/screens/widgets/discover_grid_view.dart';
-import 'package:e_fashion_flutter/features/home/screens/widgets/discover_list_view.dart';
+import 'package:e_fashion_flutter/core/widgets/discover_and_search_grid_view.dart';
+import 'package:e_fashion_flutter/core/widgets/discover_and_search_list_view.dart';
 import 'package:flutter/material.dart';
 import 'package:solar_icons/solar_icons.dart';
 
@@ -57,7 +57,10 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
             ).animate(animation);
             return SlideTransition(position: offsetAnimation, child: child);
           },
-          child: isGrid ? const DiscoverGridView() : const DiscoverListView(),
+          child:
+              isGrid
+                  ? const DiscoverAndSearchGridView()
+                  : const DiscoverAndSearchListView(),
         ),
       ),
     );
