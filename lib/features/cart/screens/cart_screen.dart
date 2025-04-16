@@ -1,5 +1,5 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:e_fashion_flutter/features/cart/screens/widgets/no_items_in_cart.dart';
+import 'package:e_fashion_flutter/features/cart/screens/widgets/cart_items_list.dart';
 import 'package:flutter/material.dart';
 
 @RoutePage()
@@ -17,7 +17,7 @@ class CartScreen extends StatelessWidget {
       ),
       body: const Padding(
         padding: EdgeInsetsDirectional.symmetric(horizontal: 24.0),
-        child: NoItemsInCart(),
+        child: CartItemsList(),
       ),
     );
   }
