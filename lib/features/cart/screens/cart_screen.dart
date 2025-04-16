@@ -44,7 +44,7 @@ class CartScreen extends StatelessWidget {
             ),
             const SizedBox(height: 8.0),
             PrimaryButton(onPressed: () {}, text: "Checkout"),
-            const SizedBox(height: 120.0),
+            const SizedBox(height: 140.0),
           ],
         ),
       ),

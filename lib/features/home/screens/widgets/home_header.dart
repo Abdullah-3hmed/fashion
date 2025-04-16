@@ -5,7 +5,7 @@ import 'package:e_fashion_flutter/config/router/app_router.dart';
 import 'package:e_fashion_flutter/core/utils/assets_manager.dart';
 import 'package:e_fashion_flutter/core/widgets/secondary_button.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class HomeHeader extends StatefulWidget {
@@ -166,19 +166,25 @@ class _HomeHeaderState extends State<HomeHeader> {
         ),
 
         PositionedDirectional(
-          top: 64.0,
+          top: 54.0,
           start: 24.0,
           end: 24.0,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              InkWell(
-                onTap: () {},
-                child: SvgPicture.asset(AssetsManager.search),
+              IconButton(
+                onPressed: () {
+                  context.pushRoute(const SearchRoute());
+                },
+                icon: const Icon(
+                  Iconsax.search_normal_1,
+                  color: Colors.white,
+                  size: 24.0,
+                ),
               ),
-              InkWell(
-                onTap: () {},
-                child: SvgPicture.asset(AssetsManager.notification),
+              IconButton(
+                onPressed: () {},
+                icon: const Icon(Iconsax.notification, color: Colors.white),
               ),
             ],
           ),

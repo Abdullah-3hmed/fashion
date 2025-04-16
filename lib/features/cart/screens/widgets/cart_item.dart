@@ -17,10 +17,10 @@ class CartItem extends StatelessWidget {
           color: Theme.of(context).colorScheme.error,
           borderRadius: BorderRadius.circular(16.0),
         ),
-        child: const Icon(Iconsax.trash, color: Colors.white, size: 28.0),
+        child: const Icon(Iconsax.trash, color: Colors.white, size: 24.0),
       ),
       onDismissed: (direction) {
-        print("Item deleted");
+        debugPrint("Item deleted");
       },
       key: UniqueKey(),
       child: Container(
