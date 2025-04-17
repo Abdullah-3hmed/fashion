@@ -288,6 +288,22 @@ class LoginRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [NotificationScreen]
+class NotificationRoute extends PageRouteInfo<void> {
+  const NotificationRoute({List<PageRouteInfo>? children})
+    : super(NotificationRoute.name, initialChildren: children);
+
+  static const String name = 'NotificationRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const NotificationScreen();
+    },
+  );
+}
+
+/// generated route for
 /// [OrderStatusScreen]
 class OrderStatusRoute extends PageRouteInfo<void> {
   const OrderStatusRoute({List<PageRouteInfo>? children})

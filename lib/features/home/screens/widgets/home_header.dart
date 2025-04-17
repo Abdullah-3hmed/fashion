@@ -183,7 +183,9 @@ class _HomeHeaderState extends State<HomeHeader> {
                 ),
               ),
               IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  context.pushRoute(const NotificationRoute());
+                },
                 icon: const Icon(Iconsax.notification, color: Colors.white),
               ),
             ],

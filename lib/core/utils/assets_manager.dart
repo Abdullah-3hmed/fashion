@@ -36,6 +36,8 @@ class AssetsManager {
   static const String onProgressImage = 'assets/images/on_progress_image.png';
 
   static const String greatSvgIcon = 'assets/images/great.svg';
+  static const String noNotificationsImage =
+      'assets/images/no_notifications.png';
   static const String collectionClippedContainer =
       'assets/images/collection_clipped_container.png';
   static const String welcomeCircleImage =
