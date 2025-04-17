@@ -47,6 +47,8 @@ dependencies:
   easy_stepper: ^0.8.5+1
   iconsax: ^0.0.8
   percent_indicator: ^4.2.5
+  syncfusion_flutter_sliders: ^29.1.38
+  intl: ^0.20.2
 
 
 dev_dependencies:
