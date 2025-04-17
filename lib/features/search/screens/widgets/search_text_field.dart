@@ -1,3 +1,5 @@
+import 'package:e_fashion_flutter/features/search/screens/widgets/search_filter_brand_items.dart';
+import 'package:e_fashion_flutter/features/search/screens/widgets/search_filter_category_items.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 
@@ -55,7 +57,68 @@ class _SearchTextFieldState extends State<SearchTextField> {
                   icon: const Icon(Icons.close),
                 )
                 : IconButton(
-                  onPressed: () {},
+                  onPressed: () async {
+                    await showModalBottomSheet(
+                      context: context,
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadiusDirectional.only(
+                          topStart: Radius.circular(24.0),
+                          topEnd: Radius.circular(24.0),
+                        ),
+                      ),
+                      builder:
+                          (context) => Padding(
+                            padding: const EdgeInsetsDirectional.symmetric(
+                              horizontal: 24.0,
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const SizedBox(height: 20.0),
+                                Divider(
+                                  thickness: 4.0,
+                                  height: 20.0,
+                                  indent: 155.0,
+                                  endIndent: 155.0,
+                                  color: Theme.of(context).colorScheme.outline,
+                                ),
+                                const SizedBox(height: 20.0),
+                                Align(
+                                  child: Text(
+                                    "Search Filters",
+                                    style:
+                                        Theme.of(context).textTheme.titleMedium,
+                                  ),
+                                ),
+                                const SizedBox(height: 30.0),
+                                Text(
+                                  "Brands",
+                                  style: Theme.of(context).textTheme.bodySmall,
+                                ),
+                                const Divider(
+                                  thickness: 1.0,
+                                  color: Color(0x1a1c1e40),
+                                ),
+                                const SizedBox(height: 8.0),
+                                const Flexible(child: SearchFilterBrandItems()),
+                                const SizedBox(height: 24.0),
+                                Text(
+                                  "Categories",
+                                  style: Theme.of(context).textTheme.bodySmall,
+                                ),
+                                const Divider(
+                                  thickness: 1.0,
+                                  color: Color(0x1a1c1e40),
+                                ),
+                                const SizedBox(height: 8.0),
+                                const Flexible(
+                                  child: SearchFilterCategoryItems(),
+                                ),
+                              ],
+                            ),
+                          ),
+                    );
+                  },
                   icon: const Icon(Iconsax.filter_search),
                 ),
         border: OutlineInputBorder(

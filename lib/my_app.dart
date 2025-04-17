@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
-      theme: ThemeManager.lightTheme(),
+      theme: ThemeManager.darkTheme(),
       routerConfig: getIt<AppRouter>().config(
         navigatorObservers: () => [AppRoutesObserver(), AutoRouteObserver()],
       ),

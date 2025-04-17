@@ -1,4 +1,5 @@
 import 'package:e_fashion_flutter/core/utils/assets_manager.dart';
+import 'package:e_fashion_flutter/core/widgets/modal_bottom_sheet_content.dart';
 import 'package:e_fashion_flutter/features/home/screens/widgets/home_clipped_container.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
@@ -43,7 +44,12 @@ class DiscoverAndSearchItem extends StatelessWidget {
                   const Spacer(),
                   const SizedBox(width: 28.0),
                   InkWell(
-                    onTap: () {},
+                    onTap: () async {
+                      await showModalBottomSheet(
+                        context: context,
+                        builder: (context) => const ModalBottomSheetContent(),
+                      );
+                    },
                     child: Icon(
                       Iconsax.bag_2,
                       color: Theme.of(context).colorScheme.primary,
