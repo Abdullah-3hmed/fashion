@@ -49,6 +49,8 @@ dependencies:
   percent_indicator: ^4.2.5
   syncfusion_flutter_sliders: ^29.1.38
   intl: ^0.20.2
+  dio: ^5.8.0+1
+  pretty_dio_logger: ^1.4.0
 
 
 dev_dependencies:
