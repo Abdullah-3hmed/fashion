@@ -21,10 +21,11 @@ class SearchFilterCategoryItem extends StatelessWidget {
                 : Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(24.0),
         border: Border.all(
+          width: 1.5,
           color:
               isSelected
                   ? Theme.of(context).colorScheme.primary
-                  : Colors.grey.shade300,
+                  : Theme.of(context).colorScheme.outline,
         ),
       ),
       child: Row(

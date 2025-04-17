@@ -22,7 +22,7 @@ class SearchFilterBrandItem extends StatelessWidget {
                 : Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadiusDirectional.circular(32.0),
         border: Border.all(
-          width: 2.0,
+          width: 1.5,
           color:
               isSelected
                   ? Theme.of(context).colorScheme.primary
