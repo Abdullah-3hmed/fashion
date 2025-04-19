@@ -5,13 +5,6 @@ import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 class DioHelper {
   static late Dio _dio;
   static bool _initialized = false;
-  static String? _token;
-
-  static void setToken(String? token) {
-    _token = token;
-  }
-
-  static String? get token => _token;
   static void init() {
     if (_initialized) return;
     _initialized = true;

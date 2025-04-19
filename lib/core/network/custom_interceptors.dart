@@ -5,10 +5,6 @@ import 'package:dio/dio.dart';
 class CustomInterceptors extends Interceptor {
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
-    // final token = DioHelper.token;
-    // if (token != null && token.isNotEmpty) {
-    //   options.headers['Authorization'] = 'Bearer $token';
-    // }
     log('REQUEST[${options.method}] => PATH: ${options.path}');
     super.onRequest(options, handler);
   }
