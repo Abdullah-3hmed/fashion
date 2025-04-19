@@ -52,6 +52,10 @@ dependencies:
   dio: ^5.8.0+1
   pretty_dio_logger: ^1.4.0
   internet_connection_checker_plus: ^2.7.1
+  equatable: ^2.0.7
+  dartz: ^0.10.1
+  flutter_bloc: ^9.1.0
+  bloc: ^9.0.0
 
 
 dev_dependencies:

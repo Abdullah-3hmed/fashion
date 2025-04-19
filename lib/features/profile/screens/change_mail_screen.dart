@@ -1,7 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:e_fashion_flutter/core/widgets/custom_text_form_field.dart';
+import 'package:e_fashion_flutter/core/widgets/password_filed.dart';
 import 'package:e_fashion_flutter/core/widgets/secondary_button.dart';
-import 'package:e_fashion_flutter/features/auth/screens/widgets/password_filed.dart';
 import 'package:e_fashion_flutter/features/profile/screens/widgets/profile_background_image_and_logo.dart';
 import 'package:e_fashion_flutter/features/profile/screens/widgets/profile_clipped_container.dart';
 import 'package:flutter/material.dart';

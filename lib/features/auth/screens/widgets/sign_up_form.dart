@@ -1,12 +1,11 @@
-import 'package:e_fashion_flutter/core/utils/assets_manager.dart';
-import 'package:e_fashion_flutter/core/utils/svg_default_color.dart';
 import 'package:e_fashion_flutter/core/widgets/custom_text_form_field.dart';
+import 'package:e_fashion_flutter/core/widgets/password_filed.dart';
 import 'package:e_fashion_flutter/core/widgets/primary_button.dart';
 import 'package:e_fashion_flutter/features/auth/screens/widgets/auth_custom_check_box.dart';
-import 'package:e_fashion_flutter/features/auth/screens/widgets/password_filed.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:solar_icons/solar_icons.dart';
 
 class SignUpForm extends StatefulWidget {
   const SignUpForm({super.key});
@@ -40,11 +39,7 @@ class _SignUpFormState extends State<SignUpForm> {
               hintText: "Name",
               label: "Name",
               autofillHints: const [AutofillHints.name],
-              prefixIcon: SvgPicture.asset(
-                colorFilter: svgColor(context),
-                AssetsManager.personIcon,
-                fit: BoxFit.scaleDown,
-              ),
+              prefixIcon: const Icon(SolarIconsOutline.user),
 
               onSaved: (value) {
                 name = value!;
@@ -57,10 +52,11 @@ class _SignUpFormState extends State<SignUpForm> {
               label: "Email",
               autofillHints: const [AutofillHints.email],
               isEmail: true,
-              prefixIcon: SvgPicture.asset(
-                colorFilter: svgColor(context),
-                AssetsManager.email,
-                fit: BoxFit.scaleDown,
+              prefixIcon: Icon(
+                FontAwesomeIcons.envelope,
+                color: Theme.of(
+                  context,
+                ).colorScheme.onSurfaceVariant.withValues(alpha: 0.6),
               ),
               onSubmit: (_) {},
               onSaved: (value) {

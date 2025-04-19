@@ -21,7 +21,7 @@ class AuthRoute extends PageRouteInfo<void> {
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      return const Auth();
+      return WrappedRoute(child: const Auth());
     },
   );
 }

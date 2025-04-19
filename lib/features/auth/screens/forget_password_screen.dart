@@ -1,11 +1,10 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:e_fashion_flutter/config/router/app_router.dart';
-import 'package:e_fashion_flutter/core/utils/assets_manager.dart';
 import 'package:e_fashion_flutter/core/widgets/custom_text_form_field.dart';
 import 'package:e_fashion_flutter/core/widgets/primary_button.dart';
 import 'package:e_fashion_flutter/features/auth/screens/widgets/auth_background_image_and_logo.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 @RoutePage()
 class ForgetPasswordScreen extends StatefulWidget {
@@ -30,12 +29,13 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: AuthBackgroundImageAndLogo(
+        height: 540.0,
         child: Form(
           key: _formKey,
           autovalidateMode: _autovalidateMode,
           child: Center(
             child: SingleChildScrollView(
-              physics: const BouncingScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -56,13 +56,11 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                     autofillHints: const [AutofillHints.email],
                     hintText: "Email",
                     label: "Email",
-                    prefixIcon: SvgPicture.asset(
-                      colorFilter: ColorFilter.mode(
-                        Theme.of(context).colorScheme.onPrimaryContainer,
-                        BlendMode.srcIn,
-                      ),
-                      fit: BoxFit.scaleDown,
-                      AssetsManager.email,
+                    prefixIcon: Icon(
+                      FontAwesomeIcons.envelope,
+                      color: Theme.of(
+                        context,
+                      ).colorScheme.onSurfaceVariant.withValues(alpha: 0.6),
                     ),
                     onSaved: (value) {
                       email = value!;
@@ -82,7 +80,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                     },
                     text: "Recover password",
                   ),
-                  const SizedBox(height: 50.0),
+                  const SizedBox(height: 40.0),
                 ],
               ),
             ),

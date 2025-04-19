@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:e_fashion_flutter/features/auth/cubit/auth_cubit.dart';
 import 'package:e_fashion_flutter/features/auth/screens/email_verification_screen.dart';
 import 'package:e_fashion_flutter/features/auth/screens/forget_password_screen.dart';
 import 'package:e_fashion_flutter/features/auth/screens/login_screen.dart';
@@ -22,6 +23,7 @@ import 'package:e_fashion_flutter/features/profile/screens/profile_screen.dart';
 import 'package:e_fashion_flutter/features/search/screens/search_screen.dart';
 import 'package:e_fashion_flutter/features/splash_feature/screens/splash_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'app_router.gr.dart';
 
@@ -96,18 +98,17 @@ class Splash extends AutoRouter {
 }
 
 @RoutePage(name: 'AuthRoute')
-class Auth extends AutoRouter {
+class Auth extends AutoRouter implements AutoRouteWrapper {
   const Auth({super.key});
+
+  @override
+  Widget wrappedRoute(BuildContext context) =>
+      BlocProvider(lazy: false, create: (context) => AuthCubit(), child: this);
 }
 
 @RoutePage(name: 'HomeTabRoute')
 class HomeTab extends AutoRouter {
   const HomeTab({super.key});
-}
-
-@RoutePage(name: 'HomeRoute')
-class Home extends AutoRouter {
-  const Home({super.key});
 }
 
 @RoutePage(name: 'CartRoute')

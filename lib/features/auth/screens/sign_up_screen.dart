@@ -13,7 +13,7 @@ class SignUpScreen extends StatelessWidget {
     return Scaffold(
       body: AuthBackgroundImageAndLogo(
         child: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
+          physics: const NeverScrollableScrollPhysics(),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

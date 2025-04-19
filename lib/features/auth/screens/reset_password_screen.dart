@@ -1,7 +1,7 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:e_fashion_flutter/core/widgets/password_filed.dart';
 import 'package:e_fashion_flutter/core/widgets/primary_button.dart';
 import 'package:e_fashion_flutter/features/auth/screens/widgets/auth_background_image_and_logo.dart';
-import 'package:e_fashion_flutter/features/auth/screens/widgets/password_filed.dart';
 import 'package:flutter/material.dart';
 
 @RoutePage()
@@ -30,6 +30,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: AuthBackgroundImageAndLogo(
+        height: 540.0,
         child: Center(
           child: SingleChildScrollView(
             physics: const BouncingScrollPhysics(),

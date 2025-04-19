@@ -5,9 +5,14 @@ import 'package:e_fashion_flutter/features/auth/screens/widgets/auth_clipped_con
 import 'package:flutter/material.dart';
 
 class AuthBackgroundImageAndLogo extends StatelessWidget {
-  const AuthBackgroundImageAndLogo({super.key, required this.child});
+  const AuthBackgroundImageAndLogo({
+    super.key,
+    required this.child,
+    this.height,
+  });
 
   final Widget child;
+  final double? height;
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +35,7 @@ class AuthBackgroundImageAndLogo extends StatelessWidget {
           ),
           PositionedDirectional(
             bottom: 0.0,
-            child: AuthClippedContainer(child: child),
+            child: AuthClippedContainer(height: height, child: child),
           ),
         ],
       ),

@@ -13,9 +13,10 @@ class EmailVerificationScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: AuthBackgroundImageAndLogo(
+        height: 540.0,
         child: Center(
           child: SingleChildScrollView(
-            physics: const BouncingScrollPhysics(),
+            physics: const NeverScrollableScrollPhysics(),
             child: Column(
               children: [
                 Text(
