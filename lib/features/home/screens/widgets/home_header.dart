@@ -196,7 +196,14 @@ class _HomeHeaderState extends State<HomeHeader> {
           bottom: 32.0,
           end: 16.0,
           child: SecondaryButton(
-            onPressed: () {
+            onPressed: () async {
+              // await NotificationHelper().sendNotification(
+              //   token:
+              //       "f3jW6x7mRuCEFPL3YjXeBx:APA91bHDhn7JI8i78U01Avf5KRJbNPpG2go0gshQ6Gya8ERxmyenMC0euz0bQdJA3C4nXTtyXu97eSuxjFVcNWdMzDawyilOHp7LpY2ReWZAXI7HmTUApNE",
+              //   title: "New Message",
+              //   body: "Test From Abdullah",
+              //   data: {"name": "Abdullah"},
+              // );
               context.pushRoute(const CollectionRoute());
             },
             text: "Shop now",

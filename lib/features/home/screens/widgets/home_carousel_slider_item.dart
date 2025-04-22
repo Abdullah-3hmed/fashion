@@ -22,7 +22,7 @@ class HomeCarouselSliderItem extends StatelessWidget {
               },
               child: Container(
                 width: double.infinity,
-                height: 180.0,
+                height: 175.0,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(16.0),
                   image: DecorationImage(

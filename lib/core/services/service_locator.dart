@@ -1,5 +1,9 @@
 import 'package:e_fashion_flutter/config/router/app_router.dart';
 import 'package:e_fashion_flutter/core/network/network_info.dart';
+import 'package:e_fashion_flutter/core/notifications/fcm_helper.dart';
+import 'package:e_fashion_flutter/features/auth/cubit/auth_cubit.dart';
+import 'package:e_fashion_flutter/features/auth/repos/auth_repo.dart';
+import 'package:e_fashion_flutter/features/auth/repos/auth_repo_impl.dart';
 import 'package:get_it/get_it.dart';
 import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 
@@ -13,5 +17,8 @@ class ServiceLocator {
     getIt.registerLazySingleton<NetworkInfo>(
       () => NetworkInfo(internetConnection: getIt<InternetConnection>()),
     );
+    getIt.registerLazySingleton<FcmHelper>(() => FcmHelper());
+    getIt.registerLazySingleton<AuthRepo>(() => AuthRepoImpl());
+    getIt.registerFactory<AuthCubit>(() => AuthCubit(getIt<AuthRepo>()));
   }
 }

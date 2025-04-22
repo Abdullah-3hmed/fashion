@@ -56,6 +56,10 @@ dependencies:
   dartz: ^0.10.1
   flutter_bloc: ^9.1.0
   bloc: ^9.0.0
+  firebase_core: ^3.13.0
+  firebase_messaging: ^15.2.5
+  googleapis_auth: ^2.0.0
+  awesome_notifications: ^0.10.1
 
 
 dev_dependencies:
@@ -84,6 +88,7 @@ flutter:
   assets:
     - assets/images/
     - assets/icons/
+    - assets/notifications_key/
 
   fonts:
     - family: Montserrat

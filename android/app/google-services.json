@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "33408223795",
+    "project_id": "e-fashion-f1215",
+    "storage_bucket": "e-fashion-f1215.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:33408223795:android:55a1a986b7c9e06852b146",
+        "android_client_info": {
+          "package_name": "com.example.e_fashion_flutter"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA-b_AKwWggEhojkjDE6Z65-NUMpDFaheA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

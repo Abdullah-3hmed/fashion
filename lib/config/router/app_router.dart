@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:e_fashion_flutter/core/services/service_locator.dart';
 import 'package:e_fashion_flutter/features/auth/cubit/auth_cubit.dart';
 import 'package:e_fashion_flutter/features/auth/screens/email_verification_screen.dart';
 import 'package:e_fashion_flutter/features/auth/screens/forget_password_screen.dart';
@@ -21,21 +22,27 @@ import 'package:e_fashion_flutter/features/profile/screens/order_status_screen.d
 import 'package:e_fashion_flutter/features/profile/screens/profile_change_password_screen.dart';
 import 'package:e_fashion_flutter/features/profile/screens/profile_screen.dart';
 import 'package:e_fashion_flutter/features/search/screens/search_screen.dart';
-import 'package:e_fashion_flutter/features/splash_feature/screens/splash_screen.dart';
+import 'package:e_fashion_flutter/features/splash/screens/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'app_router.gr.dart';
 
+final _appNavigatorKey = GlobalKey<NavigatorState>();
+
 @AutoRouterConfig(replaceInRouteName: 'Screen,Route')
 class AppRouter extends RootStackRouter {
+  AppRouter() : super(navigatorKey: _appNavigatorKey);
+
+  @override
+  GlobalKey<NavigatorState> get navigatorKey => _appNavigatorKey;
   @override
   RouteType get defaultRouteType => const RouteType.material();
 
   @override
   List<AutoRoute> get routes => [
     AutoRoute(
-      initial: true,
+      //initial: true,
       page: SplashTabRoute.page,
       children: [AutoRoute(initial: true, page: SplashRoute.page)],
     ),
@@ -50,6 +57,7 @@ class AppRouter extends RootStackRouter {
       ],
     ),
     _buildCustomRoute(
+      initial: true,
       page: LayoutRoute.page,
       children: [
         _buildCustomRoute(
@@ -102,8 +110,11 @@ class Auth extends AutoRouter implements AutoRouteWrapper {
   const Auth({super.key});
 
   @override
-  Widget wrappedRoute(BuildContext context) =>
-      BlocProvider(lazy: false, create: (context) => AuthCubit(), child: this);
+  Widget wrappedRoute(BuildContext context) => BlocProvider(
+    lazy: false,
+    create: (context) => getIt<AuthCubit>(),
+    child: this,
+  );
 }
 
 @RoutePage(name: 'HomeTabRoute')

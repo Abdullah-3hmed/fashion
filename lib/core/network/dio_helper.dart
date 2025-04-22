@@ -4,10 +4,8 @@ import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 class DioHelper {
   static late Dio _dio;
-  static bool _initialized = false;
+
   static void init() {
-    if (_initialized) return;
-    _initialized = true;
     BaseOptions options = BaseOptions(
       baseUrl: "https://fakestoreapi.com",
       connectTimeout: const Duration(seconds: 10),
@@ -38,6 +36,7 @@ class DioHelper {
     Map<String, dynamic>? query,
     Map<String, dynamic>? headers,
   }) async {
+    //_dio.options.headers = headers;
     return await _dio.post(
       url,
       data: data,
@@ -52,11 +51,12 @@ class DioHelper {
     Map<String, dynamic>? query,
     Map<String, dynamic>? headers,
   }) async {
+    _dio.options.headers = headers;
     return await _dio.put(
       url,
       data: data,
       queryParameters: query,
-      options: Options(headers: headers),
+      // options: Options(headers: headers),
     );
   }
 
