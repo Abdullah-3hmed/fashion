@@ -20,17 +20,6 @@ class Assets {
   static const String fontsMontserratSemiBold =
       'assets/fonts/Montserrat-SemiBold.ttf';
   static const String fontsMontserratThin = 'assets/fonts/Montserrat-Thin.ttf';
-  static const String iconsCart = 'assets/icons/cart.svg';
-  static const String iconsEmail = 'assets/icons/email.svg';
-  static const String iconsEye = 'assets/icons/eye.svg';
-  static const String iconsHeart = 'assets/icons/heart.svg';
-  static const String iconsHome = 'assets/icons/home.svg';
-  static const String iconsLock = 'assets/icons/lock.svg';
-  static const String iconsNotification = 'assets/icons/notification.svg';
-  static const String iconsPerson = 'assets/icons/person.svg';
-  static const String iconsProfile = 'assets/icons/profile.svg';
-  static const String iconsSearch = 'assets/icons/search.svg';
-  static const String iconsSend = 'assets/icons/send.svg';
   static const String imagesAppLogo = 'assets/images/app_logo.png';
   static const String imagesApplyFilter = 'assets/images/apply_filter.png';
   static const String imagesBad = 'assets/images/bad.svg';
@@ -77,4 +66,6 @@ class Assets {
       'assets/images/welcome_curved_container.png';
   static const String imagesWelcomeImage = 'assets/images/welcome_image.jpeg';
   static const String imagesWoman = 'assets/images/woman.png';
+  static const String notificationsKeyEFashionF1215Da0bb632d3c1 =
+      'assets/notifications_key/e-fashion-f1215-da0bb632d3c1.json';
 }

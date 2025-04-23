@@ -7,6 +7,7 @@ import 'package:e_fashion_flutter/firebase_options.dart';
 import 'package:e_fashion_flutter/my_app.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,6 +17,7 @@ void main() async {
   // await FcmInitHelper.getDeviceToken();
   DioHelper.init();
   Bloc.observer = MyBlocObserver();
-
+  await dotenv.load(fileName: "lib/.env");
+  //debugPrint("API_URL >>>>>>>>>>>>>>${dotenv.env["API_URL"]}");
   runApp(const MyApp());
 }
