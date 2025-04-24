@@ -9,7 +9,7 @@ class HomeClippedContainer extends StatelessWidget {
     return ClipPath(
       clipper: HomeContainerClipper(),
       child: Container(
-        height: 72.0,
+        height: 75.0,
         width: double.infinity,
         color: const Color(0xFF203343),
         child: child,

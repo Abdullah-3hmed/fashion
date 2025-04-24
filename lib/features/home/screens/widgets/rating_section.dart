@@ -22,7 +22,7 @@ class _RatingSectionState extends State<RatingSection> {
         RatingBar.builder(
           allowHalfRating: true,
           itemSize: 32.0,
-          itemPadding: const EdgeInsets.symmetric(horizontal: 18.0),
+          itemPadding: const EdgeInsets.symmetric(horizontal: 12.0),
           itemBuilder:
               (context, _) =>
                   const Icon(FontAwesomeIcons.star, color: Colors.amber),

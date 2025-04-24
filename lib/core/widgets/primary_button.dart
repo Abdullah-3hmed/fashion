@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class PrimaryButton extends StatelessWidget {
   const PrimaryButton({
@@ -6,11 +7,13 @@ class PrimaryButton extends StatelessWidget {
     required this.onPressed,
     required this.text,
     this.icon,
+    this.isLoading = false,
   });
 
   final VoidCallback onPressed;
   final String text;
   final Icon? icon;
+  final bool isLoading;
 
   @override
   Widget build(BuildContext context) {
@@ -30,12 +33,18 @@ class PrimaryButton extends StatelessWidget {
           children: [
             icon ?? const SizedBox.shrink(),
             const SizedBox(width: 10.0),
-            Text(
-              text,
-              style: Theme.of(context).textTheme.labelLarge!.copyWith(
-                color: Theme.of(context).colorScheme.onPrimary,
-              ),
-            ),
+            isLoading
+                ? const SpinKitThreeBounce(
+                  color: Colors.white,
+                  size: 20.0,
+                  duration: Duration(milliseconds: 900),
+                )
+                : Text(
+                  text,
+                  style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                    color: Theme.of(context).colorScheme.onPrimary,
+                  ),
+                ),
           ],
         ),
       ),
