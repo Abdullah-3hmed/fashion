@@ -1,6 +1,6 @@
-import 'package:e_fashion_flutter/core/utils/assets_manager.dart';
 import 'package:e_fashion_flutter/core/widgets/third_button.dart';
-import 'package:e_fashion_flutter/features/home/screens/widgets/filter_section_item.dart';
+import 'package:e_fashion_flutter/features/home/screens/widgets/filter_category_section.dart';
+import 'package:e_fashion_flutter/features/home/screens/widgets/filter_gender_section.dart';
 import 'package:flutter/material.dart';
 
 class FilterSection extends StatelessWidget {
@@ -34,15 +34,10 @@ class FilterSection extends StatelessWidget {
                   color: Theme.of(context).colorScheme.surfaceContainerHighest,
                   borderRadius: BorderRadius.circular(16.0),
                 ),
-                child: const Row(
-                  children: [
-                    FilterSectionItem(
-                      text: "Woman",
-                      image: AssetsManager.woman,
-                    ),
-                    SizedBox(width: 16.0),
-                    FilterSectionItem(text: "Man", image: AssetsManager.man),
-                  ],
+                child: FilterGenderSection(
+                  onGenderChanged: (value) {
+                    debugPrint(value);
+                  },
                 ),
               ),
               const SizedBox(width: 16.0),
@@ -59,33 +54,10 @@ class FilterSection extends StatelessWidget {
                           Theme.of(context).colorScheme.surfaceContainerHighest,
                       borderRadius: BorderRadius.circular(16.0),
                     ),
-                    child: const Row(
-                      children: [
-                        FilterSectionItem(
-                          text: "jeans",
-                          image: AssetsManager.jeans,
-                        ),
-                        SizedBox(width: 16.0),
-                        FilterSectionItem(
-                          text: "jeans",
-                          image: AssetsManager.jeans,
-                        ),
-                        SizedBox(width: 16.0),
-                        FilterSectionItem(
-                          text: "jeans",
-                          image: AssetsManager.jeans,
-                        ),
-                        SizedBox(width: 16.0),
-                        FilterSectionItem(
-                          text: "jeans",
-                          image: AssetsManager.jeans,
-                        ),
-                        SizedBox(width: 16.0),
-                        FilterSectionItem(
-                          text: "jeans",
-                          image: AssetsManager.jeans,
-                        ),
-                      ],
+                    child: FilterCategorySection(
+                      onCategoryChanged: (String value) {
+                        debugPrint(value);
+                      },
                     ),
                   ),
                   Container(

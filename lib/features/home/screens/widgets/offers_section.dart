@@ -11,7 +11,6 @@ class OffersSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const SizedBox(height: 16.0),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -34,7 +33,6 @@ class OffersSection extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: 18.0),
         CarouselSlider(
           items: const [
             HomeCarouselSliderItem(),
@@ -43,10 +41,7 @@ class OffersSection extends StatelessWidget {
           ],
           options: CarouselOptions(
             enlargeCenterPage: true,
-            autoPlay: true,
-            viewportFraction: 0.7,
-            autoPlayInterval: const Duration(seconds: 3),
-            autoPlayAnimationDuration: const Duration(seconds: 1),
+            viewportFraction: 0.75,
           ),
         ),
       ],
