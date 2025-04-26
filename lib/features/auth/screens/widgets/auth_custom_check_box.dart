@@ -1,9 +1,14 @@
-import 'package:e_fashion_flutter/core/utils/assets_manager.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 
 class AuthCustomCheckBox extends StatefulWidget {
-  const AuthCustomCheckBox({super.key});
+  final bool isError;
+  final ValueChanged<bool> onChanged;
+
+  const AuthCustomCheckBox({
+    super.key,
+    required this.onChanged,
+    required this.isError,
+  });
 
   @override
   State<AuthCustomCheckBox> createState() => _AuthCustomCheckBoxState();
@@ -11,6 +16,7 @@ class AuthCustomCheckBox extends StatefulWidget {
 
 class _AuthCustomCheckBoxState extends State<AuthCustomCheckBox> {
   bool isChecked = false;
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -18,6 +24,7 @@ class _AuthCustomCheckBoxState extends State<AuthCustomCheckBox> {
         setState(() {
           isChecked = !isChecked;
         });
+        widget.onChanged(isChecked);
       },
       child: AnimatedContainer(
         width: 24,
@@ -34,6 +41,8 @@ class _AuthCustomCheckBoxState extends State<AuthCustomCheckBox> {
               color:
                   isChecked
                       ? Theme.of(context).colorScheme.primary
+                      : widget.isError
+                      ? Colors.red
                       : Theme.of(context).colorScheme.outline,
             ),
             borderRadius: BorderRadius.circular(8),
@@ -41,9 +50,9 @@ class _AuthCustomCheckBoxState extends State<AuthCustomCheckBox> {
         ),
         child:
             isChecked
-                ? Padding(
-                  padding: const EdgeInsets.all(2),
-                  child: SvgPicture.asset(AssetsManager.check),
+                ? const Padding(
+                  padding: EdgeInsets.all(2),
+                  child: Icon(Icons.check_sharp, color: Colors.white, size: 18),
                 )
                 : const SizedBox(),
       ),

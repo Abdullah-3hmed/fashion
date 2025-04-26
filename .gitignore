@@ -43,4 +43,7 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
-.env
+*.env
+assets/notifications_key
+lib/core/network/api_constants.dart
+lib/core/utils/app_constants.dart

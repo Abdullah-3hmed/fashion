@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:e_fashion_flutter/core/network/custom_interceptors.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 class DioHelper {
@@ -7,7 +8,7 @@ class DioHelper {
 
   static void init() {
     BaseOptions options = BaseOptions(
-      baseUrl: "https://fakestoreapi.com",
+      baseUrl: dotenv.env["API_URL"]!,
       connectTimeout: const Duration(seconds: 10),
       receiveTimeout: const Duration(seconds: 10),
     );
@@ -18,7 +19,7 @@ class DioHelper {
     ]);
   }
 
-  static Future<Response> get(
+  Future<Response> get(
     String url, {
     Map<String, dynamic>? query,
     Map<String, dynamic>? headers,
@@ -30,8 +31,8 @@ class DioHelper {
     );
   }
 
-  static Future<Response> post(
-    String url, {
+  Future<Response> post({
+    required String url,
     Map<String, dynamic>? data,
     Map<String, dynamic>? query,
     Map<String, dynamic>? headers,
@@ -45,7 +46,7 @@ class DioHelper {
     );
   }
 
-  static Future<Response> put(
+  Future<Response> put(
     String url, {
     Map<String, dynamic>? data,
     Map<String, dynamic>? query,
@@ -60,7 +61,7 @@ class DioHelper {
     );
   }
 
-  static Future<Response> delete(
+  Future<Response> delete(
     String url, {
     Map<String, dynamic>? data,
     Map<String, dynamic>? query,

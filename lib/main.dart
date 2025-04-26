@@ -15,9 +15,9 @@ void main() async {
   ServiceLocator().init();
   await FcmInitHelper.initAwesomeNotification();
   // await FcmInitHelper.getDeviceToken();
+  await dotenv.load(fileName: "lib/.env");
   DioHelper.init();
   Bloc.observer = MyBlocObserver();
-  await dotenv.load(fileName: "lib/.env");
-  //debugPrint("API_URL >>>>>>>>>>>>>>${dotenv.env["API_URL"]}");
+
   runApp(const MyApp());
 }

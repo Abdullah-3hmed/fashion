@@ -3,7 +3,6 @@ import 'package:e_fashion_flutter/config/router/app_router.dart';
 import 'package:e_fashion_flutter/core/widgets/custom_text_form_field.dart';
 import 'package:e_fashion_flutter/core/widgets/password_filed.dart';
 import 'package:e_fashion_flutter/core/widgets/primary_button.dart';
-import 'package:e_fashion_flutter/features/auth/screens/widgets/auth_custom_check_box.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -73,7 +72,7 @@ class _LoginFormState extends State<LoginForm> {
             const SizedBox(height: 24.0),
             Row(
               children: [
-                const AuthCustomCheckBox(),
+                //  const AuthCustomCheckBox(),
                 const SizedBox(width: 8.0),
                 Text(
                   "Remember me",

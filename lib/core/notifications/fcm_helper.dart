@@ -1,4 +1,5 @@
 import 'package:e_fashion_flutter/core/network/dio_helper.dart';
+import 'package:e_fashion_flutter/core/services/service_locator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:googleapis_auth/auth_io.dart' as auth;
@@ -32,8 +33,8 @@ class FcmHelper {
         'https://fcm.googleapis.com/v1/projects/e-fashion-f1215/messages:send';
     String accessToken = await _getAccessToken();
 
-    final response = await DioHelper.post(
-      fcmUrl,
+    final response = await getIt<DioHelper>().post(
+      url: fcmUrl,
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $accessToken',

@@ -28,21 +28,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'app_router.gr.dart';
 
-final _appNavigatorKey = GlobalKey<NavigatorState>();
-
 @AutoRouterConfig(replaceInRouteName: 'Screen,Route')
 class AppRouter extends RootStackRouter {
-  AppRouter() : super(navigatorKey: _appNavigatorKey);
-
-  @override
-  GlobalKey<NavigatorState> get navigatorKey => _appNavigatorKey;
   @override
   RouteType get defaultRouteType => const RouteType.material();
 
   @override
   List<AutoRoute> get routes => [
     AutoRoute(
-      //initial: true,
+      initial: true,
       page: SplashTabRoute.page,
       children: [AutoRoute(initial: true, page: SplashRoute.page)],
     ),
@@ -57,7 +51,6 @@ class AppRouter extends RootStackRouter {
       ],
     ),
     _buildCustomRoute(
-      initial: true,
       page: LayoutRoute.page,
       children: [
         _buildCustomRoute(

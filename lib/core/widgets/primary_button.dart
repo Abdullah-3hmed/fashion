@@ -28,25 +28,26 @@ class PrimaryButton extends StatelessWidget {
           ),
         ),
         onPressed: onPressed,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            icon ?? const SizedBox.shrink(),
-            const SizedBox(width: 10.0),
+        child:
             isLoading
                 ? const SpinKitThreeBounce(
                   color: Colors.white,
                   size: 20.0,
                   duration: Duration(milliseconds: 900),
                 )
-                : Text(
-                  text,
-                  style: Theme.of(context).textTheme.labelLarge!.copyWith(
-                    color: Theme.of(context).colorScheme.onPrimary,
-                  ),
+                : Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    icon ?? const SizedBox.shrink(),
+                    const SizedBox(width: 10.0),
+                    Text(
+                      text,
+                      style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                        color: Theme.of(context).colorScheme.onPrimary,
+                      ),
+                    ),
+                  ],
                 ),
-          ],
-        ),
       ),
     );
   }

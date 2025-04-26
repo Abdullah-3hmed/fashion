@@ -1,9 +1,16 @@
+import 'package:auto_route/auto_route.dart';
+import 'package:e_fashion_flutter/config/router/app_router.dart';
+import 'package:e_fashion_flutter/core/utils/show_toast.dart';
+import 'package:e_fashion_flutter/core/utils/toast_states.dart';
 import 'package:e_fashion_flutter/core/widgets/custom_text_form_field.dart';
 import 'package:e_fashion_flutter/core/widgets/password_filed.dart';
 import 'package:e_fashion_flutter/core/widgets/primary_button.dart';
+import 'package:e_fashion_flutter/features/auth/cubit/auth_cubit.dart';
+import 'package:e_fashion_flutter/features/auth/cubit/auth_state.dart';
 import 'package:e_fashion_flutter/features/auth/screens/widgets/auth_custom_check_box.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:solar_icons/solar_icons.dart';
 
@@ -15,14 +22,18 @@ class SignUpForm extends StatefulWidget {
 }
 
 class _SignUpFormState extends State<SignUpForm> {
-  late String name, email, password;
+  late String name, email, phone, password;
   late AutovalidateMode _autovalidateMode;
   late GlobalKey<FormState> _formKey;
+  late bool _isPrivacyAccepted;
+  late bool _isPrivacyError;
 
   @override
   void initState() {
     _formKey = GlobalKey<FormState>();
     _autovalidateMode = AutovalidateMode.disabled;
+    _isPrivacyAccepted = false;
+    _isPrivacyError = false;
     super.initState();
   }
 
@@ -64,29 +75,40 @@ class _SignUpFormState extends State<SignUpForm> {
               },
             ),
             const SizedBox(height: 16.0),
+            CustomTextFormField(
+              type: TextInputType.phone,
+              hintText: "Phone",
+              label: "Phone",
+              autofillHints: const [AutofillHints.telephoneNumber],
+              prefixIcon: const Icon(SolarIconsOutline.phone),
+              onSaved: (value) {
+                phone = value!;
+              },
+            ),
+            const SizedBox(height: 16.0),
             PasswordField(
               onSaved: (value) {
                 password = value!;
               },
               onSubmit: (_) {
-                if (_formKey.currentState!.validate()) {
-                  _formKey.currentState!.save();
-                  debugPrint('Form is valid');
-                  debugPrint(name);
-                  debugPrint(email);
-                } else {
-                  setState(() {
-                    _autovalidateMode = AutovalidateMode.always;
-                  });
-                }
-                TextInput.finishAutofillContext();
+                _onSubmit();
               },
             ),
             const SizedBox(height: 24.0),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const AuthCustomCheckBox(),
+                AuthCustomCheckBox(
+                  isError: _isPrivacyError,
+                  onChanged: (bool isChecked) {
+                    setState(() {
+                      _isPrivacyAccepted = isChecked;
+                      if (isChecked) {
+                        _isPrivacyError = false;
+                      }
+                    });
+                  },
+                ),
                 const SizedBox(width: 8.0),
                 Text.rich(
                   TextSpan(
@@ -118,26 +140,59 @@ class _SignUpFormState extends State<SignUpForm> {
               ],
             ),
             const SizedBox(height: 48),
-            PrimaryButton(
-              onPressed: () {
-                if (_formKey.currentState!.validate()) {
-                  _formKey.currentState!.save();
-                  debugPrint('Form is valid');
-                  debugPrint(name);
-                  debugPrint(email);
-                  debugPrint(password);
-                } else {
-                  setState(() {
-                    _autovalidateMode = AutovalidateMode.always;
-                  });
-                  TextInput.finishAutofillContext();
+            BlocConsumer<AuthCubit, AuthStates>(
+              listener: (context, state) {
+                if (state is SignUpSuccessState) {
+                  showToast(
+                    message: state.signUpResponseModel.message,
+                    state: ToastStates.success,
+                  );
+                  context.replaceRoute(const LayoutRoute());
+                }
+                if (state is SignUpErrorState) {
+                  showToast(
+                    message: state.errorMessage,
+                    state: ToastStates.error,
+                  );
                 }
               },
-              text: "Sign up",
+              builder: (context, state) {
+                return PrimaryButton(
+                  isLoading: state is SignUpLoadingState,
+                  icon: const Icon(Icons.arrow_forward),
+                  onPressed: () {
+                    _onSubmit();
+                  },
+                  text: "Sign up",
+                );
+              },
             ),
           ],
         ),
       ),
     );
+  }
+
+  void _onSubmit() {
+    if (!_isPrivacyAccepted) {
+      setState(() {
+        _isPrivacyError = true;
+      });
+      return;
+    }
+    if (_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
+      context.read<AuthCubit>().userSignUp(
+        name: name,
+        email: email,
+        phone: phone,
+        password: password,
+      );
+    } else {
+      setState(() {
+        _autovalidateMode = AutovalidateMode.always;
+      });
+      TextInput.finishAutofillContext();
+    }
   }
 }
