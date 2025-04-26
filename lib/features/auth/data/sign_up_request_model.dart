@@ -1,18 +1,5 @@
 import 'package:equatable/equatable.dart';
 
-class SingUpResponseModel extends Equatable {
-  final String message;
-  final String token;
-
-  const SingUpResponseModel({required this.message, required this.token});
-
-  factory SingUpResponseModel.fromJson(Map<String, dynamic> json) =>
-      SingUpResponseModel(message: json["message"], token: json["token"]);
-
-  @override
-  List<Object> get props => [message, token];
-}
-
 class SignUpRequestModel extends Equatable {
   final String userName;
   final String email;

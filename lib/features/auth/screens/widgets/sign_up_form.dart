@@ -141,10 +141,15 @@ class _SignUpFormState extends State<SignUpForm> {
             ),
             const SizedBox(height: 48),
             BlocConsumer<AuthCubit, AuthStates>(
+              buildWhen:
+                  (_, __) =>
+                      AuthStates is SignUpLoadingState ||
+                      AuthStates is SignUpSuccessState ||
+                      AuthStates is SignUpErrorState,
               listener: (context, state) {
                 if (state is SignUpSuccessState) {
                   showToast(
-                    message: state.signUpResponseModel.message,
+                    message: state.authResponseModel.message,
                     state: ToastStates.success,
                   );
                   context.replaceRoute(const LayoutRoute());
@@ -157,6 +162,9 @@ class _SignUpFormState extends State<SignUpForm> {
                 }
               },
               builder: (context, state) {
+                debugPrint(
+                  ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> sign up build >>>>>>>>>>>>>>",
+                );
                 return PrimaryButton(
                   isLoading: state is SignUpLoadingState,
                   icon: const Icon(Icons.arrow_forward),
@@ -174,13 +182,7 @@ class _SignUpFormState extends State<SignUpForm> {
   }
 
   void _onSubmit() {
-    if (!_isPrivacyAccepted) {
-      setState(() {
-        _isPrivacyError = true;
-      });
-      return;
-    }
-    if (_formKey.currentState!.validate()) {
+    if (_formKey.currentState!.validate() && _isPrivacyAccepted) {
       _formKey.currentState!.save();
       context.read<AuthCubit>().userSignUp(
         name: name,
@@ -191,6 +193,7 @@ class _SignUpFormState extends State<SignUpForm> {
     } else {
       setState(() {
         _autovalidateMode = AutovalidateMode.always;
+        _isPrivacyError = true;
       });
       TextInput.finishAutofillContext();
     }
