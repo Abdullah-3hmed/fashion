@@ -1,0 +1,45 @@
+import 'package:e_fashion_flutter/core/utils/assets_manager.dart';
+import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
+
+class DiscoverItem extends StatelessWidget {
+  const DiscoverItem({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      alignment: AlignmentDirectional.bottomCenter,
+      children: [
+        ClipRRect(
+          borderRadius: BorderRadius.circular(16.0),
+          child: Image.asset(
+            height: 300.0,
+            width: double.infinity,
+            AssetsManager.welcomeImage,
+            fit: BoxFit.cover,
+          ),
+        ),
+        Image.asset(
+          AssetsManager.discoverListClippedContainer,
+          width: double.infinity,
+          fit: BoxFit.cover,
+        ),
+        PositionedDirectional(
+          top: 16.0,
+          end: 16.0,
+          child: InkWell(
+            onTap: () {},
+            child: CircleAvatar(
+              radius: 18.0,
+              backgroundColor: Colors.white.withValues(alpha: 0.15),
+              child: Icon(
+                Iconsax.heart,
+                color: Theme.of(context).colorScheme.primary,
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}

@@ -1,0 +1,54 @@
+import 'package:flutter/material.dart';
+import 'package:solar_icons/solar_icons.dart';
+
+class CartItemCounter extends StatefulWidget {
+  const CartItemCounter({super.key, required this.onPiecesChanged});
+
+  final ValueChanged<int> onPiecesChanged;
+
+  @override
+  State<CartItemCounter> createState() => _CartItemCounterState();
+}
+
+class _CartItemCounterState extends State<CartItemCounter> {
+  int _pieces = 1;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        IconButton(
+          padding: EdgeInsets.zero,
+          onPressed: () {
+            if (_pieces > 1) {
+              setState(() {
+                _pieces--;
+              });
+              widget.onPiecesChanged(_pieces);
+            }
+          },
+          icon: Icon(
+            SolarIconsOutline.minusCircle,
+            color: Theme.of(context).colorScheme.onPrimaryContainer,
+          ),
+        ),
+        Text("$_pieces", style: Theme.of(context).textTheme.bodyLarge),
+        IconButton(
+          padding: EdgeInsets.zero,
+          onPressed: () {
+            if (_pieces < 20) {
+              setState(() {
+                _pieces++;
+              });
+              widget.onPiecesChanged(_pieces);
+            }
+          },
+          icon: Icon(
+            SolarIconsOutline.addCircle,
+            color: Theme.of(context).colorScheme.onPrimaryContainer,
+          ),
+        ),
+      ],
+    );
+  }
+}

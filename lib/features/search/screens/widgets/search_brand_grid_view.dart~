@@ -1,0 +1,36 @@
+import 'package:e_fashion_flutter/features/search/screens/widgets/search_filter_item.dart';
+import 'package:flutter/material.dart';
+
+class SearchBrandItems extends StatefulWidget {
+  const SearchBrandItems({super.key});
+
+  @override
+  State<SearchBrandItems> createState() => _SearchBrandItemsState();
+}
+
+class _SearchBrandItemsState extends State<SearchBrandItems> {
+  int selectedIndex = -1;
+  List<String> brands = const ["Armani", "Fendi", "Nike", "Burberry", "Chanel"];
+
+  @override
+  Widget build(BuildContext context) {
+    return Wrap(
+      spacing: 8.0,
+      runSpacing: 8.0,
+      children: List.generate(
+        brands.length,
+        (index) => GestureDetector(
+          onTap: () {
+            setState(() {
+              selectedIndex = index;
+            });
+          },
+          child: SearchFilterItem(
+            brandName: brands[index],
+            isSelected: index == selectedIndex,
+          ),
+        ),
+      ),
+    );
+  }
+}

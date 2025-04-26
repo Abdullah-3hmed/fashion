@@ -1,0 +1,26 @@
+import 'package:flutter/material.dart';
+
+class NoResultSearchSection extends StatelessWidget {
+  const NoResultSearchSection({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        const Spacer(),
+        Icon(
+          Icons.search_off_outlined,
+          size: 80.0,
+          color: Theme.of(context).colorScheme.primary,
+        ),
+        const SizedBox(height: 16.0),
+        Text(
+          "No result yet \n try to type something",
+          textAlign: TextAlign.center,
+          style: Theme.of(context).textTheme.bodySmall,
+        ),
+        const Spacer(),
+      ],
+    );
+  }
+}

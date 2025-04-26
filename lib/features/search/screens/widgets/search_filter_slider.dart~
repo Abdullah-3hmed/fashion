@@ -1,0 +1,40 @@
+import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:syncfusion_flutter_sliders/sliders.dart';
+
+class SearchFilterSlider extends StatefulWidget {
+  const SearchFilterSlider({super.key, this.onRangeChanged});
+
+  final Function(int min, int max)? onRangeChanged;
+
+  @override
+  State<SearchFilterSlider> createState() => _SearchFilterSliderState();
+}
+
+class _SearchFilterSliderState extends State<SearchFilterSlider> {
+  SfRangeValues _values = const SfRangeValues(100.0, 800.0);
+
+  @override
+  Widget build(BuildContext context) {
+    return SfRangeSlider(
+      max: 1000.0,
+      values: _values,
+      numberFormat: NumberFormat('###'),
+      onChanged: (SfRangeValues values) {
+        setState(() {
+          _values = values;
+
+          // حوّل القيم لـ int وابعتها في الكولباك
+          int minValue = values.start.toInt();
+          int maxValue = values.end.toInt();
+          widget.onRangeChanged?.call(minValue, maxValue);
+        });
+      },
+      enableTooltip: true,
+      showDividers: true,
+      interval: 100,
+      shouldAlwaysShowTooltip: true,
+      tooltipShape: const SfPaddleTooltipShape(),
+    );
+  }
+}

@@ -1,0 +1,49 @@
+import 'package:flutter/material.dart';
+
+class MyChatItem extends StatelessWidget {
+  const MyChatItem({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            const SizedBox(width: 100.0),
+            Flexible(
+              child: Container(
+                padding: const EdgeInsetsDirectional.all(16.0),
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.primary,
+                  borderRadius: const BorderRadiusDirectional.only(
+                    topStart: Radius.circular(40.0),
+                    topEnd: Radius.circular(40.0),
+                    bottomStart: Radius.circular(40.0),
+                  ),
+                ),
+                child: Text(
+                  "Lorem ipsum dolor" * 3,
+                  textAlign: TextAlign.end,
+                  style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                    color: Theme.of(context).colorScheme.onPrimary,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 4.0),
+        Align(
+          alignment: AlignmentDirectional.centerEnd,
+          child: Text(
+            " 11:50 AM",
+            style: Theme.of(context).textTheme.labelSmall!.copyWith(
+              color: Theme.of(context).colorScheme.primary,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
