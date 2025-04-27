@@ -26,7 +26,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Scaffold(
       body: ProfileBackgroundImageAndLogo(
         child: SizedBox(
-          height: 700.0,
+          height: 650.0,
           child: DraggableScrollableSheet(
             initialChildSize: 0.9,
             minChildSize: 0.8,

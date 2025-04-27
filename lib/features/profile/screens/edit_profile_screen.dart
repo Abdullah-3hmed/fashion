@@ -1,10 +1,12 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:e_fashion_flutter/core/widgets/custom_text_form_field.dart';
 import 'package:e_fashion_flutter/core/widgets/secondary_button.dart';
+import 'package:e_fashion_flutter/features/profile/cubit/profile_cubit.dart';
 import 'package:e_fashion_flutter/features/profile/screens/widgets/profile_background_image_and_logo.dart';
 import 'package:e_fashion_flutter/features/profile/screens/widgets/profile_clipped_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:solar_icons/solar_icons.dart';
 
 @RoutePage()
@@ -116,8 +118,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
       debugPrint('Form is valid');
-      debugPrint(name);
-      debugPrint(phone);
+      context.read<ProfileCubit>().editProfile(userName: name, phone: phone);
+      context.pop();
     } else {
       setState(() {
         _autovalidateMode = AutovalidateMode.always;

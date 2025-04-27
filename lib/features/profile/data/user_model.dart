@@ -1,0 +1,59 @@
+import 'package:equatable/equatable.dart';
+
+class UserModel extends Equatable {
+  final String userName;
+  final String email;
+  final String phone;
+  final String profileImage;
+  // final String fcmToken;
+
+  const UserModel({
+    required this.userName,
+    required this.email,
+    required this.phone,
+    // required this.fcmToken,
+    required this.profileImage,
+  });
+  static const UserModel empty = UserModel(
+    userName: '',
+    phone: '',
+    profileImage: '',
+    email: '',
+  );
+
+  factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
+    userName: json["userName"],
+    email: json["email"],
+    phone: json["phone"],
+    profileImage: json["profilePhotoUrl"],
+  );
+
+  Map<String, dynamic> toJson({
+    String? userName,
+    String? email,
+    String? phone,
+    String? profileImage,
+  }) => {
+    "userName": userName ?? this.userName,
+    "email": email ?? this.email,
+    "phone": phone ?? this.phone,
+    "profilePhotoUrl": profileImage ?? this.profileImage,
+  };
+
+  UserModel copyWith({
+    String? userName,
+    String? email,
+    String? phone,
+    String? profileImage,
+  }) {
+    return UserModel(
+      userName: userName ?? this.userName,
+      email: email ?? this.email,
+      phone: phone ?? this.phone,
+      profileImage: profileImage ?? this.profileImage,
+    );
+  }
+
+  @override
+  List<Object?> get props => [userName, email, phone, profileImage];
+}

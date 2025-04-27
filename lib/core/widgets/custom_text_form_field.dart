@@ -106,12 +106,6 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
         if (value!.isEmpty) {
           return '${widget.label} required';
         }
-        if (widget.obscureText) {
-          final specialCharRegex = RegExp(r'[!@#$%^&*(),.?":{}|<>]');
-          if (!specialCharRegex.hasMatch(value)) {
-            return 'Password must contain special characters';
-          }
-        }
         return null;
       },
     );

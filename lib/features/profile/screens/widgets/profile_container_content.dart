@@ -1,7 +1,9 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:e_fashion_flutter/config/router/app_router.dart';
+import 'package:e_fashion_flutter/features/profile/cubit/profile_cubit.dart';
 import 'package:e_fashion_flutter/features/profile/screens/widgets/profile_info_item.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:solar_icons/solar_icons.dart';
@@ -13,6 +15,7 @@ class ProfileContainerContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final String email = context.read<ProfileCubit>().state.userModel.email;
     return SingleChildScrollView(
       controller: controller,
       child: Column(
@@ -20,7 +23,10 @@ class ProfileContainerContent extends StatelessWidget {
         children: [
           const SizedBox(height: 40.0),
           InkWell(
-            onTap: () {},
+            onTap: () async {
+              context.replaceRoute(const AuthRoute());
+              await context.read<ProfileCubit>().logOut();
+            },
             child: CircleAvatar(
               radius: 24.0,
               backgroundColor: Theme.of(context).colorScheme.primary,

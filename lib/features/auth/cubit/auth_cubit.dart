@@ -1,6 +1,7 @@
 import 'package:e_fashion_flutter/core/local/cache_helper.dart';
 import 'package:e_fashion_flutter/core/notifications/fcm_init_helper.dart';
 import 'package:e_fashion_flutter/core/services/service_locator.dart';
+import 'package:e_fashion_flutter/core/utils/app_constants.dart';
 import 'package:e_fashion_flutter/features/auth/cubit/auth_state.dart';
 import 'package:e_fashion_flutter/features/auth/data/login_request_model.dart';
 import 'package:e_fashion_flutter/features/auth/data/sign_up_request_model.dart';
@@ -31,11 +32,12 @@ class AuthCubit extends Cubit<AuthStates> {
     result.fold(
       (failure) => emit(SignUpErrorState(errorMessage: failure.errorMessage)),
       (authResponseModel) async {
+        AppConstants.token = authResponseModel.token;
+        emit(SignUpSuccessState(authResponseModel: authResponseModel));
         await getIt<CacheHelper>().saveData(
           key: "token",
           value: authResponseModel.token,
         );
-        emit(SignUpSuccessState(authResponseModel: authResponseModel));
       },
     );
   }
@@ -56,11 +58,12 @@ class AuthCubit extends Cubit<AuthStates> {
     result.fold(
       (failure) => emit(LoginErrorState(errorMessage: failure.errorMessage)),
       (authResponseModel) async {
+        AppConstants.token = authResponseModel.token;
+        emit(LoginSuccessState(authResponseModel: authResponseModel));
         await getIt<CacheHelper>().saveData(
           key: "token",
           value: authResponseModel.token,
         );
-        emit(LoginSuccessState(authResponseModel: authResponseModel));
       },
     );
   }

@@ -3,6 +3,7 @@ import 'package:e_fashion_flutter/config/router/app_router.dart';
 import 'package:e_fashion_flutter/core/animations/fade_in_animation.dart';
 import 'package:e_fashion_flutter/core/animations/fade_then_spin_animation.dart';
 import 'package:e_fashion_flutter/core/animations/slide_animation.dart';
+import 'package:e_fashion_flutter/core/utils/app_constants.dart';
 import 'package:e_fashion_flutter/core/utils/assets_manager.dart';
 import 'package:flutter/material.dart';
 
@@ -14,7 +15,11 @@ class SplashScreenBody extends StatelessWidget {
     return GestureDetector(
       onVerticalDragUpdate: (details) {
         if (details.delta.dy < 100) {
-          context.replaceRoute(const AuthRoute());
+          if (AppConstants.token.isNotEmpty) {
+            context.replaceRoute(const AuthenticatedRoute());
+          } else {
+            context.replaceRoute(const AuthRoute());
+          }
         }
       },
       child: Stack(

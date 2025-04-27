@@ -25,7 +25,8 @@ class ServerFailure extends Failure {
         );
       case DioExceptionType.connectionError:
         return const ServerFailure(
-          'Connection to API server failed due to internet connection',
+          // 'Connection to API server failed due to internet connection',
+          "No Internet Connection",
         );
       case DioExceptionType.receiveTimeout:
         return const ServerFailure(

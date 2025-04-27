@@ -15,6 +15,7 @@ import 'package:e_fashion_flutter/features/home/screens/discover_screen.dart';
 import 'package:e_fashion_flutter/features/home/screens/edit_review_screen.dart';
 import 'package:e_fashion_flutter/features/home/screens/home_screen.dart';
 import 'package:e_fashion_flutter/features/notification/screens/notification_screen.dart';
+import 'package:e_fashion_flutter/features/profile/cubit/profile_cubit.dart';
 import 'package:e_fashion_flutter/features/profile/screens/change_mail_screen.dart';
 import 'package:e_fashion_flutter/features/profile/screens/chat_support_screen.dart';
 import 'package:e_fashion_flutter/features/profile/screens/edit_profile_screen.dart';
@@ -51,31 +52,37 @@ class AppRouter extends RootStackRouter {
       ],
     ),
     _buildCustomRoute(
-      page: LayoutRoute.page,
+      page: AuthenticatedRoute.page,
       children: [
         _buildCustomRoute(
           initial: true,
-          page: HomeTabRoute.page,
+          page: LayoutRoute.page,
           children: [
-            _buildCustomRoute(initial: true, page: HomeRoute.page),
-            _buildCustomRoute(page: CollectionRoute.page),
+            _buildCustomRoute(
+              initial: true,
+              page: HomeTabRoute.page,
+              children: [
+                _buildCustomRoute(initial: true, page: HomeRoute.page),
+                _buildCustomRoute(page: CollectionRoute.page),
+              ],
+            ),
+            _buildCustomRoute(page: CartRoute.page),
+            _buildCustomRoute(page: FavoriteRoute.page),
+            _buildCustomRoute(page: ProfileRoute.page),
           ],
         ),
-        _buildCustomRoute(page: CartRoute.page),
-        _buildCustomRoute(page: FavoriteRoute.page),
-        _buildCustomRoute(page: ProfileRoute.page),
+        _buildCustomRoute(page: DetailsRoute.page),
+        _buildCustomRoute(page: EditProfileRoute.page),
+        _buildCustomRoute(page: ProfileChangePasswordRoute.page),
+        _buildCustomRoute(page: ChangeMailRoute.page),
+        _buildCustomRoute(page: ChatSupportRoute.page),
+        _buildCustomRoute(page: OrderStatusRoute.page),
+        _buildCustomRoute(page: EditReviewRoute.page),
+        _buildCustomRoute(page: DiscoverRoute.page),
+        _buildCustomRoute(page: SearchRoute.page),
+        _buildCustomRoute(page: NotificationRoute.page),
       ],
     ),
-    _buildCustomRoute(page: DetailsRoute.page),
-    _buildCustomRoute(page: EditProfileRoute.page),
-    _buildCustomRoute(page: ProfileChangePasswordRoute.page),
-    _buildCustomRoute(page: ChangeMailRoute.page),
-    _buildCustomRoute(page: ChatSupportRoute.page),
-    _buildCustomRoute(page: OrderStatusRoute.page),
-    _buildCustomRoute(page: EditReviewRoute.page),
-    _buildCustomRoute(page: DiscoverRoute.page),
-    _buildCustomRoute(page: SearchRoute.page),
-    _buildCustomRoute(page: NotificationRoute.page),
   ];
 
   CustomRoute _buildCustomRoute({
@@ -106,6 +113,22 @@ class Auth extends AutoRouter implements AutoRouteWrapper {
   Widget wrappedRoute(BuildContext context) => BlocProvider(
     lazy: false,
     create: (context) => getIt<AuthCubit>(),
+    child: this,
+  );
+}
+
+@RoutePage(name: 'AuthenticatedRoute')
+class Authenticated extends AutoRouter implements AutoRouteWrapper {
+  const Authenticated({super.key});
+
+  @override
+  Widget wrappedRoute(BuildContext context) => MultiBlocProvider(
+    providers: [
+      BlocProvider(
+        lazy: false,
+        create: (context) => getIt<ProfileCubit>()..getUserProfile(),
+      ),
+    ],
     child: this,
   );
 }

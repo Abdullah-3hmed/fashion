@@ -64,6 +64,9 @@ dependencies:
   flutter_secure_storage: ^9.2.4
   flutter_spinkit: ^5.2.1
   fluttertoast: ^8.2.12
+  cached_network_image: ^3.4.1
+  hydrated_bloc: ^10.0.0
+  path_provider: ^2.1.5
 
 
 dev_dependencies:

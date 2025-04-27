@@ -90,18 +90,13 @@ class _LoginFormState extends State<LoginForm> {
             ),
             const SizedBox(height: 48.0),
             BlocConsumer<AuthCubit, AuthStates>(
-              buildWhen:
-                  (_, __) =>
-                      AuthStates is LoginLoadingState ||
-                      AuthStates is LoginSuccessState ||
-                      AuthStates is LoginErrorState,
               listener: (context, state) {
                 if (state is LoginSuccessState) {
                   showToast(
                     message: state.authResponseModel.message,
                     state: ToastStates.success,
                   );
-                  context.replaceRoute(const LayoutRoute());
+                  context.replaceRoute(const AuthenticatedRoute());
                 }
                 if (state is LoginErrorState) {
                   showToast(

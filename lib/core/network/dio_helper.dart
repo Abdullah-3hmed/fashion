@@ -19,13 +19,15 @@ class DioHelper {
     ]);
   }
 
-  Future<Response> get(
-    String url, {
+  Future<Response> get({
+    required String url,
+    Map<String, dynamic>? data,
     Map<String, dynamic>? query,
     Map<String, dynamic>? headers,
   }) async {
     return await _dio.get(
       url,
+      data: data,
       queryParameters: query,
       options: Options(headers: headers),
     );

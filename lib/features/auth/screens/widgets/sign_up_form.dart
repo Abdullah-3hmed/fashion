@@ -141,18 +141,13 @@ class _SignUpFormState extends State<SignUpForm> {
             ),
             const SizedBox(height: 48),
             BlocConsumer<AuthCubit, AuthStates>(
-              buildWhen:
-                  (_, __) =>
-                      AuthStates is SignUpLoadingState ||
-                      AuthStates is SignUpSuccessState ||
-                      AuthStates is SignUpErrorState,
               listener: (context, state) {
                 if (state is SignUpSuccessState) {
                   showToast(
                     message: state.authResponseModel.message,
                     state: ToastStates.success,
                   );
-                  context.replaceRoute(const LayoutRoute());
+                  context.replaceRoute(const AuthenticatedRoute());
                 }
                 if (state is SignUpErrorState) {
                   showToast(
@@ -162,9 +157,6 @@ class _SignUpFormState extends State<SignUpForm> {
                 }
               },
               builder: (context, state) {
-                debugPrint(
-                  ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> sign up build >>>>>>>>>>>>>>",
-                );
                 return PrimaryButton(
                   isLoading: state is SignUpLoadingState,
                   icon: const Icon(Icons.arrow_forward),
