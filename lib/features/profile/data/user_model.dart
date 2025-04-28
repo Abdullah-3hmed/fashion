@@ -27,7 +27,7 @@ class UserModel extends Equatable {
     email: json["email"],
     phone: json["phone"],
     profileImage: json["profilePhotoUrl"],
-    fcmToken: json["fcmToken"],
+    fcmToken: json["fcmToken"] ?? "",
   );
 
   Map<String, dynamic> toJson({
