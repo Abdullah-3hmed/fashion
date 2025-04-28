@@ -1,8 +1,15 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:e_fashion_flutter/config/router/app_router.dart';
+import 'package:e_fashion_flutter/core/enums/request_status.dart';
+import 'package:e_fashion_flutter/core/utils/show_toast.dart';
+import 'package:e_fashion_flutter/core/utils/toast_states.dart';
 import 'package:e_fashion_flutter/core/widgets/password_filed.dart';
 import 'package:e_fashion_flutter/core/widgets/primary_button.dart';
+import 'package:e_fashion_flutter/features/auth/cubit/auth_cubit.dart';
+import 'package:e_fashion_flutter/features/auth/cubit/auth_state.dart';
 import 'package:e_fashion_flutter/features/auth/screens/widgets/auth_background_image_and_logo.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 @RoutePage()
 class ResetPasswordScreen extends StatefulWidget {
@@ -63,32 +70,48 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                     onSaved: (value) {
                       _confirmPassword = value!;
                     },
-                    onSubmit: (_) {
-                      if (_formKey.currentState!.validate()) {
-                        _formKey.currentState!.save();
-                        debugPrint("Password: $_password");
-                        debugPrint("Confirm Password: $_confirmPassword");
-                      } else {
-                        setState(() {
-                          _autovalidateMode = AutovalidateMode.always;
-                        });
-                      }
+                    onSubmit: (_) async {
+                      await _onSubmit();
                     },
                   ),
                   const SizedBox(height: 28.0),
-                  PrimaryButton(
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        _formKey.currentState!.save();
-                        debugPrint("Password: $_password");
-                        debugPrint("Confirm Password: $_confirmPassword");
-                      } else {
-                        setState(() {
-                          _autovalidateMode = AutovalidateMode.always;
-                        });
+                  BlocConsumer<AuthCubit, AuthState>(
+                    buildWhen:
+                        (previous, current) =>
+                            previous.resetPasswordRequestStatus !=
+                            current.resetPasswordRequestStatus,
+                    listenWhen:
+                        (previous, current) =>
+                            previous.resetPasswordRequestStatus !=
+                            current.resetPasswordRequestStatus,
+                    listener: (context, state) {
+                      if (state.resetPasswordRequestStatus ==
+                          RequestStatus.success) {
+                        context.navigateTo(const LoginRoute());
+                        showToast(
+                          message: "Password changed successfully",
+                          state: ToastStates.success,
+                        );
+                      }
+                      if (state.resetPasswordRequestStatus ==
+                          RequestStatus.error) {
+                        showToast(
+                          message: state.resetPasswordErrorMessage,
+                          state: ToastStates.error,
+                        );
                       }
                     },
-                    text: "Continue",
+                    builder: (context, state) {
+                      return PrimaryButton(
+                        isLoading:
+                            state.resetPasswordRequestStatus ==
+                            RequestStatus.loading,
+                        onPressed: () async {
+                          await _onSubmit();
+                        },
+                        text: "Continue",
+                      );
+                    },
                   ),
                   const SizedBox(height: 50.0),
                 ],
@@ -98,5 +121,19 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
         ),
       ),
     );
+  }
+
+  Future<void> _onSubmit() async {
+    if (_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
+      await context.read<AuthCubit>().resetPassword(
+        newPassword: _password,
+        confirmPassword: _confirmPassword,
+      );
+    } else {
+      setState(() {
+        _autovalidateMode = AutovalidateMode.always;
+      });
+    }
   }
 }

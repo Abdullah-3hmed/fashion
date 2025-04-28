@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:e_fashion_flutter/config/router/app_router.dart';
+import 'package:e_fashion_flutter/core/enums/request_status.dart';
 import 'package:e_fashion_flutter/core/utils/show_toast.dart';
 import 'package:e_fashion_flutter/core/utils/toast_states.dart';
 import 'package:e_fashion_flutter/core/widgets/custom_text_form_field.dart';
@@ -89,25 +90,31 @@ class _LoginFormState extends State<LoginForm> {
               ],
             ),
             const SizedBox(height: 48.0),
-            BlocConsumer<AuthCubit, AuthStates>(
+            BlocConsumer<AuthCubit, AuthState>(
+              buildWhen:
+                  (previous, current) =>
+                      previous.loginRequestStatus != current.loginRequestStatus,
+              listenWhen:
+                  (previous, current) =>
+                      previous.loginRequestStatus != current.loginRequestStatus,
               listener: (context, state) {
-                if (state is LoginSuccessState) {
+                if (state.loginRequestStatus == RequestStatus.success) {
                   showToast(
                     message: state.authResponseModel.message,
                     state: ToastStates.success,
                   );
                   context.replaceRoute(const AuthenticatedRoute());
                 }
-                if (state is LoginErrorState) {
+                if (state.loginRequestStatus == RequestStatus.error) {
                   showToast(
-                    message: state.errorMessage,
+                    message: state.loginErrorMessage,
                     state: ToastStates.error,
                   );
                 }
               },
               builder: (context, state) {
                 return PrimaryButton(
-                  isLoading: state is LoginLoadingState,
+                  isLoading: state.loginRequestStatus == RequestStatus.loading,
                   onPressed: () {
                     _onSubmit();
                   },

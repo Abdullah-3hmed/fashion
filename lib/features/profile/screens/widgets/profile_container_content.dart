@@ -15,7 +15,6 @@ class ProfileContainerContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final String email = context.read<ProfileCubit>().state.userModel.email;
     return SingleChildScrollView(
       controller: controller,
       child: Column(

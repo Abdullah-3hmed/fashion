@@ -28,12 +28,12 @@ class ProfileRepoImpl implements ProfileRepo {
   @override
   Future<Either<Failure, void>> logOut({required String email}) async {
     try {
-      await getIt<CacheHelper>().delete(key: "token");
       await getIt<DioHelper>().get(
         url: ApiConstants.logOutEndpoint,
         data: {"email": email},
         headers: {"Authorization": "Bearer ${AppConstants.token}"},
       );
+      await getIt<CacheHelper>().delete(key: "token");
       AppConstants.token = "";
       return const Right(null);
     } on DioException catch (e) {

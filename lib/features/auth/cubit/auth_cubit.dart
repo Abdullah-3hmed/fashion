@@ -1,15 +1,17 @@
+import 'package:e_fashion_flutter/core/enums/request_status.dart';
 import 'package:e_fashion_flutter/core/local/cache_helper.dart';
 import 'package:e_fashion_flutter/core/notifications/fcm_init_helper.dart';
 import 'package:e_fashion_flutter/core/services/service_locator.dart';
 import 'package:e_fashion_flutter/core/utils/app_constants.dart';
 import 'package:e_fashion_flutter/features/auth/cubit/auth_state.dart';
 import 'package:e_fashion_flutter/features/auth/data/login_request_model.dart';
+import 'package:e_fashion_flutter/features/auth/data/reset_password_request_model.dart';
 import 'package:e_fashion_flutter/features/auth/data/sign_up_request_model.dart';
 import 'package:e_fashion_flutter/features/auth/repos/auth_repo.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class AuthCubit extends Cubit<AuthStates> {
-  AuthCubit(this.authRepo) : super(AuthInitialState());
+class AuthCubit extends Cubit<AuthState> {
+  AuthCubit(this.authRepo) : super(const AuthState());
   final AuthRepo authRepo;
 
   Future<void> userSignUp({
@@ -18,7 +20,7 @@ class AuthCubit extends Cubit<AuthStates> {
     required String phone,
     required String password,
   }) async {
-    emit(SignUpLoadingState());
+    emit(state.copyWith(signUpRequestStatus: RequestStatus.loading));
     SignUpRequestModel signUpRequestModel = SignUpRequestModel(
       userName: name,
       email: email,
@@ -30,10 +32,20 @@ class AuthCubit extends Cubit<AuthStates> {
       signUpRequestModel: signUpRequestModel,
     );
     result.fold(
-      (failure) => emit(SignUpErrorState(errorMessage: failure.errorMessage)),
+      (failure) => emit(
+        state.copyWith(
+          signUpErrorMessage: failure.errorMessage,
+          signUpRequestStatus: RequestStatus.error,
+        ),
+      ),
       (authResponseModel) async {
         AppConstants.token = authResponseModel.token;
-        emit(SignUpSuccessState(authResponseModel: authResponseModel));
+        emit(
+          state.copyWith(
+            authResponseModel: authResponseModel,
+            signUpRequestStatus: RequestStatus.success,
+          ),
+        );
         await getIt<CacheHelper>().saveData(
           key: "token",
           value: authResponseModel.token,
@@ -46,7 +58,7 @@ class AuthCubit extends Cubit<AuthStates> {
     required String email,
     required String password,
   }) async {
-    emit(LoginLoadingState());
+    emit(state.copyWith(loginRequestStatus: RequestStatus.loading));
     LoginRequestModel loginRequestModel = LoginRequestModel(
       email: email,
       password: password,
@@ -56,15 +68,95 @@ class AuthCubit extends Cubit<AuthStates> {
       loginRequestModel: loginRequestModel,
     );
     result.fold(
-      (failure) => emit(LoginErrorState(errorMessage: failure.errorMessage)),
+      (failure) => emit(
+        state.copyWith(
+          loginErrorMessage: failure.errorMessage,
+          loginRequestStatus: RequestStatus.error,
+        ),
+      ),
       (authResponseModel) async {
         AppConstants.token = authResponseModel.token;
-        emit(LoginSuccessState(authResponseModel: authResponseModel));
+        emit(
+          state.copyWith(
+            authResponseModel: authResponseModel,
+            loginRequestStatus: RequestStatus.success,
+          ),
+        );
         await getIt<CacheHelper>().saveData(
           key: "token",
           value: authResponseModel.token,
         );
       },
+    );
+  }
+
+  Future<void> forgetPassword({required String email}) async {
+    emit(state.copyWith(forgetPasswordRequestStatus: RequestStatus.loading));
+    final result = await authRepo.forgetPassword(email: email);
+    result.fold(
+      (failure) => emit(
+        state.copyWith(
+          forgetPasswordErrorMessage: failure.errorMessage,
+          forgetPasswordRequestStatus: RequestStatus.error,
+        ),
+      ),
+
+      (forgetPasswordModel) => emit(
+        state.copyWith(
+          passwordModel: forgetPasswordModel,
+          forgetPasswordRequestStatus: RequestStatus.success,
+        ),
+      ),
+    );
+  }
+
+  Future<void> resetPasswordOtpVerify({required String otp}) async {
+    emit(state.copyWith(emailVerificationRequestStatus: RequestStatus.loading));
+    final result = await authRepo.resetPasswordOtpVerify(
+      email: state.passwordModel.email,
+      otp: otp,
+    );
+    result.fold(
+      (failure) => emit(
+        state.copyWith(
+          emailVerificationErrorMessage: failure.errorMessage,
+          emailVerificationRequestStatus: RequestStatus.error,
+        ),
+      ),
+      (forgetPasswordModel) => emit(
+        state.copyWith(
+          passwordModel: forgetPasswordModel,
+          emailVerificationRequestStatus: RequestStatus.success,
+        ),
+      ),
+    );
+  }
+
+  Future<void> resetPassword({
+    required String newPassword,
+    required String confirmPassword,
+  }) async {
+    emit(state.copyWith(resetPasswordRequestStatus: RequestStatus.loading));
+    ResetPasswordRequestModel resetPasswordRequestModel =
+        ResetPasswordRequestModel(
+          password: newPassword,
+          confirmPassword: confirmPassword,
+          token: state.passwordModel.token,
+          email: state.passwordModel.email,
+        );
+    final result = await authRepo.resetPassword(
+      resetPasswordRequestModel: resetPasswordRequestModel,
+    );
+    result.fold(
+      (failure) => emit(
+        state.copyWith(
+          resetPasswordErrorMessage: failure.errorMessage,
+          resetPasswordRequestStatus: RequestStatus.error,
+        ),
+      ),
+      (_) => emit(
+        state.copyWith(resetPasswordRequestStatus: RequestStatus.success),
+      ),
     );
   }
 }

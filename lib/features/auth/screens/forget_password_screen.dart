@@ -1,9 +1,15 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:e_fashion_flutter/config/router/app_router.dart';
+import 'package:e_fashion_flutter/core/enums/request_status.dart';
+import 'package:e_fashion_flutter/core/utils/show_toast.dart';
+import 'package:e_fashion_flutter/core/utils/toast_states.dart';
 import 'package:e_fashion_flutter/core/widgets/custom_text_form_field.dart';
 import 'package:e_fashion_flutter/core/widgets/primary_button.dart';
+import 'package:e_fashion_flutter/features/auth/cubit/auth_cubit.dart';
+import 'package:e_fashion_flutter/features/auth/cubit/auth_state.dart';
 import 'package:e_fashion_flutter/features/auth/screens/widgets/auth_background_image_and_logo.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 @RoutePage()
@@ -18,6 +24,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
   late String email;
   late GlobalKey<FormState> _formKey;
   late AutovalidateMode _autovalidateMode;
+
   @override
   void initState() {
     _formKey = GlobalKey<FormState>();
@@ -54,6 +61,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                     type: TextInputType.emailAddress,
                     isEmail: true,
                     autofillHints: const [AutofillHints.email],
+                    textInputAction: TextInputAction.done,
                     hintText: "Email",
                     label: "Email",
                     prefixIcon: Icon(
@@ -65,20 +73,48 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                     onSaved: (value) {
                       email = value!;
                     },
+                    onSubmit: (_) async {
+                      await _onSubmit();
+                    },
                   ),
                   const SizedBox(height: 75.0),
-                  PrimaryButton(
-                    onPressed: () {
-                      // if (_formKey.currentState!.validate()) {
-                      //   _formKey.currentState!.save();
-                      // } else {
-                      //   setState(() {
-                      //     _autovalidateMode = AutovalidateMode.always;
-                      //   });
-                      // }
-                      context.pushRoute(const EmailVerificationRoute());
+                  BlocConsumer<AuthCubit, AuthState>(
+                    buildWhen:
+                        (previous, current) =>
+                            previous.forgetPasswordRequestStatus !=
+                            current.forgetPasswordRequestStatus,
+                    listenWhen:
+                        (previous, current) =>
+                            previous.forgetPasswordRequestStatus !=
+                            current.forgetPasswordRequestStatus,
+                    listener: (context, state) {
+                      if (state.forgetPasswordRequestStatus ==
+                          RequestStatus.success) {
+                        showToast(
+                          message: "otp code sent successfully to your mail",
+                          state: ToastStates.success,
+                        );
+                        context.navigateTo(const EmailVerificationRoute());
+                      }
+                      if (state.forgetPasswordRequestStatus ==
+                          RequestStatus.error) {
+                        showToast(
+                          message: state.forgetPasswordErrorMessage,
+                          state: ToastStates.error,
+                        );
+                      }
                     },
-                    text: "Recover password",
+                    builder: (context, state) {
+                      return PrimaryButton(
+                        isLoading:
+                            state.forgetPasswordRequestStatus ==
+                            RequestStatus.loading,
+                        onPressed: () async {
+                          await _onSubmit();
+                        },
+                        text: "Recover password",
+                      );
+                    },
                   ),
                   const SizedBox(height: 40.0),
                 ],
@@ -88,5 +124,16 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
         ),
       ),
     );
+  }
+
+  Future<void> _onSubmit() async {
+    if (_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
+      context.read<AuthCubit>().forgetPassword(email: email);
+    } else {
+      setState(() {
+        _autovalidateMode = AutovalidateMode.always;
+      });
+    }
   }
 }

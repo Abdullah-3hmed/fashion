@@ -9,6 +9,11 @@ class AuthResponseModel extends Equatable {
   factory AuthResponseModel.fromJson(Map<String, dynamic> json) =>
       AuthResponseModel(message: json["message"], token: json["token"]);
 
+  static const AuthResponseModel empty = AuthResponseModel(
+    message: "",
+    token: "",
+  );
+
   @override
   List<Object> get props => [message, token];
 }

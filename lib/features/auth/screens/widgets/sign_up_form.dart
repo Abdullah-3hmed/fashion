@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:e_fashion_flutter/config/router/app_router.dart';
+import 'package:e_fashion_flutter/core/enums/request_status.dart';
 import 'package:e_fashion_flutter/core/utils/show_toast.dart';
 import 'package:e_fashion_flutter/core/utils/toast_states.dart';
 import 'package:e_fashion_flutter/core/widgets/custom_text_form_field.dart';
@@ -140,25 +141,33 @@ class _SignUpFormState extends State<SignUpForm> {
               ],
             ),
             const SizedBox(height: 48),
-            BlocConsumer<AuthCubit, AuthStates>(
+            BlocConsumer<AuthCubit, AuthState>(
+              buildWhen:
+                  (previous, current) =>
+                      previous.signUpRequestStatus !=
+                      current.signUpRequestStatus,
+              listenWhen:
+                  (previous, current) =>
+                      previous.signUpRequestStatus !=
+                      current.signUpRequestStatus,
               listener: (context, state) {
-                if (state is SignUpSuccessState) {
+                if (state.signUpRequestStatus == RequestStatus.success) {
                   showToast(
                     message: state.authResponseModel.message,
                     state: ToastStates.success,
                   );
                   context.replaceRoute(const AuthenticatedRoute());
                 }
-                if (state is SignUpErrorState) {
+                if (state.signUpRequestStatus == RequestStatus.error) {
                   showToast(
-                    message: state.errorMessage,
+                    message: state.signUpErrorMessage,
                     state: ToastStates.error,
                   );
                 }
               },
               builder: (context, state) {
                 return PrimaryButton(
-                  isLoading: state is SignUpLoadingState,
+                  isLoading: state.signUpRequestStatus == RequestStatus.loading,
                   icon: const Icon(Icons.arrow_forward),
                   onPressed: () {
                     _onSubmit();

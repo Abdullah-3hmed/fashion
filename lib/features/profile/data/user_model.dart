@@ -5,13 +5,13 @@ class UserModel extends Equatable {
   final String email;
   final String phone;
   final String profileImage;
-  // final String fcmToken;
+  final String fcmToken;
 
   const UserModel({
     required this.userName,
     required this.email,
     required this.phone,
-    // required this.fcmToken,
+    required this.fcmToken,
     required this.profileImage,
   });
   static const UserModel empty = UserModel(
@@ -19,6 +19,7 @@ class UserModel extends Equatable {
     phone: '',
     profileImage: '',
     email: '',
+    fcmToken: '',
   );
 
   factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
@@ -26,6 +27,7 @@ class UserModel extends Equatable {
     email: json["email"],
     phone: json["phone"],
     profileImage: json["profilePhotoUrl"],
+    fcmToken: json["fcmToken"],
   );
 
   Map<String, dynamic> toJson({
@@ -45,12 +47,14 @@ class UserModel extends Equatable {
     String? email,
     String? phone,
     String? profileImage,
+    String? fcmToken,
   }) {
     return UserModel(
       userName: userName ?? this.userName,
       email: email ?? this.email,
       phone: phone ?? this.phone,
       profileImage: profileImage ?? this.profileImage,
+      fcmToken: fcmToken ?? this.fcmToken,
     );
   }
 
