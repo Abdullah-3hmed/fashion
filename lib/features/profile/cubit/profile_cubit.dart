@@ -46,7 +46,7 @@ class ProfileCubit extends HydratedCubit<ProfileState> {
         userName: userName ?? state.userModel.userName,
         phone: phone ?? state.userModel.phone,
         profileImage: state.userModel.profileImage,
-        profileImageFile: state.pickedImageFile,
+        profileImageFile: state.editProfileModel.profileImageFile,
       ),
     );
     result.fold(
@@ -82,7 +82,13 @@ class ProfileCubit extends HydratedCubit<ProfileState> {
     final picker = ImagePicker();
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
-      emit(state.copyWith(pickedImageFile: File(pickedFile.path)));
+      emit(
+        state.copyWith(
+          editProfileModel: state.editProfileModel.copyWith(
+            profileImageFile: File(pickedFile.path),
+          ),
+        ),
+      );
       await editProfile();
     } else {
       return;

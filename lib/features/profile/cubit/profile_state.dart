@@ -9,7 +9,6 @@ class ProfileState extends Equatable {
   final UserModel userModel;
   final String errorMessage;
   final RequestStatus userStates;
-  final File? pickedImageFile;
   final EditProfileModel editProfileModel;
   final RequestStatus editProfileRequestStatus;
   final String editProfileErrorMessage;
@@ -18,7 +17,6 @@ class ProfileState extends Equatable {
     this.userModel = UserModel.empty,
     this.errorMessage = "",
     this.userStates = RequestStatus.loading,
-    this.pickedImageFile,
     this.editProfileModel = EditProfileModel.empty,
     this.editProfileRequestStatus = RequestStatus.loading,
     this.editProfileErrorMessage = "",
@@ -37,7 +35,6 @@ class ProfileState extends Equatable {
       userModel: userModel ?? this.userModel,
       errorMessage: errorMessage ?? this.errorMessage,
       userStates: userStates ?? this.userStates,
-      pickedImageFile: pickedImageFile ?? this.pickedImageFile,
       editProfileModel: editProfileModel ?? this.editProfileModel,
       editProfileRequestStatus:
           editProfileRequestStatus ?? this.editProfileRequestStatus,
@@ -51,7 +48,6 @@ class ProfileState extends Equatable {
     userModel,
     errorMessage,
     userStates,
-    pickedImageFile,
     editProfileModel,
     editProfileRequestStatus,
     editProfileErrorMessage,

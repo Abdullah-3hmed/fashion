@@ -42,6 +42,18 @@ class EditProfileModel extends Equatable {
     profileImage: '',
   );
 
+  EditProfileModel copyWith({
+    String? userName,
+    String? phone,
+    String? profileImage,
+    File? profileImageFile,
+  }) => EditProfileModel(
+    userName: userName ?? this.userName,
+    phone: phone ?? this.phone,
+    profileImage: profileImage ?? this.profileImage,
+    profileImageFile: profileImageFile ?? this.profileImageFile,
+  );
+
   @override
   List<Object?> get props => [userName, phone, profileImage, profileImageFile];
 }

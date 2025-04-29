@@ -37,7 +37,8 @@ class ProfileBackgroundImageAndLogo extends StatelessWidget {
                 BlocBuilder<ProfileCubit, ProfileState>(
                   buildWhen:
                       (previous, current) =>
-                          previous.pickedImageFile != current.pickedImageFile,
+                          previous.editProfileModel.profileImageFile !=
+                          current.editProfileModel.profileImageFile,
                   builder: (context, state) {
                     return Stack(
                       alignment: AlignmentDirectional.topEnd,
@@ -46,9 +47,9 @@ class ProfileBackgroundImageAndLogo extends StatelessWidget {
                           radius: 60.0,
                           child: ClipOval(
                             child:
-                                state.pickedImageFile != null
+                                state.editProfileModel.profileImageFile != null
                                     ? Image.file(
-                                      state.pickedImageFile!,
+                                      state.editProfileModel.profileImageFile!,
                                       width: 120.0,
                                       height: 120.0,
                                       fit: BoxFit.cover,
