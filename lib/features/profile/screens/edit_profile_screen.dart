@@ -22,6 +22,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   late AutovalidateMode _autovalidateMode;
   late String name;
   late String phone;
+
   @override
   void initState() {
     _formKey = GlobalKey<FormState>();
@@ -33,6 +34,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: ProfileBackgroundImageAndLogo(
+        isEditProfileScreen: true,
         child: ProfileClippedContainer(
           child: SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
@@ -87,15 +89,15 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       onSaved: (value) {
                         phone = value!;
                       },
-                      onSubmit: (_) {
-                        _onPressed();
+                      onSubmit: (_) async {
+                        await _onPressed();
                       },
                     ),
                     const SizedBox(height: 120.0),
                     Align(
                       child: SecondaryButton(
-                        onPressed: () {
-                          _onPressed();
+                        onPressed: () async {
+                          await _onPressed();
                         },
                         text: "Done",
                         backgroundColor: Theme.of(
@@ -114,12 +116,17 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     );
   }
 
-  void _onPressed() {
+  Future<void> _onPressed() async {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
       debugPrint('Form is valid');
-      context.read<ProfileCubit>().editProfile(userName: name, phone: phone);
-      context.pop();
+      await context.read<ProfileCubit>().editProfile(
+        userName: name,
+        phone: phone,
+      );
+      if (mounted) {
+        context.pop();
+      }
     } else {
       setState(() {
         _autovalidateMode = AutovalidateMode.always;

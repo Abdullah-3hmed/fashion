@@ -67,6 +67,7 @@ dependencies:
   cached_network_image: ^3.4.1
   hydrated_bloc: ^10.0.0
   path_provider: ^2.1.5
+  image_picker: ^1.1.2
 
 
 dev_dependencies:

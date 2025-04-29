@@ -48,9 +48,9 @@ class DioHelper {
     );
   }
 
-  Future<Response> put(
-    String url, {
-    Map<String, dynamic>? data,
+  Future<Response> put({
+    required String url,
+    dynamic data,
     Map<String, dynamic>? query,
     Map<String, dynamic>? headers,
   }) async {

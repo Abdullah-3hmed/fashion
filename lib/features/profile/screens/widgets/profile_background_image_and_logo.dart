@@ -1,15 +1,23 @@
 import 'dart:ui';
 
+import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:e_fashion_flutter/core/utils/assets_manager.dart';
 import 'package:e_fashion_flutter/features/profile/cubit/profile_cubit.dart';
+import 'package:e_fashion_flutter/features/profile/cubit/profile_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:solar_icons/solar_icons.dart';
 
 class ProfileBackgroundImageAndLogo extends StatelessWidget {
-  const ProfileBackgroundImageAndLogo({super.key, required this.child});
+  const ProfileBackgroundImageAndLogo({
+    super.key,
+    required this.child,
+    this.isEditProfileScreen = false,
+  });
 
   final Widget child;
+  final bool isEditProfileScreen;
 
   @override
   Widget build(BuildContext context) {
@@ -26,16 +34,56 @@ class ProfileBackgroundImageAndLogo extends StatelessWidget {
             end: 0.0,
             child: Column(
               children: [
-                CircleAvatar(
-                  radius: 60.0,
-                  child: ClipOval(
-                    child: CachedNetworkImage(
-                      imageUrl: context.select(
-                        (ProfileCubit cubit) =>
-                            cubit.state.userModel.profileImage,
-                      ),
-                    ),
-                  ),
+                BlocBuilder<ProfileCubit, ProfileState>(
+                  buildWhen:
+                      (previous, current) =>
+                          previous.pickedImageFile != current.pickedImageFile,
+                  builder: (context, state) {
+                    return Stack(
+                      alignment: AlignmentDirectional.topEnd,
+                      children: [
+                        CircleAvatar(
+                          radius: 60.0,
+                          child: ClipOval(
+                            child:
+                                state.pickedImageFile != null
+                                    ? Image.file(
+                                      state.pickedImageFile!,
+                                      width: 120.0,
+                                      height: 120.0,
+                                      fit: BoxFit.cover,
+                                    )
+                                    : CachedNetworkImage(
+                                      imageUrl: state.userModel.profileImage,
+                                      width: 120.0,
+                                      height: 120.0,
+                                      fit: BoxFit.cover,
+                                    ),
+                          ),
+                        ),
+                        isEditProfileScreen
+                            ? InkWell(
+                              onTap: () async {
+                                await context
+                                    .read<ProfileCubit>()
+                                    .pickProfileImage();
+                                context.pop();
+                              },
+                              child: CircleAvatar(
+                                radius: 18.0,
+                                backgroundColor:
+                                    Theme.of(context).colorScheme.primary,
+                                child: const Icon(
+                                  SolarIconsOutline.camera,
+                                  size: 20.0,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            )
+                            : const SizedBox.shrink(),
+                      ],
+                    );
+                  },
                 ),
                 const SizedBox(height: 8.0),
                 Text(
