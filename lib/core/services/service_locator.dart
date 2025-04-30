@@ -6,7 +6,7 @@ import 'package:e_fashion_flutter/core/notifications/fcm_helper.dart';
 import 'package:e_fashion_flutter/features/auth/cubit/auth_cubit.dart';
 import 'package:e_fashion_flutter/features/auth/repos/auth_repo.dart';
 import 'package:e_fashion_flutter/features/auth/repos/auth_repo_impl.dart';
-import 'package:e_fashion_flutter/features/profile/cubit/profile_cubit.dart';
+import 'package:e_fashion_flutter/features/profile/cubit/user_cubit.dart';
 import 'package:e_fashion_flutter/features/profile/repos/profile_repo.dart';
 import 'package:e_fashion_flutter/features/profile/repos/profile_repo_impl.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -32,8 +32,8 @@ class ServiceLocator {
     getIt.registerLazySingleton<AuthRepo>(() => AuthRepoImpl());
     getIt.registerFactory<AuthCubit>(() => AuthCubit(getIt<AuthRepo>()));
     getIt.registerLazySingleton<ProfileRepo>(() => ProfileRepoImpl());
-    getIt.registerFactory<ProfileCubit>(
-      () => ProfileCubit(profileRepo: getIt<ProfileRepo>()),
+    getIt.registerFactory<UserCubit>(
+      () => UserCubit(profileRepo: getIt<ProfileRepo>()),
     );
   }
 }

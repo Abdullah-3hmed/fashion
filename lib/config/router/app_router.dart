@@ -15,8 +15,7 @@ import 'package:e_fashion_flutter/features/home/screens/discover_screen.dart';
 import 'package:e_fashion_flutter/features/home/screens/edit_review_screen.dart';
 import 'package:e_fashion_flutter/features/home/screens/home_screen.dart';
 import 'package:e_fashion_flutter/features/notification/screens/notification_screen.dart';
-import 'package:e_fashion_flutter/features/profile/cubit/profile_cubit.dart';
-import 'package:e_fashion_flutter/features/profile/screens/change_mail_screen.dart';
+import 'package:e_fashion_flutter/features/profile/cubit/user_cubit.dart';
 import 'package:e_fashion_flutter/features/profile/screens/chat_support_screen.dart';
 import 'package:e_fashion_flutter/features/profile/screens/edit_profile_screen.dart';
 import 'package:e_fashion_flutter/features/profile/screens/order_status_screen.dart';
@@ -74,7 +73,6 @@ class AppRouter extends RootStackRouter {
         _buildCustomRoute(page: DetailsRoute.page),
         _buildCustomRoute(page: EditProfileRoute.page),
         _buildCustomRoute(page: ProfileChangePasswordRoute.page),
-        _buildCustomRoute(page: ChangeMailRoute.page),
         _buildCustomRoute(page: ChatSupportRoute.page),
         _buildCustomRoute(page: OrderStatusRoute.page),
         _buildCustomRoute(page: EditReviewRoute.page),
@@ -126,7 +124,7 @@ class Authenticated extends AutoRouter implements AutoRouteWrapper {
     providers: [
       BlocProvider(
         lazy: false,
-        create: (context) => getIt<ProfileCubit>()..getUserProfile(),
+        create: (context) => getIt<UserCubit>()..getUserProfile(),
       ),
     ],
     child: this,

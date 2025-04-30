@@ -3,8 +3,8 @@ import 'dart:ui';
 import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:e_fashion_flutter/core/utils/assets_manager.dart';
-import 'package:e_fashion_flutter/features/profile/cubit/profile_cubit.dart';
-import 'package:e_fashion_flutter/features/profile/cubit/profile_state.dart';
+import 'package:e_fashion_flutter/features/profile/cubit/user_cubit.dart';
+import 'package:e_fashion_flutter/features/profile/cubit/user_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:solar_icons/solar_icons.dart';
@@ -34,11 +34,11 @@ class ProfileBackgroundImageAndLogo extends StatelessWidget {
             end: 0.0,
             child: Column(
               children: [
-                BlocBuilder<ProfileCubit, ProfileState>(
+                BlocBuilder<UserCubit, UserState>(
                   buildWhen:
                       (previous, current) =>
-                          previous.editProfileModel.profileImageFile !=
-                          current.editProfileModel.profileImageFile,
+                          previous.editUserModel.profileImageFile !=
+                          current.editUserModel.profileImageFile,
                   builder: (context, state) {
                     return Stack(
                       alignment: AlignmentDirectional.topEnd,
@@ -47,9 +47,9 @@ class ProfileBackgroundImageAndLogo extends StatelessWidget {
                           radius: 60.0,
                           child: ClipOval(
                             child:
-                                state.editProfileModel.profileImageFile != null
+                                state.editUserModel.profileImageFile != null
                                     ? Image.file(
-                                      state.editProfileModel.profileImageFile!,
+                                      state.editUserModel.profileImageFile!,
                                       width: 120.0,
                                       height: 120.0,
                                       fit: BoxFit.cover,
@@ -66,7 +66,7 @@ class ProfileBackgroundImageAndLogo extends StatelessWidget {
                             ? InkWell(
                               onTap: () async {
                                 await context
-                                    .read<ProfileCubit>()
+                                    .read<UserCubit>()
                                     .pickProfileImage();
                                 context.pop();
                               },
@@ -89,7 +89,7 @@ class ProfileBackgroundImageAndLogo extends StatelessWidget {
                 const SizedBox(height: 8.0),
                 Text(
                   context.select(
-                    (ProfileCubit cubit) => cubit.state.userModel.userName,
+                    (UserCubit cubit) => cubit.state.userModel.userName,
                   ),
                   style: Theme.of(
                     context,

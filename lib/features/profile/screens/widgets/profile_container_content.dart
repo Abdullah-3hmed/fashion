@@ -1,10 +1,9 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:e_fashion_flutter/config/router/app_router.dart';
-import 'package:e_fashion_flutter/features/profile/cubit/profile_cubit.dart';
+import 'package:e_fashion_flutter/features/profile/cubit/user_cubit.dart';
 import 'package:e_fashion_flutter/features/profile/screens/widgets/profile_info_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:solar_icons/solar_icons.dart';
 
@@ -24,7 +23,7 @@ class ProfileContainerContent extends StatelessWidget {
           InkWell(
             onTap: () async {
               context.replaceRoute(const AuthRoute());
-              await context.read<ProfileCubit>().logOut();
+              await context.read<UserCubit>().logOut();
             },
             child: CircleAvatar(
               radius: 24.0,
@@ -78,14 +77,6 @@ class ProfileContainerContent extends StatelessWidget {
             icon: SolarIconsOutline.lockKeyhole,
           ),
           const SizedBox(height: 24.0),
-          ProfileInfoItem(
-            onTap: () {
-              context.pushRoute(const ChangeMailRoute());
-            },
-            text: "Change email",
-            icon: FontAwesomeIcons.envelope,
-          ),
-          const SizedBox(height: 10.0),
           ProfileInfoItem(
             onTap: () {},
             text: "Notification",

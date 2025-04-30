@@ -3,25 +3,24 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 
-class EditProfileModel extends Equatable {
+class EditUserModel extends Equatable {
   final String userName;
   final String phone;
   final String profileImage;
   final File? profileImageFile;
 
-  const EditProfileModel({
+  const EditUserModel({
     required this.userName,
     required this.phone,
     required this.profileImage,
     this.profileImageFile,
   });
 
-  factory EditProfileModel.fromJson(Map<String, dynamic> json) =>
-      EditProfileModel(
-        userName: json["username"],
-        phone: json["phone"],
-        profileImage: json["photo"],
-      );
+  factory EditUserModel.fromJson(Map<String, dynamic> json) => EditUserModel(
+    userName: json["username"],
+    phone: json["phone"],
+    profileImage: json["photo"],
+  );
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = {"userName": userName, "phone": phone};
@@ -36,18 +35,18 @@ class EditProfileModel extends Equatable {
     return data;
   }
 
-  static const EditProfileModel empty = EditProfileModel(
+  static const EditUserModel empty = EditUserModel(
     userName: '',
     phone: '',
     profileImage: '',
   );
 
-  EditProfileModel copyWith({
+  EditUserModel copyWith({
     String? userName,
     String? phone,
     String? profileImage,
     File? profileImageFile,
-  }) => EditProfileModel(
+  }) => EditUserModel(
     userName: userName ?? this.userName,
     phone: phone ?? this.phone,
     profileImage: profileImage ?? this.profileImage,

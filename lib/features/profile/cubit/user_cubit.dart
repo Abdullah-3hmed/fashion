@@ -3,16 +3,16 @@ import 'dart:io';
 import 'package:e_fashion_flutter/core/enums/request_status.dart';
 import 'package:e_fashion_flutter/core/utils/show_toast.dart';
 import 'package:e_fashion_flutter/core/utils/toast_states.dart';
-import 'package:e_fashion_flutter/features/profile/cubit/profile_state.dart';
-import 'package:e_fashion_flutter/features/profile/data/edit_profile_model.dart';
+import 'package:e_fashion_flutter/features/profile/cubit/user_state.dart';
+import 'package:e_fashion_flutter/features/profile/data/edit_user_model.dart';
 import 'package:e_fashion_flutter/features/profile/data/user_model.dart';
 import 'package:e_fashion_flutter/features/profile/repos/profile_repo.dart';
 import 'package:flutter/material.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 
-class ProfileCubit extends HydratedCubit<ProfileState> {
-  ProfileCubit({required this.profileRepo}) : super(const ProfileState());
+class UserCubit extends HydratedCubit<UserState> {
+  UserCubit({required this.profileRepo}) : super(const UserState());
   final ProfileRepo profileRepo;
 
   Future<void> getUserProfile() async {
@@ -20,8 +20,8 @@ class ProfileCubit extends HydratedCubit<ProfileState> {
     result.fold(
       (failure) => emit(
         state.copyWith(
-          errorMessage: failure.errorMessage,
-          userStates: RequestStatus.error,
+          userErrorMessage: failure.errorMessage,
+          userRequestStates: RequestStatus.error,
         ),
       ),
       (userModel) {
@@ -29,7 +29,7 @@ class ProfileCubit extends HydratedCubit<ProfileState> {
         emit(
           state.copyWith(
             userModel: userModel,
-            userStates: RequestStatus.success,
+            userRequestStates: RequestStatus.success,
           ),
         );
       },
@@ -42,32 +42,32 @@ class ProfileCubit extends HydratedCubit<ProfileState> {
 
   Future<void> editProfile({String? userName, String? phone}) async {
     final result = await profileRepo.editProfile(
-      editProfileModel: EditProfileModel(
+      editUserModel: EditUserModel(
         userName: userName ?? state.userModel.userName,
         phone: phone ?? state.userModel.phone,
         profileImage: state.userModel.profileImage,
-        profileImageFile: state.editProfileModel.profileImageFile,
+        profileImageFile: state.editUserModel.profileImageFile,
       ),
     );
     result.fold(
       (failure) => emit(
         state.copyWith(
-          editProfileErrorMessage: failure.errorMessage,
-          editProfileRequestStatus: RequestStatus.error,
+          editUserErrorMessage: failure.errorMessage,
+          editUserRequestStatus: RequestStatus.error,
         ),
       ),
-      (editProfileModel) {
-        debugPrint("user model ${editProfileModel.toString()}");
+      (editUserModel) {
+        debugPrint("user model ${editUserModel.toString()}");
         emit(
           state.copyWith(
-            editProfileModel: editProfileModel,
+            editUserModel: editUserModel,
             pickedImageFile: null,
             userModel: state.userModel.copyWith(
-              profileImage: editProfileModel.profileImage,
-              userName: editProfileModel.userName,
-              phone: editProfileModel.phone,
+              profileImage: editUserModel.profileImage,
+              userName: editUserModel.userName,
+              phone: editUserModel.phone,
             ),
-            userStates: RequestStatus.success,
+            userRequestStates: RequestStatus.success,
           ),
         );
         showToast(
@@ -84,7 +84,7 @@ class ProfileCubit extends HydratedCubit<ProfileState> {
     if (pickedFile != null) {
       emit(
         state.copyWith(
-          editProfileModel: state.editProfileModel.copyWith(
+          editUserModel: state.editUserModel.copyWith(
             profileImageFile: File(pickedFile.path),
           ),
         ),
@@ -96,12 +96,12 @@ class ProfileCubit extends HydratedCubit<ProfileState> {
   }
 
   @override
-  ProfileState? fromJson(Map<String, dynamic> json) {
-    return ProfileState(userModel: UserModel.fromJson(json["user_model"]));
+  UserState? fromJson(Map<String, dynamic> json) {
+    return UserState(userModel: UserModel.fromJson(json["user_model"]));
   }
 
   @override
-  Map<String, dynamic>? toJson(ProfileState state) {
+  Map<String, dynamic>? toJson(UserState state) {
     return {"user_model": state.userModel.toJson()};
   }
 }

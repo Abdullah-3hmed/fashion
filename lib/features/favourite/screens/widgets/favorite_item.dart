@@ -10,6 +10,7 @@ class FavoriteItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Stack(
+      alignment: AlignmentDirectional.bottomCenter,
       children: [
         Column(
           mainAxisSize: MainAxisSize.min,
@@ -32,9 +33,7 @@ class FavoriteItem extends StatelessWidget {
           ],
         ),
         PositionedDirectional(
-          bottom: 45.0,
-          start: 0.0,
-          end: 0.0,
+          bottom: 40.0,
           child: InkWell(
             onTap: () async {
               await showModalBottomSheet(

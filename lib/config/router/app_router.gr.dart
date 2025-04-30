@@ -37,7 +37,7 @@ class AuthenticatedRoute extends PageRouteInfo<void> {
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      return const Authenticated();
+      return WrappedRoute(child: const Authenticated());
     },
   );
 }
@@ -54,22 +54,6 @@ class CartRoute extends PageRouteInfo<void> {
     name,
     builder: (data) {
       return const CartScreen();
-    },
-  );
-}
-
-/// generated route for
-/// [ChangeMailScreen]
-class ChangeMailRoute extends PageRouteInfo<void> {
-  const ChangeMailRoute({List<PageRouteInfo>? children})
-    : super(ChangeMailRoute.name, initialChildren: children);
-
-  static const String name = 'ChangeMailRoute';
-
-  static PageInfo page = PageInfo(
-    name,
-    builder: (data) {
-      return const ChangeMailScreen();
     },
   );
 }
