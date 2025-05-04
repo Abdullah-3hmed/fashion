@@ -68,6 +68,7 @@ dependencies:
   hydrated_bloc: ^10.0.0
   path_provider: ^2.1.5
   image_picker: ^1.1.2
+  multi_payment_gateway: ^0.0.3
 
 
 dev_dependencies:

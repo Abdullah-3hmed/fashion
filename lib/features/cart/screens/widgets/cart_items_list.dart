@@ -1,3 +1,4 @@
+import 'package:e_fashion_flutter/core/payment/payment_manager.dart';
 import 'package:e_fashion_flutter/core/widgets/primary_button.dart';
 import 'package:e_fashion_flutter/features/cart/screens/widgets/cart_item.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +27,12 @@ class CartItemsList extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 8.0),
-        PrimaryButton(onPressed: () {}, text: "Checkout"),
+        PrimaryButton(
+          onPressed: () async {
+            await PaymentManager.payWithStripe(amount: 600);
+          },
+          text: "Checkout",
+        ),
         const SizedBox(height: 140.0),
       ],
     );
