@@ -2,7 +2,10 @@ import 'dart:ui';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:e_fashion_flutter/core/enums/request_status.dart';
 import 'package:e_fashion_flutter/core/utils/assets_manager.dart';
+import 'package:e_fashion_flutter/core/utils/show_toast.dart';
+import 'package:e_fashion_flutter/core/utils/toast_states.dart';
 import 'package:e_fashion_flutter/features/profile/cubit/user_cubit.dart';
 import 'package:e_fashion_flutter/features/profile/cubit/user_state.dart';
 import 'package:flutter/material.dart';
@@ -34,7 +37,20 @@ class ProfileBackgroundImageAndLogo extends StatelessWidget {
             end: 0.0,
             child: Column(
               children: [
-                BlocBuilder<UserCubit, UserState>(
+                BlocConsumer<UserCubit, UserState>(
+                  listenWhen:
+                      (previous, current) =>
+                          previous.userModel != current.userModel,
+                  listener: (context, state) {
+                    if (state.editUserRequestStatus == RequestStatus.success &&
+                        isEditProfileScreen) {
+                      context.pop();
+                      showToast(
+                        message: "Profile Updated Successfully",
+                        state: ToastStates.success,
+                      );
+                    }
+                  },
                   buildWhen:
                       (previous, current) =>
                           previous.editUserModel.profileImageFile !=
@@ -68,7 +84,6 @@ class ProfileBackgroundImageAndLogo extends StatelessWidget {
                                 await context
                                     .read<UserCubit>()
                                     .pickProfileImage();
-                                context.pop();
                               },
                               child: CircleAvatar(
                                 radius: 18.0,

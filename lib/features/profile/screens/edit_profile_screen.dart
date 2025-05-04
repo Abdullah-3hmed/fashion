@@ -121,9 +121,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       _formKey.currentState!.save();
       debugPrint('Form is valid');
       await context.read<UserCubit>().editProfile(userName: name, phone: phone);
-      if (mounted) {
-        context.pop();
-      }
     } else {
       setState(() {
         _autovalidateMode = AutovalidateMode.always;

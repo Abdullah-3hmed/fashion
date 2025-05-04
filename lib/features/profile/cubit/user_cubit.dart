@@ -1,8 +1,6 @@
 import 'dart:io';
 
 import 'package:e_fashion_flutter/core/enums/request_status.dart';
-import 'package:e_fashion_flutter/core/utils/show_toast.dart';
-import 'package:e_fashion_flutter/core/utils/toast_states.dart';
 import 'package:e_fashion_flutter/features/profile/cubit/user_state.dart';
 import 'package:e_fashion_flutter/features/profile/data/edit_user_model.dart';
 import 'package:e_fashion_flutter/features/profile/data/user_model.dart';
@@ -57,22 +55,16 @@ class UserCubit extends HydratedCubit<UserState> {
         ),
       ),
       (editUserModel) {
-        debugPrint("user model ${editUserModel.toString()}");
         emit(
           state.copyWith(
-            editUserModel: editUserModel,
-            pickedImageFile: null,
+            editUserModel: EditUserModel.empty,
             userModel: state.userModel.copyWith(
               profileImage: editUserModel.profileImage,
               userName: editUserModel.userName,
               phone: editUserModel.phone,
             ),
-            userRequestStates: RequestStatus.success,
+            editUserRequestStatus: RequestStatus.success,
           ),
-        );
-        showToast(
-          message: "Profile Updated Successfully",
-          state: ToastStates.success,
         );
       },
     );
