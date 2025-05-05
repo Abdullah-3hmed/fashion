@@ -48,7 +48,9 @@ class ProfileContainerContent extends StatelessWidget {
           ),
           const SizedBox(height: 24.0),
           ProfileInfoItem(
-            onTap: () {},
+            onTap: () {
+              context.pushRoute(const MapRoute());
+            },
             text: "Location",
             icon: SolarIconsOutline.mapPoint,
           ),

@@ -66,6 +66,8 @@ class Assets {
       'assets/images/welcome_curved_container.png';
   static const String imagesWelcomeImage = 'assets/images/welcome_image.jpeg';
   static const String imagesWoman = 'assets/images/woman.png';
+  static const String lib = 'lib/.env';
+  static const String mapStyleMapStyle = 'assets/map_style/map_style.json';
   static const String notificationsKeyEFashionF1215Da0bb632d3c1 =
       'assets/notifications_key/e-fashion-f1215-da0bb632d3c1.json';
 }

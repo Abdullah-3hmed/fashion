@@ -18,6 +18,7 @@ import 'package:e_fashion_flutter/features/notification/screens/notification_scr
 import 'package:e_fashion_flutter/features/profile/cubit/user_cubit.dart';
 import 'package:e_fashion_flutter/features/profile/screens/chat_support_screen.dart';
 import 'package:e_fashion_flutter/features/profile/screens/edit_profile_screen.dart';
+import 'package:e_fashion_flutter/features/profile/screens/map_screen.dart';
 import 'package:e_fashion_flutter/features/profile/screens/order_status_screen.dart';
 import 'package:e_fashion_flutter/features/profile/screens/profile_change_password_screen.dart';
 import 'package:e_fashion_flutter/features/profile/screens/profile_screen.dart';
@@ -79,6 +80,7 @@ class AppRouter extends RootStackRouter {
         _buildCustomRoute(page: DiscoverRoute.page),
         _buildCustomRoute(page: SearchRoute.page),
         _buildCustomRoute(page: NotificationRoute.page),
+        _buildCustomRoute(page: MapRoute.page),
       ],
     ),
   ];

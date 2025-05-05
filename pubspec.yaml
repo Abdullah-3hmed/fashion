@@ -69,6 +69,8 @@ dependencies:
   path_provider: ^2.1.5
   image_picker: ^1.1.2
   multi_payment_gateway: ^0.0.3
+  google_maps_flutter: ^2.12.1
+  location: ^8.0.0
 
 
 dev_dependencies:
@@ -98,6 +100,7 @@ flutter:
     - assets/images/
     - assets/notifications_key/
     - lib/.env
+    - assets/map_style/map_style.json
 
   fonts:
     - family: Montserrat
