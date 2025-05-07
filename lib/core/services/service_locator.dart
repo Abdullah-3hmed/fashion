@@ -9,8 +9,10 @@ import 'package:e_fashion_flutter/features/auth/repos/auth_repo.dart';
 import 'package:e_fashion_flutter/features/auth/repos/auth_repo_impl.dart';
 import 'package:e_fashion_flutter/features/profile/cubit/map_cubit.dart';
 import 'package:e_fashion_flutter/features/profile/cubit/user_cubit.dart';
-import 'package:e_fashion_flutter/features/profile/repos/profile_repo.dart';
-import 'package:e_fashion_flutter/features/profile/repos/profile_repo_impl.dart';
+import 'package:e_fashion_flutter/features/profile/repos/map_repo.dart';
+import 'package:e_fashion_flutter/features/profile/repos/map_repo_impl.dart';
+import 'package:e_fashion_flutter/features/profile/repos/user_repo.dart';
+import 'package:e_fashion_flutter/features/profile/repos/user_repo_impl.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
 import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
@@ -33,13 +35,12 @@ class ServiceLocator {
     getIt.registerLazySingleton<DioHelper>(() => DioHelper());
     getIt.registerLazySingleton<AuthRepo>(() => AuthRepoImpl());
     getIt.registerFactory<AuthCubit>(() => AuthCubit(getIt<AuthRepo>()));
-    getIt.registerLazySingleton<ProfileRepo>(() => ProfileRepoImpl());
+    getIt.registerLazySingleton<UserRepo>(() => UserRepoImpl());
     getIt.registerFactory<UserCubit>(
-      () => UserCubit(profileRepo: getIt<ProfileRepo>()),
+      () => UserCubit(userRepo: getIt<UserRepo>()),
     );
     getIt.registerLazySingleton<LocationService>(() => LocationService());
-    getIt.registerFactory<MapCubit>(
-      () => MapCubit(profileRepo: getIt<ProfileRepo>()),
-    );
+    getIt.registerLazySingleton<MapRepo>(() => MapRepoImpl());
+    getIt.registerFactory<MapCubit>(() => MapCubit(mapRepo: getIt<MapRepo>()));
   }
 }

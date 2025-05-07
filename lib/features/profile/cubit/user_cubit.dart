@@ -4,17 +4,17 @@ import 'package:e_fashion_flutter/core/enums/request_status.dart';
 import 'package:e_fashion_flutter/features/profile/cubit/user_state.dart';
 import 'package:e_fashion_flutter/features/profile/data/edit_user_model.dart';
 import 'package:e_fashion_flutter/features/profile/data/user_model.dart';
-import 'package:e_fashion_flutter/features/profile/repos/profile_repo.dart';
+import 'package:e_fashion_flutter/features/profile/repos/user_repo.dart';
 import 'package:flutter/material.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 
 class UserCubit extends HydratedCubit<UserState> {
-  UserCubit({required this.profileRepo}) : super(const UserState());
-  final ProfileRepo profileRepo;
+  UserCubit({required this.userRepo}) : super(const UserState());
+  final UserRepo userRepo;
 
   Future<void> getUserProfile() async {
-    final result = await profileRepo.getUserProfile();
+    final result = await userRepo.getUserProfile();
     result.fold(
       (failure) => emit(
         state.copyWith(
@@ -35,11 +35,11 @@ class UserCubit extends HydratedCubit<UserState> {
   }
 
   Future<void> logOut() async {
-    await profileRepo.logOut(email: state.userModel.email);
+    await userRepo.logOut(email: state.userModel.email);
   }
 
   Future<void> editProfile({String? userName, String? phone}) async {
-    final result = await profileRepo.editProfile(
+    final result = await userRepo.editProfile(
       editUserModel: EditUserModel(
         userName: userName ?? state.userModel.userName,
         phone: phone ?? state.userModel.phone,
