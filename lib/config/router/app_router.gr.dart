@@ -298,7 +298,7 @@ class MapRoute extends PageRouteInfo<void> {
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      return const MapScreen();
+      return WrappedRoute(child: const MapScreen());
     },
   );
 }

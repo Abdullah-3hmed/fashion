@@ -46,16 +46,5 @@ class AssetsManager {
       'assets/images/welcome_circle_arrow.png';
   static const String userTestImage =
       'https://images.unsplash.com/photo-1581338834647-b0fb40704e21?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80';
-
-  // icons >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-  static const String email = 'assets/icons/email.svg';
-  static const String lock = 'assets/icons/lock.svg';
-  static const String eye = 'assets/icons/eye.svg';
-  static const String search = 'assets/icons/search.svg';
-  static const String profile = 'assets/icons/profile.svg';
-  static const String notification = 'assets/icons/notification.svg';
-  static const String home = 'assets/icons/home.svg';
-  static const String heart = 'assets/icons/heart.svg';
-  static const String cart = 'assets/icons/cart.svg';
-  static const String send = 'assets/icons/send.svg';
+  static const String mapStyle = 'assets/map_style/map_style.json';
 }

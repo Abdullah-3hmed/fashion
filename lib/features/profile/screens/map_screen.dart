@@ -1,55 +1,63 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:e_fashion_flutter/core/services/service_locator.dart';
+import 'package:e_fashion_flutter/features/profile/cubit/map_cubit.dart';
+import 'package:e_fashion_flutter/features/profile/cubit/map_state.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 @RoutePage()
-class MapScreen extends StatefulWidget {
+class MapScreen extends StatefulWidget implements AutoRouteWrapper {
   const MapScreen({super.key});
 
   @override
   State<MapScreen> createState() => _MapScreenState();
+
+  @override
+  Widget wrappedRoute(BuildContext context) => BlocProvider(
+    create: (context) => getIt<MapCubit>()..setMapStyle(context: context),
+    child: this,
+  );
 }
 
 class _MapScreenState extends State<MapScreen> {
   late CameraPosition initialCameraPosition;
-  GoogleMapController? mapController;
-  String mapStyle = "";
+  late GoogleMapController mapController;
 
   @override
   void initState() {
     initialCameraPosition = const CameraPosition(
-      target: LatLng(26.61817517870546, 31.52886861007292),
+      target: LatLng(0, 0),
       zoom: 14,
     );
-    _setMapStyle();
     super.initState();
   }
 
   @override
   void dispose() {
-    mapController?.dispose();
+    mapController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: GoogleMap(
-        style: mapStyle,
-        onMapCreated: (controller) {
-          mapController = controller;
+      body: BlocBuilder<MapCubit, MapState>(
+        builder: (context, state) {
+          return GoogleMap(
+            style: state.mapStyle,
+            markers: state.myLocationMarker,
+            onMapCreated: (controller) async {
+              mapController = controller;
+              await context.read<MapCubit>().getCurrentLocation(
+                mapController: mapController,
+              );
+            },
+            zoomControlsEnabled: false,
+            initialCameraPosition: initialCameraPosition,
+          );
         },
-        initialCameraPosition: initialCameraPosition,
       ),
     );
-  }
-
-  Future<void> _setMapStyle() async {
-    String style = await DefaultAssetBundle.of(
-      context,
-    ).loadString('assets/map_style/map_style.json');
-    setState(() {
-      mapStyle = style;
-    });
   }
 }

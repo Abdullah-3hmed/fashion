@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:e_fashion_flutter/core/services/location_service.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class Failure extends Equatable {
@@ -56,5 +57,19 @@ class ServerFailure extends Failure {
       return const ServerFailure('Internal server error , please try later');
     }
     return const ServerFailure('there was an error , please try again');
+  }
+}
+
+class LocationFailure extends Failure {
+  const LocationFailure(super.errorMessage);
+
+  factory LocationFailure.fromException(Exception exception) {
+    if (exception is LocationServiceException) {
+      return LocationFailure(exception.errorMessage);
+    } else if (exception is LocationPermissionException) {
+      return LocationFailure(exception.errorMessage);
+    } else {
+      return const LocationFailure("Unknown location error");
+    }
   }
 }

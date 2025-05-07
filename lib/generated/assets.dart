@@ -2,6 +2,8 @@
 class Assets {
   Assets._();
 
+  static const String assetsMapStyleMapStyle =
+      'assets/map_style/map_style.json';
   static const String fontsDMSerifDisplayRegular =
       'assets/fonts/DMSerifDisplay-Regular.ttf';
   static const String fontsMontserratBlack =

@@ -1,8 +1,7 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:e_fashion_flutter/core/utils/assets_manager.dart';
 import 'package:e_fashion_flutter/features/profile/screens/widgets/messages_list.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:iconsax/iconsax.dart';
 
 @RoutePage()
 class ChatSupportScreen extends StatefulWidget {
@@ -78,7 +77,7 @@ class _ChatSupportScreenState extends State<ChatSupportScreen> {
                     controller.clear();
                     // setState(() {});
                   },
-                  icon: SvgPicture.asset(AssetsManager.send),
+                  icon: const Icon(Iconsax.send),
                 ),
               ],
             ),

@@ -1,7 +1,7 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 
-class CustomTextFormField extends StatefulWidget {
+class CustomTextFormField extends StatelessWidget {
   const CustomTextFormField({
     super.key,
     this.controller,
@@ -42,69 +42,60 @@ class CustomTextFormField extends StatefulWidget {
   final TextInputAction? textInputAction;
 
   @override
-  State<CustomTextFormField> createState() => _CustomTextFormFieldState();
-}
-
-class _CustomTextFormFieldState extends State<CustomTextFormField> {
-  @override
   Widget build(BuildContext context) {
     return TextFormField(
-      controller: widget.controller,
-      textInputAction: widget.textInputAction ?? TextInputAction.next,
-      keyboardType: widget.type,
-      obscureText: widget.obscureText,
-      onSaved: widget.onSaved,
-      autofillHints: widget.autofillHints,
-      onFieldSubmitted: widget.onSubmit,
+      controller: controller,
+      textInputAction: textInputAction ?? TextInputAction.next,
+      keyboardType: type,
+      obscureText: obscureText,
+      onSaved: onSaved,
+      autofillHints: autofillHints,
+      onFieldSubmitted: onSubmit,
       onTapOutside: (event) => FocusScope.of(context).unfocus(),
       style: Theme.of(context).textTheme.bodySmall!.copyWith(
         color: Theme.of(context).colorScheme.onSurfaceVariant,
       ),
       decoration: InputDecoration(
         filled: true,
-        fillColor: widget.fillColor ?? Colors.transparent,
+        fillColor: fillColor ?? Colors.transparent,
         errorStyle: Theme.of(context).textTheme.bodySmall,
-        hintText: widget.hintText,
+        hintText: hintText,
         hintStyle: Theme.of(context).textTheme.bodySmall,
         errorMaxLines: 1,
-        prefixIcon: widget.prefixIcon,
-        suffixIcon: widget.suffixIcon,
-        labelText: widget.label,
+        prefixIcon: prefixIcon,
+        suffixIcon: suffixIcon,
+        labelText: label,
         labelStyle: Theme.of(context).textTheme.bodySmall,
-        contentPadding: EdgeInsets.all(widget.contentPadding),
+        contentPadding: EdgeInsets.all(contentPadding),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(widget.borderRadius ?? 8.0),
+          borderRadius: BorderRadius.circular(borderRadius ?? 8.0),
           borderSide: BorderSide(
-            color:
-                widget.enableBorderColor ??
-                Theme.of(context).colorScheme.outline,
+            color: enableBorderColor ?? Theme.of(context).colorScheme.outline,
           ),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(widget.borderRadius ?? 8.0),
+          borderRadius: BorderRadius.circular(borderRadius ?? 8.0),
           borderSide: BorderSide(color: Theme.of(context).colorScheme.primary),
         ),
         errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(widget.borderRadius ?? 8.0),
+          borderRadius: BorderRadius.circular(borderRadius ?? 8.0),
           borderSide: BorderSide(color: Theme.of(context).colorScheme.error),
         ),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(widget.borderRadius ?? 8.0),
+          borderRadius: BorderRadius.circular(borderRadius ?? 8.0),
           borderSide: BorderSide(
-            color:
-                widget.enableBorderColor ??
-                Theme.of(context).colorScheme.outline,
+            color: enableBorderColor ?? Theme.of(context).colorScheme.outline,
           ),
         ),
       ),
       validator: (value) {
-        if (widget.isEmail) {
+        if (isEmail) {
           if (value!.isNotEmpty && !EmailValidator.validate(value)) {
             return "Enter a valid mail";
           }
         }
         if (value!.isEmpty) {
-          return '${widget.label} required';
+          return '$label required';
         }
         return null;
       },
