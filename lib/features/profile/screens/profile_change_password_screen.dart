@@ -1,10 +1,16 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:e_fashion_flutter/core/enums/request_status.dart';
+import 'package:e_fashion_flutter/core/utils/show_toast.dart';
+import 'package:e_fashion_flutter/core/utils/toast_states.dart';
 import 'package:e_fashion_flutter/core/widgets/password_filed.dart';
 import 'package:e_fashion_flutter/core/widgets/secondary_button.dart';
+import 'package:e_fashion_flutter/features/profile/cubit/user_cubit.dart';
+import 'package:e_fashion_flutter/features/profile/cubit/user_state.dart';
 import 'package:e_fashion_flutter/features/profile/screens/widgets/profile_background_image_and_logo.dart';
 import 'package:e_fashion_flutter/features/profile/screens/widgets/profile_clipped_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 @RoutePage()
 class ProfileChangePasswordScreen extends StatefulWidget {
@@ -22,6 +28,7 @@ class _ProfileChangePasswordScreenState
   late String oldPassword;
   late String newPassword;
   late String confirmPassword;
+
   @override
   void initState() {
     super.initState();
@@ -67,9 +74,7 @@ class _ProfileChangePasswordScreenState
                       onSaved: (value) {
                         oldPassword = value!;
                       },
-                      onSubmit: (_) {
-                        _onPressed();
-                      },
+                      textInputAction: TextInputAction.next,
                       hintText: "old password",
                       label: "old password",
                     ),
@@ -78,9 +83,7 @@ class _ProfileChangePasswordScreenState
                       onSaved: (value) {
                         newPassword = value!;
                       },
-                      onSubmit: (_) {
-                        _onPressed();
-                      },
+                      textInputAction: TextInputAction.next,
                       hintText: "new password",
                       label: "new password",
                     ),
@@ -97,14 +100,46 @@ class _ProfileChangePasswordScreenState
                     ),
                     const SizedBox(height: 85.0),
                     Align(
-                      child: SecondaryButton(
-                        onPressed: () {
-                          _onPressed();
+                      child: BlocConsumer<UserCubit, UserState>(
+                        listenWhen:
+                            (previous, current) =>
+                                previous.changePasswordRequestStatus !=
+                                current.changePasswordRequestStatus,
+                        buildWhen:
+                            (previous, current) =>
+                                previous.changePasswordRequestStatus !=
+                                current.changePasswordRequestStatus,
+                        listener: (context, state) async {
+                          if (state.changePasswordRequestStatus ==
+                              RequestStatus.success) {
+                            context.pop();
+                            await showToast(
+                              message: state.changePasswordMessage,
+                              state: ToastStates.success,
+                            );
+                          }
+                          if (state.changePasswordRequestStatus ==
+                              RequestStatus.error) {
+                            await showToast(
+                              message: state.changePasswordMessage,
+                              state: ToastStates.error,
+                            );
+                          }
                         },
-                        text: "done",
-                        backgroundColor: Theme.of(
-                          context,
-                        ).colorScheme.secondary.withValues(alpha: 0.5),
+                        builder: (context, state) {
+                          return SecondaryButton(
+                            isLoading:
+                                state.changePasswordRequestStatus ==
+                                RequestStatus.loading,
+                            onPressed: () async {
+                              await _onPressed();
+                            },
+                            text: "done",
+                            backgroundColor: Theme.of(
+                              context,
+                            ).colorScheme.secondary.withValues(alpha: 0.5),
+                          );
+                        },
                       ),
                     ),
                     const SizedBox(height: 100.0),
@@ -118,13 +153,14 @@ class _ProfileChangePasswordScreenState
     );
   }
 
-  void _onPressed() {
+  Future<void> _onPressed() async {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
-      debugPrint('Form is valid');
-      debugPrint(oldPassword);
-      debugPrint(newPassword);
-      debugPrint(confirmPassword);
+      await context.read<UserCubit>().changePassword(
+        currentPassword: oldPassword,
+        newPassword: newPassword,
+        confirmPassword: confirmPassword,
+      );
     } else {
       setState(() {
         _autovalidateMode = AutovalidateMode.always;

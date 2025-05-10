@@ -63,4 +63,22 @@ class UserRepoImpl implements UserRepo {
       return Left(ServerFailure(e.toString()));
     }
   }
+
+  @override
+  Future<Either<Failure, String>> changePassword({
+    required passwordModel,
+  }) async {
+    try {
+      final response = await getIt<DioHelper>().post(
+        url: ApiConstants.changePasswordEndpoint,
+        data: passwordModel.toJson(),
+        headers: {"Authorization": "Bearer ${AppConstants.token}"},
+      );
+      return Right(response.data["message"]);
+    } on DioException catch (e) {
+      return Left(ServerFailure.fromDioError(e));
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
 }

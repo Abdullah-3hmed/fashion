@@ -41,10 +41,13 @@ class SecondaryButton extends StatelessWidget {
         onPressed: onPressed,
         child:
             isLoading
-                ? const SpinKitThreeBounce(
-                  color: Colors.white,
-                  size: 20.0,
-                  duration: Duration(milliseconds: 900),
+                ? const SizedBox(
+                  width: 33.0,
+                  child: SpinKitThreeBounce(
+                    color: Colors.white,
+                    size: 20.0,
+                    duration: Duration(milliseconds: 900),
+                  ),
                 )
                 : Text(
                   text,

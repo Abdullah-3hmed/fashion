@@ -4,6 +4,7 @@ import 'package:e_fashion_flutter/core/enums/request_status.dart';
 import 'package:e_fashion_flutter/features/profile/cubit/user_state.dart';
 import 'package:e_fashion_flutter/features/profile/data/edit_user_model.dart';
 import 'package:e_fashion_flutter/features/profile/data/user_model.dart';
+import 'package:e_fashion_flutter/features/profile/data/user_password_model.dart';
 import 'package:e_fashion_flutter/features/profile/repos/user_repo.dart';
 import 'package:flutter/material.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
@@ -85,6 +86,36 @@ class UserCubit extends HydratedCubit<UserState> {
     } else {
       return;
     }
+  }
+
+  Future<void> changePassword({
+    required String currentPassword,
+    required String newPassword,
+    required String confirmPassword,
+  }) async {
+    emit(state.copyWith(changePasswordRequestStatus: RequestStatus.loading));
+    UserPasswordModel passwordModel = UserPasswordModel(
+      currentPassword: currentPassword,
+      newPassword: newPassword,
+      confirmPassword: confirmPassword,
+    );
+    final result = await userRepo.changePassword(passwordModel: passwordModel);
+    result.fold(
+      (failure) => emit(
+        state.copyWith(
+          changePasswordMessage: failure.errorMessage,
+          changePasswordRequestStatus: RequestStatus.error,
+        ),
+      ),
+      (message) {
+        emit(
+          state.copyWith(
+            changePasswordMessage: message,
+            changePasswordRequestStatus: RequestStatus.success,
+          ),
+        );
+      },
+    );
   }
 
   @override
