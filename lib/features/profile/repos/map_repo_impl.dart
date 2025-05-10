@@ -3,6 +3,7 @@ import 'package:e_fashion_flutter/core/error/failures.dart';
 import 'package:e_fashion_flutter/core/services/location_service.dart';
 import 'package:e_fashion_flutter/core/services/service_locator.dart';
 import 'package:e_fashion_flutter/features/profile/repos/map_repo.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class MapRepoImpl implements MapRepo {
@@ -20,10 +21,41 @@ class MapRepoImpl implements MapRepo {
         markerId: const MarkerId("myLocation"),
         position: currentLocation,
       );
-      mapController.animateCamera(CameraUpdate.newLatLng(currentLocation));
+      await mapController.animateCamera(
+        CameraUpdate.newLatLng(currentLocation),
+      );
       return Right(myLocationMarker);
     } on Exception catch (e) {
       return Left(LocationFailure.fromException(e));
     }
+  }
+
+  @override
+  Future<Either<Failure, Marker>> changeLocation({
+    required GoogleMapController mapController,
+    required LatLng newLocation,
+  }) async {
+    try {
+      Marker myLocationMarker = Marker(
+        markerId: const MarkerId("myLocation"),
+        position: newLocation,
+      );
+      await mapController.animateCamera(CameraUpdate.newLatLng(newLocation));
+      return Right(myLocationMarker);
+    } on Exception catch (e) {
+      return Left(LocationFailure.fromException(e));
+    }
+  }
+
+  @override
+  Future<String> getPlaceName({required LatLng location}) async {
+    double lat = location.latitude;
+    double lng = location.longitude;
+    List<Placemark> placeMarks = await placemarkFromCoordinates(lat, lng);
+    if (placeMarks.isNotEmpty) {
+      Placemark place = placeMarks.first;
+      return "${place.locality}, ${place.street}, ${place.name}";
+    }
+    return "";
   }
 }

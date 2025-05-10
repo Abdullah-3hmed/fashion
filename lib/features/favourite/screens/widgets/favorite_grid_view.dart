@@ -8,11 +8,11 @@ class FavoriteGridView extends StatelessWidget {
   Widget build(BuildContext context) {
     return GridView.builder(
       physics: const BouncingScrollPhysics(),
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
+      gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+        maxCrossAxisExtent: 200.0,
         crossAxisSpacing: 12.0,
         mainAxisSpacing: 10.0,
-        childAspectRatio: 0.67,
+        childAspectRatio: 0.65,
       ),
       itemBuilder: (context, index) => const FavoriteItem(),
       itemCount: 10,

@@ -53,6 +53,12 @@ class _MapScreenState extends State<MapScreen> {
                 mapController: mapController,
               );
             },
+            onTap: (LatLng newLocation) async {
+              await context.read<MapCubit>().changeLocation(
+                mapController: mapController,
+                newLocation: newLocation,
+              );
+            },
             zoomControlsEnabled: false,
             initialCameraPosition: initialCameraPosition,
           );

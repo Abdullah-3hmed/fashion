@@ -6,4 +6,9 @@ abstract class MapRepo {
   Future<Either<Failure, Marker>> getCurrentLocation({
     required GoogleMapController mapController,
   });
+  Future<Either<Failure, Marker>> changeLocation({
+    required GoogleMapController mapController,
+    required LatLng newLocation,
+  });
+  Future<String> getPlaceName({required LatLng location});
 }

@@ -11,97 +11,100 @@ class HomeCarouselSliderItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return Stack(
       children: [
-        Stack(
-          alignment: AlignmentDirectional.bottomCenter,
-          children: [
-            InkWell(
-              onTap: () {
-                context.pushRoute(const DetailsRoute());
-              },
-              child: Container(
-                width: double.infinity,
-                height: 175.0,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(16.0),
-                  image: DecorationImage(
-                    fit: BoxFit.cover,
-                    image: Image.asset(AssetsManager.testImage).image,
+        InkWell(
+          onTap: () {
+            context.pushRoute(const DetailsRoute());
+          },
+          child: Container(
+            width: double.infinity,
+            height: 180.0,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(16.0),
+              image: DecorationImage(
+                fit: BoxFit.cover,
+                image: Image.asset(AssetsManager.testImage).image,
+              ),
+            ),
+          ),
+        ),
+        PositionedDirectional(
+          bottom: 0.0,
+          start: 0.0,
+          end: 0.0,
+          child: InkWell(
+            onTap: () {
+              context.pushRoute(const DetailsRoute());
+            },
+            child: HomeClippedContainer(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "Denim Jacket",
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: Theme.of(
+                      context,
+                    ).textTheme.bodyLarge!.copyWith(color: Colors.white),
                   ),
-                ),
-              ),
-            ),
-            InkWell(
-              onTap: () {
-                context.pushRoute(const DetailsRoute());
-              },
-              child: HomeClippedContainer(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "Denim Jacket",
-                      style: Theme.of(
-                        context,
-                      ).textTheme.bodyLarge!.copyWith(color: Colors.white),
-                    ),
-                    Text.rich(
-                      TextSpan(
-                        children: [
-                          TextSpan(
-                            text: r"$200 ",
-                            style: Theme.of(
-                              context,
-                            ).textTheme.bodyLarge!.copyWith(
-                              color: Theme.of(context).colorScheme.primary,
-                              overflow: TextOverflow.ellipsis,
-                              decoration: TextDecoration.lineThrough,
-                              decorationColor:
-                                  Theme.of(context).colorScheme.primary,
-                            ),
+                  Text.rich(
+                    TextSpan(
+                      children: [
+                        TextSpan(
+                          text: r"$200 ",
+                          style: Theme.of(
+                            context,
+                          ).textTheme.bodyLarge!.copyWith(
+                            color: Theme.of(context).colorScheme.primary,
+                            overflow: TextOverflow.ellipsis,
+                            decoration: TextDecoration.lineThrough,
+                            decorationColor:
+                                Theme.of(context).colorScheme.primary,
                           ),
-                          TextSpan(
-                            text: r"  $150 ",
-                            style: Theme.of(context).textTheme.bodyLarge!
-                                .copyWith(color: Colors.white),
-                          ),
-                        ],
-                      ),
+                        ),
+                        TextSpan(
+                          text: r"  $150 ",
+                          style: Theme.of(
+                            context,
+                          ).textTheme.bodyLarge!.copyWith(color: Colors.white),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
-            PositionedDirectional(
-              bottom: 0.0,
-              end: 0.0,
-              child: IconButton(
-                onPressed: () async {
-                  await showModalBottomSheet(
-                    context: context,
-                    useRootNavigator: true,
-                    builder: (context) => const ModalBottomSheetContent(),
-                  );
-                },
-                icon: Icon(
-                  Iconsax.bag_2,
-                  color: Theme.of(context).colorScheme.primary,
-                ),
-              ),
+          ),
+        ),
+        PositionedDirectional(
+          bottom: 0.0,
+          end: 0.0,
+          child: IconButton(
+            onPressed: () async {
+              await showModalBottomSheet(
+                context: context,
+                useRootNavigator: true,
+                builder: (context) => const ModalBottomSheetContent(),
+              );
+            },
+            icon: Icon(
+              Iconsax.bag_2,
+              color: Theme.of(context).colorScheme.primary,
             ),
-            PositionedDirectional(
-              top: 0.0,
-              end: 0.0,
-              child: IconButton(
-                onPressed: () {},
-                icon: Icon(
-                  Iconsax.heart,
-                  color: Theme.of(context).colorScheme.primary,
-                ),
-              ),
+          ),
+        ),
+        PositionedDirectional(
+          top: 0.0,
+          end: 0.0,
+          child: IconButton(
+            onPressed: () {},
+            icon: Icon(
+              Iconsax.heart,
+              color: Theme.of(context).colorScheme.primary,
             ),
-          ],
+          ),
         ),
       ],
     );

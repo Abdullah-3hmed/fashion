@@ -41,7 +41,7 @@ class OffersSection extends StatelessWidget {
           ],
           options: CarouselOptions(
             enlargeCenterPage: true,
-            viewportFraction: 0.75,
+            viewportFraction: 0.70,
           ),
         ),
       ],

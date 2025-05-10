@@ -71,6 +71,7 @@ dependencies:
   multi_payment_gateway: ^0.0.3
   google_maps_flutter: ^2.12.1
   location: ^8.0.0
+  geocoding: ^3.0.0
 
 
 dev_dependencies:
