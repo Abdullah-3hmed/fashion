@@ -14,17 +14,18 @@ import 'package:path_provider/path_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  HydratedBloc.storage = await HydratedStorage.build(
+    storageDirectory: HydratedStorageDirectory(
+      (await getTemporaryDirectory()).path,
+    ),
+  );
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   ServiceLocator().init();
   await FcmInitHelper.initAwesomeNotification();
   await dotenv.load(fileName: "lib/.env");
   DioHelper.init();
   AppConstants.token = await getIt<CacheHelper>().readData(key: "token") ?? "";
-  HydratedBloc.storage = await HydratedStorage.build(
-    storageDirectory: HydratedStorageDirectory(
-      (await getTemporaryDirectory()).path,
-    ),
-  );
+
   Bloc.observer = MyBlocObserver();
 
   runApp(const MyApp());
