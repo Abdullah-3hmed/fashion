@@ -54,7 +54,7 @@ class MapRepoImpl implements MapRepo {
     List<Placemark> placeMarks = await placemarkFromCoordinates(lat, lng);
     if (placeMarks.isNotEmpty) {
       Placemark place = placeMarks.first;
-      return "${place.locality}, ${place.street}, ${place.name}";
+      return "${place.street}, ${place.locality}, ${place.subLocality}";
     }
     return "";
   }
