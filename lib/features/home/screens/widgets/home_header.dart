@@ -1,13 +1,16 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:e_fashion_flutter/config/router/app_router.dart';
-import 'package:e_fashion_flutter/core/utils/assets_manager.dart';
 import 'package:e_fashion_flutter/core/widgets/secondary_button.dart';
+import 'package:e_fashion_flutter/features/home/data/collection_model.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class HomeHeader extends StatefulWidget {
-  const HomeHeader({super.key});
+  const HomeHeader({super.key, this.collections = const []});
+
+  final List<CollectionModel> collections;
 
   @override
   State<HomeHeader> createState() => _HomeHeaderState();
@@ -15,33 +18,6 @@ class HomeHeader extends StatefulWidget {
 
 class _HomeHeaderState extends State<HomeHeader> {
   late final PageController controller;
-
-  static const List<Map<String, String>> slides = [
-    {
-      'image': AssetsManager.welcomeImage,
-      'title': 'Summer COLLECTION',
-      'discount': '30% OFF',
-      'subtitle': 'On all summer outfits',
-    },
-    {
-      'image': AssetsManager.welcomeImage,
-      'title': 'Spring COLLECTION',
-      'discount': '50% OFF',
-      'subtitle': 'Fresh styles for you',
-    },
-    {
-      'image': AssetsManager.welcomeImage,
-      'title': 'Autumn COLLECTION',
-      'discount': '20% OFF',
-      'subtitle': 'Warm & Stylish',
-    },
-    {
-      'image': AssetsManager.welcomeImage,
-      'title': 'Winter COLLECTION',
-      'discount': '40% OFF',
-      'subtitle': 'Cozy Looks Await',
-    },
-  ];
 
   @override
   void initState() {
@@ -57,12 +33,13 @@ class _HomeHeaderState extends State<HomeHeader> {
 
   @override
   Widget build(BuildContext context) {
+    final collections = widget.collections;
     return SizedBox(
       height: 320,
       width: double.infinity,
       child: PageView.builder(
         controller: controller,
-        itemCount: slides.length,
+        itemCount: collections.length,
         itemBuilder:
             (context, index) => ClipRRect(
               key: ValueKey(index),
@@ -72,8 +49,8 @@ class _HomeHeaderState extends State<HomeHeader> {
               ),
               child: Stack(
                 children: [
-                  Image.asset(
-                    slides[index]['image']!,
+                  CachedNetworkImage(
+                    imageUrl: collections[index].imageUrl,
                     fit: BoxFit.cover,
                     height: 320,
                     width: double.infinity,
@@ -83,7 +60,7 @@ class _HomeHeaderState extends State<HomeHeader> {
                     start: 24.0,
                     child: SmoothPageIndicator(
                       controller: controller,
-                      count: slides.length,
+                      count: collections.length,
                       effect: const ExpandingDotsEffect(
                         dotWidth: 30.0,
                         dotHeight: 4.0,
@@ -106,7 +83,7 @@ class _HomeHeaderState extends State<HomeHeader> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          slides[index]['title']!,
+                          collections[index].title,
                           style: Theme.of(context).textTheme.titleMedium!
                               .copyWith(color: Colors.white),
                         ),
@@ -120,12 +97,12 @@ class _HomeHeaderState extends State<HomeHeader> {
                         ),
                         const SizedBox(height: 8.0),
                         Text(
-                          slides[index]['discount']!,
+                          collections[index].discount,
                           style: Theme.of(context).textTheme.displayLarge!
                               .copyWith(color: Colors.white),
                         ),
                         Text(
-                          slides[index]['subtitle']!,
+                          collections[index].subTitle,
                           style: Theme.of(context).textTheme.titleMedium!
                               .copyWith(color: Colors.white),
                         ),

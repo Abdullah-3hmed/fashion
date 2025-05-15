@@ -4,8 +4,8 @@ import 'package:multi_payment_gateway/stripe_payment_kit.dart';
 
 class PaymentManager {
   static Future<void> payWithStripe({required int amount}) async {
-    StripeSetup.setup(publishableKey: dotenv.env["Stripe_Publishable_Key"]!);
-    var token = "${dotenv.env["Stripe_Secret_Key"]}";
+    StripeSetup.setup(publishableKey: dotenv.env["STRIPE_PUBLISHABLE_KEY"]!);
+    var token = "${dotenv.env["STRIPE_SECRET_KEY"]}";
     final SetupStripePayment intent = SetupStripePayment(
       token: token,
       amount: amount,

@@ -1,6 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:e_fashion_flutter/features/home/screens/widgets/filter_section.dart';
-import 'package:e_fashion_flutter/features/home/screens/widgets/home_header.dart';
+import 'package:e_fashion_flutter/features/home/screens/widgets/home_header_bloc_builder.dart';
 import 'package:e_fashion_flutter/features/home/screens/widgets/offers_section.dart';
 import 'package:e_fashion_flutter/features/home/screens/widgets/zara_section.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +15,7 @@ class HomeScreen extends StatelessWidget {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          HomeHeader(),
+          HomeHeaderBlocBuilder(),
           Expanded(
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 24.0),

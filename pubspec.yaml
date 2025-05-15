@@ -72,6 +72,8 @@ dependencies:
   google_maps_flutter: ^2.12.1
   location: ^8.0.0
   geocoding: ^3.0.0
+  redacted: ^1.0.13
+  skeletonizer: ^1.4.3
 
 
 dev_dependencies:

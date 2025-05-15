@@ -7,6 +7,9 @@ import 'package:e_fashion_flutter/core/services/location_service.dart';
 import 'package:e_fashion_flutter/features/auth/cubit/auth_cubit.dart';
 import 'package:e_fashion_flutter/features/auth/repos/auth_repo.dart';
 import 'package:e_fashion_flutter/features/auth/repos/auth_repo_impl.dart';
+import 'package:e_fashion_flutter/features/home/cubit/home_cubit.dart';
+import 'package:e_fashion_flutter/features/home/repos/home_repo.dart';
+import 'package:e_fashion_flutter/features/home/repos/home_repo_impl.dart';
 import 'package:e_fashion_flutter/features/profile/cubit/map_cubit.dart';
 import 'package:e_fashion_flutter/features/profile/cubit/user_cubit.dart';
 import 'package:e_fashion_flutter/features/profile/repos/map_repo.dart';
@@ -42,5 +45,9 @@ class ServiceLocator {
     getIt.registerLazySingleton<LocationService>(() => LocationService());
     getIt.registerLazySingleton<MapRepo>(() => MapRepoImpl());
     getIt.registerFactory<MapCubit>(() => MapCubit(mapRepo: getIt<MapRepo>()));
+    getIt.registerLazySingleton<HomeRepo>(() => HomeRepoImpl());
+    getIt.registerFactory<HomeCubit>(
+      () => HomeCubit(homeRepo: getIt<HomeRepo>()),
+    );
   }
 }
