@@ -16,8 +16,7 @@ class HomeHeaderBlocBuilder extends StatelessWidget {
     (index) => const CollectionModel(
       id: 0,
       title: '•••••• ••••••',
-      imageUrl:
-          'http://efashion.runasp.net/Products/Woman Dress.jpg', // صورة رمادية مؤقتة
+      imageUrl: 'http://efashion.runasp.net/Products/Woman Dress.jpg',
       discount: '••% OFF',
       subTitle: '•••••••••••••',
       discountPercent: 0.0,

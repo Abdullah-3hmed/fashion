@@ -30,26 +30,32 @@ class _FilterGenderSectionState extends State<FilterGenderSection> {
   Widget build(BuildContext context) {
     return SizedBox(
       height: 70.0,
-      child: ListView.separated(
-        physics: const NeverScrollableScrollPhysics(),
+      child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
-        shrinkWrap: true,
-        itemBuilder:
-            (context, index) => InkWell(
+        child: Row(
+          children: List.generate(
+            filterGenderList.length,
+            (index) => InkWell(
               onTap: () {
                 setState(() {
                   activeIndex = index;
                   widget.onGenderChanged(filterGenderList[index].title);
                 });
               },
-              child: FilterSectionItem(
-                image: filterGenderList[index].image,
-                text: filterGenderList[index].title,
-                isSelected: activeIndex == index,
+              child: Padding(
+                padding:
+                    index == 0
+                        ? const EdgeInsetsDirectional.only(end: 16.0)
+                        : const EdgeInsetsDirectional.only(),
+                child: FilterSectionItem(
+                  image: filterGenderList[index].image,
+                  text: filterGenderList[index].title,
+                  isSelected: activeIndex == index,
+                ),
               ),
             ),
-        separatorBuilder: (context, index) => const SizedBox(width: 16.0),
-        itemCount: filterGenderList.length,
+          ),
+        ),
       ),
     );
   }

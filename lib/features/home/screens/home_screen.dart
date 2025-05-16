@@ -1,5 +1,5 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:e_fashion_flutter/features/home/screens/widgets/filter_section.dart';
+import 'package:e_fashion_flutter/features/home/screens/widgets/category_section.dart';
 import 'package:e_fashion_flutter/features/home/screens/widgets/home_header_bloc_builder.dart';
 import 'package:e_fashion_flutter/features/home/screens/widgets/offers_section.dart';
 import 'package:e_fashion_flutter/features/home/screens/widgets/zara_section.dart';
@@ -22,7 +22,7 @@ class HomeScreen extends StatelessWidget {
               child: CustomScrollView(
                 physics: BouncingScrollPhysics(),
                 slivers: [
-                  SliverToBoxAdapter(child: FilterSection()),
+                  SliverToBoxAdapter(child: CategorySection()),
                   SliverToBoxAdapter(child: OffersSection()),
                   SliverToBoxAdapter(child: ZaraSection()),
                 ],
