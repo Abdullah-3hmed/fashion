@@ -19,29 +19,32 @@ class FilterSectionItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final imageProvider =
+        isCategory
+            ? CachedNetworkImageProvider(image)
+            : AssetImage(image) as ImageProvider;
+
     return Column(
       children: [
-        isSelected
-            ? CircleAvatar(
-              radius: 22.0,
-              backgroundColor: Theme.of(context).colorScheme.primary,
-              child: CircleAvatar(
-                radius: 20.0,
-                backgroundColor: Colors.transparent,
-                backgroundImage:
-                    isCategory
-                        ? CachedNetworkImageProvider(image)
-                        : Image(image: AssetImage(image)).image,
-              ),
-            )
-            : CircleAvatar(
-              radius: 20.0,
-              backgroundColor: Colors.transparent,
-              backgroundImage:
-                  isCategory
-                      ? CachedNetworkImageProvider(image)
-                      : Image(image: AssetImage(image)).image,
-            ),
+        Container(
+          width: 44,
+          height: 44,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            border:
+                isSelected
+                    ? Border.all(
+                      color: Theme.of(context).colorScheme.primary,
+                      width: 3,
+                    )
+                    : null,
+          ),
+          child: CircleAvatar(
+            radius: 20.0,
+            backgroundColor: Colors.transparent,
+            backgroundImage: imageProvider,
+          ),
+        ),
         const SizedBox(height: 8.0),
         Text(text, style: Theme.of(context).textTheme.bodySmall),
       ],

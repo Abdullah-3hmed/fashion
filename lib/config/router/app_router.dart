@@ -132,7 +132,10 @@ class Authenticated extends AutoRouter implements AutoRouteWrapper {
                   ..getCollections()
                   ..getCategories(),
       ),
-      BlocProvider(create: (context) => getIt<UserCubit>()..getUserProfile()),
+      BlocProvider(
+        lazy: false,
+        create: (context) => getIt<UserCubit>()..getUserProfile(),
+      ),
     ],
     child: this,
   );

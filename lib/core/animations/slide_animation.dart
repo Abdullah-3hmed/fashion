@@ -37,7 +37,6 @@ class _SlideAnimationState extends State<SlideAnimation>
       end: Offset.zero,
     ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOut));
 
-    // تأخير قبل التشغيل لو فيه delay
     Future.delayed(widget.delay, () {
       if (mounted) _controller.forward();
     });

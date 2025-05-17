@@ -1,3 +1,4 @@
+import 'package:e_fashion_flutter/core/animations/slide_animation.dart';
 import 'package:e_fashion_flutter/core/enums/request_status.dart';
 import 'package:e_fashion_flutter/core/widgets/third_button.dart';
 import 'package:e_fashion_flutter/features/home/cubit/home_cubit.dart';
@@ -47,13 +48,17 @@ class _CategorySectionState extends State<CategorySection> {
           children: [
             Text("Category", style: Theme.of(context).textTheme.bodyMedium),
             if (selectedGender != null || selectedCategory != null)
-              ThirdButton(
-                onPressed: () {
-                  debugPrint(
-                    'Applied with Gender: $selectedGender, Category: $selectedCategory',
-                  );
-                },
-                text: "Apply",
+              SlideAnimation(
+                duration: const Duration(milliseconds: 300),
+                begin: const Offset(1.0, 0.0),
+                child: ThirdButton(
+                  onPressed: () {
+                    debugPrint(
+                      'Applied with Gender: $selectedGender, Category: $selectedCategory',
+                    );
+                  },
+                  text: "Apply",
+                ),
               ),
           ],
         ),
