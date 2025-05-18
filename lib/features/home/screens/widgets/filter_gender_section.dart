@@ -22,8 +22,8 @@ class FilterGenderSection extends StatefulWidget {
 class _FilterGenderSectionState extends State<FilterGenderSection> {
   int activeIndex = -1;
   List<FilterGenderModel> filterGenderList = const [
-    FilterGenderModel(title: "woman", image: AssetsManager.woman),
-    FilterGenderModel(title: "man", image: AssetsManager.man),
+    FilterGenderModel(title: "women", image: AssetsManager.woman),
+    FilterGenderModel(title: "men", image: AssetsManager.man),
   ];
 
   @override

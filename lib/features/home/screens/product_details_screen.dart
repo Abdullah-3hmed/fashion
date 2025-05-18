@@ -1,19 +1,22 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:e_fashion_flutter/core/utils/assets_manager.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:e_fashion_flutter/features/home/screens/widgets/details_clipped_container.dart';
 import 'package:e_fashion_flutter/features/home/screens/widgets/details_container_content.dart';
 import 'package:flutter/material.dart';
 
 @RoutePage()
-class DetailsScreen extends StatefulWidget {
-  const DetailsScreen({super.key});
+class ProductDetailsScreen extends StatefulWidget {
+  const ProductDetailsScreen({super.key, required this.imageUrl});
+
+  final String imageUrl;
 
   @override
-  State<DetailsScreen> createState() => _DetailsScreenState();
+  State<ProductDetailsScreen> createState() => _ProductDetailsScreenState();
 }
 
-class _DetailsScreenState extends State<DetailsScreen> {
+class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   late bool isClipped;
+
   @override
   void initState() {
     isClipped = true;
@@ -26,7 +29,10 @@ class _DetailsScreenState extends State<DetailsScreen> {
       body: Stack(
         children: [
           Positioned.fill(
-            child: Image.asset(AssetsManager.welcomeImage, fit: BoxFit.cover),
+            child: CachedNetworkImage(
+              imageUrl: widget.imageUrl,
+              fit: BoxFit.cover,
+            ),
           ),
           DraggableScrollableSheet(
             initialChildSize: 0.47,

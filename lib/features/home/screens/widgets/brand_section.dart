@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
-class ZaraSection extends StatelessWidget {
-  const ZaraSection({super.key});
+class BrandSection extends StatelessWidget {
+  const BrandSection({super.key, required this.brandName});
+
+  final String brandName;
 
   @override
   Widget build(BuildContext context) {
@@ -10,7 +12,7 @@ class ZaraSection extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text("Zara", style: Theme.of(context).textTheme.bodyMedium),
+            Text(brandName, style: Theme.of(context).textTheme.bodyMedium),
             TextButton(
               style: ButtonStyle(
                 padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
@@ -34,8 +36,8 @@ class ZaraSection extends StatelessWidget {
             physics: const BouncingScrollPhysics(),
             scrollDirection: Axis.horizontal,
             itemCount: 4,
-            itemBuilder:
-                (context, _) => const SizedBox(width: 180.0, child: SizedBox()),
+            itemBuilder: (context, index) => const SizedBox.shrink(),
+            // const SizedBox(width: 180.0, child: BrandSectionItem()),
             separatorBuilder:
                 (BuildContext context, int index) =>
                     const SizedBox(width: 12.0),

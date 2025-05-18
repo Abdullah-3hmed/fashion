@@ -11,10 +11,10 @@ import 'package:e_fashion_flutter/features/cart/screens/cart_screen.dart';
 import 'package:e_fashion_flutter/features/favourite/screens/favorite_screen.dart';
 import 'package:e_fashion_flutter/features/home/cubit/home_cubit.dart';
 import 'package:e_fashion_flutter/features/home/screens/collection_screen.dart';
-import 'package:e_fashion_flutter/features/home/screens/details_screen.dart';
 import 'package:e_fashion_flutter/features/home/screens/discover_screen.dart';
 import 'package:e_fashion_flutter/features/home/screens/edit_review_screen.dart';
 import 'package:e_fashion_flutter/features/home/screens/home_screen.dart';
+import 'package:e_fashion_flutter/features/home/screens/product_details_screen.dart';
 import 'package:e_fashion_flutter/features/notification/screens/notification_screen.dart';
 import 'package:e_fashion_flutter/features/profile/cubit/user_cubit.dart';
 import 'package:e_fashion_flutter/features/profile/screens/chat_support_screen.dart';
@@ -72,7 +72,7 @@ class AppRouter extends RootStackRouter {
             _buildCustomRoute(page: ProfileRoute.page),
           ],
         ),
-        _buildCustomRoute(page: DetailsRoute.page),
+        _buildCustomRoute(page: ProductDetailsRoute.page),
         _buildCustomRoute(page: EditProfileRoute.page),
         _buildCustomRoute(page: ProfileChangePasswordRoute.page),
         _buildCustomRoute(page: ChatSupportRoute.page),

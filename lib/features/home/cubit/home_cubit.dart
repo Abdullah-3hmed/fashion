@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:e_fashion_flutter/core/enums/request_status.dart';
 import 'package:e_fashion_flutter/features/home/cubit/home_state.dart';
 import 'package:e_fashion_flutter/features/home/repos/home_repo.dart';
@@ -73,6 +75,28 @@ class HomeCubit extends Cubit<HomeState> {
       ),
       (offers) => emit(
         state.copyWith(offers: offers, offersStatus: RequestStatus.success),
+      ),
+    );
+  }
+
+  Future<void> getProductDetails({required int productId}) async {
+    emit(state.copyWith(productDetailsStatus: RequestStatus.loading));
+    final result = await homeRepo.getProductDetails(productId);
+    result.fold(
+      (failure) {
+        emit(
+          state.copyWith(
+            productDetailsErrorMessage: failure.errorMessage,
+            productDetailsStatus: RequestStatus.error,
+          ),
+        );
+        log(failure.errorMessage);
+      },
+      (productDetails) => emit(
+        state.copyWith(
+          productDetailsModel: productDetails,
+          productDetailsStatus: RequestStatus.success,
+        ),
       ),
     );
   }

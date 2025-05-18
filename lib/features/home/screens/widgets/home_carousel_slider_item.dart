@@ -2,9 +2,11 @@ import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:e_fashion_flutter/config/router/app_router.dart';
 import 'package:e_fashion_flutter/core/widgets/modal_bottom_sheet_content.dart';
+import 'package:e_fashion_flutter/features/home/cubit/home_cubit.dart';
 import 'package:e_fashion_flutter/features/home/data/offer_model.dart';
 import 'package:e_fashion_flutter/features/home/screens/widgets/home_clipped_container.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
 
 class HomeCarouselSliderItem extends StatelessWidget {
@@ -17,8 +19,13 @@ class HomeCarouselSliderItem extends StatelessWidget {
     return Stack(
       children: [
         InkWell(
-          onTap: () {
-            context.pushRoute(const DetailsRoute());
+          onTap: () async {
+            context.pushRoute(
+              ProductDetailsRoute(imageUrl: offerModel.imageUrl),
+            );
+            await context.read<HomeCubit>().getProductDetails(
+              productId: offerModel.id,
+            );
           },
           child: ClipRRect(
             borderRadius: BorderRadius.circular(16.0),
@@ -36,8 +43,13 @@ class HomeCarouselSliderItem extends StatelessWidget {
           start: 0.0,
           end: 0.0,
           child: InkWell(
-            onTap: () {
-              context.pushRoute(const DetailsRoute());
+            onTap: () async {
+              context.pushRoute(
+                ProductDetailsRoute(imageUrl: offerModel.imageUrl),
+              );
+              await context.read<HomeCubit>().getProductDetails(
+                productId: offerModel.id,
+              );
             },
             child: HomeClippedContainer(
               child: Column(
@@ -61,7 +73,7 @@ class HomeCarouselSliderItem extends StatelessWidget {
                         TextSpan(
                           text:
                               r"$"
-                              "${offerModel.oldPrice}  ",
+                              "${offerModel.oldPrice}",
                           style: Theme.of(
                             context,
                           ).textTheme.bodyLarge!.copyWith(
@@ -74,7 +86,7 @@ class HomeCarouselSliderItem extends StatelessWidget {
                         ),
                         TextSpan(
                           text:
-                              r"$"
+                              r"  $"
                               "${offerModel.discountedPrice}",
                           style: Theme.of(
                             context,

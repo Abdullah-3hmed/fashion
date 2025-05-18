@@ -91,22 +91,6 @@ class CollectionRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [DetailsScreen]
-class DetailsRoute extends PageRouteInfo<void> {
-  const DetailsRoute({List<PageRouteInfo>? children})
-    : super(DetailsRoute.name, initialChildren: children);
-
-  static const String name = 'DetailsRoute';
-
-  static PageInfo page = PageInfo(
-    name,
-    builder: (data) {
-      return const DetailsScreen();
-    },
-  );
-}
-
-/// generated route for
 /// [DiscoverScreen]
 class DiscoverRoute extends PageRouteInfo<void> {
   const DiscoverRoute({List<PageRouteInfo>? children})
@@ -333,6 +317,43 @@ class OrderStatusRoute extends PageRouteInfo<void> {
       return const OrderStatusScreen();
     },
   );
+}
+
+/// generated route for
+/// [ProductDetailsScreen]
+class ProductDetailsRoute extends PageRouteInfo<ProductDetailsRouteArgs> {
+  ProductDetailsRoute({
+    Key? key,
+    required String imageUrl,
+    List<PageRouteInfo>? children,
+  }) : super(
+         ProductDetailsRoute.name,
+         args: ProductDetailsRouteArgs(key: key, imageUrl: imageUrl),
+         initialChildren: children,
+       );
+
+  static const String name = 'ProductDetailsRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<ProductDetailsRouteArgs>();
+      return ProductDetailsScreen(key: args.key, imageUrl: args.imageUrl);
+    },
+  );
+}
+
+class ProductDetailsRouteArgs {
+  const ProductDetailsRouteArgs({this.key, required this.imageUrl});
+
+  final Key? key;
+
+  final String imageUrl;
+
+  @override
+  String toString() {
+    return 'ProductDetailsRouteArgs{key: $key, imageUrl: $imageUrl}';
+  }
 }
 
 /// generated route for

@@ -3,6 +3,7 @@ import 'package:e_fashion_flutter/features/home/data/category_model.dart';
 import 'package:e_fashion_flutter/features/home/data/collection_details_model.dart';
 import 'package:e_fashion_flutter/features/home/data/collection_model.dart';
 import 'package:e_fashion_flutter/features/home/data/offer_model.dart';
+import 'package:e_fashion_flutter/features/home/data/product_details_model.dart';
 import 'package:equatable/equatable.dart';
 
 class HomeState extends Equatable {
@@ -18,6 +19,9 @@ class HomeState extends Equatable {
   final List<OfferModel> offers;
   final RequestStatus offersStatus;
   final String offersErrorMessage;
+  final ProductDetailsModel productDetailsModel;
+  final RequestStatus productDetailsStatus;
+  final String productDetailsErrorMessage;
 
   const HomeState({
     this.collections = const [],
@@ -32,6 +36,9 @@ class HomeState extends Equatable {
     this.offers = const [],
     this.offersStatus = RequestStatus.loading,
     this.offersErrorMessage = "",
+    this.productDetailsModel = ProductDetailsModel.empty,
+    this.productDetailsStatus = RequestStatus.initial,
+    this.productDetailsErrorMessage = "",
   });
 
   HomeState copyWith({
@@ -47,6 +54,9 @@ class HomeState extends Equatable {
     List<OfferModel>? offers,
     RequestStatus? offersStatus,
     String? offersErrorMessage,
+    ProductDetailsModel? productDetailsModel,
+    RequestStatus? productDetailsStatus,
+    String? productDetailsErrorMessage,
   }) {
     return HomeState(
       collections: collections ?? this.collections,
@@ -66,6 +76,10 @@ class HomeState extends Equatable {
       offers: offers ?? this.offers,
       offersStatus: offersStatus ?? this.offersStatus,
       offersErrorMessage: offersErrorMessage ?? this.offersErrorMessage,
+      productDetailsModel: productDetailsModel ?? this.productDetailsModel,
+      productDetailsStatus: productDetailsStatus ?? this.productDetailsStatus,
+      productDetailsErrorMessage:
+          productDetailsErrorMessage ?? this.productDetailsErrorMessage,
     );
   }
 
@@ -83,5 +97,8 @@ class HomeState extends Equatable {
     offers,
     offersStatus,
     offersErrorMessage,
+    productDetailsModel,
+    productDetailsStatus,
+    productDetailsErrorMessage,
   ];
 }

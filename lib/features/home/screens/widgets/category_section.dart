@@ -35,7 +35,7 @@ class _CategorySectionState extends State<CategorySection> {
             Text("Category", style: Theme.of(context).textTheme.bodyMedium),
             if (selectedGender != null || selectedCategory != null)
               SlideAnimation(
-                duration: const Duration(milliseconds: 300),
+                duration: const Duration(milliseconds: 600),
                 begin: const Offset(1.0, 0.0),
                 child: ThirdButton(
                   onPressed: () {

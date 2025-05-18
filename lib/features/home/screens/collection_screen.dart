@@ -40,8 +40,10 @@ class CollectionScreen extends StatelessWidget {
           switch (state.collectionDetailsStatus) {
             case RequestStatus.loading:
               return Skeletonizer(
-                child: ListView.builder(
+                child: ListView.separated(
                   itemCount: 3,
+                  separatorBuilder:
+                      (context, index) => const SizedBox(height: 16.0),
                   itemBuilder:
                       (context, index) =>
                           index % 2 == 0

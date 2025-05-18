@@ -1,12 +1,15 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:e_fashion_flutter/config/router/app_router.dart';
-import 'package:e_fashion_flutter/core/utils/assets_manager.dart';
+import 'package:e_fashion_flutter/features/home/data/product_details_model.dart';
+import 'package:e_fashion_flutter/features/home/screens/widgets/review_section.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class RatingSection extends StatefulWidget {
-  const RatingSection({super.key});
+  const RatingSection({super.key, required this.productDetailsModel});
+
+  final ProductDetailsModel productDetailsModel;
 
   @override
   State<RatingSection> createState() => _RatingSectionState();
@@ -17,6 +20,7 @@ class _RatingSectionState extends State<RatingSection> {
 
   @override
   Widget build(BuildContext context) {
+    final ProductDetailsModel product = widget.productDetailsModel;
     return Column(
       children: [
         RatingBar.builder(
@@ -39,7 +43,7 @@ class _RatingSectionState extends State<RatingSection> {
               context.pushRoute(EditReviewRoute(rating: rating));
             },
             child: Text(
-              rating == 0.0 ? "Write a review" : " Edit review",
+              rating == 0 ? "Write a review" : " Edit review",
               style: Theme.of(context).textTheme.bodySmall!.copyWith(
                 color: Theme.of(context).colorScheme.primary,
               ),
@@ -75,7 +79,7 @@ class _RatingSectionState extends State<RatingSection> {
         const SizedBox(height: 24.0),
         Align(
           child: Text(
-            rating == 0 ? " 0 Reviews" : " 1 Reviews",
+            "${product.reviews.length}",
             style: Theme.of(context).textTheme.bodyMedium,
           ),
         ),
@@ -99,47 +103,7 @@ class _RatingSectionState extends State<RatingSection> {
             ],
           ),
         const SizedBox(height: 24.0),
-        Container(
-          padding: const EdgeInsetsDirectional.symmetric(
-            horizontal: 12.0,
-            vertical: 16.0,
-          ),
-          decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.surfaceContainerHighest,
-            borderRadius: BorderRadius.circular(12.0),
-          ),
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  CircleAvatar(
-                    radius: 20.0,
-                    backgroundImage: Image.asset(AssetsManager.testImage).image,
-                  ),
-                  const SizedBox(width: 16.0),
-                  Text(
-                    "Kira Alan",
-                    style: Theme.of(context).textTheme.bodyMedium,
-                  ),
-                ],
-              ),
-              const SizedBox(height: 4.0),
-              Row(
-                children: [
-                  for (int i = 1; i <= rating; i++)
-                    const Icon(Icons.star, color: Colors.amber, size: 16.0),
-                  const SizedBox(width: 11.0),
-                  Text("9/10/22", style: Theme.of(context).textTheme.bodySmall),
-                ],
-              ),
-              const SizedBox(height: 8.0),
-              Text(
-                "Lorem ipsum dolor sit amet consectetur. Elit neque integer enim diam rhoncus rhoncus eu ut. Porttitor elementum arcu gravida adipiscing in. Consequat.",
-                style: Theme.of(context).textTheme.bodySmall,
-              ),
-            ],
-          ),
-        ),
+        if (product.reviews.isNotEmpty) const ReviewSection(),
       ],
     );
   }

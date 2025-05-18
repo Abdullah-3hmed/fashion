@@ -9,6 +9,7 @@ import 'package:e_fashion_flutter/features/home/data/category_model.dart';
 import 'package:e_fashion_flutter/features/home/data/collection_details_model.dart';
 import 'package:e_fashion_flutter/features/home/data/collection_model.dart';
 import 'package:e_fashion_flutter/features/home/data/offer_model.dart';
+import 'package:e_fashion_flutter/features/home/data/product_details_model.dart';
 import 'package:e_fashion_flutter/features/home/repos/home_repo.dart';
 
 class HomeRepoImpl implements HomeRepo {
@@ -86,6 +87,24 @@ class HomeRepoImpl implements HomeRepo {
           ),
         ),
       );
+    } on DioException catch (e) {
+      return Left(ServerFailure.fromDioError(e));
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, ProductDetailsModel>> getProductDetails(
+    int productId,
+  ) async {
+    try {
+      final response = await getIt<DioHelper>().get(
+        url: ApiConstants.getProductDetailsEndpoint,
+        headers: {"Authorization": "Bearer ${AppConstants.token}"},
+        queryParameters: {"id": productId},
+      );
+      return Right(ProductDetailsModel.fromJson(response.data));
     } on DioException catch (e) {
       return Left(ServerFailure.fromDioError(e));
     } catch (e) {

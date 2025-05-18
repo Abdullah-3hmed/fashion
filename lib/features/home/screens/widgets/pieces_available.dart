@@ -34,7 +34,7 @@ class _PiecesAvailableState extends State<PiecesAvailable> {
         IconButton(
           padding: EdgeInsets.zero,
           onPressed: () {
-            if (_pieces < 20) {
+            if (_pieces < 10) {
               setState(() {
                 _pieces++;
               });
