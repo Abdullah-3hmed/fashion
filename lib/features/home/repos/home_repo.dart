@@ -3,11 +3,16 @@ import 'package:e_fashion_flutter/core/error/failures.dart';
 import 'package:e_fashion_flutter/features/home/data/category_model.dart';
 import 'package:e_fashion_flutter/features/home/data/collection_details_model.dart';
 import 'package:e_fashion_flutter/features/home/data/collection_model.dart';
+import 'package:e_fashion_flutter/features/home/data/offer_model.dart';
 
 abstract class HomeRepo {
   Future<Either<Failure, List<CollectionModel>>> getCollections();
+
   Future<Either<Failure, List<CategoryModel>>> getCategories();
+
   Future<Either<Failure, CollectionDetailsModel>> getCollectionDetails(
     int collectionId,
   );
+
+  Future<Either<Failure, List<OfferModel>>> getOffers();
 }

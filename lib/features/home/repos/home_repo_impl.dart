@@ -8,6 +8,7 @@ import 'package:e_fashion_flutter/core/utils/app_constants.dart';
 import 'package:e_fashion_flutter/features/home/data/category_model.dart';
 import 'package:e_fashion_flutter/features/home/data/collection_details_model.dart';
 import 'package:e_fashion_flutter/features/home/data/collection_model.dart';
+import 'package:e_fashion_flutter/features/home/data/offer_model.dart';
 import 'package:e_fashion_flutter/features/home/repos/home_repo.dart';
 
 class HomeRepoImpl implements HomeRepo {
@@ -64,6 +65,27 @@ class HomeRepoImpl implements HomeRepo {
         queryParameters: {"id": collectionId},
       );
       return Right(CollectionDetailsModel.fromJson(response.data));
+    } on DioException catch (e) {
+      return Left(ServerFailure.fromDioError(e));
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<OfferModel>>> getOffers() async {
+    try {
+      final response = await getIt<DioHelper>().get(
+        url: ApiConstants.getOffersEndpoint,
+        headers: {"Authorization": "Bearer ${AppConstants.token}"},
+      );
+      return Right(
+        List<OfferModel>.from(
+          (response.data[r'$values'] as List).map(
+            (offer) => OfferModel.fromJson(offer),
+          ),
+        ),
+      );
     } on DioException catch (e) {
       return Left(ServerFailure.fromDioError(e));
     } catch (e) {

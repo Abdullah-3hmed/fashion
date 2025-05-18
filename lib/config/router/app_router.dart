@@ -130,7 +130,8 @@ class Authenticated extends AutoRouter implements AutoRouteWrapper {
             (context) =>
                 getIt<HomeCubit>()
                   ..getCollections()
-                  ..getCategories(),
+                  ..getCategories()
+                  ..getOffers(),
       ),
       BlocProvider(
         lazy: false,

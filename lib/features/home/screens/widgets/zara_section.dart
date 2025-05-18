@@ -1,4 +1,3 @@
-import 'package:e_fashion_flutter/features/home/screens/widgets/home_carousel_slider_item.dart';
 import 'package:flutter/material.dart';
 
 class ZaraSection extends StatelessWidget {
@@ -36,10 +35,7 @@ class ZaraSection extends StatelessWidget {
             scrollDirection: Axis.horizontal,
             itemCount: 4,
             itemBuilder:
-                (context, _) => const SizedBox(
-                  width: 180.0,
-                  child: HomeCarouselSliderItem(),
-                ),
+                (context, _) => const SizedBox(width: 180.0, child: SizedBox()),
             separatorBuilder:
                 (BuildContext context, int index) =>
                     const SizedBox(width: 12.0),

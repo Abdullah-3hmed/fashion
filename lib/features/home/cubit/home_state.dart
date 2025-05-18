@@ -2,6 +2,7 @@ import 'package:e_fashion_flutter/core/enums/request_status.dart';
 import 'package:e_fashion_flutter/features/home/data/category_model.dart';
 import 'package:e_fashion_flutter/features/home/data/collection_details_model.dart';
 import 'package:e_fashion_flutter/features/home/data/collection_model.dart';
+import 'package:e_fashion_flutter/features/home/data/offer_model.dart';
 import 'package:equatable/equatable.dart';
 
 class HomeState extends Equatable {
@@ -14,6 +15,9 @@ class HomeState extends Equatable {
   final CollectionDetailsModel collectionDetailsModel;
   final RequestStatus collectionDetailsStatus;
   final String collectionDetailsErrorMessage;
+  final List<OfferModel> offers;
+  final RequestStatus offersStatus;
+  final String offersErrorMessage;
 
   const HomeState({
     this.collections = const [],
@@ -23,8 +27,11 @@ class HomeState extends Equatable {
     this.categoriesStatus = RequestStatus.loading,
     this.categoriesErrorMessage = "",
     this.collectionDetailsModel = CollectionDetailsModel.empty,
-    this.collectionDetailsStatus = RequestStatus.loading,
+    this.collectionDetailsStatus = RequestStatus.initial,
     this.collectionDetailsErrorMessage = "",
+    this.offers = const [],
+    this.offersStatus = RequestStatus.loading,
+    this.offersErrorMessage = "",
   });
 
   HomeState copyWith({
@@ -37,6 +44,9 @@ class HomeState extends Equatable {
     CollectionDetailsModel? collectionDetailsModel,
     RequestStatus? collectionDetailsStatus,
     String? collectionDetailsErrorMessage,
+    List<OfferModel>? offers,
+    RequestStatus? offersStatus,
+    String? offersErrorMessage,
   }) {
     return HomeState(
       collections: collections ?? this.collections,
@@ -53,6 +63,9 @@ class HomeState extends Equatable {
           collectionDetailsStatus ?? this.collectionDetailsStatus,
       collectionDetailsErrorMessage:
           collectionDetailsErrorMessage ?? this.collectionDetailsErrorMessage,
+      offers: offers ?? this.offers,
+      offersStatus: offersStatus ?? this.offersStatus,
+      offersErrorMessage: offersErrorMessage ?? this.offersErrorMessage,
     );
   }
 
@@ -67,5 +80,8 @@ class HomeState extends Equatable {
     collectionDetailsModel,
     collectionDetailsStatus,
     collectionDetailsErrorMessage,
+    offers,
+    offersStatus,
+    offersErrorMessage,
   ];
 }

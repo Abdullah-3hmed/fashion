@@ -1,13 +1,16 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:e_fashion_flutter/config/router/app_router.dart';
-import 'package:e_fashion_flutter/core/utils/assets_manager.dart';
 import 'package:e_fashion_flutter/core/widgets/modal_bottom_sheet_content.dart';
+import 'package:e_fashion_flutter/features/home/data/offer_model.dart';
 import 'package:e_fashion_flutter/features/home/screens/widgets/home_clipped_container.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 
 class HomeCarouselSliderItem extends StatelessWidget {
-  const HomeCarouselSliderItem({super.key});
+  const HomeCarouselSliderItem({super.key, required this.offerModel});
+
+  final OfferModel offerModel;
 
   @override
   Widget build(BuildContext context) {
@@ -17,15 +20,14 @@ class HomeCarouselSliderItem extends StatelessWidget {
           onTap: () {
             context.pushRoute(const DetailsRoute());
           },
-          child: Container(
-            width: double.infinity,
-            height: 180.0,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(16.0),
-              image: DecorationImage(
-                fit: BoxFit.cover,
-                image: Image.asset(AssetsManager.testImage).image,
-              ),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(16.0),
+            child: CachedNetworkImage(
+              height: 180.0,
+              width: double.infinity,
+              fit: BoxFit.cover,
+              imageUrl: offerModel.imageUrl,
+              errorWidget: (context, url, error) => const Icon(Icons.error),
             ),
           ),
         ),
@@ -41,9 +43,13 @@ class HomeCarouselSliderItem extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  const SizedBox(height: 10.0),
                   Text(
-                    "Denim Jacket",
+                    offerModel.name.length > 20
+                        ? '${offerModel.name.substring(0, 20)}...'
+                        : offerModel.name,
                     maxLines: 1,
+
                     overflow: TextOverflow.ellipsis,
                     style: Theme.of(
                       context,
@@ -53,7 +59,9 @@ class HomeCarouselSliderItem extends StatelessWidget {
                     TextSpan(
                       children: [
                         TextSpan(
-                          text: r"$200 ",
+                          text:
+                              r"$"
+                              "${offerModel.oldPrice}  ",
                           style: Theme.of(
                             context,
                           ).textTheme.bodyLarge!.copyWith(
@@ -65,7 +73,9 @@ class HomeCarouselSliderItem extends StatelessWidget {
                           ),
                         ),
                         TextSpan(
-                          text: r"  $150 ",
+                          text:
+                              r"$"
+                              "${offerModel.discountedPrice}",
                           style: Theme.of(
                             context,
                           ).textTheme.bodyLarge!.copyWith(color: Colors.white),

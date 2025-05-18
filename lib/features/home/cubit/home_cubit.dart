@@ -44,6 +44,7 @@ class HomeCubit extends Cubit<HomeState> {
   }
 
   Future<void> getCollectionDetails({required int collectionId}) async {
+    emit(state.copyWith(collectionDetailsStatus: RequestStatus.loading));
     final result = await homeRepo.getCollectionDetails(collectionId);
     result.fold(
       (failure) => emit(
@@ -57,6 +58,21 @@ class HomeCubit extends Cubit<HomeState> {
           collectionDetailsModel: collectionDetails,
           collectionDetailsStatus: RequestStatus.success,
         ),
+      ),
+    );
+  }
+
+  Future<void> getOffers() async {
+    final result = await homeRepo.getOffers();
+    result.fold(
+      (failure) => emit(
+        state.copyWith(
+          offersErrorMessage: failure.errorMessage,
+          offersStatus: RequestStatus.error,
+        ),
+      ),
+      (offers) => emit(
+        state.copyWith(offers: offers, offersStatus: RequestStatus.success),
       ),
     );
   }
