@@ -1,6 +1,4 @@
 import 'package:e_fashion_flutter/core/enums/request_status.dart';
-import 'package:e_fashion_flutter/core/utils/show_toast.dart';
-import 'package:e_fashion_flutter/core/utils/toast_states.dart';
 import 'package:e_fashion_flutter/features/home/cubit/home_cubit.dart';
 import 'package:e_fashion_flutter/features/home/cubit/home_state.dart';
 import 'package:e_fashion_flutter/features/home/data/collection_model.dart';
@@ -19,7 +17,6 @@ class HomeHeaderBlocBuilder extends StatelessWidget {
       imageUrl: 'http://efashion.runasp.net/Products/Woman Dress.jpg',
       discount: '••% OFF',
       subTitle: '•••••••••••••',
-      discountPercent: 0.0,
     ),
   );
   @override
@@ -37,11 +34,8 @@ class HomeHeaderBlocBuilder extends StatelessWidget {
           case RequestStatus.success:
             return HomeHeader(collections: state.collections);
           case RequestStatus.error:
-            showToast(
-              message: state.collectionsErrorMessage,
-              state: ToastStates.error,
-            );
-            return Center(
+            return SizedBox(
+              height: 200.0,
               child: Text(
                 state.collectionsErrorMessage,
                 style: Theme.of(context).textTheme.titleMedium,

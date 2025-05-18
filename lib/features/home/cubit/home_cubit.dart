@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class HomeCubit extends Cubit<HomeState> {
   HomeCubit({required this.homeRepo}) : super(const HomeState());
   final HomeRepo homeRepo;
+
   Future<void> getCollections() async {
     final result = await homeRepo.getCollections();
     result.fold(
@@ -37,6 +38,24 @@ class HomeCubit extends Cubit<HomeState> {
         state.copyWith(
           categories: categories,
           categoriesStatus: RequestStatus.success,
+        ),
+      ),
+    );
+  }
+
+  Future<void> getCollectionDetails({required int collectionId}) async {
+    final result = await homeRepo.getCollectionDetails(collectionId);
+    result.fold(
+      (failure) => emit(
+        state.copyWith(
+          collectionDetailsErrorMessage: failure.errorMessage,
+          collectionDetailsStatus: RequestStatus.error,
+        ),
+      ),
+      (collectionDetails) => emit(
+        state.copyWith(
+          collectionDetailsModel: collectionDetails,
+          collectionDetailsStatus: RequestStatus.success,
         ),
       ),
     );

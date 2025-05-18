@@ -2,8 +2,10 @@ import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:e_fashion_flutter/config/router/app_router.dart';
 import 'package:e_fashion_flutter/core/widgets/secondary_button.dart';
+import 'package:e_fashion_flutter/features/home/cubit/home_cubit.dart';
 import 'package:e_fashion_flutter/features/home/data/collection_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -99,6 +101,14 @@ class _HomeHeaderState extends State<HomeHeader> {
                         child: SecondaryButton(
                           onPressed: () async {
                             context.pushRoute(const CollectionRoute());
+                            debugPrint(
+                              "collection ID : ${collections[index].id}",
+                            );
+                            await context
+                                .read<HomeCubit>()
+                                .getCollectionDetails(
+                                  collectionId: collections[index].id,
+                                );
                           },
                           text: "Shop now",
                         ),

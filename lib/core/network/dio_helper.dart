@@ -22,13 +22,13 @@ class DioHelper {
   Future<Response> get({
     required String url,
     Map<String, dynamic>? data,
-    Map<String, dynamic>? query,
+    Map<String, dynamic>? queryParameters,
     Map<String, dynamic>? headers,
   }) async {
     return await _dio.get(
       url,
       data: data,
-      queryParameters: query,
+      queryParameters: queryParameters,
       options: Options(headers: headers),
     );
   }

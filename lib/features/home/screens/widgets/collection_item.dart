@@ -1,8 +1,11 @@
-import 'package:e_fashion_flutter/core/utils/assets_manager.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:e_fashion_flutter/features/home/data/collection_details_product.dart';
 import 'package:flutter/material.dart';
 
 class CollectionItem extends StatelessWidget {
-  const CollectionItem({super.key});
+  const CollectionItem({super.key, required this.product});
+
+  final CollectionDetailsProduct product;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +27,11 @@ class CollectionItem extends StatelessWidget {
           Expanded(
             child: ClipRRect(
               borderRadius: BorderRadius.circular(16.0),
-              child: Image.asset(fit: BoxFit.cover, AssetsManager.welcomeImage),
+              child: CachedNetworkImage(
+                imageUrl: product.imageUrl,
+                fit: BoxFit.cover,
+                errorWidget: (context, url, error) => const Icon(Icons.error),
+              ),
             ),
           ),
           const SizedBox(width: 16.0),
@@ -36,13 +43,12 @@ class CollectionItem extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "White Dress",
+                    product.productName,
                     style: Theme.of(context).textTheme.bodyLarge,
                   ),
                   const SizedBox(width: 16.0),
                   Text(
-                    "Lorem ipsum dolor sit amet consectetur. Porttitor ipsum non est dolor nibh vulputate laoreet nunc." *
-                        3,
+                    product.description,
                     maxLines: 8,
                     overflow: TextOverflow.ellipsis,
                     style: Theme.of(context).textTheme.bodySmall,
