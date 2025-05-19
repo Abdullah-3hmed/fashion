@@ -132,6 +132,31 @@ class HomeCubit extends Cubit<HomeState> {
     );
   }
 
+  Future<void> addReview({
+    required int productId,
+    required int rating,
+    required String review,
+  }) async {
+    emit(state.copyWith(addReviewStatus: RequestStatus.loading));
+    final result = await homeRepo.addReview(
+      productId: productId,
+      rating: rating,
+      review: review,
+    );
+    result.fold(
+      (failure) => emit(
+        state.copyWith(
+          addReviewErrorMessage: failure.errorMessage,
+          addReviewStatus: RequestStatus.error,
+        ),
+      ),
+      (_) async {
+        await getProductDetails(productId: productId);
+        emit(state.copyWith(addReviewStatus: RequestStatus.success));
+      },
+    );
+  }
+
   void selectCategory({required int categoryId}) {
     emit(state.copyWith(selectedCategoryId: categoryId));
   }

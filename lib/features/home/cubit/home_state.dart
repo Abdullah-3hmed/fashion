@@ -26,6 +26,8 @@ class HomeState extends Equatable {
   final List<ProductModel> products;
   final RequestStatus productsStatus;
   final String productsErrorMessage;
+  final RequestStatus addReviewStatus;
+  final String addReviewErrorMessage;
   final int? selectedCategoryId;
   final String? gender;
 
@@ -48,6 +50,8 @@ class HomeState extends Equatable {
     this.products = const [],
     this.productsStatus = RequestStatus.initial,
     this.productsErrorMessage = "",
+    this.addReviewStatus = RequestStatus.initial,
+    this.addReviewErrorMessage = "",
     this.selectedCategoryId,
     this.gender,
   });
@@ -71,6 +75,8 @@ class HomeState extends Equatable {
     List<ProductModel>? products,
     RequestStatus? productsStatus,
     String? productsErrorMessage,
+    RequestStatus? addReviewStatus,
+    String? addReviewErrorMessage,
     int? selectedCategoryId,
     String? gender,
   }) {
@@ -99,6 +105,9 @@ class HomeState extends Equatable {
       products: products ?? this.products,
       productsStatus: productsStatus ?? this.productsStatus,
       productsErrorMessage: productsErrorMessage ?? this.productsErrorMessage,
+      addReviewStatus: addReviewStatus ?? this.addReviewStatus,
+      addReviewErrorMessage:
+          addReviewErrorMessage ?? this.addReviewErrorMessage,
       selectedCategoryId: selectedCategoryId ?? this.selectedCategoryId,
       gender: gender ?? this.gender,
     );
@@ -124,6 +133,8 @@ class HomeState extends Equatable {
     products,
     productsStatus,
     productsErrorMessage,
+    addReviewStatus,
+    addReviewErrorMessage,
     selectedCategoryId,
     gender,
   ];

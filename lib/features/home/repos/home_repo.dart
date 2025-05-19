@@ -27,4 +27,10 @@ abstract class HomeRepo {
     required int? categoryId,
     required String? gender,
   });
+
+  Future<Either<Failure, void>> addReview({
+    required String review,
+    required int productId,
+    required int rating,
+  });
 }

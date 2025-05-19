@@ -148,4 +148,24 @@ class HomeRepoImpl implements HomeRepo {
       return Left(ServerFailure(e.toString()));
     }
   }
+
+  @override
+  Future<Either<Failure, void>> addReview({
+    required String review,
+    required int productId,
+    required int rating,
+  }) async {
+    try {
+      await getIt<DioHelper>().post(
+        url: ApiConstants.addReviewEndpoint,
+        headers: {"Authorization": "Bearer ${AppConstants.token}"},
+        data: {"comment": review, "rating": rating, "productId": productId},
+      );
+      return const Right(null);
+    } on DioException catch (e) {
+      return Left(ServerFailure.fromDioError(e));
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
 }

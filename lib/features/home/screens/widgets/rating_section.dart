@@ -1,8 +1,11 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:e_fashion_flutter/config/router/app_router.dart';
+import 'package:e_fashion_flutter/features/home/cubit/home_cubit.dart';
+import 'package:e_fashion_flutter/features/home/cubit/home_state.dart';
 import 'package:e_fashion_flutter/features/home/data/product_details_model.dart';
 import 'package:e_fashion_flutter/features/home/screens/widgets/review_section.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -40,7 +43,9 @@ class _RatingSectionState extends State<RatingSection> {
         Align(
           child: TextButton(
             onPressed: () {
-              context.pushRoute(EditReviewRoute(rating: rating));
+              context.pushRoute(
+                EditReviewRoute(productDetailsModel: product, rating: rating),
+              );
             },
             child: Text(
               rating == 0 ? "Write a review" : " Edit review",
@@ -79,7 +84,7 @@ class _RatingSectionState extends State<RatingSection> {
         const SizedBox(height: 24.0),
         Align(
           child: Text(
-            "${product.reviews.length}",
+            "${product.reviews.length} reviews",
             style: Theme.of(context).textTheme.bodyMedium,
           ),
         ),
@@ -103,7 +108,17 @@ class _RatingSectionState extends State<RatingSection> {
             ],
           ),
         const SizedBox(height: 24.0),
-        if (product.reviews.isNotEmpty) const ReviewSection(),
+        BlocBuilder<HomeCubit, HomeState>(
+          buildWhen:
+              (previous, current) =>
+                  previous.productDetailsModel.reviews !=
+                  current.productDetailsModel.reviews,
+          builder: (context, state) {
+            final reviews = state.productDetailsModel.reviews;
+            if (reviews.isEmpty) return const SizedBox.shrink();
+            return ReviewSection(review: reviews);
+          },
+        ),
       ],
     );
   }

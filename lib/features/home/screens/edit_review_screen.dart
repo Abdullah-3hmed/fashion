@@ -1,15 +1,33 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:e_fashion_flutter/core/utils/assets_manager.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:e_fashion_flutter/core/enums/request_status.dart';
 import 'package:e_fashion_flutter/core/widgets/primary_button.dart';
+import 'package:e_fashion_flutter/features/home/cubit/home_cubit.dart';
+import 'package:e_fashion_flutter/features/home/cubit/home_state.dart';
+import 'package:e_fashion_flutter/features/home/data/product_details_model.dart';
+import 'package:e_fashion_flutter/features/profile/cubit/user_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 @RoutePage()
-class EditReviewScreen extends StatelessWidget {
-  const EditReviewScreen({super.key, required this.rating});
+class EditReviewScreen extends StatefulWidget {
+  const EditReviewScreen({
+    super.key,
+    required this.productDetailsModel,
+    required this.rating,
+  });
 
+  final ProductDetailsModel productDetailsModel;
   final double rating;
+
+  @override
+  State<EditReviewScreen> createState() => _EditReviewScreenState();
+}
+
+class _EditReviewScreenState extends State<EditReviewScreen> {
+  String review = "";
 
   @override
   Widget build(BuildContext context) {
@@ -27,11 +45,13 @@ class EditReviewScreen extends StatelessWidget {
                 children: [
                   ClipRRect(
                     borderRadius: BorderRadiusDirectional.circular(8.0),
-                    child: Image.asset(
+                    child: CachedNetworkImage(
+                      imageUrl: widget.productDetailsModel.productImage,
                       height: 140.0,
                       width: 120.0,
-                      AssetsManager.welcomeImage,
                       fit: BoxFit.cover,
+                      errorWidget:
+                          (context, url, error) => const Icon(Icons.error),
                     ),
                   ),
                   const SizedBox(width: 16.0),
@@ -39,12 +59,13 @@ class EditReviewScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Denim Jacket",
+                        widget.productDetailsModel.productName,
                         style: Theme.of(context).textTheme.titleMedium,
                       ),
                       const SizedBox(height: 8.0),
                       Text(
-                        r"$200.00",
+                        r"$"
+                        "${widget.productDetailsModel.price}",
                         style: Theme.of(context).textTheme.bodyMedium,
                       ),
                     ],
@@ -56,15 +77,20 @@ class EditReviewScreen extends StatelessWidget {
                 children: [
                   CircleAvatar(
                     radius: 20.0,
-                    backgroundImage:
-                        Image.asset(AssetsManager.welcomeImage).image,
+                    backgroundImage: CachedNetworkImageProvider(
+                      context.select(
+                        (UserCubit cubit) => cubit.state.userModel.profileImage,
+                      ),
+                    ),
                   ),
                   const SizedBox(width: 16.0),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Kira Alan",
+                        context.select(
+                          (UserCubit cubit) => cubit.state.userModel.userName,
+                        ),
                         style: Theme.of(context).textTheme.bodyMedium,
                       ),
                       const SizedBox(height: 4.0),
@@ -79,7 +105,7 @@ class EditReviewScreen extends StatelessWidget {
               const SizedBox(height: 30.0),
               RatingBar.builder(
                 allowHalfRating: true,
-                initialRating: rating,
+                initialRating: widget.rating,
                 itemSize: 32.0,
                 itemPadding: const EdgeInsets.symmetric(horizontal: 18.0),
                 itemBuilder:
@@ -92,8 +118,10 @@ class EditReviewScreen extends StatelessWidget {
               const SizedBox(height: 40.0),
               TextField(
                 maxLength: 200,
-                onSubmitted: (value) {},
-                onChanged: (value) {},
+                onSubmitted: (_) {},
+                onChanged: (value) {
+                  review = value;
+                },
                 onTapOutside: (event) => FocusScope.of(context).unfocus(),
                 decoration: InputDecoration(
                   hintText: "Describe your opinion",
@@ -107,7 +135,32 @@ class EditReviewScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 140.0),
-              PrimaryButton(onPressed: () {}, text: "Post review"),
+              BlocConsumer<HomeCubit, HomeState>(
+                listenWhen:
+                    (previous, current) =>
+                        previous.addReviewStatus != current.addReviewStatus,
+                buildWhen:
+                    (previous, current) =>
+                        previous.addReviewStatus != previous.addReviewStatus,
+                listener: (context, state) {
+                  if (state.addReviewStatus == RequestStatus.success) {
+                    context.pop();
+                  }
+                },
+                builder: (context, state) {
+                  return PrimaryButton(
+                    isLoading: state.addReviewStatus == RequestStatus.loading,
+                    onPressed: () async {
+                      await context.read<HomeCubit>().addReview(
+                        productId: widget.productDetailsModel.id,
+                        rating: widget.rating.toInt(),
+                        review: review,
+                      );
+                    },
+                    text: "Post review",
+                  );
+                },
+              ),
             ],
           ),
         ),

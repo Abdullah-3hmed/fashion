@@ -26,7 +26,7 @@ class DetailsClippedContainer extends StatelessWidget {
                 child: child,
               )
               : AnimatedContainer(
-                duration: const Duration(milliseconds: 600),
+                duration: const Duration(milliseconds: 900),
                 curve: Curves.easeInOut,
                 width: double.infinity,
                 decoration: BoxDecoration(

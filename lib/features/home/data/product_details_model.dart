@@ -25,7 +25,7 @@ class ProductDetailsModel extends Equatable {
       price: json["price"],
       description: json["description"],
       reviews: List<ReviewModel>.from(
-        (json["reviews"]?[r"values"] as List? ?? []).map(
+        (json["reviews"]?[r"$values"] as List? ?? []).map(
           (review) => ReviewModel.fromJson(review),
         ),
       ),

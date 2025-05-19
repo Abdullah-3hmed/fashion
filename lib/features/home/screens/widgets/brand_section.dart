@@ -20,12 +20,6 @@ class BrandSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final selectedGender = context.select(
-      (HomeCubit cubit) => cubit.state.gender,
-    );
-    final selectedCategory = context.select(
-      (HomeCubit cubit) => cubit.state.selectedCategoryId,
-    );
     return Column(
       children: [
         Row(
@@ -38,13 +32,7 @@ class BrandSection extends StatelessWidget {
                   EdgeInsets.zero,
                 ),
               ),
-              onPressed: () async {
-                await _filterProducts(
-                  selectedGender,
-                  selectedCategory,
-                  context,
-                );
-              },
+              onPressed: () {},
               child: Text(
                 "See All",
                 style: Theme.of(context).textTheme.labelMedium!.copyWith(
@@ -115,22 +103,5 @@ class BrandSection extends StatelessWidget {
         ),
       ],
     );
-  }
-
-  Future<void> _filterProducts(
-    String? selectedGender,
-    int? selectedCategory,
-    BuildContext context,
-  ) async {
-    if (selectedGender != null && selectedCategory != null) {
-      await context.read<HomeCubit>().getProducts(
-        gender: selectedGender,
-        categoryId: selectedCategory,
-      );
-    } else if (selectedGender != null) {
-      await context.read<HomeCubit>().getProducts(gender: selectedGender);
-    } else if (selectedCategory != null) {
-      await context.read<HomeCubit>().getProducts(categoryId: selectedCategory);
-    }
   }
 }

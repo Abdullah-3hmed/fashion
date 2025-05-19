@@ -85,72 +85,79 @@ class DetailsContainerContent extends StatelessWidget {
               ),
             );
           case RequestStatus.success:
-            return SingleChildScrollView(
+            return CustomScrollView(
               controller: controller,
               physics: const BouncingScrollPhysics(),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(height: 30.0),
-                  InkWell(
-                    onTap: () {
-                      context.pop();
-                    },
-                    child: CircleAvatar(
-                      backgroundColor: Theme.of(context).colorScheme.primary,
-                      radius: 24.0,
-                      child: Icon(
-                        Icons.arrow_back,
-                        color: Theme.of(context).colorScheme.onPrimary,
+              slivers: [
+                SliverToBoxAdapter(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SizedBox(height: 30.0),
+                      InkWell(
+                        onTap: () {
+                          context.pop();
+                        },
+                        child: CircleAvatar(
+                          backgroundColor:
+                              Theme.of(context).colorScheme.primary,
+                          radius: 24.0,
+                          child: Icon(
+                            Icons.arrow_back,
+                            color: Theme.of(context).colorScheme.onPrimary,
+                          ),
+                        ),
                       ),
-                    ),
+                      const SizedBox(height: 24.0),
+                      Text(
+                        state.productDetailsModel.productName,
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
+                      Text(
+                        r"$"
+                        "${state.productDetailsModel.price}",
+                        style: Theme.of(context).textTheme.bodyLarge,
+                      ),
+                      const SizedBox(height: 24.0),
+                      ColorsAvailable(
+                        onColorChanged: (color) => debugPrint(color.toString()),
+                      ),
+                      PiecesAvailable(
+                        onPiecesChanged: (int value) {
+                          debugPrint(value.toString());
+                        },
+                      ),
+                      Text(
+                        state.productDetailsModel.description,
+                        style: Theme.of(context).textTheme.bodySmall,
+                      ),
+                      const SizedBox(height: 24.0),
+                      PrimaryButton(
+                        icon: Icon(
+                          Iconsax.bag_2,
+                          color: Theme.of(context).colorScheme.onPrimary,
+                        ),
+                        onPressed: () {},
+                        text: "Add to bag",
+                      ),
+                      const SizedBox(height: 24.0),
+                      Text(
+                        "Rate this product",
+                        style: Theme.of(context).textTheme.labelMedium,
+                      ),
+                      Text(
+                        "Tell others what you think",
+                        style: Theme.of(context).textTheme.bodySmall,
+                      ),
+                      const SizedBox(height: 24.0),
+                      RatingSection(
+                        productDetailsModel: state.productDetailsModel,
+                      ),
+                      const SizedBox(height: 40.0),
+                    ],
                   ),
-                  const SizedBox(height: 24.0),
-                  Text(
-                    state.productDetailsModel.productName,
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                  Text(
-                    r"$"
-                    "${state.productDetailsModel.price}",
-                    style: Theme.of(context).textTheme.bodyLarge,
-                  ),
-                  const SizedBox(height: 24.0),
-                  ColorsAvailable(
-                    onColorChanged: (color) => debugPrint(color.toString()),
-                  ),
-                  PiecesAvailable(
-                    onPiecesChanged: (int value) {
-                      debugPrint(value.toString());
-                    },
-                  ),
-                  Text(
-                    state.productDetailsModel.description,
-                    style: Theme.of(context).textTheme.bodySmall,
-                  ),
-                  const SizedBox(height: 24.0),
-                  PrimaryButton(
-                    icon: Icon(
-                      Iconsax.bag_2,
-                      color: Theme.of(context).colorScheme.onPrimary,
-                    ),
-                    onPressed: () {},
-                    text: "Add to bag",
-                  ),
-                  const SizedBox(height: 24.0),
-                  Text(
-                    "Rate this product",
-                    style: Theme.of(context).textTheme.labelMedium,
-                  ),
-                  Text(
-                    "Tell others what you think",
-                    style: Theme.of(context).textTheme.bodySmall,
-                  ),
-                  const SizedBox(height: 24.0),
-                  RatingSection(productDetailsModel: state.productDetailsModel),
-                  const SizedBox(height: 40.0),
-                ],
-              ),
+                ),
+              ],
             );
           case RequestStatus.error:
             return const SizedBox();

@@ -23,7 +23,7 @@ class DetailsContainerClipper extends CustomClipper<Path> {
       size.height * 0.2219605,
     );
     path.lineTo(size.width, size.height);
-    path.lineTo(0, size.height * 0.9925658);
+    path.lineTo(0, size.height * size.height);
     path.lineTo(0, size.height * 0.1110934);
     path.close();
     return path;
