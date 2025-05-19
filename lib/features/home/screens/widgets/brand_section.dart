@@ -1,11 +1,11 @@
 import 'package:e_fashion_flutter/core/enums/request_status.dart';
-import 'package:e_fashion_flutter/core/utils/assets_manager.dart';
 import 'package:e_fashion_flutter/features/home/cubit/home_cubit.dart';
 import 'package:e_fashion_flutter/features/home/cubit/home_state.dart';
 import 'package:e_fashion_flutter/features/home/data/product_model.dart';
 import 'package:e_fashion_flutter/features/home/screens/widgets/brand_section_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 class BrandSection extends StatelessWidget {
   const BrandSection({super.key, required this.brandName});
@@ -13,13 +13,19 @@ class BrandSection extends StatelessWidget {
   final String brandName;
   static const ProductModel dummyProductModel = ProductModel(
     id: 1,
-    name: "anyThing",
-    imageUrl: AssetsManager.welcomeImage,
-    price: 300.0,
+    name: "***************",
+    imageUrl: "",
+    price: 0.0,
   );
 
   @override
   Widget build(BuildContext context) {
+    final selectedGender = context.select(
+      (HomeCubit cubit) => cubit.state.gender,
+    );
+    final selectedCategory = context.select(
+      (HomeCubit cubit) => cubit.state.selectedCategoryId,
+    );
     return Column(
       children: [
         Row(
@@ -32,7 +38,13 @@ class BrandSection extends StatelessWidget {
                   EdgeInsets.zero,
                 ),
               ),
-              onPressed: () {},
+              onPressed: () async {
+                await _filterProducts(
+                  selectedGender,
+                  selectedCategory,
+                  context,
+                );
+              },
               child: Text(
                 "See All",
                 style: Theme.of(context).textTheme.labelMedium!.copyWith(
@@ -50,22 +62,24 @@ class BrandSection extends StatelessWidget {
           builder: (context, state) {
             switch (state.productsStatus) {
               case RequestStatus.loading:
-                return SizedBox(
-                  height: 180.0,
-                  child: ListView.separated(
-                    physics: const BouncingScrollPhysics(),
-                    scrollDirection: Axis.horizontal,
-                    itemCount: 4,
-                    itemBuilder:
-                        (context, index) => const SizedBox(
-                          width: 240.0,
-                          child: BrandSectionItem(
-                            productModel: dummyProductModel,
+                return Skeletonizer(
+                  child: SizedBox(
+                    height: 180.0,
+                    child: ListView.separated(
+                      physics: const BouncingScrollPhysics(),
+                      scrollDirection: Axis.horizontal,
+                      itemCount: 4,
+                      itemBuilder:
+                          (context, index) => const SizedBox(
+                            width: 240.0,
+                            child: BrandSectionItem(
+                              productModel: dummyProductModel,
+                            ),
                           ),
-                        ),
-                    separatorBuilder:
-                        (BuildContext context, int index) =>
-                            const SizedBox(width: 12.0),
+                      separatorBuilder:
+                          (BuildContext context, int index) =>
+                              const SizedBox(width: 12.0),
+                    ),
                   ),
                 );
               case RequestStatus.success:
@@ -74,7 +88,7 @@ class BrandSection extends StatelessWidget {
                   child: ListView.separated(
                     physics: const BouncingScrollPhysics(),
                     scrollDirection: Axis.horizontal,
-                    itemCount: 4,
+                    itemCount: state.products.length,
                     itemBuilder:
                         (context, index) => SizedBox(
                           width: 240.0,
@@ -101,5 +115,22 @@ class BrandSection extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  Future<void> _filterProducts(
+    String? selectedGender,
+    int? selectedCategory,
+    BuildContext context,
+  ) async {
+    if (selectedGender != null && selectedCategory != null) {
+      await context.read<HomeCubit>().getProducts(
+        gender: selectedGender,
+        categoryId: selectedCategory,
+      );
+    } else if (selectedGender != null) {
+      await context.read<HomeCubit>().getProducts(gender: selectedGender);
+    } else if (selectedCategory != null) {
+      await context.read<HomeCubit>().getProducts(categoryId: selectedCategory);
+    }
   }
 }

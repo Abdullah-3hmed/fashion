@@ -1,16 +1,16 @@
+import 'package:e_fashion_flutter/features/home/cubit/home_cubit.dart';
 import 'package:e_fashion_flutter/features/home/data/category_model.dart';
 import 'package:e_fashion_flutter/features/home/screens/widgets/filter_section_item.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class FilterCategorySection extends StatefulWidget {
   const FilterCategorySection({
     super.key,
-    required this.onCategoryChanged,
     this.categories = const [],
     this.isScroll = false,
   });
 
-  final ValueChanged<String> onCategoryChanged;
   final List<CategoryModel> categories;
   final bool isScroll;
 
@@ -38,7 +38,9 @@ class _FilterCategorySectionState extends State<FilterCategorySection> {
               onTap: () {
                 setState(() {
                   activeIndex = index;
-                  widget.onCategoryChanged(categories[index].name);
+                  context.read<HomeCubit>().selectCategory(
+                    categoryId: categories[index].id,
+                  );
                 });
               },
               child: FilterSectionItem(

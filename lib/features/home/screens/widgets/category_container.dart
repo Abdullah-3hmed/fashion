@@ -7,12 +7,10 @@ class CategoryContainer extends StatelessWidget {
     super.key,
     required this.categories,
     this.isScroll = true,
-    this.onCategoryChanged,
   });
 
   final List<CategoryModel> categories;
   final bool isScroll;
-  final ValueChanged<String>? onCategoryChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -28,9 +26,6 @@ class CategoryContainer extends StatelessWidget {
           child: FilterCategorySection(
             categories: categories,
             isScroll: isScroll,
-            onCategoryChanged: (String value) {
-              onCategoryChanged!(value);
-            },
           ),
         ),
         Container(

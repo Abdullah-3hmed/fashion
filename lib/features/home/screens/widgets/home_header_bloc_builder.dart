@@ -1,4 +1,5 @@
 import 'package:e_fashion_flutter/core/enums/request_status.dart';
+import 'package:e_fashion_flutter/core/utils/app_constants.dart';
 import 'package:e_fashion_flutter/features/home/cubit/home_cubit.dart';
 import 'package:e_fashion_flutter/features/home/cubit/home_state.dart';
 import 'package:e_fashion_flutter/features/home/data/collection_model.dart';
@@ -14,7 +15,7 @@ class HomeHeaderBlocBuilder extends StatelessWidget {
     (index) => const CollectionModel(
       id: 0,
       title: '•••••• ••••••',
-      imageUrl: 'http://efashion.runasp.net/Products/Woman Dress.jpg',
+      imageUrl: AppConstants.imageUrl,
       discount: '••% OFF',
       subTitle: '•••••••••••••',
       price: 0.0,

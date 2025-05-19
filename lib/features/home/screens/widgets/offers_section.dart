@@ -2,7 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:e_fashion_flutter/config/router/app_router.dart';
 import 'package:e_fashion_flutter/core/enums/request_status.dart';
-import 'package:e_fashion_flutter/core/utils/assets_manager.dart';
+import 'package:e_fashion_flutter/core/utils/app_constants.dart';
 import 'package:e_fashion_flutter/features/home/cubit/home_cubit.dart';
 import 'package:e_fashion_flutter/features/home/cubit/home_state.dart';
 import 'package:e_fashion_flutter/features/home/data/offer_model.dart';
@@ -17,7 +17,7 @@ class OffersSection extends StatelessWidget {
   static const dummyOfferModel = OfferModel(
     id: 1,
     name: "dummy name",
-    imageUrl: AssetsManager.welcomeImage,
+    imageUrl: AppConstants.imageUrl,
     oldPrice: 300.0,
     discountedPrice: 300.0,
   );

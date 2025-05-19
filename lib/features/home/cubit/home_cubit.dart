@@ -131,4 +131,12 @@ class HomeCubit extends Cubit<HomeState> {
       ),
     );
   }
+
+  void selectCategory({required int categoryId}) {
+    emit(state.copyWith(selectedCategoryId: categoryId));
+  }
+
+  void selectGender({required String gender}) {
+    emit(state.copyWith(gender: gender));
+  }
 }

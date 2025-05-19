@@ -1,4 +1,5 @@
 import 'package:e_fashion_flutter/core/enums/request_status.dart';
+import 'package:e_fashion_flutter/core/utils/app_constants.dart';
 import 'package:e_fashion_flutter/features/home/cubit/home_cubit.dart';
 import 'package:e_fashion_flutter/features/home/cubit/home_state.dart';
 import 'package:e_fashion_flutter/features/home/data/category_model.dart';
@@ -8,20 +9,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class CategoryBlocBuilder extends StatelessWidget {
-  const CategoryBlocBuilder({
-    super.key,
-    required this.genderWidth,
-    required this.onCategoryChanged,
-  });
+  const CategoryBlocBuilder({super.key, required this.genderWidth});
+
   final ValueNotifier<double> genderWidth;
-  final ValueChanged<String> onCategoryChanged;
+
   static List<CategoryModel> dummyCategories = List.generate(
     5,
-    (index) => const CategoryModel(
-      name: "jeans",
-      image: "http://efashion.runasp.net/Products/Woman T-shirt.jpg",
-    ),
+    (index) =>
+        const CategoryModel(id: 1, name: "jeans", image: AppConstants.imageUrl),
   );
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<HomeCubit, HomeState>(
@@ -32,10 +29,7 @@ class CategoryBlocBuilder extends StatelessWidget {
         switch (state.categoriesStatus) {
           case RequestStatus.loading:
             return Skeletonizer(
-              child: CategoryContainer(
-                categories: dummyCategories,
-                onCategoryChanged: (_) {},
-              ),
+              child: CategoryContainer(categories: dummyCategories),
             );
           case RequestStatus.success:
             return GestureDetector(
@@ -53,9 +47,6 @@ class CategoryBlocBuilder extends StatelessWidget {
               child: CategoryContainer(
                 categories: state.categories,
                 isScroll: genderWidth.value == 0.0,
-                onCategoryChanged: (value) {
-                  onCategoryChanged(value);
-                },
               ),
             );
           case RequestStatus.error:

@@ -1,8 +1,10 @@
 import 'package:e_fashion_flutter/core/animations/slide_animation.dart';
 import 'package:e_fashion_flutter/core/widgets/third_button.dart';
+import 'package:e_fashion_flutter/features/home/cubit/home_cubit.dart';
 import 'package:e_fashion_flutter/features/home/screens/widgets/category_bloc_builder.dart';
 import 'package:e_fashion_flutter/features/home/screens/widgets/filter_gender_section.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CategorySection extends StatefulWidget {
   const CategorySection({super.key});
@@ -14,9 +16,6 @@ class CategorySection extends StatefulWidget {
 class _CategorySectionState extends State<CategorySection> {
   final ValueNotifier<double> genderWidth = ValueNotifier<double>(145);
 
-  String? selectedGender;
-  String? selectedCategory;
-
   @override
   void dispose() {
     genderWidth.dispose();
@@ -25,6 +24,12 @@ class _CategorySectionState extends State<CategorySection> {
 
   @override
   Widget build(BuildContext context) {
+    final selectedGender = context.select(
+      (HomeCubit cubit) => cubit.state.gender,
+    );
+    final selectedCategory = context.select(
+      (HomeCubit cubit) => cubit.state.selectedCategoryId,
+    );
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -38,9 +43,11 @@ class _CategorySectionState extends State<CategorySection> {
                 duration: const Duration(milliseconds: 600),
                 begin: const Offset(1.0, 0.0),
                 child: ThirdButton(
-                  onPressed: () {
-                    debugPrint(
-                      'Applied with Gender: $selectedGender, Category: $selectedCategory',
+                  onPressed: () async {
+                    await _filterProducts(
+                      selectedGender,
+                      selectedCategory,
+                      context,
                     );
                   },
                   text: "Apply",
@@ -70,12 +77,7 @@ class _CategorySectionState extends State<CategorySection> {
                     child: Align(
                       alignment: Alignment.centerLeft,
                       widthFactor: value / 145.0,
-                      child: FilterGenderSection(
-                        onGenderChanged: (value) {
-                          debugPrint(value);
-                          setState(() => selectedGender = value);
-                        },
-                      ),
+                      child: const FilterGenderSection(),
                     ),
                   ),
                 );
@@ -86,12 +88,7 @@ class _CategorySectionState extends State<CategorySection> {
               child: ValueListenableBuilder<double>(
                 valueListenable: genderWidth,
                 builder: (context, value, _) {
-                  return CategoryBlocBuilder(
-                    genderWidth: genderWidth,
-                    onCategoryChanged: (value) {
-                      setState(() => selectedCategory = value);
-                    },
-                  );
+                  return CategoryBlocBuilder(genderWidth: genderWidth);
                 },
               ),
             ),
@@ -99,5 +96,22 @@ class _CategorySectionState extends State<CategorySection> {
         ),
       ],
     );
+  }
+
+  Future<void> _filterProducts(
+    String? selectedGender,
+    int? selectedCategory,
+    BuildContext context,
+  ) async {
+    if (selectedGender != null && selectedCategory != null) {
+      await context.read<HomeCubit>().getProducts(
+        gender: selectedGender,
+        categoryId: selectedCategory,
+      );
+    } else if (selectedGender != null) {
+      await context.read<HomeCubit>().getProducts(gender: selectedGender);
+    } else if (selectedCategory != null) {
+      await context.read<HomeCubit>().getProducts(categoryId: selectedCategory);
+    }
   }
 }

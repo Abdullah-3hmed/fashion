@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:e_fashion_flutter/core/enums/request_status.dart';
+import 'package:e_fashion_flutter/core/utils/app_constants.dart';
 import 'package:e_fashion_flutter/core/utils/assets_manager.dart';
 import 'package:e_fashion_flutter/core/widgets/secondary_button.dart';
 import 'package:e_fashion_flutter/features/home/cubit/home_cubit.dart';
@@ -19,7 +20,7 @@ class CollectionScreen extends StatelessWidget {
     id: 0,
     productName: "Product name",
     description: "Description",
-    imageUrl: AssetsManager.welcomeImage,
+    imageUrl: AppConstants.imageUrl,
   );
 
   @override

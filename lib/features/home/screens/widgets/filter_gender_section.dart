@@ -1,7 +1,9 @@
 import 'package:e_fashion_flutter/core/utils/assets_manager.dart';
+import 'package:e_fashion_flutter/features/home/cubit/home_cubit.dart';
 import 'package:e_fashion_flutter/features/home/screens/widgets/filter_section_item.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class FilterGenderModel extends Equatable {
   final String title;
@@ -13,8 +15,7 @@ class FilterGenderModel extends Equatable {
 }
 
 class FilterGenderSection extends StatefulWidget {
-  const FilterGenderSection({super.key, required this.onGenderChanged});
-  final ValueChanged<String> onGenderChanged;
+  const FilterGenderSection({super.key});
   @override
   State<FilterGenderSection> createState() => _FilterGenderSectionState();
 }
@@ -39,7 +40,9 @@ class _FilterGenderSectionState extends State<FilterGenderSection> {
               onTap: () {
                 setState(() {
                   activeIndex = index;
-                  widget.onGenderChanged(filterGenderList[index].title);
+                  context.read<HomeCubit>().selectGender(
+                    gender: filterGenderList[index].title,
+                  );
                 });
               },
               child: Padding(

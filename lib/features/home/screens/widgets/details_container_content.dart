@@ -1,6 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:e_fashion_flutter/core/enums/request_status.dart';
-import 'package:e_fashion_flutter/core/utils/assets_manager.dart';
+import 'package:e_fashion_flutter/core/utils/app_constants.dart';
 import 'package:e_fashion_flutter/core/widgets/primary_button.dart';
 import 'package:e_fashion_flutter/features/home/cubit/home_cubit.dart';
 import 'package:e_fashion_flutter/features/home/cubit/home_state.dart';
@@ -23,7 +23,7 @@ class DetailsContainerContent extends StatelessWidget {
         productName: "Product Name",
         price: 99.99,
         description: "Description",
-        productImage: AssetsManager.welcomeImage,
+        productImage: AppConstants.imageUrl,
         reviews: [],
       );
 
