@@ -13,13 +13,13 @@ import 'package:skeletonizer/skeletonizer.dart';
 
 @RoutePage()
 class CollectionScreen extends StatelessWidget {
-  const CollectionScreen({super.key});
-
+  const CollectionScreen({super.key, required this.collectionName});
+  final String collectionName;
   static const CollectionDetailsProduct dummyProduct = CollectionDetailsProduct(
     id: 0,
     productName: "Product name",
     description: "Description",
-    imageUrl: "http://efashion.runasp.net/Products/Woman Dress.jpg",
+    imageUrl: AssetsManager.welcomeImage,
   );
 
   @override
@@ -27,7 +27,7 @@ class CollectionScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Collection Details",
+          collectionName,
           style: Theme.of(context).textTheme.titleMedium,
         ),
       ),

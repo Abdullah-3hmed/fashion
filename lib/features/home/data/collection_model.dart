@@ -6,6 +6,7 @@ class CollectionModel extends Equatable {
   final String imageUrl;
   final String discount;
   final String subTitle;
+  final double price;
 
   const CollectionModel({
     required this.id,
@@ -13,6 +14,7 @@ class CollectionModel extends Equatable {
     required this.imageUrl,
     required this.discount,
     required this.subTitle,
+    required this.price,
   });
   factory CollectionModel.fromJson(Map<String, dynamic> json) {
     return CollectionModel(
@@ -21,6 +23,7 @@ class CollectionModel extends Equatable {
       imageUrl: json["imageUrl"],
       discount: json["discount"],
       subTitle: json["subTitle"],
+      price: json["price"],
     );
   }
 

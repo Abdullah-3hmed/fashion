@@ -45,9 +45,15 @@ class HomeCubit extends Cubit<HomeState> {
     );
   }
 
-  Future<void> getCollectionDetails({required int collectionId}) async {
+  Future<void> getCollectionDetails({
+    required int collectionId,
+    required double price,
+  }) async {
     emit(state.copyWith(collectionDetailsStatus: RequestStatus.loading));
-    final result = await homeRepo.getCollectionDetails(collectionId);
+    final result = await homeRepo.getCollectionDetails(
+      collectionId: collectionId,
+      price: price.toInt(),
+    );
     result.fold(
       (failure) => emit(
         state.copyWith(
@@ -81,7 +87,7 @@ class HomeCubit extends Cubit<HomeState> {
 
   Future<void> getProductDetails({required int productId}) async {
     emit(state.copyWith(productDetailsStatus: RequestStatus.loading));
-    final result = await homeRepo.getProductDetails(productId);
+    final result = await homeRepo.getProductDetails(productId: productId);
     result.fold(
       (failure) {
         emit(
@@ -96,6 +102,31 @@ class HomeCubit extends Cubit<HomeState> {
         state.copyWith(
           productDetailsModel: productDetails,
           productDetailsStatus: RequestStatus.success,
+        ),
+      ),
+    );
+  }
+
+  Future<void> getProducts({int? categoryId, String? gender}) async {
+    emit(state.copyWith(productsStatus: RequestStatus.loading));
+    final result = await homeRepo.getProducts(
+      categoryId: categoryId,
+      gender: gender,
+    );
+    result.fold(
+      (failure) {
+        emit(
+          state.copyWith(
+            productsErrorMessage: failure.errorMessage,
+            productsStatus: RequestStatus.error,
+          ),
+        );
+        log(failure.errorMessage);
+      },
+      (products) => emit(
+        state.copyWith(
+          products: products,
+          productsStatus: RequestStatus.success,
         ),
       ),
     );

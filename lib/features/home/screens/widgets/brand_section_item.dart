@@ -1,20 +1,31 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:e_fashion_flutter/config/router/app_router.dart';
 import 'package:e_fashion_flutter/core/widgets/modal_bottom_sheet_content.dart';
+import 'package:e_fashion_flutter/features/home/cubit/home_cubit.dart';
 import 'package:e_fashion_flutter/features/home/data/product_model.dart';
 import 'package:e_fashion_flutter/features/home/screens/widgets/home_clipped_container.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
 
 class BrandSectionItem extends StatelessWidget {
   const BrandSectionItem({super.key, required this.productModel});
+
   final ProductModel productModel;
+
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
         InkWell(
-          onTap: () {
-            // context.pushRoute( ProductDetailsRoute());
+          onTap: () async {
+            context.pushRoute(
+              ProductDetailsRoute(imageUrl: productModel.imageUrl),
+            );
+            await context.read<HomeCubit>().getProductDetails(
+              productId: productModel.id,
+            );
           },
           child: ClipRRect(
             borderRadius: BorderRadius.circular(16.0),
@@ -32,8 +43,13 @@ class BrandSectionItem extends StatelessWidget {
           start: 0.0,
           end: 0.0,
           child: InkWell(
-            onTap: () {
-              // context.pushRoute(const ProductDetailsRoute());
+            onTap: () async {
+              context.pushRoute(
+                ProductDetailsRoute(imageUrl: productModel.imageUrl),
+              );
+              await context.read<HomeCubit>().getProductDetails(
+                productId: productModel.id,
+              );
             },
             child: HomeClippedContainer(
               child: Column(
@@ -51,8 +67,13 @@ class BrandSectionItem extends StatelessWidget {
                       context,
                     ).textTheme.bodyLarge!.copyWith(color: Colors.white),
                   ),
-                  //TODO:replace this with price
                   const SizedBox(height: 4.0),
+                  Text(
+                    "${productModel.price}",
+                    style: Theme.of(
+                      context,
+                    ).textTheme.bodyMedium!.copyWith(color: Colors.white),
+                  ),
                 ],
               ),
             ),

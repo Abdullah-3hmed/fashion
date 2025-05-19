@@ -100,7 +100,11 @@ class _HomeHeaderState extends State<HomeHeader> {
                         end: 16.0,
                         child: SecondaryButton(
                           onPressed: () async {
-                            context.pushRoute(const CollectionRoute());
+                            context.pushRoute(
+                              CollectionRoute(
+                                collectionName: collections[index].title,
+                              ),
+                            );
                             debugPrint(
                               "collection ID : ${collections[index].id}",
                             );
@@ -108,6 +112,7 @@ class _HomeHeaderState extends State<HomeHeader> {
                                 .read<HomeCubit>()
                                 .getCollectionDetails(
                                   collectionId: collections[index].id,
+                                  price: collections[index].price,
                                 );
                           },
                           text: "Shop now",

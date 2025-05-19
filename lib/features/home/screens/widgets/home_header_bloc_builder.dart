@@ -17,6 +17,7 @@ class HomeHeaderBlocBuilder extends StatelessWidget {
       imageUrl: 'http://efashion.runasp.net/Products/Woman Dress.jpg',
       discount: '••% OFF',
       subTitle: '•••••••••••••',
+      price: 0.0,
     ),
   );
   @override

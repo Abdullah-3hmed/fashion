@@ -73,7 +73,7 @@ class OffersSection extends StatelessWidget {
                           .toList(),
                   options: CarouselOptions(
                     enlargeCenterPage: true,
-
+                    initialPage: 2,
                     viewportFraction: 0.70,
                     enableInfiniteScroll: false,
                   ),

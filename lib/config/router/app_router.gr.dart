@@ -76,18 +76,42 @@ class ChatSupportRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [CollectionScreen]
-class CollectionRoute extends PageRouteInfo<void> {
-  const CollectionRoute({List<PageRouteInfo>? children})
-    : super(CollectionRoute.name, initialChildren: children);
+class CollectionRoute extends PageRouteInfo<CollectionRouteArgs> {
+  CollectionRoute({
+    Key? key,
+    required String collectionName,
+    List<PageRouteInfo>? children,
+  }) : super(
+         CollectionRoute.name,
+         args: CollectionRouteArgs(key: key, collectionName: collectionName),
+         initialChildren: children,
+       );
 
   static const String name = 'CollectionRoute';
 
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      return const CollectionScreen();
+      final args = data.argsAs<CollectionRouteArgs>();
+      return CollectionScreen(
+        key: args.key,
+        collectionName: args.collectionName,
+      );
     },
   );
+}
+
+class CollectionRouteArgs {
+  const CollectionRouteArgs({this.key, required this.collectionName});
+
+  final Key? key;
+
+  final String collectionName;
+
+  @override
+  String toString() {
+    return 'CollectionRouteArgs{key: $key, collectionName: $collectionName}';
+  }
 }
 
 /// generated route for

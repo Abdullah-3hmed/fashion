@@ -24,11 +24,14 @@ class HomeScreen extends StatelessWidget {
                 slivers: [
                   SliverToBoxAdapter(child: CategorySection()),
                   SliverToBoxAdapter(child: OffersSection()),
-                  SliverToBoxAdapter(child: BrandSection(brandName: "Zara")),
+                  SliverToBoxAdapter(
+                    child: BrandSection(brandName: "Products"),
+                  ),
                 ],
               ),
             ),
           ),
+          SizedBox(height: 60.0),
         ],
       ),
     );

@@ -10,6 +10,7 @@ import 'package:e_fashion_flutter/features/home/data/collection_details_model.da
 import 'package:e_fashion_flutter/features/home/data/collection_model.dart';
 import 'package:e_fashion_flutter/features/home/data/offer_model.dart';
 import 'package:e_fashion_flutter/features/home/data/product_details_model.dart';
+import 'package:e_fashion_flutter/features/home/data/product_model.dart';
 import 'package:e_fashion_flutter/features/home/repos/home_repo.dart';
 
 class HomeRepoImpl implements HomeRepo {
@@ -56,14 +57,15 @@ class HomeRepoImpl implements HomeRepo {
   }
 
   @override
-  Future<Either<Failure, CollectionDetailsModel>> getCollectionDetails(
-    int collectionId,
-  ) async {
+  Future<Either<Failure, CollectionDetailsModel>> getCollectionDetails({
+    required int collectionId,
+    required int price,
+  }) async {
     try {
       final response = await getIt<DioHelper>().get(
         url: ApiConstants.getCollectionDetailsEndpoint,
         headers: {"Authorization": "Bearer ${AppConstants.token}"},
-        queryParameters: {"id": collectionId},
+        queryParameters: {"id": collectionId, "price": price},
       );
       return Right(CollectionDetailsModel.fromJson(response.data));
     } on DioException catch (e) {
@@ -95,9 +97,9 @@ class HomeRepoImpl implements HomeRepo {
   }
 
   @override
-  Future<Either<Failure, ProductDetailsModel>> getProductDetails(
-    int productId,
-  ) async {
+  Future<Either<Failure, ProductDetailsModel>> getProductDetails({
+    required int productId,
+  }) async {
     try {
       final response = await getIt<DioHelper>().get(
         url: ApiConstants.getProductDetailsEndpoint,
@@ -105,6 +107,41 @@ class HomeRepoImpl implements HomeRepo {
         queryParameters: {"id": productId},
       );
       return Right(ProductDetailsModel.fromJson(response.data));
+    } on DioException catch (e) {
+      return Left(ServerFailure.fromDioError(e));
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<ProductModel>>> getProducts({
+    required int? categoryId,
+    required String? gender,
+  }) async {
+    try {
+      Map<String, dynamic> queryParams = {};
+      if (categoryId != null) {
+        queryParams["categoryId"] = categoryId;
+      }
+      if (gender != null) {
+        queryParams["Gender"] = gender;
+      }
+      if (gender == null && categoryId == null) {
+        queryParams = {"categoryId": categoryId, "Gender": gender};
+      }
+      final response = await getIt<DioHelper>().get(
+        url: ApiConstants.getProductsEndpoint,
+        headers: {"Authorization": "Bearer ${AppConstants.token}"},
+        queryParameters: queryParams,
+      );
+      return Right(
+        List<ProductModel>.from(
+          (response.data[r'$values'] as List).map(
+            (product) => ProductModel.fromJson(product),
+          ),
+        ),
+      );
     } on DioException catch (e) {
       return Left(ServerFailure.fromDioError(e));
     } catch (e) {

@@ -131,7 +131,8 @@ class Authenticated extends AutoRouter implements AutoRouteWrapper {
                 getIt<HomeCubit>()
                   ..getCollections()
                   ..getCategories()
-                  ..getOffers(),
+                  ..getOffers()
+                  ..getProducts(),
       ),
       BlocProvider(
         lazy: false,
