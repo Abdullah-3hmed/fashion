@@ -52,9 +52,12 @@ class ReviewSection extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 8.0),
-              Text(
-                review[index].review,
-                style: Theme.of(context).textTheme.bodySmall,
+              Align(
+                alignment: AlignmentDirectional.centerStart,
+                child: Text(
+                  review[index].review,
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
               ),
             ],
           ),

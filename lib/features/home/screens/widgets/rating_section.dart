@@ -18,17 +18,43 @@ class RatingSection extends StatefulWidget {
   State<RatingSection> createState() => _RatingSectionState();
 }
 
-class _RatingSectionState extends State<RatingSection> {
+class _RatingSectionState extends State<RatingSection> with AutoRouteAware {
   double rating = 0.0;
+  AutoRouteObserver? _observer;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _observer =
+        RouterScope.of(context).firstObserverOfType<AutoRouteObserver>();
+    if (_observer != null) {
+      _observer?.subscribe(this, context.routeData);
+    }
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _observer?.unsubscribe(this);
+  }
+
+  @override
+  void didPopNext() {
+    setState(() {
+      rating = 0.0;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     final ProductDetailsModel product = widget.productDetailsModel;
+
     return Column(
       children: [
         RatingBar.builder(
           allowHalfRating: true,
           itemSize: 32.0,
+          initialRating: rating,
           itemPadding: const EdgeInsets.symmetric(horizontal: 12.0),
           itemBuilder:
               (context, _) =>
@@ -48,7 +74,7 @@ class _RatingSectionState extends State<RatingSection> {
               );
             },
             child: Text(
-              rating == 0 ? "Write a review" : " Edit review",
+              rating == 0 ? "Write a review" : "Edit review",
               style: Theme.of(context).textTheme.bodySmall!.copyWith(
                 color: Theme.of(context).colorScheme.primary,
               ),
@@ -84,7 +110,7 @@ class _RatingSectionState extends State<RatingSection> {
         const SizedBox(height: 24.0),
         Align(
           child: Text(
-            "${product.reviews.length} reviews",
+            "${context.watch<HomeCubit>().state.productDetailsModel.reviews.length} reviews",
             style: Theme.of(context).textTheme.bodyMedium,
           ),
         ),
@@ -115,8 +141,9 @@ class _RatingSectionState extends State<RatingSection> {
                   current.productDetailsModel.reviews,
           builder: (context, state) {
             final reviews = state.productDetailsModel.reviews;
-            if (reviews.isEmpty) return const SizedBox.shrink();
-            return ReviewSection(review: reviews);
+            return reviews.isEmpty
+                ? const SizedBox.shrink()
+                : ReviewSection(review: reviews);
           },
         ),
       ],
@@ -124,10 +151,6 @@ class _RatingSectionState extends State<RatingSection> {
   }
 
   double _calculateRating({required int i}) {
-    if (rating.floor() == i) {
-      return 1.0;
-    } else {
-      return 0.0;
-    }
+    return rating.floor() == i ? 1.0 : 0.0;
   }
 }

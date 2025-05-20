@@ -26,14 +26,6 @@ class ReviewModel extends Equatable {
       userImage: json["userData"]["imageUrl"],
     );
   }
-  static const empty = ReviewModel(
-    productId: 0,
-    rating: 0,
-    review: '',
-    date: '',
-    userName: '',
-    userImage: '',
-  );
   @override
   List<Object> get props => [
     productId,

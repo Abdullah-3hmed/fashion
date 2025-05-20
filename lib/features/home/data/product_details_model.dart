@@ -17,6 +17,7 @@ class ProductDetailsModel extends Equatable {
     required this.description,
     required this.reviews,
   });
+
   factory ProductDetailsModel.fromJson(Map<String, dynamic> json) {
     return ProductDetailsModel(
       id: json["id"],
@@ -31,6 +32,7 @@ class ProductDetailsModel extends Equatable {
       ),
     );
   }
+
   static const ProductDetailsModel empty = ProductDetailsModel(
     id: 0,
     productName: "",
@@ -39,6 +41,23 @@ class ProductDetailsModel extends Equatable {
     description: "",
     reviews: [],
   );
+
+  ProductDetailsModel copyWith({
+    int? id,
+    String? productName,
+    String? productImage,
+    double? price,
+    String? description,
+    List<ReviewModel>? reviews,
+  }) => ProductDetailsModel(
+    id: id ?? this.id,
+    productName: productName ?? this.productName,
+    productImage: productImage ?? this.productImage,
+    price: price ?? this.price,
+    description: description ?? this.description,
+    reviews: reviews ?? this.reviews,
+  );
+
   @override
   List<Object> get props => [
     id,

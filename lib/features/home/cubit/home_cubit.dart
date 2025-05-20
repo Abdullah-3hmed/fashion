@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:e_fashion_flutter/core/enums/request_status.dart';
 import 'package:e_fashion_flutter/features/home/cubit/home_state.dart';
+import 'package:e_fashion_flutter/features/home/data/review_model.dart';
 import 'package:e_fashion_flutter/features/home/repos/home_repo.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -150,9 +151,18 @@ class HomeCubit extends Cubit<HomeState> {
           addReviewStatus: RequestStatus.error,
         ),
       ),
-      (_) async {
-        await getProductDetails(productId: productId);
-        emit(state.copyWith(addReviewStatus: RequestStatus.success));
+      (reviewModel) async {
+        final List<ReviewModel> updatedReviews = List<ReviewModel>.from(
+          state.productDetailsModel.reviews,
+        )..add(reviewModel);
+        emit(
+          state.copyWith(
+            addReviewStatus: RequestStatus.success,
+            productDetailsModel: state.productDetailsModel.copyWith(
+              reviews: updatedReviews,
+            ),
+          ),
+        );
       },
     );
   }

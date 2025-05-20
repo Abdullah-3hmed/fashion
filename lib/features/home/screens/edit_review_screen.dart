@@ -1,6 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:e_fashion_flutter/core/enums/request_status.dart';
+import 'package:e_fashion_flutter/core/utils/show_toast.dart';
+import 'package:e_fashion_flutter/core/utils/toast_states.dart';
 import 'package:e_fashion_flutter/core/widgets/primary_button.dart';
 import 'package:e_fashion_flutter/features/home/cubit/home_cubit.dart';
 import 'package:e_fashion_flutter/features/home/cubit/home_state.dart';
@@ -27,7 +29,15 @@ class EditReviewScreen extends StatefulWidget {
 }
 
 class _EditReviewScreenState extends State<EditReviewScreen> {
-  String review = "";
+  late String review;
+  late double editedRating;
+
+  @override
+  void initState() {
+    super.initState();
+    review = "";
+    editedRating = widget.rating;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -113,12 +123,18 @@ class _EditReviewScreenState extends State<EditReviewScreen> {
                       FontAwesomeIcons.solidStar,
                       color: Colors.amber,
                     ),
-                onRatingUpdate: (double value) {},
+                onRatingUpdate: (double value) {
+                  setState(() {
+                    editedRating = value;
+                  });
+                },
               ),
               const SizedBox(height: 40.0),
               TextField(
                 maxLength: 200,
-                onSubmitted: (_) {},
+                onSubmitted: (_) async {
+                  await _onPressed();
+                },
                 onChanged: (value) {
                   review = value;
                 },
@@ -141,21 +157,27 @@ class _EditReviewScreenState extends State<EditReviewScreen> {
                         previous.addReviewStatus != current.addReviewStatus,
                 buildWhen:
                     (previous, current) =>
-                        previous.addReviewStatus != previous.addReviewStatus,
+                        previous.addReviewStatus != current.addReviewStatus,
                 listener: (context, state) {
                   if (state.addReviewStatus == RequestStatus.success) {
                     context.pop();
+                    showToast(
+                      message: "Review added successfully",
+                      state: ToastStates.success,
+                    );
+                  }
+                  if (state.addReviewStatus == RequestStatus.error) {
+                    showToast(
+                      message: state.addReviewErrorMessage,
+                      state: ToastStates.error,
+                    );
                   }
                 },
                 builder: (context, state) {
                   return PrimaryButton(
                     isLoading: state.addReviewStatus == RequestStatus.loading,
                     onPressed: () async {
-                      await context.read<HomeCubit>().addReview(
-                        productId: widget.productDetailsModel.id,
-                        rating: widget.rating.toInt(),
-                        review: review,
-                      );
+                      await _onPressed();
                     },
                     text: "Post review",
                   );
@@ -166,5 +188,17 @@ class _EditReviewScreenState extends State<EditReviewScreen> {
         ),
       ),
     );
+  }
+
+  Future<void> _onPressed() async {
+    if (review.isNotEmpty) {
+      await context.read<HomeCubit>().addReview(
+        productId: widget.productDetailsModel.id,
+        rating: editedRating.toInt(),
+        review: review,
+      );
+    } else {
+      showToast(message: "please enter review", state: ToastStates.error);
+    }
   }
 }

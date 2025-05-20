@@ -6,6 +6,7 @@ import 'package:e_fashion_flutter/features/home/data/collection_model.dart';
 import 'package:e_fashion_flutter/features/home/data/offer_model.dart';
 import 'package:e_fashion_flutter/features/home/data/product_details_model.dart';
 import 'package:e_fashion_flutter/features/home/data/product_model.dart';
+import 'package:e_fashion_flutter/features/home/data/review_model.dart';
 
 abstract class HomeRepo {
   Future<Either<Failure, List<CollectionModel>>> getCollections();
@@ -28,7 +29,7 @@ abstract class HomeRepo {
     required String? gender,
   });
 
-  Future<Either<Failure, void>> addReview({
+  Future<Either<Failure, ReviewModel>> addReview({
     required String review,
     required int productId,
     required int rating,

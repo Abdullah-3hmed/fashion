@@ -11,6 +11,7 @@ import 'package:e_fashion_flutter/features/home/data/collection_model.dart';
 import 'package:e_fashion_flutter/features/home/data/offer_model.dart';
 import 'package:e_fashion_flutter/features/home/data/product_details_model.dart';
 import 'package:e_fashion_flutter/features/home/data/product_model.dart';
+import 'package:e_fashion_flutter/features/home/data/review_model.dart';
 import 'package:e_fashion_flutter/features/home/repos/home_repo.dart';
 
 class HomeRepoImpl implements HomeRepo {
@@ -150,18 +151,18 @@ class HomeRepoImpl implements HomeRepo {
   }
 
   @override
-  Future<Either<Failure, void>> addReview({
+  Future<Either<Failure, ReviewModel>> addReview({
     required String review,
     required int productId,
     required int rating,
   }) async {
     try {
-      await getIt<DioHelper>().post(
+      final response = await getIt<DioHelper>().post(
         url: ApiConstants.addReviewEndpoint,
         headers: {"Authorization": "Bearer ${AppConstants.token}"},
         data: {"comment": review, "rating": rating, "productId": productId},
       );
-      return const Right(null);
+      return Right(ReviewModel.fromJson(response.data));
     } on DioException catch (e) {
       return Left(ServerFailure.fromDioError(e));
     } catch (e) {
