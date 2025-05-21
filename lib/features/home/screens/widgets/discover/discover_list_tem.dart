@@ -7,8 +7,8 @@ import 'package:e_fashion_flutter/features/home/screens/widgets/discover_list_to
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 
-class DiscoverAndSearchItem extends StatelessWidget {
-  const DiscoverAndSearchItem({
+class DiscoverListItem extends StatelessWidget {
+  const DiscoverListItem({
     super.key,
     required this.discoverModel,
     required this.isFirstItem,

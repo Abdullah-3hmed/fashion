@@ -1,8 +1,8 @@
 import 'package:auto_route/annotations.dart';
 import 'package:e_fashion_flutter/core/widgets/discover_and_search_grid_view.dart';
-import 'package:e_fashion_flutter/core/widgets/discover_and_search_list_view.dart';
 import 'package:e_fashion_flutter/features/home/cubit/home_cubit.dart';
 import 'package:e_fashion_flutter/features/home/cubit/home_state.dart';
+import 'package:e_fashion_flutter/features/home/screens/widgets/discover/discover_list_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:solar_icons/solar_icons.dart';
@@ -74,7 +74,7 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
                                 ? state.offersDiscoverList
                                 : state.productsDiscoverList,
                       )
-                      : DiscoverAndSearchListView(
+                      : DiscoverListView(
                         discoverList:
                             widget.isOffer
                                 ? state.offersDiscoverList

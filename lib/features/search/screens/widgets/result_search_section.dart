@@ -1,5 +1,5 @@
 import 'package:e_fashion_flutter/core/widgets/discover_and_search_grid_view.dart';
-import 'package:e_fashion_flutter/core/widgets/discover_and_search_list_view.dart';
+import 'package:e_fashion_flutter/features/home/screens/widgets/discover/discover_list_view.dart';
 import 'package:flutter/material.dart';
 
 class ResultSearchSection extends StatelessWidget {
@@ -19,7 +19,7 @@ class ResultSearchSection extends StatelessWidget {
       child:
           isGrid
               ? const DiscoverAndSearchGridView(discoverList: [])
-              : const DiscoverAndSearchListView(discoverList: []),
+              : const DiscoverListView(discoverList: []),
     );
   }
 }

@@ -1,9 +1,9 @@
-import 'package:e_fashion_flutter/core/widgets/discover_and_search_item.dart';
 import 'package:e_fashion_flutter/features/home/data/discover_model.dart';
+import 'package:e_fashion_flutter/features/home/screens/widgets/discover/discover_list_tem.dart';
 import 'package:flutter/material.dart';
 
-class DiscoverAndSearchListView extends StatelessWidget {
-  const DiscoverAndSearchListView({super.key, required this.discoverList});
+class DiscoverListView extends StatelessWidget {
+  const DiscoverListView({super.key, required this.discoverList});
 
   final List<DiscoverModel> discoverList;
 
@@ -13,7 +13,7 @@ class DiscoverAndSearchListView extends StatelessWidget {
       key: const ValueKey('list'),
       physics: const BouncingScrollPhysics(),
       itemBuilder:
-          (context, index) => DiscoverAndSearchItem(
+          (context, index) => DiscoverListItem(
             isFirstItem: index == 0,
             discoverModel: discoverList[index],
           ),
