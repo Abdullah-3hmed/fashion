@@ -1,5 +1,3 @@
-import 'package:e_fashion_flutter/core/widgets/discover_and_search_grid_view.dart';
-import 'package:e_fashion_flutter/features/home/screens/widgets/discover/discover_list_view.dart';
 import 'package:flutter/material.dart';
 
 class ResultSearchSection extends StatelessWidget {
@@ -16,10 +14,10 @@ class ResultSearchSection extends StatelessWidget {
         ).animate(animation);
         return SlideTransition(position: offsetAnimation, child: child);
       },
-      child:
-          isGrid
-              ? const DiscoverAndSearchGridView(discoverList: [])
-              : const DiscoverListView(discoverList: []),
+      child: const SizedBox.shrink(),
+      // isGrid
+      //     ? const Di(discoverList: [])
+      //     : const DiscoverListView(discoverList: []),
     );
   }
 }

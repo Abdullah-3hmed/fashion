@@ -1,5 +1,5 @@
 import 'package:e_fashion_flutter/features/home/data/discover_model.dart';
-import 'package:e_fashion_flutter/features/home/screens/widgets/discover/discover_list_tem.dart';
+import 'package:e_fashion_flutter/features/home/screens/widgets/discover/discover_list/discover_list_tem.dart';
 import 'package:flutter/material.dart';
 
 class DiscoverListView extends StatelessWidget {
