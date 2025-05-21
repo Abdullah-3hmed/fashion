@@ -1,7 +1,7 @@
 import 'package:e_fashion_flutter/core/widgets/primary_button.dart';
-import 'package:e_fashion_flutter/features/home/screens/widgets/colors_available.dart';
-import 'package:e_fashion_flutter/features/home/screens/widgets/pieces_available.dart';
-import 'package:e_fashion_flutter/features/home/screens/widgets/sizes_available.dart';
+import 'package:e_fashion_flutter/features/home/screens/widgets/shared/colors_available.dart';
+import 'package:e_fashion_flutter/features/home/screens/widgets/shared/pieces_available.dart';
+import 'package:e_fashion_flutter/features/home/screens/widgets/shared/sizes_available.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 

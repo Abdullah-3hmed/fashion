@@ -1,8 +1,8 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:e_fashion_flutter/features/home/screens/widgets/brand_section.dart';
-import 'package:e_fashion_flutter/features/home/screens/widgets/category_section.dart';
-import 'package:e_fashion_flutter/features/home/screens/widgets/home_header_bloc_builder.dart';
-import 'package:e_fashion_flutter/features/home/screens/widgets/offers_section.dart';
+import 'package:e_fashion_flutter/features/home/screens/widgets/category/category_section.dart';
+import 'package:e_fashion_flutter/features/home/screens/widgets/home_header/home_header_bloc_builder.dart';
+import 'package:e_fashion_flutter/features/home/screens/widgets/offers/offers_section.dart';
+import 'package:e_fashion_flutter/features/home/screens/widgets/products/products_section.dart';
 import 'package:flutter/material.dart';
 
 @RoutePage()
@@ -25,7 +25,7 @@ class HomeScreen extends StatelessWidget {
                   SliverToBoxAdapter(child: CategorySection()),
                   SliverToBoxAdapter(child: OffersSection()),
                   SliverToBoxAdapter(
-                    child: BrandSection(brandName: "Products"),
+                    child: ProductsSection(brandName: "Products"),
                   ),
                 ],
               ),

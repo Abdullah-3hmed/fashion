@@ -1,6 +1,6 @@
 import 'package:e_fashion_flutter/core/utils/assets_manager.dart';
 import 'package:e_fashion_flutter/features/home/cubit/home_cubit.dart';
-import 'package:e_fashion_flutter/features/home/screens/widgets/filter_section_item.dart';
+import 'package:e_fashion_flutter/features/home/screens/widgets/filter/filter_section_item.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

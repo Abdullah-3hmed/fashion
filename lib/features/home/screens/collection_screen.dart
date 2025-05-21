@@ -6,8 +6,8 @@ import 'package:e_fashion_flutter/core/widgets/secondary_button.dart';
 import 'package:e_fashion_flutter/features/home/cubit/home_cubit.dart';
 import 'package:e_fashion_flutter/features/home/cubit/home_state.dart';
 import 'package:e_fashion_flutter/features/home/data/collection_details_product.dart';
-import 'package:e_fashion_flutter/features/home/screens/widgets/collection_item.dart';
-import 'package:e_fashion_flutter/features/home/screens/widgets/reverse_collection_item.dart';
+import 'package:e_fashion_flutter/features/home/screens/widgets/collection/collection_item.dart';
+import 'package:e_fashion_flutter/features/home/screens/widgets/collection/reverse_collection_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:skeletonizer/skeletonizer.dart';
@@ -15,6 +15,7 @@ import 'package:skeletonizer/skeletonizer.dart';
 @RoutePage()
 class CollectionScreen extends StatelessWidget {
   const CollectionScreen({super.key, required this.collectionName});
+
   final String collectionName;
   static const CollectionDetailsProduct dummyProduct = CollectionDetailsProduct(
     id: 0,

@@ -3,7 +3,7 @@ import 'package:e_fashion_flutter/core/utils/app_constants.dart';
 import 'package:e_fashion_flutter/features/home/cubit/home_cubit.dart';
 import 'package:e_fashion_flutter/features/home/cubit/home_state.dart';
 import 'package:e_fashion_flutter/features/home/data/collection_model.dart';
-import 'package:e_fashion_flutter/features/home/screens/widgets/home_header.dart';
+import 'package:e_fashion_flutter/features/home/screens/widgets/home_header/home_header.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:skeletonizer/skeletonizer.dart';

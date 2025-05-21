@@ -4,13 +4,13 @@ import 'package:e_fashion_flutter/core/enums/request_status.dart';
 import 'package:e_fashion_flutter/features/home/cubit/home_cubit.dart';
 import 'package:e_fashion_flutter/features/home/cubit/home_state.dart';
 import 'package:e_fashion_flutter/features/home/data/product_model.dart';
-import 'package:e_fashion_flutter/features/home/screens/widgets/brand_section_item.dart';
+import 'package:e_fashion_flutter/features/home/screens/widgets/products/product_section_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
-class BrandSection extends StatelessWidget {
-  const BrandSection({super.key, required this.brandName});
+class ProductsSection extends StatelessWidget {
+  const ProductsSection({super.key, required this.brandName});
 
   final String brandName;
   static const ProductModel dummyProductModel = ProductModel(
@@ -38,7 +38,7 @@ class BrandSection extends StatelessWidget {
                 context.pushRoute(DiscoverRoute());
               },
               child: Text(
-                "See All",
+                "Discover",
                 style: Theme.of(context).textTheme.labelMedium!.copyWith(
                   color: Theme.of(context).colorScheme.primary,
                 ),
@@ -64,7 +64,7 @@ class BrandSection extends StatelessWidget {
                       itemBuilder:
                           (context, index) => const SizedBox(
                             width: 240.0,
-                            child: BrandSectionItem(
+                            child: ProductsSectionItem(
                               productModel: dummyProductModel,
                             ),
                           ),
@@ -84,7 +84,7 @@ class BrandSection extends StatelessWidget {
                     itemBuilder:
                         (context, index) => SizedBox(
                           width: 240.0,
-                          child: BrandSectionItem(
+                          child: ProductsSectionItem(
                             productModel: state.products[index],
                           ),
                         ),

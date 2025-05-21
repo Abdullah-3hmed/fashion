@@ -1,5 +1,5 @@
 import 'package:e_fashion_flutter/features/home/data/category_model.dart';
-import 'package:e_fashion_flutter/features/home/screens/widgets/filter_category_section.dart';
+import 'package:e_fashion_flutter/features/home/screens/widgets/filter/filter_category_section.dart';
 import 'package:flutter/material.dart';
 
 class CategoryContainer extends StatelessWidget {

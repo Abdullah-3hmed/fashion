@@ -6,7 +6,7 @@ import 'package:e_fashion_flutter/core/utils/app_constants.dart';
 import 'package:e_fashion_flutter/features/home/cubit/home_cubit.dart';
 import 'package:e_fashion_flutter/features/home/cubit/home_state.dart';
 import 'package:e_fashion_flutter/features/home/data/offer_model.dart';
-import 'package:e_fashion_flutter/features/home/screens/widgets/home_carousel_slider_item.dart';
+import 'package:e_fashion_flutter/features/home/screens/widgets/shared/home_carousel_slider_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:skeletonizer/skeletonizer.dart';
@@ -40,7 +40,7 @@ class OffersSection extends StatelessWidget {
                 context.pushRoute(DiscoverRoute(isOffer: true));
               },
               child: Text(
-                "See All",
+                "Discover",
                 style: Theme.of(context).textTheme.labelMedium!.copyWith(
                   color: Theme.of(context).colorScheme.primary,
                 ),

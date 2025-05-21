@@ -3,16 +3,16 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:e_fashion_flutter/config/router/app_router.dart';
 import 'package:e_fashion_flutter/core/widgets/modal_bottom_sheet_content.dart';
 import 'package:e_fashion_flutter/features/home/cubit/home_cubit.dart';
-import 'package:e_fashion_flutter/features/home/data/product_model.dart';
-import 'package:e_fashion_flutter/features/home/screens/widgets/home_clipped_container.dart';
+import 'package:e_fashion_flutter/features/home/data/offer_model.dart';
+import 'package:e_fashion_flutter/features/home/screens/widgets/shared/home_clipped_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
 
-class BrandSectionItem extends StatelessWidget {
-  const BrandSectionItem({super.key, required this.productModel});
+class HomeCarouselSliderItem extends StatelessWidget {
+  const HomeCarouselSliderItem({super.key, required this.offerModel});
 
-  final ProductModel productModel;
+  final OfferModel offerModel;
 
   @override
   Widget build(BuildContext context) {
@@ -21,10 +21,10 @@ class BrandSectionItem extends StatelessWidget {
         InkWell(
           onTap: () async {
             context.pushRoute(
-              ProductDetailsRoute(imageUrl: productModel.imageUrl),
+              ProductDetailsRoute(imageUrl: offerModel.imageUrl),
             );
             await context.read<HomeCubit>().getProductDetails(
-              productId: productModel.id,
+              productId: offerModel.id,
             );
           },
           child: ClipRRect(
@@ -33,7 +33,7 @@ class BrandSectionItem extends StatelessWidget {
               height: 180.0,
               width: double.infinity,
               fit: BoxFit.cover,
-              imageUrl: productModel.imageUrl,
+              imageUrl: offerModel.imageUrl,
               errorWidget: (context, url, error) => const Icon(Icons.error),
             ),
           ),
@@ -45,10 +45,10 @@ class BrandSectionItem extends StatelessWidget {
           child: InkWell(
             onTap: () async {
               context.pushRoute(
-                ProductDetailsRoute(imageUrl: productModel.imageUrl),
+                ProductDetailsRoute(imageUrl: offerModel.imageUrl),
               );
               await context.read<HomeCubit>().getProductDetails(
-                productId: productModel.id,
+                productId: offerModel.id,
               );
             },
             child: HomeClippedContainer(
@@ -57,9 +57,9 @@ class BrandSectionItem extends StatelessWidget {
                 children: [
                   const SizedBox(height: 10.0),
                   Text(
-                    productModel.name.length > 20
-                        ? '${productModel.name.substring(0, 20)}...'
-                        : productModel.name,
+                    offerModel.name.length > 20
+                        ? '${offerModel.name.substring(0, 20)}...'
+                        : offerModel.name,
                     maxLines: 1,
 
                     overflow: TextOverflow.ellipsis,
@@ -67,13 +67,33 @@ class BrandSectionItem extends StatelessWidget {
                       context,
                     ).textTheme.bodyLarge!.copyWith(color: Colors.white),
                   ),
-                  const SizedBox(height: 4.0),
-                  Text(
-                    r"$"
-                    "${productModel.price}",
-                    style: Theme.of(
-                      context,
-                    ).textTheme.bodyMedium!.copyWith(color: Colors.white),
+                  Text.rich(
+                    TextSpan(
+                      children: [
+                        TextSpan(
+                          text:
+                              r"$"
+                              "${offerModel.oldPrice}",
+                          style: Theme.of(
+                            context,
+                          ).textTheme.bodyLarge!.copyWith(
+                            color: Theme.of(context).colorScheme.primary,
+                            overflow: TextOverflow.ellipsis,
+                            decoration: TextDecoration.lineThrough,
+                            decorationColor:
+                                Theme.of(context).colorScheme.primary,
+                          ),
+                        ),
+                        TextSpan(
+                          text:
+                              r"  $"
+                              "${offerModel.discountedPrice}",
+                          style: Theme.of(
+                            context,
+                          ).textTheme.bodyLarge!.copyWith(color: Colors.white),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),

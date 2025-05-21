@@ -1,7 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:e_fashion_flutter/features/home/screens/widgets/details_clipped_container.dart';
-import 'package:e_fashion_flutter/features/home/screens/widgets/details_container_content.dart';
+import 'package:e_fashion_flutter/features/home/screens/widgets/details/details_clipped_container.dart';
+import 'package:e_fashion_flutter/features/home/screens/widgets/discover/details_container_content.dart';
 import 'package:flutter/material.dart';
 
 @RoutePage()

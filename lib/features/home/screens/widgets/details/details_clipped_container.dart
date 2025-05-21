@@ -1,4 +1,4 @@
-import 'package:e_fashion_flutter/features/home/screens/widgets/details_container_clipper.dart';
+import 'package:e_fashion_flutter/features/home/screens/widgets/details/details_container_clipper.dart';
 import 'package:flutter/material.dart';
 
 class DetailsClippedContainer extends StatelessWidget {
