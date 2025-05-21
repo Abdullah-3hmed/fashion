@@ -1,68 +1,99 @@
-import 'package:e_fashion_flutter/core/utils/assets_manager.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:e_fashion_flutter/core/widgets/modal_bottom_sheet_content.dart';
-import 'package:e_fashion_flutter/features/home/screens/widgets/home_clipped_container.dart';
+import 'package:e_fashion_flutter/features/home/data/discover_model.dart';
+import 'package:e_fashion_flutter/features/home/screens/widgets/discover_list_clipped_container.dart';
+import 'package:e_fashion_flutter/features/home/screens/widgets/discover_list_image_clipper.dart';
+import 'package:e_fashion_flutter/features/home/screens/widgets/discover_list_top_image_clipper.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 
 class DiscoverAndSearchItem extends StatelessWidget {
-  const DiscoverAndSearchItem({super.key});
+  const DiscoverAndSearchItem({
+    super.key,
+    required this.discoverModel,
+    required this.isFirstItem,
+  });
+
+  final DiscoverModel discoverModel;
+  final bool isFirstItem;
 
   @override
   Widget build(BuildContext context) {
     return Stack(
-      alignment: AlignmentDirectional.bottomCenter,
+      clipBehavior: Clip.none,
       children: [
-        ClipRRect(
-          borderRadius: BorderRadius.circular(16.0),
-          child: Image.asset(
-            height: 300.0,
-            width: double.infinity,
-            AssetsManager.welcomeImage,
-            fit: BoxFit.cover,
+        ClipPath(
+          clipper:
+              isFirstItem
+                  ? DiscoverListTopImageClipper()
+                  : DiscoverListImageClipper(),
+          child: ClipRRect(
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(16.0),
+              topRight: Radius.circular(16.0),
+            ),
+            child: CachedNetworkImage(
+              imageUrl: discoverModel.image,
+              height: isFirstItem ? 300.0 : 320.0,
+              width: double.infinity,
+              fit: BoxFit.cover,
+              errorWidget: (context, url, error) => const Icon(Icons.error),
+            ),
           ),
         ),
-        HomeClippedContainer(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                "Denim Jacket",
-                style: Theme.of(
-                  context,
-                ).textTheme.bodyLarge!.copyWith(color: Colors.white),
-              ),
-              Row(
+        PositionedDirectional(
+          bottom: isFirstItem ? -0.5 : -2.0,
+          start: 0.0,
+          end: 0.0,
+          child: CustomPaint(
+            painter: DiscoverListClippedContainer(),
+            child: SizedBox(
+              height: 112.0,
+              child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Spacer(),
                   Text(
-                    r"$150 ",
+                    discoverModel.name,
                     style: Theme.of(
                       context,
                     ).textTheme.bodyLarge!.copyWith(color: Colors.white),
                   ),
-                  const Spacer(),
-                  const SizedBox(width: 28.0),
-                  InkWell(
-                    onTap: () async {
-                      await showModalBottomSheet(
-                        context: context,
-                        builder: (context) => const ModalBottomSheetContent(),
-                      );
-                    },
-                    child: Icon(
-                      Iconsax.bag_2,
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Spacer(),
+                      Text(
+                        r"$"
+                        "${discoverModel.price}",
+                        style: Theme.of(
+                          context,
+                        ).textTheme.bodyLarge!.copyWith(color: Colors.white),
+                      ),
+                      const Spacer(),
+                      const SizedBox(width: 28.0),
+                      InkWell(
+                        onTap: () async {
+                          await showModalBottomSheet(
+                            context: context,
+                            builder:
+                                (context) => const ModalBottomSheetContent(),
+                          );
+                        },
+                        child: Icon(
+                          Iconsax.bag_2,
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
+                      ),
+                      const SizedBox(width: 16.0),
+                    ],
                   ),
-                  const SizedBox(width: 16.0),
                 ],
               ),
-            ],
+            ),
           ),
         ),
         PositionedDirectional(
-          top: 16.0,
+          top: isFirstItem ? 16.0 : 45.0,
           end: 16.0,
           child: InkWell(
             onTap: () {},

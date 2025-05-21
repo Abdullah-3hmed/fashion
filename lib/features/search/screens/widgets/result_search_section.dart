@@ -18,8 +18,8 @@ class ResultSearchSection extends StatelessWidget {
       },
       child:
           isGrid
-              ? const DiscoverAndSearchGridView()
-              : const DiscoverAndSearchListView(),
+              ? const DiscoverAndSearchGridView(discoverList: [])
+              : const DiscoverAndSearchListView(discoverList: []),
     );
   }
 }

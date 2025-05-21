@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:e_fashion_flutter/core/enums/request_status.dart';
 import 'package:e_fashion_flutter/features/home/cubit/home_state.dart';
+import 'package:e_fashion_flutter/features/home/data/discover_model.dart';
 import 'package:e_fashion_flutter/features/home/data/review_model.dart';
 import 'package:e_fashion_flutter/features/home/repos/home_repo.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -80,9 +81,26 @@ class HomeCubit extends Cubit<HomeState> {
           offersStatus: RequestStatus.error,
         ),
       ),
-      (offers) => emit(
-        state.copyWith(offers: offers, offersStatus: RequestStatus.success),
-      ),
+      (offers) {
+        List<DiscoverModel> offersDiscoverList =
+            offers
+                .map(
+                  (offer) => DiscoverModel(
+                    name: offer.name,
+                    image: offer.imageUrl,
+                    price: offer.discountedPrice,
+                    id: offer.id,
+                  ),
+                )
+                .toList();
+        emit(
+          state.copyWith(
+            offers: offers,
+            offersStatus: RequestStatus.success,
+            offersDiscoverList: offersDiscoverList,
+          ),
+        );
+      },
     );
   }
 
@@ -124,12 +142,26 @@ class HomeCubit extends Cubit<HomeState> {
         );
         log(failure.errorMessage);
       },
-      (products) => emit(
-        state.copyWith(
-          products: products,
-          productsStatus: RequestStatus.success,
-        ),
-      ),
+      (products) {
+        List<DiscoverModel> productsDiscoverList =
+            products
+                .map(
+                  (product) => DiscoverModel(
+                    name: product.name,
+                    image: product.imageUrl,
+                    price: product.price,
+                    id: product.id,
+                  ),
+                )
+                .toList();
+        emit(
+          state.copyWith(
+            products: products,
+            productsStatus: RequestStatus.success,
+            productsDiscoverList: productsDiscoverList,
+          ),
+        );
+      },
     );
   }
 

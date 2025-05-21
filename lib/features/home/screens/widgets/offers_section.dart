@@ -37,7 +37,7 @@ class OffersSection extends StatelessWidget {
                 ),
               ),
               onPressed: () {
-                context.pushRoute(const DiscoverRoute());
+                context.pushRoute(DiscoverRoute(isOffer: true));
               },
               child: Text(
                 "See All",

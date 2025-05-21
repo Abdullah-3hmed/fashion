@@ -69,6 +69,7 @@ class BrandSectionItem extends StatelessWidget {
                   ),
                   const SizedBox(height: 4.0),
                   Text(
+                    r"$"
                     "${productModel.price}",
                     style: Theme.of(
                       context,

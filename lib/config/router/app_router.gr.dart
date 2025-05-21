@@ -116,18 +116,38 @@ class CollectionRouteArgs {
 
 /// generated route for
 /// [DiscoverScreen]
-class DiscoverRoute extends PageRouteInfo<void> {
-  const DiscoverRoute({List<PageRouteInfo>? children})
-    : super(DiscoverRoute.name, initialChildren: children);
+class DiscoverRoute extends PageRouteInfo<DiscoverRouteArgs> {
+  DiscoverRoute({Key? key, bool isOffer = false, List<PageRouteInfo>? children})
+    : super(
+        DiscoverRoute.name,
+        args: DiscoverRouteArgs(key: key, isOffer: isOffer),
+        initialChildren: children,
+      );
 
   static const String name = 'DiscoverRoute';
 
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      return const DiscoverScreen();
+      final args = data.argsAs<DiscoverRouteArgs>(
+        orElse: () => const DiscoverRouteArgs(),
+      );
+      return DiscoverScreen(key: args.key, isOffer: args.isOffer);
     },
   );
+}
+
+class DiscoverRouteArgs {
+  const DiscoverRouteArgs({this.key, this.isOffer = false});
+
+  final Key? key;
+
+  final bool isOffer;
+
+  @override
+  String toString() {
+    return 'DiscoverRouteArgs{key: $key, isOffer: $isOffer}';
+  }
 }
 
 /// generated route for

@@ -2,6 +2,7 @@ import 'package:e_fashion_flutter/core/enums/request_status.dart';
 import 'package:e_fashion_flutter/features/home/data/category_model.dart';
 import 'package:e_fashion_flutter/features/home/data/collection_details_model.dart';
 import 'package:e_fashion_flutter/features/home/data/collection_model.dart';
+import 'package:e_fashion_flutter/features/home/data/discover_model.dart';
 import 'package:e_fashion_flutter/features/home/data/offer_model.dart';
 import 'package:e_fashion_flutter/features/home/data/product_details_model.dart';
 import 'package:e_fashion_flutter/features/home/data/product_model.dart';
@@ -28,6 +29,8 @@ class HomeState extends Equatable {
   final String productsErrorMessage;
   final RequestStatus addReviewStatus;
   final String addReviewErrorMessage;
+  final List<DiscoverModel> offersDiscoverList;
+  final List<DiscoverModel> productsDiscoverList;
   final int? selectedCategoryId;
   final String? gender;
 
@@ -52,6 +55,8 @@ class HomeState extends Equatable {
     this.productsErrorMessage = "",
     this.addReviewStatus = RequestStatus.initial,
     this.addReviewErrorMessage = "",
+    this.offersDiscoverList = const [],
+    this.productsDiscoverList = const [],
     this.selectedCategoryId,
     this.gender,
   });
@@ -77,6 +82,8 @@ class HomeState extends Equatable {
     String? productsErrorMessage,
     RequestStatus? addReviewStatus,
     String? addReviewErrorMessage,
+    List<DiscoverModel>? offersDiscoverList,
+    List<DiscoverModel>? productsDiscoverList,
     int? selectedCategoryId,
     String? gender,
   }) {
@@ -108,6 +115,8 @@ class HomeState extends Equatable {
       addReviewStatus: addReviewStatus ?? this.addReviewStatus,
       addReviewErrorMessage:
           addReviewErrorMessage ?? this.addReviewErrorMessage,
+      offersDiscoverList: offersDiscoverList ?? this.offersDiscoverList,
+      productsDiscoverList: productsDiscoverList ?? this.productsDiscoverList,
       selectedCategoryId: selectedCategoryId ?? this.selectedCategoryId,
       gender: gender ?? this.gender,
     );
@@ -135,6 +144,8 @@ class HomeState extends Equatable {
     productsErrorMessage,
     addReviewStatus,
     addReviewErrorMessage,
+    offersDiscoverList,
+    productsDiscoverList,
     selectedCategoryId,
     gender,
   ];
