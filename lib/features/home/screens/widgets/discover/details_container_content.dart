@@ -1,11 +1,10 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:e_fashion_flutter/core/enums/request_status.dart';
 import 'package:e_fashion_flutter/core/utils/app_constants.dart';
 import 'package:e_fashion_flutter/core/widgets/primary_button.dart';
 import 'package:e_fashion_flutter/features/home/cubit/home_cubit.dart';
 import 'package:e_fashion_flutter/features/home/cubit/home_state.dart';
 import 'package:e_fashion_flutter/features/home/data/product_details_model.dart';
-import 'package:e_fashion_flutter/features/home/screens/widgets/details/rating_section.dart';
+import 'package:e_fashion_flutter/features/home/screens/widgets/details/product_details.dart';
 import 'package:e_fashion_flutter/features/home/screens/widgets/shared/colors_available.dart';
 import 'package:e_fashion_flutter/features/home/screens/widgets/shared/pieces_available.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +25,6 @@ class DetailsContainerContent extends StatelessWidget {
         productImage: AppConstants.imageUrl,
         reviews: [],
       );
-
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<HomeCubit, HomeState>(
@@ -85,82 +83,18 @@ class DetailsContainerContent extends StatelessWidget {
               ),
             );
           case RequestStatus.success:
-            return CustomScrollView(
+            return ProductDetails(
               controller: controller,
-              physics: const BouncingScrollPhysics(),
-              slivers: [
-                SliverToBoxAdapter(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const SizedBox(height: 30.0),
-                      InkWell(
-                        onTap: () {
-                          context.pop();
-                        },
-                        child: CircleAvatar(
-                          backgroundColor:
-                              Theme.of(context).colorScheme.primary,
-                          radius: 24.0,
-                          child: Icon(
-                            Icons.arrow_back,
-                            color: Theme.of(context).colorScheme.onPrimary,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 24.0),
-                      Text(
-                        state.productDetailsModel.productName,
-                        style: Theme.of(context).textTheme.titleMedium,
-                      ),
-                      Text(
-                        r"$"
-                        "${state.productDetailsModel.price}",
-                        style: Theme.of(context).textTheme.bodyLarge,
-                      ),
-                      const SizedBox(height: 24.0),
-                      ColorsAvailable(
-                        onColorChanged: (color) => debugPrint(color.toString()),
-                      ),
-                      PiecesAvailable(
-                        onPiecesChanged: (int value) {
-                          debugPrint(value.toString());
-                        },
-                      ),
-                      Text(
-                        state.productDetailsModel.description,
-                        style: Theme.of(context).textTheme.bodySmall,
-                      ),
-                      const SizedBox(height: 24.0),
-                      PrimaryButton(
-                        icon: Icon(
-                          Iconsax.bag_2,
-                          color: Theme.of(context).colorScheme.onPrimary,
-                        ),
-                        onPressed: () {},
-                        text: "Add to bag",
-                      ),
-                      const SizedBox(height: 24.0),
-                      Text(
-                        "Rate this product",
-                        style: Theme.of(context).textTheme.labelMedium,
-                      ),
-                      Text(
-                        "Tell others what you think",
-                        style: Theme.of(context).textTheme.bodySmall,
-                      ),
-                      const SizedBox(height: 24.0),
-                      RatingSection(
-                        productDetailsModel: state.productDetailsModel,
-                      ),
-                      const SizedBox(height: 40.0),
-                    ],
-                  ),
-                ),
-              ],
+              productDetailsModel: state.productDetailsModel,
             );
           case RequestStatus.error:
-            return const SizedBox();
+            return SizedBox(
+              height: 150.0,
+              child: Text(
+                state.productDetailsErrorMessage,
+                style: Theme.of(context).textTheme.bodyMedium,
+              ),
+            );
           default:
             return const SizedBox.shrink();
         }

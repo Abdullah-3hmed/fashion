@@ -172,14 +172,12 @@ class EditReviewRoute extends PageRouteInfo<EditReviewRouteArgs> {
   EditReviewRoute({
     Key? key,
     required ProductDetailsModel productDetailsModel,
-    required double rating,
     List<PageRouteInfo>? children,
   }) : super(
          EditReviewRoute.name,
          args: EditReviewRouteArgs(
            key: key,
            productDetailsModel: productDetailsModel,
-           rating: rating,
          ),
          initialChildren: children,
        );
@@ -193,28 +191,21 @@ class EditReviewRoute extends PageRouteInfo<EditReviewRouteArgs> {
       return EditReviewScreen(
         key: args.key,
         productDetailsModel: args.productDetailsModel,
-        rating: args.rating,
       );
     },
   );
 }
 
 class EditReviewRouteArgs {
-  const EditReviewRouteArgs({
-    this.key,
-    required this.productDetailsModel,
-    required this.rating,
-  });
+  const EditReviewRouteArgs({this.key, required this.productDetailsModel});
 
   final Key? key;
 
   final ProductDetailsModel productDetailsModel;
 
-  final double rating;
-
   @override
   String toString() {
-    return 'EditReviewRouteArgs{key: $key, productDetailsModel: $productDetailsModel, rating: $rating}';
+    return 'EditReviewRouteArgs{key: $key, productDetailsModel: $productDetailsModel}';
   }
 }
 

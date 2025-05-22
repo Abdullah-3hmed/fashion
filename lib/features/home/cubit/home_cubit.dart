@@ -167,13 +167,12 @@ class HomeCubit extends Cubit<HomeState> {
 
   Future<void> addReview({
     required int productId,
-    required int rating,
     required String review,
   }) async {
     emit(state.copyWith(addReviewStatus: RequestStatus.loading));
     final result = await homeRepo.addReview(
       productId: productId,
-      rating: rating,
+      rating: state.rating.toInt(),
       review: review,
     );
     result.fold(
@@ -205,5 +204,9 @@ class HomeCubit extends Cubit<HomeState> {
 
   void selectGender({required String gender}) {
     emit(state.copyWith(gender: gender));
+  }
+
+  void rateProduct({required double rating}) {
+    emit(state.copyWith(rating: rating));
   }
 }

@@ -33,6 +33,7 @@ class HomeState extends Equatable {
   final List<DiscoverModel> productsDiscoverList;
   final int? selectedCategoryId;
   final String? gender;
+  final double rating;
 
   const HomeState({
     this.collections = const [],
@@ -59,6 +60,7 @@ class HomeState extends Equatable {
     this.productsDiscoverList = const [],
     this.selectedCategoryId,
     this.gender,
+    this.rating = 0.0,
   });
 
   HomeState copyWith({
@@ -86,6 +88,7 @@ class HomeState extends Equatable {
     List<DiscoverModel>? productsDiscoverList,
     int? selectedCategoryId,
     String? gender,
+    double? rating,
   }) {
     return HomeState(
       collections: collections ?? this.collections,
@@ -119,6 +122,7 @@ class HomeState extends Equatable {
       productsDiscoverList: productsDiscoverList ?? this.productsDiscoverList,
       selectedCategoryId: selectedCategoryId ?? this.selectedCategoryId,
       gender: gender ?? this.gender,
+      rating: rating ?? this.rating,
     );
   }
 
@@ -148,5 +152,6 @@ class HomeState extends Equatable {
     productsDiscoverList,
     selectedCategoryId,
     gender,
+    rating,
   ];
 }

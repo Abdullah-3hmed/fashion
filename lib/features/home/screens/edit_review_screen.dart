@@ -1,43 +1,16 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:e_fashion_flutter/core/enums/request_status.dart';
-import 'package:e_fashion_flutter/core/utils/show_toast.dart';
-import 'package:e_fashion_flutter/core/utils/toast_states.dart';
-import 'package:e_fashion_flutter/core/widgets/primary_button.dart';
-import 'package:e_fashion_flutter/features/home/cubit/home_cubit.dart';
-import 'package:e_fashion_flutter/features/home/cubit/home_state.dart';
 import 'package:e_fashion_flutter/features/home/data/product_details_model.dart';
+import 'package:e_fashion_flutter/features/home/screens/widgets/details/edit_review_section.dart';
 import 'package:e_fashion_flutter/features/profile/cubit/user_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 @RoutePage()
-class EditReviewScreen extends StatefulWidget {
-  const EditReviewScreen({
-    super.key,
-    required this.productDetailsModel,
-    required this.rating,
-  });
+class EditReviewScreen extends StatelessWidget {
+  const EditReviewScreen({super.key, required this.productDetailsModel});
 
   final ProductDetailsModel productDetailsModel;
-  final double rating;
-
-  @override
-  State<EditReviewScreen> createState() => _EditReviewScreenState();
-}
-
-class _EditReviewScreenState extends State<EditReviewScreen> {
-  late String review;
-  late double editedRating;
-
-  @override
-  void initState() {
-    super.initState();
-    review = "";
-    editedRating = widget.rating;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +29,7 @@ class _EditReviewScreenState extends State<EditReviewScreen> {
                   ClipRRect(
                     borderRadius: BorderRadiusDirectional.circular(8.0),
                     child: CachedNetworkImage(
-                      imageUrl: widget.productDetailsModel.productImage,
+                      imageUrl: productDetailsModel.productImage,
                       height: 140.0,
                       width: 120.0,
                       fit: BoxFit.cover,
@@ -69,13 +42,13 @@ class _EditReviewScreenState extends State<EditReviewScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        widget.productDetailsModel.productName,
+                        productDetailsModel.productName,
                         style: Theme.of(context).textTheme.titleMedium,
                       ),
                       const SizedBox(height: 8.0),
                       Text(
                         r"$"
-                        "${widget.productDetailsModel.price}",
+                        "${productDetailsModel.price}",
                         style: Theme.of(context).textTheme.bodyMedium,
                       ),
                     ],
@@ -113,92 +86,11 @@ class _EditReviewScreenState extends State<EditReviewScreen> {
                 ],
               ),
               const SizedBox(height: 30.0),
-              RatingBar.builder(
-                allowHalfRating: true,
-                initialRating: widget.rating,
-                itemSize: 32.0,
-                itemPadding: const EdgeInsets.symmetric(horizontal: 18.0),
-                itemBuilder:
-                    (context, _) => const Icon(
-                      FontAwesomeIcons.solidStar,
-                      color: Colors.amber,
-                    ),
-                onRatingUpdate: (double value) {
-                  setState(() {
-                    editedRating = value;
-                  });
-                },
-              ),
-              const SizedBox(height: 40.0),
-              TextField(
-                maxLength: 200,
-                onSubmitted: (_) async {
-                  await _onPressed();
-                },
-                onChanged: (value) {
-                  review = value;
-                },
-                onTapOutside: (event) => FocusScope.of(context).unfocus(),
-                decoration: InputDecoration(
-                  hintText: "Describe your opinion",
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12.0),
-                    borderSide: BorderSide(
-                      color: Theme.of(context).colorScheme.outlineVariant,
-                    ),
-                  ),
-                  counterStyle: Theme.of(context).textTheme.bodySmall,
-                ),
-              ),
-              const SizedBox(height: 140.0),
-              BlocConsumer<HomeCubit, HomeState>(
-                listenWhen:
-                    (previous, current) =>
-                        previous.addReviewStatus != current.addReviewStatus,
-                buildWhen:
-                    (previous, current) =>
-                        previous.addReviewStatus != current.addReviewStatus,
-                listener: (context, state) {
-                  if (state.addReviewStatus == RequestStatus.success) {
-                    context.pop();
-                    showToast(
-                      message: "Review added successfully",
-                      state: ToastStates.success,
-                    );
-                  }
-                  if (state.addReviewStatus == RequestStatus.error) {
-                    showToast(
-                      message: state.addReviewErrorMessage,
-                      state: ToastStates.error,
-                    );
-                  }
-                },
-                builder: (context, state) {
-                  return PrimaryButton(
-                    isLoading: state.addReviewStatus == RequestStatus.loading,
-                    onPressed: () async {
-                      await _onPressed();
-                    },
-                    text: "Post review",
-                  );
-                },
-              ),
+              EditReviewSection(productId: productDetailsModel.id),
             ],
           ),
         ),
       ),
     );
-  }
-
-  Future<void> _onPressed() async {
-    if (review.isNotEmpty) {
-      await context.read<HomeCubit>().addReview(
-        productId: widget.productDetailsModel.id,
-        rating: editedRating.toInt(),
-        review: review,
-      );
-    } else {
-      showToast(message: "please enter review", state: ToastStates.error);
-    }
   }
 }

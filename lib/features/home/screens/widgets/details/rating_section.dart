@@ -9,72 +9,38 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class RatingSection extends StatefulWidget {
+class RatingSection extends StatelessWidget {
   const RatingSection({super.key, required this.productDetailsModel});
 
   final ProductDetailsModel productDetailsModel;
-
-  @override
-  State<RatingSection> createState() => _RatingSectionState();
-}
-
-class _RatingSectionState extends State<RatingSection> with AutoRouteAware {
-  double rating = 0.0;
-  AutoRouteObserver? _observer;
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    _observer =
-        RouterScope.of(context).firstObserverOfType<AutoRouteObserver>();
-    if (_observer != null) {
-      _observer?.subscribe(this, context.routeData);
-    }
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _observer?.unsubscribe(this);
-  }
-
-  @override
-  void didPopNext() {
-    setState(() {
-      rating = 0.0;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    final ProductDetailsModel product = widget.productDetailsModel;
-
+    final ProductDetailsModel product = productDetailsModel;
+    context.watch<HomeCubit>().state.rating;
     return Column(
       children: [
         RatingBar.builder(
           allowHalfRating: true,
           itemSize: 32.0,
-          initialRating: rating,
+          initialRating: context.watch<HomeCubit>().state.rating,
           itemPadding: const EdgeInsets.symmetric(horizontal: 12.0),
           itemBuilder:
               (context, _) =>
                   const Icon(FontAwesomeIcons.star, color: Colors.amber),
           onRatingUpdate: (newRating) {
-            setState(() {
-              rating = newRating;
-            });
+            context.read<HomeCubit>().rateProduct(rating: newRating);
           },
         ),
         const SizedBox(height: 16.0),
         Align(
           child: TextButton(
             onPressed: () {
-              context.pushRoute(
-                EditReviewRoute(productDetailsModel: product, rating: rating),
-              );
+              context.pushRoute(EditReviewRoute(productDetailsModel: product));
             },
             child: Text(
-              rating == 0 ? "Write a review" : "Edit review",
+              context.watch<HomeCubit>().state.rating == 0
+                  ? "Write a review"
+                  : "Edit review",
               style: Theme.of(context).textTheme.bodySmall!.copyWith(
                 color: Theme.of(context).colorScheme.primary,
               ),
@@ -93,14 +59,14 @@ class _RatingSectionState extends State<RatingSection> with AutoRouteAware {
         const SizedBox(height: 24.0),
         Align(
           child: Text(
-            " $rating",
+            " ${context.watch<HomeCubit>().state.rating}",
             style: Theme.of(context).textTheme.headlineSmall,
           ),
         ),
         const SizedBox(height: 24.0),
         Align(
           child: RatingBarIndicator(
-            rating: rating,
+            rating: context.watch<HomeCubit>().state.rating,
             itemBuilder:
                 (context, index) => const Icon(Icons.star, color: Colors.amber),
             itemSize: 24.0,
@@ -124,7 +90,10 @@ class _RatingSectionState extends State<RatingSection> with AutoRouteAware {
               const SizedBox(width: 16.0),
               Expanded(
                 child: LinearProgressIndicator(
-                  value: _calculateRating(i: i),
+                  value: _calculateRating(
+                    i: i,
+                    rating: context.watch<HomeCubit>().state.rating,
+                  ),
                   minHeight: 8,
                   backgroundColor: Colors.grey[300],
                   valueColor: const AlwaysStoppedAnimation<Color>(Colors.amber),
@@ -150,7 +119,6 @@ class _RatingSectionState extends State<RatingSection> with AutoRouteAware {
     );
   }
 
-  double _calculateRating({required int i}) {
-    return rating.floor() == i ? 1.0 : 0.0;
-  }
+  double _calculateRating({required int i, required double rating}) =>
+      rating.floor() == i ? 1.0 : 0.0;
 }
