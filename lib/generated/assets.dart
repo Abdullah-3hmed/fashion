@@ -27,8 +27,6 @@ class Assets {
   static const String imagesBad = 'assets/images/bad.svg';
   static const String imagesChatImage = 'assets/images/chat_image.png';
   static const String imagesCheck = 'assets/images/Check.svg';
-  static const String imagesCollectionClippedContainer =
-      'assets/images/collection_clipped_container.png';
   static const String imagesDeliveredImage =
       'assets/images/delivered_image.png';
   static const String imagesGreat = 'assets/images/great.svg';

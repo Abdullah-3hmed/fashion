@@ -38,8 +38,6 @@ class AssetsManager {
   static const String greatSvgIcon = 'assets/images/great.svg';
   static const String noNotificationsImage =
       'assets/images/no_notifications.png';
-  static const String collectionClippedContainer =
-      'assets/images/collection_clipped_container.png';
   static const String welcomeCircleImage =
       'assets/images/welcome_circle_image.png';
   static const String welcomeCircleArrow =
