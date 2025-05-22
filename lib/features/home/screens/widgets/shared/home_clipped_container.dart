@@ -11,7 +11,13 @@ class HomeClippedContainer extends StatelessWidget {
       child: Container(
         height: 75.0,
         width: double.infinity,
-        color: const Color(0xFF203343),
+        decoration: const BoxDecoration(
+          color: Color(0xFF203343),
+          borderRadius: BorderRadiusDirectional.only(
+            bottomStart: Radius.circular(16.0),
+            bottomEnd: Radius.circular(16.0),
+          ),
+        ),
         child: child,
       ),
     );

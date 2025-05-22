@@ -1,19 +1,43 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:e_fashion_flutter/core/enums/request_status.dart';
+import 'package:e_fashion_flutter/core/services/service_locator.dart';
+import 'package:e_fashion_flutter/core/utils/app_constants.dart';
+import 'package:e_fashion_flutter/features/search/cubit/search_cubit.dart';
+import 'package:e_fashion_flutter/features/search/cubit/search_state.dart';
+import 'package:e_fashion_flutter/features/search/data/search_model.dart';
+import 'package:e_fashion_flutter/features/search/screens/widgets/empty_search.dart';
+import 'package:e_fashion_flutter/features/search/screens/widgets/no_result_search_section.dart';
 import 'package:e_fashion_flutter/features/search/screens/widgets/result_search_section.dart';
 import 'package:e_fashion_flutter/features/search/screens/widgets/search_text_field.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 import 'package:solar_icons/solar_icons.dart';
 
 @RoutePage()
-class SearchScreen extends StatefulWidget {
+class SearchScreen extends StatefulWidget implements AutoRouteWrapper {
   const SearchScreen({super.key});
 
   @override
   State<SearchScreen> createState() => _SearchScreenState();
+
+  @override
+  Widget wrappedRoute(BuildContext context) {
+    return BlocProvider(create: (context) => getIt<SearchCubit>(), child: this);
+  }
 }
 
 class _SearchScreenState extends State<SearchScreen> {
   bool isGrid = false;
+  List<SearchModel> dummyList = List<SearchModel>.generate(
+    5,
+    (index) => SearchModel(
+      name: "*********",
+      id: index + 1,
+      imageUrl: AppConstants.imageUrl,
+      price: 100,
+    ),
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -52,8 +76,44 @@ class _SearchScreenState extends State<SearchScreen> {
           children: [
             const SearchTextField(),
             const SizedBox(height: 16.0),
-            Expanded(child: ResultSearchSection(isGrid: isGrid)),
-            // Expanded(child: NoResultSearchSection()),
+            BlocBuilder<SearchCubit, SearchState>(
+              buildWhen:
+                  (previous, current) =>
+                      previous.searchStatus != current.searchStatus,
+              builder: (context, state) {
+                switch (state.searchStatus) {
+                  case RequestStatus.initial:
+                    return const Expanded(child: NoResultSearchSection());
+                  case RequestStatus.loading:
+                    return Expanded(
+                      child: Skeletonizer(
+                        child: ResultSearchSection(
+                          isGrid: isGrid,
+                          searchProducts: dummyList,
+                        ),
+                      ),
+                    );
+                  case RequestStatus.success:
+                    return state.searchProducts.isEmpty
+                        ? const Expanded(child: EmptySearch())
+                        : Expanded(
+                          child: ResultSearchSection(
+                            isGrid: isGrid,
+                            searchProducts: state.searchProducts,
+                          ),
+                        );
+                  case RequestStatus.error:
+                    return Expanded(
+                      child: Center(
+                        child: Text(
+                          state.searchErrorMessage,
+                          style: Theme.of(context).textTheme.titleMedium,
+                        ),
+                      ),
+                    );
+                }
+              },
+            ),
           ],
         ),
       ),

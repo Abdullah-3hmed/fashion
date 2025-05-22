@@ -1,5 +1,7 @@
+import 'package:e_fashion_flutter/features/search/cubit/search_cubit.dart';
 import 'package:e_fashion_flutter/features/search/screens/widgets/search_modal_bottom_sheet_content.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
 
 class SearchTextField extends StatefulWidget {
@@ -10,7 +12,6 @@ class SearchTextField extends StatefulWidget {
 }
 
 class _SearchTextFieldState extends State<SearchTextField> {
-  String searchText = "";
   bool isTapped = false;
   late final TextEditingController controller;
 
@@ -34,9 +35,9 @@ class _SearchTextFieldState extends State<SearchTextField> {
         setState(() {
           isTapped = false;
         });
-      },
-      onChanged: (value) {
-        searchText = value;
+        if (controller.text.isNotEmpty) {
+          context.read<SearchCubit>().searchProducts(query: controller.text);
+        }
       },
       onTap: () {
         setState(() {
@@ -51,7 +52,9 @@ class _SearchTextFieldState extends State<SearchTextField> {
             isTapped
                 ? IconButton(
                   onPressed: () {
-                    controller.clear();
+                    if (controller.text.isNotEmpty) {
+                      controller.clear();
+                    }
                   },
                   icon: const Icon(Icons.close),
                 )

@@ -1,12 +1,22 @@
+import 'package:e_fashion_flutter/features/search/data/search_model.dart';
+import 'package:e_fashion_flutter/features/search/screens/widgets/search_grid/search_grid_view.dart';
+import 'package:e_fashion_flutter/features/search/screens/widgets/search_list/search_list_view.dart';
 import 'package:flutter/material.dart';
 
 class ResultSearchSection extends StatelessWidget {
-  const ResultSearchSection({super.key, required this.isGrid});
+  const ResultSearchSection({
+    super.key,
+    required this.isGrid,
+    required this.searchProducts,
+  });
+
   final bool isGrid;
+  final List<SearchModel> searchProducts;
+
   @override
   Widget build(BuildContext context) {
     return AnimatedSwitcher(
-      duration: const Duration(milliseconds: 250),
+      duration: const Duration(milliseconds: 300),
       transitionBuilder: (child, animation) {
         final offsetAnimation = Tween<Offset>(
           begin: const Offset(1.0, 0.0), // Slide from right
@@ -14,10 +24,10 @@ class ResultSearchSection extends StatelessWidget {
         ).animate(animation);
         return SlideTransition(position: offsetAnimation, child: child);
       },
-      child: const SizedBox.shrink(),
-      // isGrid
-      //     ? const Di(discoverList: [])
-      //     : const DiscoverListView(discoverList: []),
+      child:
+          isGrid
+              ? SearchGridView(searchProducts: searchProducts)
+              : SearchListView(searchProducts: searchProducts),
     );
   }
 }
