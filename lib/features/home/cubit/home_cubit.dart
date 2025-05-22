@@ -126,11 +126,11 @@ class HomeCubit extends Cubit<HomeState> {
     );
   }
 
-  Future<void> getProducts({int? categoryId, String? gender}) async {
+  Future<void> getProducts() async {
     emit(state.copyWith(productsStatus: RequestStatus.loading));
     final result = await homeRepo.getProducts(
-      categoryId: categoryId,
-      gender: gender,
+      categoryId: state.selectedCategoryId,
+      gender: state.gender,
     );
     result.fold(
       (failure) {

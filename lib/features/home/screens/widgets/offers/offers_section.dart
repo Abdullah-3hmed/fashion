@@ -14,12 +14,15 @@ import 'package:skeletonizer/skeletonizer.dart';
 class OffersSection extends StatelessWidget {
   const OffersSection({super.key});
 
-  static const dummyOfferModel = OfferModel(
-    id: 1,
-    name: "dummy name",
-    imageUrl: AppConstants.imageUrl,
-    oldPrice: 300.0,
-    discountedPrice: 300.0,
+  static List<OfferModel> dummyOffers = List<OfferModel>.generate(
+    3,
+    (index) => const OfferModel(
+      id: 1,
+      name: "dummy name",
+      imageUrl: AppConstants.imageUrl,
+      oldPrice: 300.0,
+      discountedPrice: 300.0,
+    ),
   );
 
   @override
@@ -55,11 +58,21 @@ class OffersSection extends StatelessWidget {
           builder: (context, state) {
             switch (state.offersStatus) {
               case RequestStatus.loading:
-                return const Skeletonizer(
-                  child: SizedBox(
-                    height: 180.0,
-                    width: 280.0,
-                    child: HomeCarouselSliderItem(offerModel: dummyOfferModel),
+                return Skeletonizer(
+                  child: CarouselSlider(
+                    items:
+                        dummyOffers
+                            .map(
+                              (offer) =>
+                                  HomeCarouselSliderItem(offerModel: offer),
+                            )
+                            .toList(),
+                    options: CarouselOptions(
+                      enlargeCenterPage: true,
+                      initialPage: 2,
+                      viewportFraction: 0.70,
+                      enableInfiniteScroll: false,
+                    ),
                   ),
                 );
               case RequestStatus.success:

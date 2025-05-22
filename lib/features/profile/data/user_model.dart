@@ -39,7 +39,7 @@ class UserModel extends Equatable {
     "userName": userName ?? this.userName,
     "email": email ?? this.email,
     "phone": phone ?? this.phone,
-    "profilePhotoUrl": profileImage ?? this.profileImage,
+    "imageUrl": profileImage ?? this.profileImage,
   };
 
   UserModel copyWith({

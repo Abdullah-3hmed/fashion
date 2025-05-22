@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:e_fashion_flutter/config/router/app_router.dart';
 import 'package:e_fashion_flutter/core/enums/request_status.dart';
+import 'package:e_fashion_flutter/core/utils/app_constants.dart';
 import 'package:e_fashion_flutter/features/home/cubit/home_cubit.dart';
 import 'package:e_fashion_flutter/features/home/cubit/home_state.dart';
 import 'package:e_fashion_flutter/features/home/data/product_model.dart';
@@ -16,7 +17,7 @@ class ProductsSection extends StatelessWidget {
   static const ProductModel dummyProductModel = ProductModel(
     id: 1,
     name: "***************",
-    imageUrl: "",
+    imageUrl: AppConstants.imageUrl,
     price: 0.0,
   );
 

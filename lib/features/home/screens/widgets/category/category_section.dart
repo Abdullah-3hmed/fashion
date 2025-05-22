@@ -1,6 +1,7 @@
 import 'package:e_fashion_flutter/core/animations/slide_animation.dart';
 import 'package:e_fashion_flutter/core/widgets/third_button.dart';
 import 'package:e_fashion_flutter/features/home/cubit/home_cubit.dart';
+import 'package:e_fashion_flutter/features/home/cubit/home_state.dart';
 import 'package:e_fashion_flutter/features/home/screens/widgets/category/category_bloc_builder.dart';
 import 'package:e_fashion_flutter/features/home/screens/widgets/filter/filter_gender_section.dart';
 import 'package:flutter/material.dart';
@@ -24,12 +25,6 @@ class _CategorySectionState extends State<CategorySection> {
 
   @override
   Widget build(BuildContext context) {
-    final selectedGender = context.select(
-      (HomeCubit cubit) => cubit.state.gender,
-    );
-    final selectedCategory = context.select(
-      (HomeCubit cubit) => cubit.state.selectedCategoryId,
-    );
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -38,21 +33,27 @@ class _CategorySectionState extends State<CategorySection> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text("Category", style: Theme.of(context).textTheme.bodyMedium),
-            if (selectedGender != null || selectedCategory != null)
-              SlideAnimation(
-                duration: const Duration(milliseconds: 600),
-                begin: const Offset(1.0, 0.0),
-                child: ThirdButton(
-                  onPressed: () async {
-                    await _filterProducts(
-                      selectedGender,
-                      selectedCategory,
-                      context,
-                    );
-                  },
-                  text: "Apply",
-                ),
-              ),
+            BlocBuilder<HomeCubit, HomeState>(
+              buildWhen:
+                  (previous, current) =>
+                      previous.selectedCategoryId !=
+                          current.selectedCategoryId ||
+                      previous.gender != current.gender,
+              builder: (context, state) {
+                return state.gender != null || state.selectedCategoryId != null
+                    ? SlideAnimation(
+                      duration: const Duration(milliseconds: 600),
+                      begin: const Offset(1.0, 0.0),
+                      child: ThirdButton(
+                        onPressed: () async {
+                          await context.read<HomeCubit>().getProducts();
+                        },
+                        text: "Apply",
+                      ),
+                    )
+                    : const SizedBox.shrink();
+              },
+            ),
           ],
         ),
         const SizedBox(height: 8.0),
@@ -96,22 +97,5 @@ class _CategorySectionState extends State<CategorySection> {
         ),
       ],
     );
-  }
-
-  Future<void> _filterProducts(
-    String? selectedGender,
-    int? selectedCategory,
-    BuildContext context,
-  ) async {
-    if (selectedGender != null && selectedCategory != null) {
-      await context.read<HomeCubit>().getProducts(
-        gender: selectedGender,
-        categoryId: selectedCategory,
-      );
-    } else if (selectedGender != null) {
-      await context.read<HomeCubit>().getProducts(gender: selectedGender);
-    } else if (selectedCategory != null) {
-      await context.read<HomeCubit>().getProducts(categoryId: selectedCategory);
-    }
   }
 }
