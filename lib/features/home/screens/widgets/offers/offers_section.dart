@@ -15,7 +15,7 @@ class OffersSection extends StatelessWidget {
   const OffersSection({super.key});
 
   static List<OfferModel> dummyOffers = List<OfferModel>.generate(
-    3,
+    5,
     (index) => const OfferModel(
       id: 1,
       name: "dummy name",

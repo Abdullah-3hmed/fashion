@@ -12,16 +12,30 @@ class HomeCubit extends Cubit<HomeState> {
   final HomeRepo homeRepo;
 
   Future<void> getCollections() async {
+    emit(state.copyWith(collectionsStatus: RequestStatus.loading));
     final result = await homeRepo.getCollections();
     result.fold(
-      (failure) => emit(
-        state.copyWith(
-          collectionsErrorMessage: failure.errorMessage,
-          collectionsStatus: RequestStatus.error,
-        ),
-      ),
+      (failure) {
+        if (!failure.isConnected) {
+          emit(
+            state.copyWith(
+              collectionsErrorMessage: failure.errorMessage,
+              collectionsStatus: RequestStatus.error,
+              isConnected: false,
+            ),
+          );
+        } else {
+          emit(
+            state.copyWith(
+              collectionsErrorMessage: failure.errorMessage,
+              collectionsStatus: RequestStatus.error,
+            ),
+          );
+        }
+      },
       (collections) => emit(
         state.copyWith(
+          isConnected: true,
           collections: collections,
           collectionsStatus: RequestStatus.success,
         ),

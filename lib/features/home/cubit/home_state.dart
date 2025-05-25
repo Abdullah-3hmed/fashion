@@ -34,10 +34,10 @@ class HomeState extends Equatable {
   final int? selectedCategoryId;
   final String? gender;
   final double rating;
-
+  final bool isConnected;
   const HomeState({
     this.collections = const [],
-    this.collectionsStatus = RequestStatus.loading,
+    this.collectionsStatus = RequestStatus.initial,
     this.collectionsErrorMessage = "",
     this.categories = const [],
     this.categoriesStatus = RequestStatus.loading,
@@ -61,6 +61,7 @@ class HomeState extends Equatable {
     this.selectedCategoryId,
     this.gender,
     this.rating = 0.0,
+    this.isConnected = true,
   });
 
   HomeState copyWith({
@@ -89,6 +90,7 @@ class HomeState extends Equatable {
     int? selectedCategoryId,
     String? gender,
     double? rating,
+    bool? isConnected,
   }) {
     return HomeState(
       collections: collections ?? this.collections,
@@ -123,6 +125,7 @@ class HomeState extends Equatable {
       selectedCategoryId: selectedCategoryId ?? this.selectedCategoryId,
       gender: gender ?? this.gender,
       rating: rating ?? this.rating,
+      isConnected: isConnected ?? this.isConnected,
     );
   }
 
@@ -153,5 +156,6 @@ class HomeState extends Equatable {
     selectedCategoryId,
     gender,
     rating,
+    isConnected,
   ];
 }

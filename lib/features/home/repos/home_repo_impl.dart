@@ -128,9 +128,6 @@ class HomeRepoImpl implements HomeRepo {
       if (gender != null) {
         queryParams["Gender"] = gender;
       }
-      if (gender == null && categoryId == null) {
-        queryParams = {"categoryId": categoryId, "Gender": gender};
-      }
       final response = await getIt<DioHelper>().get(
         url: ApiConstants.getProductsEndpoint,
         headers: {"Authorization": "Bearer ${AppConstants.token}"},
