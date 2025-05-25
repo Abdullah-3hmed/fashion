@@ -3,9 +3,7 @@ class AssetsManager {
   static const String secondaryFontFamily = 'DM Serif Display';
   static const String check = 'assets/images/Check.svg';
   static const String personIcon = 'assets/icons/person.svg';
-
   static const String testImage = 'assets/images/test_image.png';
-
   static const String appLogo = 'assets/images/app_logo.png';
   static const String welcomeImage = 'assets/images/welcome_image.jpeg';
   static const String swipeUpImage = 'assets/images/swipe_up.png';
@@ -45,4 +43,5 @@ class AssetsManager {
   static const String userTestImage =
       'https://images.unsplash.com/photo-1581338834647-b0fb40704e21?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80';
   static const String mapStyle = 'assets/map_style/map_style.json';
+  static const String noInternet = 'assets/images/wifi.svg';
 }

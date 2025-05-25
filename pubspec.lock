@@ -944,6 +944,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.7.2"
+  internet_state_manager:
+    dependency: "direct main"
+    description:
+      name: internet_state_manager
+      sha256: d0e8c231e908764c7ccc5e9210df5010960faf958b72044a339ae7f3601af905
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.8.0"
   intl:
     dependency: "direct main"
     description:

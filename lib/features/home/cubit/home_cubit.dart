@@ -198,6 +198,15 @@ class HomeCubit extends Cubit<HomeState> {
     );
   }
 
+  Future<void> getAllHomeData() async {
+    await Future.wait([
+      getCollections(),
+      getCategories(),
+      getOffers(),
+      getProducts(),
+    ]);
+  }
+
   void selectCategory({required int categoryId}) {
     emit(state.copyWith(selectedCategoryId: categoryId));
   }

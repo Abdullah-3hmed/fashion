@@ -87,8 +87,7 @@ class DetailsContainerContent extends StatelessWidget {
               productDetailsModel: state.productDetailsModel,
             );
           case RequestStatus.error:
-            return SizedBox(
-              height: 150.0,
+            return Center(
               child: Text(
                 state.productDetailsErrorMessage,
                 style: Theme.of(context).textTheme.bodyMedium,

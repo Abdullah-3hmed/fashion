@@ -10,7 +10,6 @@ import 'package:e_fashion_flutter/features/bottom_vav_bar/layout_screen.dart';
 import 'package:e_fashion_flutter/features/cart/screens/cart_screen.dart';
 import 'package:e_fashion_flutter/features/favourite/screens/favorite_screen.dart';
 import 'package:e_fashion_flutter/features/home/cubit/home_cubit.dart';
-import 'package:e_fashion_flutter/features/home/data/discover_model.dart';
 import 'package:e_fashion_flutter/features/home/data/product_details_model.dart';
 import 'package:e_fashion_flutter/features/home/screens/collection_screen.dart';
 import 'package:e_fashion_flutter/features/home/screens/discover_screen.dart';
@@ -127,15 +126,7 @@ class Authenticated extends AutoRouter implements AutoRouteWrapper {
   @override
   Widget wrappedRoute(BuildContext context) => MultiBlocProvider(
     providers: [
-      BlocProvider(
-        create:
-            (context) =>
-                getIt<HomeCubit>()
-                  ..getCollections()
-                  ..getCategories()
-                  ..getOffers()
-                  ..getProducts(),
-      ),
+      BlocProvider(create: (context) => getIt<HomeCubit>()..getAllHomeData()),
       BlocProvider(
         lazy: false,
         create: (context) => getIt<UserCubit>()..getUserProfile(),

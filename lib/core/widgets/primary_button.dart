@@ -8,17 +8,19 @@ class PrimaryButton extends StatelessWidget {
     required this.text,
     this.icon,
     this.isLoading = false,
+    this.width,
   });
 
   final VoidCallback onPressed;
   final String text;
   final Icon? icon;
   final bool isLoading;
+  final double? width;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: double.infinity,
+      width: width ?? double.infinity,
       height: 46.0,
       child: TextButton(
         style: TextButton.styleFrom(
