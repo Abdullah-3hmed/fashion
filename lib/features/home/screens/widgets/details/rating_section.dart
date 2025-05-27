@@ -13,6 +13,7 @@ class RatingSection extends StatelessWidget {
   const RatingSection({super.key, required this.productDetailsModel});
 
   final ProductDetailsModel productDetailsModel;
+
   @override
   Widget build(BuildContext context) {
     final ProductDetailsModel product = productDetailsModel;
@@ -22,7 +23,9 @@ class RatingSection extends StatelessWidget {
         RatingBar.builder(
           allowHalfRating: true,
           itemSize: 32.0,
-          initialRating: context.watch<HomeCubit>().state.rating,
+          initialRating: context.select(
+            (HomeCubit cubit) => cubit.state.rating,
+          ),
           itemPadding: const EdgeInsets.symmetric(horizontal: 12.0),
           itemBuilder:
               (context, _) =>
@@ -59,14 +62,14 @@ class RatingSection extends StatelessWidget {
         const SizedBox(height: 24.0),
         Align(
           child: Text(
-            " ${context.watch<HomeCubit>().state.rating}",
+            " ${context.select((HomeCubit cubit) => cubit.state.rating)}",
             style: Theme.of(context).textTheme.headlineSmall,
           ),
         ),
         const SizedBox(height: 24.0),
         Align(
           child: RatingBarIndicator(
-            rating: context.watch<HomeCubit>().state.rating,
+            rating: context.select((HomeCubit cubit) => cubit.state.rating),
             itemBuilder:
                 (context, index) => const Icon(Icons.star, color: Colors.amber),
             itemSize: 24.0,
@@ -92,7 +95,9 @@ class RatingSection extends StatelessWidget {
                 child: LinearProgressIndicator(
                   value: _calculateRating(
                     i: i,
-                    rating: context.watch<HomeCubit>().state.rating,
+                    rating: context.select(
+                      (HomeCubit cubit) => cubit.state.rating,
+                    ),
                   ),
                   minHeight: 8,
                   backgroundColor: Colors.grey[300],

@@ -15,16 +15,9 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bool isConnected = context.select(
-      (HomeCubit cubit) => cubit.state.isConnected,
-    );
-    final bool isLoading = context.select(
-      (HomeCubit cubit) =>
-          cubit.state.collectionsStatus == RequestStatus.loading,
-    );
     return Scaffold(
       body:
-          isConnected
+          context.select((HomeCubit cubit) => cubit.state.isConnected)
               ? const Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -48,7 +41,10 @@ class HomeScreen extends StatelessWidget {
                 ],
               )
               : NoInternetWidget(
-                isLoading: isLoading,
+                isLoading: context.select(
+                  (HomeCubit cubit) =>
+                      cubit.state.collectionsStatus == RequestStatus.loading,
+                ),
                 onPressed: () async {
                   await context.read<HomeCubit>().getAllHomeData();
                 },

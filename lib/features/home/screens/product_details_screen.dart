@@ -6,9 +6,14 @@ import 'package:flutter/material.dart';
 
 @RoutePage()
 class ProductDetailsScreen extends StatefulWidget {
-  const ProductDetailsScreen({super.key, required this.imageUrl});
+  const ProductDetailsScreen({
+    super.key,
+    required this.imageUrl,
+    required this.productId,
+  });
 
   final String imageUrl;
+  final int productId;
 
   @override
   State<ProductDetailsScreen> createState() => _ProductDetailsScreenState();
@@ -50,7 +55,10 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                 },
                 child: DetailsClippedContainer(
                   isClipped: isClipped,
-                  child: DetailsContainerContent(controller: scrollController),
+                  child: DetailsContainerContent(
+                    controller: scrollController,
+                    productId: widget.productId,
+                  ),
                 ),
               );
             },

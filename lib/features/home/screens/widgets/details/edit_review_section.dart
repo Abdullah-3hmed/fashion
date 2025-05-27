@@ -32,17 +32,22 @@ class _EditReviewSectionState extends State<EditReviewSection> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        RatingBar.builder(
-          allowHalfRating: true,
-          initialRating: context.watch<HomeCubit>().state.rating,
-          itemSize: 32.0,
-          itemPadding: const EdgeInsets.symmetric(horizontal: 18.0),
-          itemBuilder:
-              (context, _) =>
-                  const Icon(FontAwesomeIcons.solidStar, color: Colors.amber),
-          onRatingUpdate: (double value) {
-            context.read<HomeCubit>().rateProduct(rating: value);
-          },
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: RatingBar.builder(
+            allowHalfRating: true,
+            initialRating: context.select(
+              (HomeCubit cubit) => cubit.state.rating,
+            ),
+            itemSize: 32.0,
+            itemPadding: const EdgeInsets.symmetric(horizontal: 14.0),
+            itemBuilder:
+                (context, _) =>
+                    const Icon(FontAwesomeIcons.solidStar, color: Colors.amber),
+            onRatingUpdate: (double value) {
+              context.read<HomeCubit>().rateProduct(rating: value);
+            },
+          ),
         ),
         const SizedBox(height: 40.0),
         TextField(

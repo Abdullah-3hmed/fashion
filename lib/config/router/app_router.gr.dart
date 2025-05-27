@@ -375,10 +375,15 @@ class ProductDetailsRoute extends PageRouteInfo<ProductDetailsRouteArgs> {
   ProductDetailsRoute({
     Key? key,
     required String imageUrl,
+    required int productId,
     List<PageRouteInfo>? children,
   }) : super(
          ProductDetailsRoute.name,
-         args: ProductDetailsRouteArgs(key: key, imageUrl: imageUrl),
+         args: ProductDetailsRouteArgs(
+           key: key,
+           imageUrl: imageUrl,
+           productId: productId,
+         ),
          initialChildren: children,
        );
 
@@ -388,21 +393,31 @@ class ProductDetailsRoute extends PageRouteInfo<ProductDetailsRouteArgs> {
     name,
     builder: (data) {
       final args = data.argsAs<ProductDetailsRouteArgs>();
-      return ProductDetailsScreen(key: args.key, imageUrl: args.imageUrl);
+      return ProductDetailsScreen(
+        key: args.key,
+        imageUrl: args.imageUrl,
+        productId: args.productId,
+      );
     },
   );
 }
 
 class ProductDetailsRouteArgs {
-  const ProductDetailsRouteArgs({this.key, required this.imageUrl});
+  const ProductDetailsRouteArgs({
+    this.key,
+    required this.imageUrl,
+    required this.productId,
+  });
 
   final Key? key;
 
   final String imageUrl;
 
+  final int productId;
+
   @override
   String toString() {
-    return 'ProductDetailsRouteArgs{key: $key, imageUrl: $imageUrl}';
+    return 'ProductDetailsRouteArgs{key: $key, imageUrl: $imageUrl, productId: $productId}';
   }
 }
 

@@ -18,6 +18,7 @@ import 'package:e_fashion_flutter/features/profile/repos/user_repo.dart';
 import 'package:e_fashion_flutter/features/profile/repos/user_repo_impl.dart';
 import 'package:e_fashion_flutter/features/search/cubit/search_cubit.dart';
 import 'package:e_fashion_flutter/features/search/repo/search_repo.dart';
+import 'package:e_fashion_flutter/shared/app_cubit/app_cubit.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
 import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
@@ -55,5 +56,6 @@ class ServiceLocator {
     getIt.registerFactory<SearchCubit>(
       () => SearchCubit(searchRepo: getIt<SearchRepo>()),
     );
+    getIt.registerFactory<AppCubit>(() => AppCubit());
   }
 }

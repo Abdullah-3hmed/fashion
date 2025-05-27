@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:e_fashion_flutter/config/router/app_router.dart';
 import 'package:e_fashion_flutter/features/profile/cubit/user_cubit.dart';
 import 'package:e_fashion_flutter/features/profile/screens/widgets/profile_info_item.dart';
+import 'package:e_fashion_flutter/shared/app_cubit/app_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
@@ -98,8 +99,10 @@ class ProfileContainerContent extends StatelessWidget {
             suffixWidget: Switch(
               activeColor: Colors.white,
               activeTrackColor: Colors.green,
-              value: true,
-              onChanged: (value) {},
+              value: context.read<AppCubit>().state.isDarkMode,
+              onChanged: (_) {
+                context.read<AppCubit>().toggleTheme();
+              },
             ),
           ),
         ],

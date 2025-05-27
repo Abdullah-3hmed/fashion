@@ -1,5 +1,8 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:e_fashion_flutter/core/enums/request_status.dart';
 import 'package:e_fashion_flutter/core/services/service_locator.dart';
+import 'package:e_fashion_flutter/core/utils/show_toast.dart';
+import 'package:e_fashion_flutter/core/utils/toast_states.dart';
 import 'package:e_fashion_flutter/features/profile/cubit/map_cubit.dart';
 import 'package:e_fashion_flutter/features/profile/cubit/map_state.dart';
 import 'package:flutter/material.dart';
@@ -42,7 +45,16 @@ class _MapScreenState extends State<MapScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocBuilder<MapCubit, MapState>(
+      body: BlocConsumer<MapCubit, MapState>(
+        listener: (context, state) {
+          if (state.locationStatus == RequestStatus.error) {
+            context.pop();
+            showToast(
+              message: state.getLocationErrorMessage,
+              state: ToastStates.error,
+            );
+          }
+        },
         builder: (context, state) {
           return GoogleMap(
             style: state.mapStyle,
