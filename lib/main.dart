@@ -26,6 +26,7 @@ void main() async {
   await dotenv.load(fileName: "lib/.env");
   DioHelper.init();
   AppConstants.token = await getIt<CacheHelper>().readData(key: "token") ?? "";
+  await FcmInitHelper.getFcmToken();
 
   Bloc.observer = MyBlocObserver();
 

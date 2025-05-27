@@ -1,5 +1,7 @@
 import 'dart:ui';
 
+import 'package:e_fashion_flutter/core/notifications/fcm_helper.dart';
+import 'package:e_fashion_flutter/core/services/service_locator.dart';
 import 'package:e_fashion_flutter/core/widgets/secondary_button.dart';
 import 'package:e_fashion_flutter/features/home/data/collection_details_model.dart';
 import 'package:e_fashion_flutter/features/home/screens/widgets/collection/collection_container_clipper.dart';
@@ -70,7 +72,15 @@ class CollectionItems extends StatelessWidget {
               ),
               const SizedBox(width: 16.0),
               SecondaryButton(
-                onPressed: () {},
+                onPressed: () async {
+                  await getIt<FcmHelper>().sendNotification(
+                    token:
+                        "eGe7ukc5TJmzxjxO5IUUXe:APA91bEBXwjO0MpwzQg002c7JYiINeeA6bNKYD6P0ltP8SCT19Wz2yqQmRvhI93L7Tl0lF70Mb9PmXHQsz4ONq3BrTd3ilLTAlNO2heIsVwKs09Fw4SSOGg",
+                    title: "new message",
+                    body: "test from abdullah",
+                    data: {},
+                  );
+                },
                 text: "Buy collection",
                 backgroundColor: Theme.of(context).colorScheme.primary,
               ),

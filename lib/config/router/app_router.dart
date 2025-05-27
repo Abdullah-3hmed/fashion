@@ -56,6 +56,7 @@ class AppRouter extends RootStackRouter {
     _buildCustomRoute(
       page: AuthenticatedRoute.page,
       children: [
+        _buildCustomRoute(page: ChatSupportRoute.page),
         _buildCustomRoute(
           initial: true,
           page: LayoutRoute.page,
@@ -76,7 +77,6 @@ class AppRouter extends RootStackRouter {
         _buildCustomRoute(page: ProductDetailsRoute.page),
         _buildCustomRoute(page: EditProfileRoute.page),
         _buildCustomRoute(page: ProfileChangePasswordRoute.page),
-        _buildCustomRoute(page: ChatSupportRoute.page),
         _buildCustomRoute(page: OrderStatusRoute.page),
         _buildCustomRoute(page: EditReviewRoute.page),
         _buildCustomRoute(page: DiscoverRoute.page),

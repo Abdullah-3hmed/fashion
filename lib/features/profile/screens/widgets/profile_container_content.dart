@@ -87,8 +87,14 @@ class ProfileContainerContent extends StatelessWidget {
             suffixWidget: Switch(
               activeColor: Colors.white,
               activeTrackColor: Colors.red,
-              value: true,
-              onChanged: (value) {},
+              value: context.select(
+                (AppCubit cubit) => cubit.state.areNotificationsEnabled,
+              ),
+              onChanged: (value) {
+                context.read<AppCubit>().toggleNotifications(
+                  areNotificationsEnabled: value,
+                );
+              },
             ),
           ),
           const SizedBox(height: 10.0),

@@ -2,6 +2,7 @@ import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:e_fashion_flutter/config/router/app_router.dart';
 import 'package:e_fashion_flutter/core/notifications/notification_controller.dart';
 import 'package:e_fashion_flutter/core/services/service_locator.dart';
+import 'package:e_fashion_flutter/core/utils/app_constants.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 
@@ -15,8 +16,17 @@ class FcmInitHelper {
     return await _awesomeNotifications.isNotificationAllowed();
   }
 
-  static Future<void> requestPermission() async {
-    await _awesomeNotifications.requestPermissionToSendNotifications();
+  static Future<bool> requestPermission() async {
+    return await _awesomeNotifications.requestPermissionToSendNotifications();
+  }
+
+  static Future<void> disableNotification() async {
+    await _awesomeNotifications.cancelAll();
+    await firebaseMessaging.setAutoInitEnabled(false);
+  }
+
+  static Future<void> enableNotification() async {
+    await firebaseMessaging.setAutoInitEnabled(true);
   }
 
   static Future<void> initAwesomeNotification() async {
@@ -56,29 +66,22 @@ class FcmInitHelper {
     // Foreground
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       debugPrint("📩 Foreground message: ${message.data}");
-      final currentRouteName = getIt<AppRouter>().current.name;
-      if (currentRouteName == ChatSupportRoute.name) {
-        debugPrint("🔕 Notification suppressed: in ChatSupportRoute");
+      if (AppConstants.currentRoute == ChatSupportRoute.name) {
         return;
       }
       _showAwesomeNotification(message);
     });
 
     // Background
-    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) async {
       debugPrint("📲 Notification opened (background): ${message.data}");
-      getIt<AppRouter>().navigate(const ChatSupportRoute());
+      if (getIt<AppRouter>().current.name != AuthenticatedRoute.name) {
+        await getIt<AppRouter>().replace(const AuthenticatedRoute());
+      }
+      await getIt<AppRouter>().push(const ChatSupportRoute());
     });
-
-    RemoteMessage? message =
-        await FcmInitHelper.firebaseMessaging.getInitialMessage();
-    if (message != null) {
-      debugPrint("🪦 App opened from terminated: ${message.data}");
-      getIt<AppRouter>().navigate(const ChatSupportRoute());
-    }
   }
 
-  /// Get device token
   static Future<String?> getFcmToken() async {
     final token = await firebaseMessaging.getToken();
     debugPrint("📱 Device FCM Token: $token");

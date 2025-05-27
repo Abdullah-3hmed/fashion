@@ -30,7 +30,10 @@ class _ChatSupportScreenState extends State<ChatSupportScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Chat Support")),
+      appBar: AppBar(
+        leading: const AutoLeadingButton(),
+        title: const Text("Chat Support"),
+      ),
       body: Padding(
         padding: const EdgeInsetsDirectional.symmetric(horizontal: 24.0),
         child: Column(
