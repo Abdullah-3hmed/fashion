@@ -1,7 +1,7 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:e_fashion_flutter/config/router/app_router.dart';
+import 'package:e_fashion_flutter/core/notifications/navigate_to_chat.dart';
 import 'package:e_fashion_flutter/core/notifications/notification_controller.dart';
-import 'package:e_fashion_flutter/core/services/service_locator.dart';
 import 'package:e_fashion_flutter/core/utils/app_constants.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -30,7 +30,7 @@ class FcmInitHelper {
   }
 
   static Future<void> initAwesomeNotification() async {
-    await AwesomeNotifications().initialize(null, [
+    await _awesomeNotifications.initialize(null, [
       NotificationChannel(
         channelKey: 'fcm_channel',
         channelName: 'Push Notifications',
@@ -75,10 +75,7 @@ class FcmInitHelper {
     // Background
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) async {
       debugPrint("📲 Notification opened (background): ${message.data}");
-      if (getIt<AppRouter>().current.name != AuthenticatedRoute.name) {
-        await getIt<AppRouter>().replace(const AuthenticatedRoute());
-      }
-      await getIt<AppRouter>().push(const ChatSupportRoute());
+      await navigateToChat();
     });
   }
 

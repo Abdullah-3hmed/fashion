@@ -85,10 +85,10 @@ class _SplashScreenState extends State<SplashScreen> {
   Future<void> _handleInitialMessage() async {
     final message = await FcmInitHelper.firebaseMessaging.getInitialMessage();
     if (message != null) {
-      final router = getIt<AppRouter>();
-      await router.replace(
-        const AuthenticatedRoute(children: [LayoutRoute(), ChatSupportRoute()]),
-      );
+      await getIt<AppRouter>().replaceAll([
+        const AuthenticatedRoute(children: [LayoutRoute()]),
+      ]);
+      getIt<AppRouter>().push(const ChatSupportRoute());
     }
   }
 }

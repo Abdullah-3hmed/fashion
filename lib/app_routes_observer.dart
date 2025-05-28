@@ -25,7 +25,7 @@ class AppRoutesObserver extends AutoRouterObserver {
   void didReplace({Route? newRoute, Route? oldRoute}) {
     AppConstants.currentRoute = newRoute!.settings.name ?? "";
     debugPrint(
-      '[INFO] OldRoute : ${oldRoute!.settings.name} was replaced by ${newRoute!.settings.name}',
+      '[INFO] OldRoute : ${oldRoute!.settings.name} was replaced by ${newRoute.settings.name}',
     );
   }
 
