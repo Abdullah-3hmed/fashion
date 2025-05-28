@@ -39,39 +39,8 @@ class UserCubit extends HydratedCubit<UserState> {
     await userRepo.logOut(email: state.userModel.email);
   }
 
-  Future<void> editProfile({String? userName, String? phone}) async {
-    final result = await userRepo.editProfile(
-      editUserModel: EditUserModel(
-        userName: userName ?? state.userModel.userName,
-        phone: phone ?? state.userModel.phone,
-        profileImage: state.userModel.profileImage,
-        profileImageFile: state.editUserModel.profileImageFile,
-      ),
-    );
-    result.fold(
-      (failure) => emit(
-        state.copyWith(
-          editUserErrorMessage: failure.errorMessage,
-          editUserRequestStatus: RequestStatus.error,
-        ),
-      ),
-      (editUserModel) {
-        emit(
-          state.copyWith(
-            editUserModel: EditUserModel.empty,
-            userModel: state.userModel.copyWith(
-              profileImage: editUserModel.profileImage,
-              userName: editUserModel.userName,
-              phone: editUserModel.phone,
-            ),
-            editUserRequestStatus: RequestStatus.success,
-          ),
-        );
-      },
-    );
-  }
-
   Future<void> pickProfileImage() async {
+    emit(state.copyWith(editUserRequestStatus: RequestStatus.initial));
     final picker = ImagePicker();
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
@@ -86,6 +55,42 @@ class UserCubit extends HydratedCubit<UserState> {
     } else {
       return;
     }
+  }
+
+  Future<void> editProfile({String? userName, String? phone}) async {
+    final result = await userRepo.editProfile(
+      editUserModel: EditUserModel(
+        userName: userName ?? state.userModel.userName,
+        phone: phone ?? state.userModel.phone,
+        profileImage: state.userModel.profileImage,
+        profileImageFile: state.editUserModel.profileImageFile,
+      ),
+    );
+    result.fold(
+      (failure) {
+        debugPrint(failure.errorMessage);
+        emit(
+          state.copyWith(
+            editUserModel: EditUserModel.empty,
+            editUserErrorMessage: failure.errorMessage,
+            editUserRequestStatus: RequestStatus.error,
+          ),
+        );
+      },
+      (editUserModel) {
+        emit(
+          state.copyWith(
+            editUserModel: EditUserModel.empty,
+            userModel: state.userModel.copyWith(
+              profileImage: editUserModel.profileImage,
+              userName: editUserModel.userName,
+              phone: editUserModel.phone,
+            ),
+            editUserRequestStatus: RequestStatus.success,
+          ),
+        );
+      },
+    );
   }
 
   Future<void> changePassword({

@@ -94,7 +94,7 @@ class DiscoverListItem extends StatelessWidget {
           ),
         ),
         PositionedDirectional(
-          top: isFirstItem ? 16.0 : 45.0,
+          top: isFirstItem ? 8.0 : 45.0,
           end: 16.0,
           child: InkWell(
             onTap: () {},

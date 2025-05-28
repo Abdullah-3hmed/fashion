@@ -47,8 +47,8 @@ class SearchGridItem extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        searchModel.name.length > 10
-                            ? '${searchModel.name.substring(0, 10)}...'
+                        searchModel.name.length > 8
+                            ? '${searchModel.name.substring(0, 8)}...'
                             : searchModel.name,
                         style: Theme.of(context).textTheme.bodyMedium,
                       ),

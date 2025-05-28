@@ -20,13 +20,19 @@ class EditProfileScreen extends StatefulWidget {
 class _EditProfileScreenState extends State<EditProfileScreen> {
   late GlobalKey<FormState> _formKey;
   late AutovalidateMode _autovalidateMode;
-  late String name;
-  late String phone;
+  late TextEditingController _nameController;
+  late TextEditingController _phoneController;
 
   @override
   void initState() {
     _formKey = GlobalKey<FormState>();
     _autovalidateMode = AutovalidateMode.disabled;
+    _nameController = TextEditingController(
+      text: context.read<UserCubit>().state.userModel.userName,
+    );
+    _phoneController = TextEditingController(
+      text: context.read<UserCubit>().state.userModel.phone,
+    );
     super.initState();
   }
 
@@ -66,13 +72,14 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     ),
                     const SizedBox(height: 70.0),
                     CustomTextFormField(
+                      controller: _nameController,
                       type: TextInputType.name,
                       autofillHints: const [AutofillHints.name],
                       hintText: "Edit your name",
                       label: "Edit your name",
                       prefixIcon: const Icon(SolarIconsOutline.user),
                       onSaved: (value) {
-                        name = value!;
+                        _nameController.text = value!;
                       },
                       onSubmit: (_) {
                         _onPressed();
@@ -80,6 +87,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     ),
                     const SizedBox(height: 16.0),
                     CustomTextFormField(
+                      controller: _phoneController,
                       type: TextInputType.phone,
                       autofillHints: const [AutofillHints.telephoneNumber],
                       hintText: "Edit your phone number",
@@ -87,7 +95,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       textInputAction: TextInputAction.done,
                       prefixIcon: const Icon(SolarIconsOutline.phone),
                       onSaved: (value) {
-                        phone = value!;
+                        _phoneController.text = value!;
                       },
                       onSubmit: (_) async {
                         await _onPressed();
@@ -120,7 +128,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
       debugPrint('Form is valid');
-      await context.read<UserCubit>().editProfile(userName: name, phone: phone);
+      await context.read<UserCubit>().editProfile(
+        userName: _nameController.text,
+        phone: _phoneController.text,
+      );
     } else {
       setState(() {
         _autovalidateMode = AutovalidateMode.always;

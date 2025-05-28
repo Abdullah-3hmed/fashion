@@ -69,8 +69,8 @@ class DiscoverGridItem extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      discoverModel.name.length > 10
-                          ? '${discoverModel.name.substring(0, 10)}...'
+                      discoverModel.name.length > 7
+                          ? '${discoverModel.name.substring(0, 7)}...'
                           : discoverModel.name,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
@@ -92,7 +92,7 @@ class DiscoverGridItem extends StatelessWidget {
           ),
         ),
         Positioned(
-          top: 40.0,
+          top: 22.0,
           left: 10.0,
           child: InkWell(
             onTap: () {},

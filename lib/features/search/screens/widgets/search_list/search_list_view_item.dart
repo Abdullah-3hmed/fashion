@@ -48,8 +48,8 @@ class SearchListViewItem extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        searchModel.name.length > 20
-                            ? '${searchModel.name.substring(0, 20)}...'
+                        searchModel.name.length > 18
+                            ? '${searchModel.name.substring(0, 18)}...'
                             : searchModel.name,
                         style: Theme.of(context).textTheme.titleLarge,
                         overflow: TextOverflow.ellipsis,
