@@ -1,6 +1,8 @@
 import 'package:e_fashion_flutter/core/notifications/fcm_init_helper.dart';
+import 'package:e_fashion_flutter/core/utils/app_constants.dart';
 import 'package:e_fashion_flutter/shared/app_cubit/app_state.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class AppCubit extends HydratedCubit<AppState> {
   AppCubit() : super(const AppState());
@@ -10,13 +12,14 @@ class AppCubit extends HydratedCubit<AppState> {
   }
 
   void toggleNotifications({required bool areNotificationsEnabled}) async {
-    if (!areNotificationsEnabled) {
-      await FcmInitHelper.disableNotification();
-    } else {
-      await FcmInitHelper.enableNotification();
-    }
-
+    AppConstants.areNotificationsEnabled = areNotificationsEnabled;
     emit(state.copyWith(areNotificationsEnabled: areNotificationsEnabled));
+  }
+
+  Future<void> syncNotificationStatusWithSystem() async {
+    final bool isAllowed = await FcmInitHelper.permissionHandler.isGranted;
+    AppConstants.areNotificationsEnabled = isAllowed;
+    emit(state.copyWith(areNotificationsEnabled: isAllowed));
   }
 
   @override

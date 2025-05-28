@@ -1,12 +1,48 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:e_fashion_flutter/config/router/app_router.dart';
+import 'package:e_fashion_flutter/core/notifications/fcm_init_helper.dart';
+import 'package:e_fashion_flutter/core/services/service_locator.dart';
+import 'package:e_fashion_flutter/core/utils/app_constants.dart';
+import 'package:e_fashion_flutter/shared/app_cubit/app_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:solar_icons/solar_icons.dart';
 
 @RoutePage()
-class LayoutScreen extends StatelessWidget {
+class LayoutScreen extends StatefulWidget {
   const LayoutScreen({super.key});
+
+  @override
+  State<LayoutScreen> createState() => _LayoutScreenState();
+}
+
+class _LayoutScreenState extends State<LayoutScreen>
+    with WidgetsBindingObserver {
+  @override
+  void initState() {
+    WidgetsBinding.instance.addObserver(this);
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await FcmInitHelper.initFirebaseMessagingListeners();
+      await FcmInitHelper.setAwesomeNotificationListeners();
+      await _handleInitialMessage();
+    });
+
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      context.read<AppCubit>().syncNotificationStatusWithSystem();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -81,5 +117,15 @@ class LayoutScreen extends StatelessWidget {
             ),
           ),
     );
+  }
+  Future<void> _handleInitialMessage() async {
+    if (!AppConstants.areNotificationsEnabled) return;
+    final message = await FcmInitHelper.firebaseMessaging.getInitialMessage();
+    if (message != null) {
+      await getIt<AppRouter>().replaceAll([
+        const AuthenticatedRoute(children: [LayoutRoute()]),
+      ]);
+      getIt<AppRouter>().push(const ChatSupportRoute());
+    }
   }
 }

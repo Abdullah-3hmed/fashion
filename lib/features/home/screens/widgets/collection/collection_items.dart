@@ -75,7 +75,7 @@ class CollectionItems extends StatelessWidget {
                 onPressed: () async {
                   await getIt<FcmHelper>().sendNotification(
                     token:
-                        "eGe7ukc5TJmzxjxO5IUUXe:APA91bEBXwjO0MpwzQg002c7JYiINeeA6bNKYD6P0ltP8SCT19Wz2yqQmRvhI93L7Tl0lF70Mb9PmXHQsz4ONq3BrTd3ilLTAlNO2heIsVwKs09Fw4SSOGg",
+                        "e2CwU6F9Rg2MCNyYsx1gTB:APA91bFE3BKAvWlOg0S2fo2UL46vb8MEymLutL5Cb_mxdr0XVfF9C_7r4v7ci81eIpgcsAyfExqxRXv5ONcsyxVaTvyUmSAurmwwwmtteAvNKDsbydsOtE8",
                     title: "new message",
                     body: "test from abdullah",
                     data: {},

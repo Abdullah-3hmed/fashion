@@ -5,28 +5,21 @@ import 'package:e_fashion_flutter/core/notifications/notification_controller.dar
 import 'package:e_fashion_flutter/core/utils/app_constants.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class FcmInitHelper {
   static final FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
   static final AwesomeNotifications _awesomeNotifications =
       AwesomeNotifications();
+  static final Permission permissionHandler = Permission.notification;
 
   /// Request notification permission from the user
   static Future<bool> isNotificationAllowed() async {
-    return await _awesomeNotifications.isNotificationAllowed();
+    return await permissionHandler.isGranted;
   }
 
   static Future<bool> requestPermission() async {
-    return await _awesomeNotifications.requestPermissionToSendNotifications();
-  }
-
-  static Future<void> disableNotification() async {
-    await _awesomeNotifications.cancelAll();
-    await firebaseMessaging.setAutoInitEnabled(false);
-  }
-
-  static Future<void> enableNotification() async {
-    await firebaseMessaging.setAutoInitEnabled(true);
+    return await permissionHandler.request().isGranted;
   }
 
   static Future<void> initAwesomeNotification() async {
@@ -65,6 +58,7 @@ class FcmInitHelper {
   static Future<void> initFirebaseMessagingListeners() async {
     // Foreground
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      if (!AppConstants.areNotificationsEnabled) return;
       debugPrint("📩 Foreground message: ${message.data}");
       if (AppConstants.currentRoute == ChatSupportRoute.name) {
         return;
@@ -74,6 +68,7 @@ class FcmInitHelper {
 
     // Background
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) async {
+      if (!AppConstants.areNotificationsEnabled) return;
       debugPrint("📲 Notification opened (background): ${message.data}");
       await navigateToChat();
     });
