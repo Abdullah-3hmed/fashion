@@ -90,13 +90,14 @@ class ProfileContainerContent extends StatelessWidget {
               value: context.select(
                 (AppCubit cubit) => cubit.state.areNotificationsEnabled,
               ),
-              onChanged: (value) {
-                context.read<AppCubit>().toggleNotifications(
-                  areNotificationsEnabled: value,
+              onChanged: (value) async {
+                await context.read<AppCubit>().toggleNotificationsStatus(
+                  value: value,
                 );
               },
             ),
           ),
+
           const SizedBox(height: 10.0),
           ProfileInfoItem(
             onTap: () {},

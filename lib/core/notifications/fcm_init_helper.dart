@@ -48,6 +48,28 @@ class FcmInitHelper {
     );
   }
 
+  static Future<void> disableNotifications() async {
+    // await _awesomeNotifications.cancelAll();
+    // await _awesomeNotifications.dismissAllNotifications();
+    await firebaseMessaging.setForegroundNotificationPresentationOptions(
+      alert: false,
+      badge: false,
+      sound: false,
+    );
+    // await _awesomeNotifications.removeChannel("fcm_channel");
+    await firebaseMessaging.deleteToken();
+  }
+
+  static Future<void> enableNotifications() async {
+    // await initAwesomeNotification();
+    await getFcmToken();
+    await firebaseMessaging.setForegroundNotificationPresentationOptions(
+      alert: true,
+      badge: true,
+      sound: true,
+    );
+  }
+
   static Future<void> setAwesomeNotificationListeners() async {
     await _awesomeNotifications.setListeners(
       onActionReceivedMethod: NotificationController.onActionReceivedMethod,
@@ -58,7 +80,6 @@ class FcmInitHelper {
   static Future<void> initFirebaseMessagingListeners() async {
     // Foreground
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      if (!AppConstants.areNotificationsEnabled) return;
       debugPrint("📩 Foreground message: ${message.data}");
       if (AppConstants.currentRoute == ChatSupportRoute.name) {
         return;
@@ -68,7 +89,6 @@ class FcmInitHelper {
 
     // Background
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) async {
-      if (!AppConstants.areNotificationsEnabled) return;
       debugPrint("📲 Notification opened (background): ${message.data}");
       await navigateToChat();
     });

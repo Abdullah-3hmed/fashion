@@ -1,7 +1,5 @@
 import 'dart:ui';
 
-import 'package:e_fashion_flutter/core/notifications/fcm_helper.dart';
-import 'package:e_fashion_flutter/core/services/service_locator.dart';
 import 'package:e_fashion_flutter/core/widgets/secondary_button.dart';
 import 'package:e_fashion_flutter/features/home/data/collection_details_model.dart';
 import 'package:e_fashion_flutter/features/home/screens/widgets/collection/collection_container_clipper.dart';
@@ -73,13 +71,13 @@ class CollectionItems extends StatelessWidget {
               const SizedBox(width: 16.0),
               SecondaryButton(
                 onPressed: () async {
-                  await getIt<FcmHelper>().sendNotification(
-                    token:
-                        "e2CwU6F9Rg2MCNyYsx1gTB:APA91bFE3BKAvWlOg0S2fo2UL46vb8MEymLutL5Cb_mxdr0XVfF9C_7r4v7ci81eIpgcsAyfExqxRXv5ONcsyxVaTvyUmSAurmwwwmtteAvNKDsbydsOtE8",
-                    title: "new message",
-                    body: "test from abdullah",
-                    data: {},
-                  );
+                  // await getIt<FcmHelper>().sendNotification(
+                  //   token:
+                  //       " cBu-nnWxTkaE9zzpnAUJNf:APA91bHGBXmXqXanhEFcoix7Y6DV4L8p0sryd7EgdnNTeqroFifsncZHYPdaRt9nuAD6IGeW7CV5n9MYcGB-munQPQX32IUWC_RwTlp0SC6qwNK73awhnCU",
+                  //   title: "new message",
+                  //   body: "test from abdullah",
+                  //   data: {},
+                  // );
                 },
                 text: "Buy collection",
                 backgroundColor: Theme.of(context).colorScheme.primary,
