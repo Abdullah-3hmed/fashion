@@ -1,0 +1,87 @@
+import 'package:dotted_dashed_line/dotted_dashed_line.dart';
+import 'package:flutter/material.dart';
+
+class PaymentCardBody extends StatelessWidget {
+  const PaymentCardBody({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        const SizedBox(height: 24.0),
+        Padding(
+          padding: const EdgeInsetsDirectional.symmetric(horizontal: 48.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Ordered by : Abdullah Ahmed",
+                style: Theme.of(
+                  context,
+                ).textTheme.bodyMedium!.copyWith(color: Colors.black),
+              ),
+              const SizedBox(height: 8.0),
+              Text(
+                "Date : 20, Oct, 2023",
+                style: Theme.of(
+                  context,
+                ).textTheme.bodyMedium!.copyWith(color: Colors.black),
+              ),
+              const SizedBox(height: 8.0),
+              Text(
+                "Time : 12:50 pm",
+                style: Theme.of(
+                  context,
+                ).textTheme.bodyMedium!.copyWith(color: Colors.black),
+              ),
+              const SizedBox(height: 8.0),
+              Text(
+                "Delivery Date : 21, Oct, 2023",
+                style: Theme.of(
+                  context,
+                ).textTheme.bodyMedium!.copyWith(color: Colors.black),
+              ),
+              const SizedBox(height: 20.0),
+              const Row(
+                children: [
+                  Expanded(
+                    child: DottedDashedLine(
+                      height: 5.0,
+                      axis: Axis.horizontal,
+                      width: 200.0,
+                      dashWidth: 7.0,
+                      strokeWidth: 1.3,
+                      dashSpace: 5.0,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 20.0),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Order Price : ",
+                    style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                      color: Colors.black,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  Text(
+                    r"$"
+                    "600",
+                    style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                      color: Colors.black,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 80.0),
+      ],
+    );
+  }
+}

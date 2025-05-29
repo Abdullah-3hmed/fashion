@@ -8,17 +8,20 @@ class SecondaryButton extends StatelessWidget {
     required this.text,
     this.backgroundColor,
     this.isLoading = false,
+    this.width,
   });
 
   final void Function() onPressed;
   final String text;
   final Color? backgroundColor;
   final bool isLoading;
+  final double? width;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: 42.0,
+      width: width,
       child: ElevatedButton(
         style: ButtonStyle(
           padding: WidgetStateProperty.all<EdgeInsetsGeometry>(

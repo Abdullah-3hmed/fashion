@@ -77,6 +77,7 @@ dependencies:
   path_drawing: ^1.0.1
   internet_state_manager: ^1.8.0
   permission_handler: ^12.0.0+1
+  dotted_dashed_line: ^0.0.3
 
 
 dev_dependencies:

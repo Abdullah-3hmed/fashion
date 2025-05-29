@@ -370,6 +370,22 @@ class OrderStatusRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [PaymentSuccessScreen]
+class PaymentSuccessRoute extends PageRouteInfo<void> {
+  const PaymentSuccessRoute({List<PageRouteInfo>? children})
+    : super(PaymentSuccessRoute.name, initialChildren: children);
+
+  static const String name = 'PaymentSuccessRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const PaymentSuccessScreen();
+    },
+  );
+}
+
+/// generated route for
 /// [ProductDetailsScreen]
 class ProductDetailsRoute extends PageRouteInfo<ProductDetailsRouteArgs> {
   ProductDetailsRoute({
