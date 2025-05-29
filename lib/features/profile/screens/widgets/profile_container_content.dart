@@ -91,8 +91,8 @@ class ProfileContainerContent extends StatelessWidget {
                 (AppCubit cubit) => cubit.state.areNotificationsEnabled,
               ),
               onChanged: (value) async {
-                await context.read<AppCubit>().toggleNotificationsStatus(
-                  value: value,
+                await context.read<AppCubit>().handleUserNotificationRequest(
+                  value,
                 );
               },
             ),

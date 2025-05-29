@@ -12,8 +12,6 @@ class FcmInitHelper {
   static final AwesomeNotifications _awesomeNotifications =
       AwesomeNotifications();
   static final Permission permissionHandler = Permission.notification;
-
-  /// Request notification permission from the user
   static Future<bool> isNotificationAllowed() async {
     return await permissionHandler.isGranted;
   }

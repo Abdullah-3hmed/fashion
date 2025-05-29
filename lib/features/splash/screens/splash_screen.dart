@@ -55,13 +55,9 @@ class _SplashScreenState extends State<SplashScreen> {
                   TextButton(
                     onPressed: () async {
                       Navigator.of(ctx).pop();
-                      await FcmInitHelper.requestPermission().then((value) {
-                        if (mounted) {
-                          context.read<AppCubit>().toggleNotifications(
-                            areNotificationsEnabled: value,
-                          );
-                        }
-                      });
+                      context.read<AppCubit>().handleUserNotificationRequest(
+                        true,
+                      );
                     },
                     child: Text(
                       "Yes",

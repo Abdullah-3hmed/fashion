@@ -20,7 +20,7 @@ class AppCubit extends HydratedCubit<AppState> {
   }
 
   Future<void> syncNotificationStatusWithSystem() async {
-    final bool isAllowed =  await FcmInitHelper.isNotificationAllowed();
+    final bool isAllowed = await FcmInitHelper.isNotificationAllowed();
     emit(state.copyWith(areNotificationsEnabled: isAllowed));
     if (!isAllowed) {
       await FcmInitHelper.disableNotifications();
@@ -29,19 +29,25 @@ class AppCubit extends HydratedCubit<AppState> {
     }
   }
 
-  Future<void> toggleNotificationsStatus({required bool value}) async {
-    if (value) {
-      final isAllowed = await FcmInitHelper.isNotificationAllowed();
-      if (!isAllowed) {
-        await openAppSettings();
-        final newStatus = await FcmInitHelper.isNotificationAllowed();
-        toggleNotifications(areNotificationsEnabled: newStatus);
-      } else {
-        toggleNotifications(areNotificationsEnabled: true);
-      }
-    } else {
+  Future<void> handleUserNotificationRequest(bool enable) async {
+    if (!enable) {
       toggleNotifications(areNotificationsEnabled: false);
+      return;
     }
+    bool isAllowed = await FcmInitHelper.isNotificationAllowed();
+    if (!isAllowed) {
+      final status = await FcmInitHelper.permissionHandler.status;
+      if (status.isDenied) {
+        final result = await FcmInitHelper.permissionHandler.request();
+        isAllowed = result.isGranted;
+      }
+      if (status.isPermanentlyDenied || !isAllowed) {
+        await openAppSettings();
+        isAllowed = await FcmInitHelper.isNotificationAllowed();
+      }
+    }
+
+    toggleNotifications(areNotificationsEnabled: isAllowed);
   }
 
   @override
