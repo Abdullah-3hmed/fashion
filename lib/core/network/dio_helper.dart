@@ -9,8 +9,8 @@ class DioHelper {
   static void init() {
     BaseOptions options = BaseOptions(
       baseUrl: dotenv.env["API_URL"]!,
-      connectTimeout: const Duration(seconds: 10),
-      receiveTimeout: const Duration(seconds: 10),
+      connectTimeout: const Duration(seconds: 20),
+      receiveTimeout: const Duration(seconds: 20),
     );
     _dio = Dio(options);
     _dio.interceptors.addAll([
@@ -38,8 +38,17 @@ class DioHelper {
     Map<String, dynamic>? data,
     Map<String, dynamic>? query,
     Map<String, dynamic>? headers,
+    bool isFormData = false,
   }) async {
     //_dio.options.headers = headers;
+    if (isFormData) {
+      return await _dio.post(
+        url,
+        data: FormData.fromMap(data!),
+        queryParameters: query,
+        options: Options(headers: headers),
+      );
+    }
     return await _dio.post(
       url,
       data: data,

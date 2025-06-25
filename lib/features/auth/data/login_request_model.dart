@@ -12,7 +12,7 @@ class LoginRequestModel extends Equatable {
   Map<String, dynamic> toJson() => {
     "email": email,
     "password": password,
-    "fcmToken": fcmToken,
+    "fcM_Token": fcmToken,
   };
   @override
   List<Object> get props => [email, password, fcmToken];

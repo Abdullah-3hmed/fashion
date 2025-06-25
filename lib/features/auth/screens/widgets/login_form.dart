@@ -26,11 +26,19 @@ class _LoginFormState extends State<LoginForm> {
   late AutovalidateMode _autovalidateMode;
   late String email, password;
 
+  final ValueNotifier<bool> _rememberMeNotifier = ValueNotifier(false);
+
   @override
   void initState() {
     _formKey = GlobalKey<FormState>();
     _autovalidateMode = AutovalidateMode.disabled;
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _rememberMeNotifier.dispose();
+    super.dispose();
   }
 
   @override
@@ -43,33 +51,32 @@ class _LoginFormState extends State<LoginForm> {
           children: [
             CustomTextFormField(
               type: TextInputType.emailAddress,
-              isEmail: true,
               autofillHints: const [AutofillHints.email],
               hintText: "Email",
               label: "Email",
               prefixIcon: Icon(
                 FontAwesomeIcons.envelope,
-                color: Theme.of(
-                  context,
-                ).colorScheme.onSurfaceVariant.withValues(alpha: 0.6),
+                color: Theme.of(context).colorScheme.onSurfaceVariant.withAlpha(153),
               ),
-              onSaved: (value) {
-                email = value!;
-              },
+              onSaved: (value) => email = value!,
             ),
             const SizedBox(height: 16.0),
             PasswordField(
-              onSaved: (value) {
-                password = value!;
-              },
-              onSubmit: (_) {
-                _onSubmit();
-              },
+              onSaved: (value) => password = value!,
+              onSubmit: (_) => _onSubmit(),
             ),
             const SizedBox(height: 24.0),
             Row(
               children: [
-                AuthCustomCheckBox(isError: false, onChanged: (_) {}),
+                ValueListenableBuilder<bool>(
+                  valueListenable: _rememberMeNotifier,
+                  builder: (context, isChecked, _) {
+                    return AuthCustomCheckBox(
+                      value: isChecked,
+                      onChanged: (value) => _rememberMeNotifier.value = value,
+                    );
+                  },
+                ),
                 const SizedBox(width: 8.0),
                 Text(
                   "Remember me",
@@ -91,21 +98,19 @@ class _LoginFormState extends State<LoginForm> {
             ),
             const SizedBox(height: 48.0),
             BlocConsumer<AuthCubit, AuthState>(
-              buildWhen:
-                  (previous, current) =>
-                      previous.loginRequestStatus != current.loginRequestStatus,
-              listenWhen:
-                  (previous, current) =>
-                      previous.loginRequestStatus != current.loginRequestStatus,
+              buildWhen: (previous, current) =>
+              previous.loginRequestStatus != current.loginRequestStatus,
+              listenWhen: (previous, current) =>
+              previous.loginRequestStatus != current.loginRequestStatus,
               listener: (context, state) {
-                if (state.loginRequestStatus == RequestStatus.success) {
+                if (state.loginRequestStatus.isSuccess) {
                   showToast(
                     message: state.authResponseModel.message,
                     state: ToastStates.success,
                   );
                   context.replaceRoute(const AuthenticatedRoute());
                 }
-                if (state.loginRequestStatus == RequestStatus.error) {
+                if (state.loginRequestStatus.isError) {
                   showToast(
                     message: state.loginErrorMessage,
                     state: ToastStates.error,
@@ -114,10 +119,9 @@ class _LoginFormState extends State<LoginForm> {
               },
               builder: (context, state) {
                 return PrimaryButton(
-                  isLoading: state.loginRequestStatus == RequestStatus.loading,
-                  onPressed: () {
-                    _onSubmit();
-                  },
+                  isLoading:
+                  state.loginRequestStatus.isLoading,
+                  onPressed: () => _onSubmit(),
                   text: "Log in",
                 );
               },
@@ -140,3 +144,4 @@ class _LoginFormState extends State<LoginForm> {
     }
   }
 }
+

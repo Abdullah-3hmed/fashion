@@ -37,6 +37,13 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   }
 
   @override
+  void dispose() {
+    _nameController.dispose();
+    _phoneController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: ProfileBackgroundImageAndLogo(

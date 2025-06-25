@@ -8,8 +8,9 @@ class AuthState extends Equatable {
   final PasswordModel passwordModel;
   final RequestStatus loginRequestStatus;
   final RequestStatus signUpRequestStatus;
-  final String loginErrorMessage;
   final String signUpErrorMessage;
+  final String loginErrorMessage;
+
   final RequestStatus forgetPasswordRequestStatus;
   final RequestStatus resetPasswordRequestStatus;
   final RequestStatus emailVerificationRequestStatus;

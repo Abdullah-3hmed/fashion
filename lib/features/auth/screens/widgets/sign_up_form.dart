@@ -26,16 +26,23 @@ class _SignUpFormState extends State<SignUpForm> {
   late String name, email, phone, password;
   late AutovalidateMode _autovalidateMode;
   late GlobalKey<FormState> _formKey;
-  late bool _isPrivacyAccepted;
-  late bool _isPrivacyError;
+  late final ValueNotifier<bool> _isPrivacyAccepted;
+  late final ValueNotifier<bool> _isPrivacyError;
 
   @override
   void initState() {
     _formKey = GlobalKey<FormState>();
     _autovalidateMode = AutovalidateMode.disabled;
-    _isPrivacyAccepted = false;
-    _isPrivacyError = false;
+    _isPrivacyAccepted = ValueNotifier(false);
+    _isPrivacyError = ValueNotifier(false);
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _isPrivacyAccepted.dispose();
+    _isPrivacyError.dispose();
+    super.dispose();
   }
 
   @override
@@ -52,10 +59,7 @@ class _SignUpFormState extends State<SignUpForm> {
               label: "Name",
               autofillHints: const [AutofillHints.name],
               prefixIcon: const Icon(SolarIconsOutline.user),
-
-              onSaved: (value) {
-                name = value!;
-              },
+              onSaved: (value) => name = value!,
             ),
             const SizedBox(height: 16.0),
             CustomTextFormField(
@@ -63,7 +67,6 @@ class _SignUpFormState extends State<SignUpForm> {
               hintText: "Email",
               label: "Email",
               autofillHints: const [AutofillHints.email],
-              isEmail: true,
               prefixIcon: Icon(
                 FontAwesomeIcons.envelope,
                 color: Theme.of(
@@ -71,9 +74,7 @@ class _SignUpFormState extends State<SignUpForm> {
                 ).colorScheme.onSurfaceVariant.withValues(alpha: 0.6),
               ),
               onSubmit: (_) {},
-              onSaved: (value) {
-                email = value!;
-              },
+              onSaved: (value) => email = value!,
             ),
             const SizedBox(height: 16.0),
             CustomTextFormField(
@@ -82,32 +83,33 @@ class _SignUpFormState extends State<SignUpForm> {
               label: "Phone",
               autofillHints: const [AutofillHints.telephoneNumber],
               prefixIcon: const Icon(SolarIconsOutline.phone),
-              onSaved: (value) {
-                phone = value!;
-              },
+              onSaved: (value) => phone = value!,
             ),
             const SizedBox(height: 16.0),
             PasswordField(
-              onSaved: (value) {
-                password = value!;
-              },
-              onSubmit: (_) {
-                _onSubmit();
-              },
+              onSaved: (value) => password = value!,
+              onSubmit: (_) => _onSubmit(),
             ),
             const SizedBox(height: 24.0),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                AuthCustomCheckBox(
-                  isError: _isPrivacyError,
-                  onChanged: (bool isChecked) {
-                    setState(() {
-                      _isPrivacyAccepted = isChecked;
-                      if (isChecked) {
-                        _isPrivacyError = false;
-                      }
-                    });
+                ValueListenableBuilder<bool>(
+                  valueListenable: _isPrivacyError,
+                  builder: (context, isError, _) {
+                    return ValueListenableBuilder<bool>(
+                      valueListenable: _isPrivacyAccepted,
+                      builder: (context, isAccepted, _) {
+                        return AuthCustomCheckBox(
+                          isError: isError,
+                          value: isAccepted,
+                          onChanged: (bool isChecked) {
+                            _isPrivacyAccepted.value = isChecked;
+                            if (isChecked) _isPrivacyError.value = false;
+                          },
+                        );
+                      },
+                    );
                   },
                 ),
                 const SizedBox(width: 8.0),
@@ -124,7 +126,6 @@ class _SignUpFormState extends State<SignUpForm> {
                           color: Theme.of(context).colorScheme.primary,
                         ),
                       ),
-
                       TextSpan(
                         text: " and",
                         style: Theme.of(context).textTheme.bodyMedium,
@@ -142,23 +143,24 @@ class _SignUpFormState extends State<SignUpForm> {
             ),
             const SizedBox(height: 48),
             BlocConsumer<AuthCubit, AuthState>(
-              buildWhen:
-                  (previous, current) =>
-                      previous.signUpRequestStatus !=
-                      current.signUpRequestStatus,
               listenWhen:
                   (previous, current) =>
                       previous.signUpRequestStatus !=
                       current.signUpRequestStatus,
+              buildWhen:
+                  (previous, current) =>
+                      previous.signUpRequestStatus !=
+                      current.signUpRequestStatus,
+
               listener: (context, state) {
-                if (state.signUpRequestStatus == RequestStatus.success) {
+                if (state.signUpRequestStatus.isSuccess) {
                   showToast(
                     message: state.authResponseModel.message,
                     state: ToastStates.success,
                   );
                   context.replaceRoute(const AuthenticatedRoute());
                 }
-                if (state.signUpRequestStatus == RequestStatus.error) {
+                if (state.signUpRequestStatus.isError) {
                   showToast(
                     message: state.signUpErrorMessage,
                     state: ToastStates.error,
@@ -167,11 +169,9 @@ class _SignUpFormState extends State<SignUpForm> {
               },
               builder: (context, state) {
                 return PrimaryButton(
-                  isLoading: state.signUpRequestStatus == RequestStatus.loading,
+                  isLoading: state.signUpRequestStatus.isLoading,
                   icon: const Icon(Icons.arrow_forward),
-                  onPressed: () {
-                    _onSubmit();
-                  },
+                  onPressed: _onSubmit,
                   text: "Sign up",
                 );
               },
@@ -183,7 +183,7 @@ class _SignUpFormState extends State<SignUpForm> {
   }
 
   void _onSubmit() {
-    if (_formKey.currentState!.validate() && _isPrivacyAccepted) {
+    if (_formKey.currentState!.validate() && _isPrivacyAccepted.value) {
       _formKey.currentState!.save();
       context.read<AuthCubit>().userSignUp(
         name: name,
@@ -192,11 +192,10 @@ class _SignUpFormState extends State<SignUpForm> {
         password: password,
       );
     } else {
-      setState(() {
-        _autovalidateMode = AutovalidateMode.always;
-        _isPrivacyError = true;
-      });
+      _autovalidateMode = AutovalidateMode.always;
+      _isPrivacyError.value = true;
       TextInput.finishAutofillContext();
+      setState(() {});
     }
   }
 }

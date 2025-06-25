@@ -29,6 +29,6 @@ void main() async {
   await FcmInitHelper.getFcmToken();
 
   Bloc.observer = MyBlocObserver();
-
-  runApp(InternetStateManagerInitializer.init(child: const MyApp()));
+  await InternetStateManagerInitializer.initialize();
+  runApp(InternetStateManagerInitializer(child: const MyApp()));
 }

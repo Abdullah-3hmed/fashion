@@ -1,4 +1,3 @@
-import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 
 class CustomTextFormField extends StatelessWidget {
@@ -17,7 +16,6 @@ class CustomTextFormField extends StatelessWidget {
     this.enableBorderColor,
     this.onSaved,
     this.autofillHints,
-    this.isEmail = false,
     this.fillColor,
     this.textInputAction,
     this.contentPadding = 20.0,
@@ -28,7 +26,6 @@ class CustomTextFormField extends StatelessWidget {
   final Widget? prefixIcon;
   final Widget? suffixIcon;
   final bool obscureText;
-  final bool isEmail;
   final String? label;
   final List<String>? autofillHints;
   final Function(String submittedText)? onSubmit;
@@ -89,11 +86,6 @@ class CustomTextFormField extends StatelessWidget {
         ),
       ),
       validator: (value) {
-        if (isEmail) {
-          if (value!.isNotEmpty && !EmailValidator.validate(value)) {
-            return "Enter a valid mail";
-          }
-        }
         if (value!.isEmpty) {
           return '$label required';
         }

@@ -50,9 +50,7 @@ class FcmInitHelper {
     // await _awesomeNotifications.cancelAll();
     // await _awesomeNotifications.dismissAllNotifications();
     await firebaseMessaging.setForegroundNotificationPresentationOptions(
-      alert: false,
-      badge: false,
-      sound: false,
+      
     );
     // await _awesomeNotifications.removeChannel("fcm_channel");
     await firebaseMessaging.deleteToken();

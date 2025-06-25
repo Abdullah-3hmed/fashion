@@ -59,7 +59,6 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                   const SizedBox(height: 40.0),
                   CustomTextFormField(
                     type: TextInputType.emailAddress,
-                    isEmail: true,
                     autofillHints: const [AutofillHints.email],
                     textInputAction: TextInputAction.done,
                     hintText: "Email",

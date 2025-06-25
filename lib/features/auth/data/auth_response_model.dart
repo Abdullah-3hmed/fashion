@@ -7,7 +7,7 @@ class AuthResponseModel extends Equatable {
   const AuthResponseModel({required this.message, required this.token});
 
   factory AuthResponseModel.fromJson(Map<String, dynamic> json) =>
-      AuthResponseModel(message: json["message"], token: json["token"]);
+      AuthResponseModel(message: json["message"]??"", token: json["data"]??"");
 
   static const AuthResponseModel empty = AuthResponseModel(
     message: "",

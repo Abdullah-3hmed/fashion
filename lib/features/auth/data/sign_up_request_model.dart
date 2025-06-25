@@ -16,14 +16,13 @@ class SignUpRequestModel extends Equatable {
   });
 
   Map<String, dynamic> toJson() => {
-    "userName": userName,
-    "email": email,
-    "password": password,
-    "confirmPassword": password,
-    "phoneNumber": phone,
-    "fcmToken": fcmToken,
+    "FullName": userName,
+    "Email": email,
+    "Password": password,
+    "PhoneNumber": phone,
+    "FCM_Token": fcmToken,
   };
 
   @override
-  List<Object> get props => [userName, email, password, fcmToken];
+  List<Object> get props => [userName, phone, email, password, fcmToken];
 }

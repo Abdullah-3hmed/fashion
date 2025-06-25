@@ -28,8 +28,6 @@ class _FadeThenSpinAnimationState extends State<FadeThenSpinAnimation>
   @override
   void initState() {
     super.initState();
-
-    // Fade animation setup
     _fadeController = AnimationController(
       duration: widget.fadeDuration ?? const Duration(seconds: 3),
       vsync: this,
@@ -39,14 +37,11 @@ class _FadeThenSpinAnimationState extends State<FadeThenSpinAnimation>
       begin: 0.0,
       end: 1.0,
     ).animate(CurvedAnimation(parent: _fadeController, curve: Curves.easeIn));
-
-    // Spin animation setup
     _spinController = AnimationController(
       duration: widget.spinDuration ?? const Duration(seconds: 3),
       vsync: this,
     );
 
-    // Start fade first
     _fadeController.forward().whenComplete(() {
       setState(() => _showSpin = true);
       _spinController.repeat();
