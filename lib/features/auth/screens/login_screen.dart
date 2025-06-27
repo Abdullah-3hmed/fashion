@@ -15,7 +15,7 @@ class LoginScreen extends StatelessWidget {
     return Scaffold(
       body: AuthBackgroundImageAndLogo(
         child: SingleChildScrollView(
-          physics: const NeverScrollableScrollPhysics(),
+          physics: const BouncingScrollPhysics(),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

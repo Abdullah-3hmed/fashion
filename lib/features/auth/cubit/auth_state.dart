@@ -1,85 +1,96 @@
 import 'package:e_fashion_flutter/core/enums/request_status.dart';
 import 'package:e_fashion_flutter/features/auth/data/auth_response_model.dart';
-import 'package:e_fashion_flutter/features/auth/data/password_model.dart';
 import 'package:equatable/equatable.dart';
 
 class AuthState extends Equatable {
+  // Data
   final AuthResponseModel authResponseModel;
-  final PasswordModel passwordModel;
+
+  // Request Statuses
   final RequestStatus loginRequestStatus;
   final RequestStatus signUpRequestStatus;
-  final String signUpErrorMessage;
-  final String loginErrorMessage;
-
   final RequestStatus forgetPasswordRequestStatus;
   final RequestStatus resetPasswordRequestStatus;
-  final RequestStatus emailVerificationRequestStatus;
+  final RequestStatus verifyOtpRequestStatus;
+
+  // Error Messages
+  final String loginErrorMessage;
+  final String signUpErrorMessage;
   final String forgetPasswordErrorMessage;
   final String resetPasswordErrorMessage;
-  final String emailVerificationErrorMessage;
+  final String verifyOtpErrorMessage;
+
+  // Success Messages
+  final String verifyOtpMessage;
+  final String resetPasswordMessage;
 
   const AuthState({
     this.authResponseModel = AuthResponseModel.empty,
-    this.passwordModel = PasswordModel.empty,
     this.loginRequestStatus = RequestStatus.initial,
     this.signUpRequestStatus = RequestStatus.initial,
-    this.loginErrorMessage = '',
-    this.signUpErrorMessage = '',
     this.forgetPasswordRequestStatus = RequestStatus.initial,
     this.resetPasswordRequestStatus = RequestStatus.initial,
+    this.verifyOtpRequestStatus = RequestStatus.initial,
+    this.loginErrorMessage = '',
+    this.signUpErrorMessage = '',
     this.forgetPasswordErrorMessage = '',
     this.resetPasswordErrorMessage = '',
-    this.emailVerificationRequestStatus = RequestStatus.initial,
-    this.emailVerificationErrorMessage = '',
+    this.verifyOtpErrorMessage = '',
+    this.verifyOtpMessage = '',
+    this.resetPasswordMessage = '',
   });
 
   AuthState copyWith({
     AuthResponseModel? authResponseModel,
-    PasswordModel? passwordModel,
     RequestStatus? loginRequestStatus,
     RequestStatus? signUpRequestStatus,
-    String? loginErrorMessage,
-    String? signUpErrorMessage,
     RequestStatus? forgetPasswordRequestStatus,
     RequestStatus? resetPasswordRequestStatus,
-    RequestStatus? emailVerificationRequestStatus,
+    RequestStatus? verifyOtpRequestStatus,
+    String? loginErrorMessage,
+    String? signUpErrorMessage,
     String? forgetPasswordErrorMessage,
     String? resetPasswordErrorMessage,
-    String? emailVerificationErrorMessage,
-  }) => AuthState(
-    authResponseModel: authResponseModel ?? this.authResponseModel,
-    passwordModel: passwordModel ?? this.passwordModel,
-    loginRequestStatus: loginRequestStatus ?? this.loginRequestStatus,
-    signUpRequestStatus: signUpRequestStatus ?? this.signUpRequestStatus,
-    loginErrorMessage: loginErrorMessage ?? this.loginErrorMessage,
-    signUpErrorMessage: signUpErrorMessage ?? this.signUpErrorMessage,
-    forgetPasswordRequestStatus:
+    String? verifyOtpErrorMessage,
+    String? verifyOtpMessage,
+    String? resetPasswordMessage,
+  }) =>
+      AuthState(
+        authResponseModel: authResponseModel ?? this.authResponseModel,
+        loginRequestStatus: loginRequestStatus ?? this.loginRequestStatus,
+        signUpRequestStatus: signUpRequestStatus ?? this.signUpRequestStatus,
+        forgetPasswordRequestStatus:
         forgetPasswordRequestStatus ?? this.forgetPasswordRequestStatus,
-    resetPasswordRequestStatus:
+        resetPasswordRequestStatus:
         resetPasswordRequestStatus ?? this.resetPasswordRequestStatus,
-    forgetPasswordErrorMessage:
+        verifyOtpRequestStatus:
+        verifyOtpRequestStatus ?? this.verifyOtpRequestStatus,
+        loginErrorMessage: loginErrorMessage ?? this.loginErrorMessage,
+        signUpErrorMessage: signUpErrorMessage ?? this.signUpErrorMessage,
+        forgetPasswordErrorMessage:
         forgetPasswordErrorMessage ?? this.forgetPasswordErrorMessage,
-    resetPasswordErrorMessage:
+        resetPasswordErrorMessage:
         resetPasswordErrorMessage ?? this.resetPasswordErrorMessage,
-    emailVerificationRequestStatus:
-        emailVerificationRequestStatus ?? this.emailVerificationRequestStatus,
-    emailVerificationErrorMessage:
-        emailVerificationErrorMessage ?? this.emailVerificationErrorMessage,
-  );
+        verifyOtpErrorMessage:
+        verifyOtpErrorMessage ?? this.verifyOtpErrorMessage,
+        verifyOtpMessage: verifyOtpMessage ?? this.verifyOtpMessage,
+        resetPasswordMessage: resetPasswordMessage ?? this.resetPasswordMessage,
+      );
 
   @override
   List<Object> get props => [
     authResponseModel,
-    passwordModel,
     loginRequestStatus,
     signUpRequestStatus,
-    loginErrorMessage,
-    signUpErrorMessage,
     forgetPasswordRequestStatus,
     resetPasswordRequestStatus,
-    emailVerificationRequestStatus,
+    verifyOtpRequestStatus,
+    loginErrorMessage,
+    signUpErrorMessage,
     forgetPasswordErrorMessage,
     resetPasswordErrorMessage,
-    emailVerificationErrorMessage,
+    verifyOtpErrorMessage,
+    verifyOtpMessage,
+    resetPasswordMessage,
   ];
 }

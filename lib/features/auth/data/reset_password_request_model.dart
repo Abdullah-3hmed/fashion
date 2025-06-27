@@ -15,7 +15,7 @@ class ResetPasswordRequestModel extends Equatable {
 
   Map<String, dynamic> toJson() => {
     "newPassword": password,
-    "confirmPassword": confirmPassword,
+    "confirmNewPassword": confirmPassword,
     "token": token,
     "email": email,
   };

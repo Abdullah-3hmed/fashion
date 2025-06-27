@@ -17,7 +17,7 @@ class UserRepoImpl implements UserRepo {
     try {
       debugPrint("Bearer ${AppConstants.token}");
       final response = await getIt<DioHelper>().get(
-        url: ApiConstants.getUserProfileEndpoint,
+        url: "",
         headers: {"Authorization": "Bearer ${AppConstants.token}"},
       );
       return Right(UserModel.fromJson(response.data));
@@ -32,7 +32,7 @@ class UserRepoImpl implements UserRepo {
   Future<Either<Failure, void>> logOut({required String email}) async {
     try {
       await getIt<DioHelper>().get(
-        url: ApiConstants.logOutEndpoint,
+        url: "",
         data: {"email": email},
         headers: {"Authorization": "Bearer ${AppConstants.token}"},
       );
@@ -52,7 +52,7 @@ class UserRepoImpl implements UserRepo {
   }) async {
     try {
       final response = await getIt<DioHelper>().put(
-        url: ApiConstants.editProfileEndpoint,
+        url: "",
         data: FormData.fromMap(editUserModel.toJson()),
         headers: {"Authorization": "Bearer ${AppConstants.token}"},
       );
@@ -70,7 +70,7 @@ class UserRepoImpl implements UserRepo {
   }) async {
     try {
       final response = await getIt<DioHelper>().post(
-        url: ApiConstants.changePasswordEndpoint,
+        url: "",
         data: passwordModel.toJson(),
         headers: {"Authorization": "Bearer ${AppConstants.token}"},
       );

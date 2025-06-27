@@ -13,8 +13,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 @RoutePage()
 class ResetPasswordScreen extends StatefulWidget {
-  const ResetPasswordScreen({super.key});
-
+  const ResetPasswordScreen({super.key, required this.email});
+final String email;
   @override
   State<ResetPasswordScreen> createState() => _ResetPasswordScreenState();
 }
@@ -85,16 +85,14 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                             previous.resetPasswordRequestStatus !=
                             current.resetPasswordRequestStatus,
                     listener: (context, state) {
-                      if (state.resetPasswordRequestStatus ==
-                          RequestStatus.success) {
+                      if (state.resetPasswordRequestStatus.isSuccess) {
                         context.navigateTo(const LoginRoute());
                         showToast(
-                          message: "Password changed successfully",
+                          message: state.resetPasswordMessage,
                           state: ToastStates.success,
                         );
                       }
-                      if (state.resetPasswordRequestStatus ==
-                          RequestStatus.error) {
+                      if (state.resetPasswordRequestStatus.isError) {
                         showToast(
                           message: state.resetPasswordErrorMessage,
                           state: ToastStates.error,
@@ -104,8 +102,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                     builder: (context, state) {
                       return PrimaryButton(
                         isLoading:
-                            state.resetPasswordRequestStatus ==
-                            RequestStatus.loading,
+                            state.resetPasswordRequestStatus.isLoading,
                         onPressed: () async {
                           await _onSubmit();
                         },
@@ -127,6 +124,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
       await context.read<AuthCubit>().resetPassword(
+        email: widget.email,
         newPassword: _password,
         confirmPassword: _confirmPassword,
       );

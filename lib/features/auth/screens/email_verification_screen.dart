@@ -15,7 +15,8 @@ import 'package:pinput/pinput.dart';
 
 @RoutePage()
 class EmailVerificationScreen extends StatefulWidget {
-  const EmailVerificationScreen({super.key});
+  const EmailVerificationScreen({super.key, required this.email});
+  final String email;
 
   @override
   State<EmailVerificationScreen> createState() =>
@@ -25,29 +26,25 @@ class EmailVerificationScreen extends StatefulWidget {
 class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
   late final GlobalKey<FormState> _formKey;
   late final AutovalidateMode _autovalidateMode;
-  String otp = "";
-  bool isOtpError = false;
-
+  late final ValueNotifier<int> _secondsRemaining;
   late Timer _timer;
-  int _secondsRemaining = 59;
 
   @override
   void initState() {
     super.initState();
     _formKey = GlobalKey<FormState>();
     _autovalidateMode = AutovalidateMode.disabled;
+    _secondsRemaining = ValueNotifier<int>(59);
     _startTimer();
   }
 
   void _startTimer() {
-    _secondsRemaining = 59;
+    _secondsRemaining.value = 59;
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      if (_secondsRemaining == 0) {
+      if (_secondsRemaining.value == 0) {
         timer.cancel();
       } else {
-        setState(() {
-          _secondsRemaining--;
-        });
+        _secondsRemaining.value--;
       }
     });
   }
@@ -55,14 +52,12 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
   @override
   void dispose() {
     _timer.cancel();
+    _secondsRemaining.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final String expectedOtp = context.select(
-      (AuthCubit cubit) => cubit.state.passwordModel.otp.toString(),
-    );
     return Scaffold(
       body: AuthBackgroundImageAndLogo(
         height: 540.0,
@@ -88,24 +83,9 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
                   Pinput(
                     length: 6,
                     onCompleted: (value) async {
-                      if (value != expectedOtp) {
-                        setState(() {
-                          isOtpError = true;
-                          showToast(
-                            message: "Error! wrong otp code",
-                            state: ToastStates.error,
-                          );
-                        });
-                      } else {
-                        setState(() {
-                          otp = value;
-                          isOtpError = false;
-                        });
-                        context.navigateTo(const ResetPasswordRoute());
-                        await context.read<AuthCubit>().resetPasswordOtpVerify(
-                          otp: otp,
-                        );
-                      }
+                      await context
+                          .read<AuthCubit>()
+                          .verifyOtp(email: widget.email, otp: value);
                     },
                     defaultPinTheme: PinTheme(
                       width: 40.0,
@@ -114,52 +94,63 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
                         color: Colors.transparent,
                         borderRadius: BorderRadius.circular(8.0),
                         border: Border.all(
-                          color:
-                              isOtpError
-                                  ? Theme.of(context).colorScheme.error
-                                  : Theme.of(context).colorScheme.outline,
+                          color: Theme.of(context).colorScheme.outline,
                         ),
                       ),
                     ),
                   ),
                   const SizedBox(height: 70.0),
                   BlocConsumer<AuthCubit, AuthState>(
-                    buildWhen:
-                        (previous, current) =>
-                            previous.emailVerificationRequestStatus !=
-                            current.emailVerificationRequestStatus,
-                    listenWhen:
-                        (previous, current) =>
-                            previous.emailVerificationRequestStatus !=
-                            current.emailVerificationRequestStatus,
+                    buildWhen: (previous, current) =>
+                    previous.forgetPasswordRequestStatus !=
+                        current.forgetPasswordRequestStatus,
+                    listenWhen: (previous, current) =>
+                    previous.verifyOtpRequestStatus !=
+                        current.verifyOtpRequestStatus,
                     listener: (context, state) {
-                      if (state.emailVerificationRequestStatus ==
-                          RequestStatus.error) {
+                      if (state.verifyOtpRequestStatus.isError) {
                         showToast(
-                          message: state.emailVerificationErrorMessage,
+                          message: state.verifyOtpErrorMessage,
                           state: ToastStates.error,
                         );
                       }
+                      if (state.verifyOtpRequestStatus.isSuccess) {
+                        showToast(
+                          message: state.verifyOtpMessage,
+                          state: ToastStates.success,
+                        );
+                        context.navigateTo( ResetPasswordRoute(
+                          email: widget.email,
+                        ));
+                      }
                     },
                     builder: (context, state) {
-                      return _secondsRemaining > 0
-                          ? Text(
-                            "RESEND OTP IN 00:${_secondsRemaining.toString().padLeft(2, '0')}",
-                            style: Theme.of(
-                              context,
-                            ).textTheme.bodyMedium!.copyWith(
-                              color: Theme.of(context).colorScheme.primary,
+                      return ValueListenableBuilder<int>(
+                        valueListenable: _secondsRemaining,
+                        builder: (context, value, _) {
+                          return value > 0
+                              ? Text(
+                            "RESEND OTP IN 00:${value.toString().padLeft(2, '0')}",
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium!
+                                .copyWith(
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .primary,
                             ),
                           )
-                          : PrimaryButton(
-                            isLoading:
-                                state.emailVerificationRequestStatus ==
-                                RequestStatus.loading,
+                              : PrimaryButton(
+                            isLoading: state
+                                .forgetPasswordRequestStatus.isLoading,
                             onPressed: () async {
                               await _onSubmit();
+                              _startTimer();
                             },
                             text: "Resend OTP",
                           );
+                        },
+                      );
                     },
                   ),
                 ],
@@ -174,9 +165,8 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
   Future<void> _onSubmit() async {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
-      //TODO: apply resend otp when it is completed
 
-      // await context.read<AuthCubit>().resetPasswordOtpVerify(otp: otp);
+      await context.read<AuthCubit>().forgetPassword(email: widget.email);
     } else {
       setState(() {
         _autovalidateMode = AutovalidateMode.always;

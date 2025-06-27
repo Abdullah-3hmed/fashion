@@ -112,6 +112,16 @@ class CollectionRouteArgs {
   String toString() {
     return 'CollectionRouteArgs{key: $key, collectionName: $collectionName}';
   }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! CollectionRouteArgs) return false;
+    return key == other.key && collectionName == other.collectionName;
+  }
+
+  @override
+  int get hashCode => key.hashCode ^ collectionName.hashCode;
 }
 
 /// generated route for
@@ -148,6 +158,16 @@ class DiscoverRouteArgs {
   String toString() {
     return 'DiscoverRouteArgs{key: $key, isOffer: $isOffer}';
   }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! DiscoverRouteArgs) return false;
+    return key == other.key && isOffer == other.isOffer;
+  }
+
+  @override
+  int get hashCode => key.hashCode ^ isOffer.hashCode;
 }
 
 /// generated route for
@@ -207,22 +227,63 @@ class EditReviewRouteArgs {
   String toString() {
     return 'EditReviewRouteArgs{key: $key, productDetailsModel: $productDetailsModel}';
   }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! EditReviewRouteArgs) return false;
+    return key == other.key && productDetailsModel == other.productDetailsModel;
+  }
+
+  @override
+  int get hashCode => key.hashCode ^ productDetailsModel.hashCode;
 }
 
 /// generated route for
 /// [EmailVerificationScreen]
-class EmailVerificationRoute extends PageRouteInfo<void> {
-  const EmailVerificationRoute({List<PageRouteInfo>? children})
-    : super(EmailVerificationRoute.name, initialChildren: children);
+class EmailVerificationRoute extends PageRouteInfo<EmailVerificationRouteArgs> {
+  EmailVerificationRoute({
+    Key? key,
+    required String email,
+    List<PageRouteInfo>? children,
+  }) : super(
+         EmailVerificationRoute.name,
+         args: EmailVerificationRouteArgs(key: key, email: email),
+         initialChildren: children,
+       );
 
   static const String name = 'EmailVerificationRoute';
 
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      return const EmailVerificationScreen();
+      final args = data.argsAs<EmailVerificationRouteArgs>();
+      return EmailVerificationScreen(key: args.key, email: args.email);
     },
   );
+}
+
+class EmailVerificationRouteArgs {
+  const EmailVerificationRouteArgs({this.key, required this.email});
+
+  final Key? key;
+
+  final String email;
+
+  @override
+  String toString() {
+    return 'EmailVerificationRouteArgs{key: $key, email: $email}';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! EmailVerificationRouteArgs) return false;
+    return key == other.key && email == other.email;
+  }
+
+  @override
+  int get hashCode => key.hashCode ^ email.hashCode;
 }
 
 /// generated route for
@@ -435,6 +496,18 @@ class ProductDetailsRouteArgs {
   String toString() {
     return 'ProductDetailsRouteArgs{key: $key, imageUrl: $imageUrl, productId: $productId}';
   }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! ProductDetailsRouteArgs) return false;
+    return key == other.key &&
+        imageUrl == other.imageUrl &&
+        productId == other.productId;
+  }
+
+  @override
+  int get hashCode => key.hashCode ^ imageUrl.hashCode ^ productId.hashCode;
 }
 
 /// generated route for
@@ -471,18 +544,49 @@ class ProfileChangePasswordRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [ResetPasswordScreen]
-class ResetPasswordRoute extends PageRouteInfo<void> {
-  const ResetPasswordRoute({List<PageRouteInfo>? children})
-    : super(ResetPasswordRoute.name, initialChildren: children);
+class ResetPasswordRoute extends PageRouteInfo<ResetPasswordRouteArgs> {
+  ResetPasswordRoute({
+    Key? key,
+    required String email,
+    List<PageRouteInfo>? children,
+  }) : super(
+         ResetPasswordRoute.name,
+         args: ResetPasswordRouteArgs(key: key, email: email),
+         initialChildren: children,
+       );
 
   static const String name = 'ResetPasswordRoute';
 
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      return const ResetPasswordScreen();
+      final args = data.argsAs<ResetPasswordRouteArgs>();
+      return ResetPasswordScreen(key: args.key, email: args.email);
     },
   );
+}
+
+class ResetPasswordRouteArgs {
+  const ResetPasswordRouteArgs({this.key, required this.email});
+
+  final Key? key;
+
+  final String email;
+
+  @override
+  String toString() {
+    return 'ResetPasswordRouteArgs{key: $key, email: $email}';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! ResetPasswordRouteArgs) return false;
+    return key == other.key && email == other.email;
+  }
+
+  @override
+  int get hashCode => key.hashCode ^ email.hashCode;
 }
 
 /// generated route for

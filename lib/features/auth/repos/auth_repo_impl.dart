@@ -8,7 +8,6 @@ import 'package:e_fashion_flutter/core/network/dio_helper.dart';
 import 'package:e_fashion_flutter/core/services/service_locator.dart';
 import 'package:e_fashion_flutter/features/auth/data/auth_response_model.dart';
 import 'package:e_fashion_flutter/features/auth/data/login_request_model.dart';
-import 'package:e_fashion_flutter/features/auth/data/password_model.dart';
 import 'package:e_fashion_flutter/features/auth/data/reset_password_request_model.dart';
 import 'package:e_fashion_flutter/features/auth/data/sign_up_request_model.dart';
 import 'package:e_fashion_flutter/features/auth/repos/auth_repo.dart';
@@ -66,7 +65,7 @@ class AuthRepoImpl implements AuthRepo {
   }
 
   @override
-  Future<Either<Failure, PasswordModel>> forgetPassword({
+  Future<Either<Failure, AuthResponseModel>> forgetPassword({
     required String email,
   }) async {
     try {
@@ -74,8 +73,8 @@ class AuthRepoImpl implements AuthRepo {
         url: ApiConstants.forgetPasswordEndpoint,
         data: {"email": email},
       );
-    if (response.data["statusCode"] == 200) {
-        return Right(PasswordModel.fromJson(response.data));
+      if (response.data["statusCode"] == 200) {
+        return Right(AuthResponseModel.fromJson(response.data));
       } else {
         throw ServerException(errorModel: ErrorModel.fromJson(response.data));
       }
@@ -89,35 +88,47 @@ class AuthRepoImpl implements AuthRepo {
   }
 
   @override
-  Future<Either<Failure, PasswordModel>> resetPasswordOtpVerify({
+  Future<Either<Failure, String>> verifyOtp({
     required String email,
     required String otp,
   }) async {
     try {
       final response = await dioHelper.post(
-        url: ApiConstants.resetPasswordOtpVerifyEndpoint,
+        url: ApiConstants.verifyOtpEndpoint,
         data: {"email": email, "otp": otp},
       );
-      return Right(PasswordModel.fromJson(response.data));
+      if (response.data["statusCode"] == 200) {
+        return Right(response.data["message"]);
+      } else {
+        throw ServerException(errorModel: ErrorModel.fromJson(response.data));
+      }
     } on DioException catch (e) {
       return Left(ServerFailure.fromDioError(e));
+    } on ServerException catch (e) {
+      return Left(ServerFailure(e.errorModel.errors.join(" \n")));
     } catch (e) {
       return Left(ServerFailure(e.toString()));
     }
   }
 
   @override
-  Future<Either<Failure, void>> resetPassword({
+  Future<Either<Failure, String>> resetPassword({
     required ResetPasswordRequestModel resetPasswordRequestModel,
   }) async {
     try {
-      await dioHelper.post(
+      final response = await dioHelper.put(
         url: ApiConstants.resetPasswordEndpoint,
         data: resetPasswordRequestModel.toJson(),
       );
-      return const Right(null);
+      if (response.data["statusCode"] == 200) {
+        return Right(response.data["message"]);
+      } else {
+        throw ServerException(errorModel: ErrorModel.fromJson(response.data));
+      }
     } on DioException catch (e) {
       return Left(ServerFailure.fromDioError(e));
+    } on ServerException catch (e) {
+      return Left(ServerFailure(e.errorModel.errors.join(" \n")));
     } catch (e) {
       return Left(ServerFailure(e.toString()));
     }

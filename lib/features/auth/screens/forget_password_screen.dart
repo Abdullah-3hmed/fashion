@@ -42,7 +42,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
           autovalidateMode: _autovalidateMode,
           child: Center(
             child: SingleChildScrollView(
-              physics: const NeverScrollableScrollPhysics(),
+              physics: const BouncingScrollPhysics(),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -87,16 +87,16 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                             previous.forgetPasswordRequestStatus !=
                             current.forgetPasswordRequestStatus,
                     listener: (context, state) {
-                      if (state.forgetPasswordRequestStatus ==
-                          RequestStatus.success) {
+                      if (state.forgetPasswordRequestStatus.isSuccess) {
                         showToast(
-                          message: "otp code sent successfully to your mail",
+                          message: state.authResponseModel.message,
                           state: ToastStates.success,
                         );
-                        context.navigateTo(const EmailVerificationRoute());
+                        context.navigateTo( EmailVerificationRoute(
+                          email: email.trim(),
+                        ));
                       }
-                      if (state.forgetPasswordRequestStatus ==
-                          RequestStatus.error) {
+                      if (state.forgetPasswordRequestStatus.isError) {
                         showToast(
                           message: state.forgetPasswordErrorMessage,
                           state: ToastStates.error,
@@ -106,8 +106,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                     builder: (context, state) {
                       return PrimaryButton(
                         isLoading:
-                            state.forgetPasswordRequestStatus ==
-                            RequestStatus.loading,
+                            state.forgetPasswordRequestStatus.isLoading,
                         onPressed: () async {
                           await _onSubmit();
                         },

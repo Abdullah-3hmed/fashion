@@ -101,38 +101,36 @@ class AuthCubit extends Cubit<AuthState> {
         ),
       ),
 
-      (forgetPasswordModel) => emit(
+      (authResponseModel) => emit(
         state.copyWith(
-          passwordModel: forgetPasswordModel,
+          authResponseModel: authResponseModel,
           forgetPasswordRequestStatus: RequestStatus.success,
         ),
       ),
     );
   }
 
-  Future<void> resetPasswordOtpVerify({required String otp}) async {
-    emit(state.copyWith(emailVerificationRequestStatus: RequestStatus.loading));
-    final result = await authRepo.resetPasswordOtpVerify(
-      email: state.passwordModel.email,
-      otp: otp,
-    );
+  Future<void> verifyOtp({required String email, required String otp}) async {
+    emit(state.copyWith(verifyOtpRequestStatus: RequestStatus.loading));
+    final result = await authRepo.verifyOtp(email: email, otp: otp);
     result.fold(
       (failure) => emit(
         state.copyWith(
-          emailVerificationErrorMessage: failure.errorMessage,
-          emailVerificationRequestStatus: RequestStatus.error,
+          verifyOtpErrorMessage: failure.errorMessage,
+          verifyOtpRequestStatus: RequestStatus.error,
         ),
       ),
-      (forgetPasswordModel) => emit(
+      (message) => emit(
         state.copyWith(
-          passwordModel: forgetPasswordModel,
-          emailVerificationRequestStatus: RequestStatus.success,
+          verifyOtpMessage: message,
+          verifyOtpRequestStatus: RequestStatus.success,
         ),
       ),
     );
   }
 
   Future<void> resetPassword({
+    required String email,
     required String newPassword,
     required String confirmPassword,
   }) async {
@@ -141,8 +139,8 @@ class AuthCubit extends Cubit<AuthState> {
         ResetPasswordRequestModel(
           password: newPassword,
           confirmPassword: confirmPassword,
-          token: state.passwordModel.token,
-          email: state.passwordModel.email,
+          token: state.authResponseModel.token,
+          email: email,
         );
     final result = await authRepo.resetPassword(
       resetPasswordRequestModel: resetPasswordRequestModel,
@@ -154,8 +152,11 @@ class AuthCubit extends Cubit<AuthState> {
           resetPasswordRequestStatus: RequestStatus.error,
         ),
       ),
-      (_) => emit(
-        state.copyWith(resetPasswordRequestStatus: RequestStatus.success),
+      (message) => emit(
+        state.copyWith(
+          resetPasswordRequestStatus: RequestStatus.success,
+          resetPasswordMessage: message,
+        ),
       ),
     );
   }
