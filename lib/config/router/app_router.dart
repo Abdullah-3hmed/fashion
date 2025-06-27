@@ -128,10 +128,10 @@ class Authenticated extends AutoRouter implements AutoRouteWrapper {
   @override
   Widget wrappedRoute(BuildContext context) => MultiBlocProvider(
     providers: [
-      BlocProvider(create: (context) => getIt<HomeCubit>()..getAllHomeData()),
+      BlocProvider(create: (context) => getIt<HomeCubit>()),
       BlocProvider(
         lazy: false,
-        create: (context) => getIt<UserCubit>()..getUserProfile(),
+        create: (context) => getIt<UserCubit>(),
       ),
     ],
     child: this,

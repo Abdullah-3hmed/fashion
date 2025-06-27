@@ -28,7 +28,7 @@ class AuthRepoImpl implements AuthRepo {
         url: ApiConstants.singUpEndpoint,
         data: signUpRequestModel.toJson(),
       );
-      if (response.statusCode == 200) {
+      if (response.data["statusCode"] == 200) {
         return Right(AuthResponseModel.fromJson(response.data));
       } else {
         throw ServerException(errorModel: ErrorModel.fromJson(response.data));
@@ -51,7 +51,7 @@ class AuthRepoImpl implements AuthRepo {
         url: ApiConstants.loginEndpoint,
         data: loginRequestModel.toJson(),
       );
-      if (response.statusCode == 200) {
+      if (response.data["statusCode"] == 200) {
         return Right(AuthResponseModel.fromJson(response.data));
       } else {
         throw ServerException(errorModel: ErrorModel.fromJson(response.data));
@@ -74,7 +74,7 @@ class AuthRepoImpl implements AuthRepo {
         url: ApiConstants.forgetPasswordEndpoint,
         data: {"email": email},
       );
-    if (response.statusCode == 200) {
+    if (response.data["statusCode"] == 200) {
         return Right(PasswordModel.fromJson(response.data));
       } else {
         throw ServerException(errorModel: ErrorModel.fromJson(response.data));

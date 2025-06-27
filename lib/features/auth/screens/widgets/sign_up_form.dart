@@ -187,9 +187,9 @@ class _SignUpFormState extends State<SignUpForm> {
       _formKey.currentState!.save();
       context.read<AuthCubit>().userSignUp(
         name: name,
-        email: email,
+        email: email.trim(),
         phone: phone,
-        password: password,
+        password: password.trim(),
       );
     } else {
       _autovalidateMode = AutovalidateMode.always;

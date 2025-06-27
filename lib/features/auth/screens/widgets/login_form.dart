@@ -105,7 +105,7 @@ class _LoginFormState extends State<LoginForm> {
               listener: (context, state) {
                 if (state.loginRequestStatus.isSuccess) {
                   showToast(
-                    message: state.authResponseModel.message,
+                    message: "login successfully",
                     state: ToastStates.success,
                   );
                   context.replaceRoute(const AuthenticatedRoute());
@@ -135,7 +135,7 @@ class _LoginFormState extends State<LoginForm> {
   void _onSubmit() {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
-      context.read<AuthCubit>().userLogin(email: email, password: password);
+      context.read<AuthCubit>().userLogin(email: email.trim(), password: password.trim());
     } else {
       setState(() {
         _autovalidateMode = AutovalidateMode.always;
