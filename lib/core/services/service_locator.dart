@@ -41,7 +41,7 @@ class ServiceLocator {
     getIt.registerLazySingleton<DioHelper>(() => DioHelper());
     getIt.registerLazySingleton<AuthRepo>(() => AuthRepoImpl(dioHelper: getIt<DioHelper>()));
     getIt.registerFactory<AuthCubit>(() => AuthCubit(getIt<AuthRepo>()));
-    getIt.registerLazySingleton<UserRepo>(() => UserRepoImpl());
+    getIt.registerLazySingleton<UserRepo>(() => UserRepoImpl(dioHelper: getIt<DioHelper>()));
     getIt.registerFactory<UserCubit>(
       () => UserCubit(userRepo: getIt<UserRepo>()),
     );

@@ -70,7 +70,7 @@ class ServerFailure extends Failure {
 
   factory ServerFailure.fromBadResponse(int statusCode, dynamic response) {
     if (statusCode == 400 || statusCode == 401 || statusCode == 403) {
-      return ServerFailure(response["data"][0]);
+      return ServerFailure(response["errors"][0]);
     } else if (statusCode == 404) {
       return const ServerFailure('Your request not found , please try later');
     } else if (statusCode == 500) {

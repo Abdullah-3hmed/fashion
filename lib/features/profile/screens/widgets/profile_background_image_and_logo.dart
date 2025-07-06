@@ -5,6 +5,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:e_fashion_flutter/core/enums/request_status.dart';
 import 'package:e_fashion_flutter/core/utils/show_toast.dart';
 import 'package:e_fashion_flutter/core/utils/toast_states.dart';
+import 'package:e_fashion_flutter/core/widgets/custom_cached_network_image.dart';
 import 'package:e_fashion_flutter/features/profile/cubit/user_cubit.dart';
 import 'package:e_fashion_flutter/features/profile/cubit/user_state.dart';
 import 'package:flutter/material.dart';
@@ -41,13 +42,10 @@ class ProfileBackgroundImageAndLogo extends StatelessWidget {
                       ),
                       fit: BoxFit.cover,
                     )
-                    : CachedNetworkImage(
+                    : CustomCachedNetworkImage(
                       imageUrl: context.select(
                         (UserCubit cubit) => cubit.state.userModel.profileImage,
                       ),
-                      fit: BoxFit.cover,
-                      errorWidget:
-                          (context, url, error) => const Icon(Icons.error),
                     ),
           ),
           PositionedDirectional(
@@ -59,18 +57,18 @@ class ProfileBackgroundImageAndLogo extends StatelessWidget {
                 BlocConsumer<UserCubit, UserState>(
                   listenWhen:
                       (previous, current) =>
-                          previous.editUserModel.profileImageFile !=
-                              current.editUserModel.profileImageFile &&
+                          previous.editUserModel !=
+                              current.editUserModel &&
                           isEditProfileScreen,
                   listener: (context, state) {
-                    if (state.editUserRequestStatus == RequestStatus.success) {
+                    if (state.editUserRequestStatus.isSuccess) {
                       context.pop();
                       showToast(
                         message: "Profile Updated Successfully",
                         state: ToastStates.success,
                       );
                     }
-                    if (state.editUserRequestStatus == RequestStatus.error) {
+                    if (state.editUserRequestStatus.isError) {
                       showToast(
                         message: state.editUserErrorMessage,
                         state: ToastStates.error,
@@ -96,11 +94,10 @@ class ProfileBackgroundImageAndLogo extends StatelessWidget {
                                       height: 120.0,
                                       fit: BoxFit.cover,
                                     )
-                                    : CachedNetworkImage(
+                                    : CustomCachedNetworkImage(
                                       imageUrl: state.userModel.profileImage,
                                       width: 120.0,
                                       height: 120.0,
-                                      fit: BoxFit.cover,
                                     ),
                           ),
                         ),

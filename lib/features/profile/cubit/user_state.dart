@@ -18,7 +18,7 @@ class UserState extends Equatable {
     this.userErrorMessage = "",
     this.userRequestStates = RequestStatus.loading,
     this.editUserModel = EditUserModel.empty,
-    this.editUserRequestStatus = RequestStatus.loading,
+    this.editUserRequestStatus = RequestStatus.initial,
     this.editUserErrorMessage = "",
     this.changePasswordMessage = "",
     this.changePasswordRequestStatus = RequestStatus.initial,
@@ -33,6 +33,7 @@ class UserState extends Equatable {
     String? editUserErrorMessage,
     String? changePasswordMessage,
     RequestStatus? changePasswordRequestStatus,
+
   }) {
     return UserState(
       userModel: userModel ?? this.userModel,

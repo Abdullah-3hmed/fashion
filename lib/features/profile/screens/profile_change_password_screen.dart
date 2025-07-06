@@ -3,6 +3,7 @@ import 'package:e_fashion_flutter/core/enums/request_status.dart';
 import 'package:e_fashion_flutter/core/utils/show_toast.dart';
 import 'package:e_fashion_flutter/core/utils/toast_states.dart';
 import 'package:e_fashion_flutter/core/widgets/password_filed.dart';
+import 'package:e_fashion_flutter/core/widgets/primary_button.dart';
 import 'package:e_fashion_flutter/core/widgets/secondary_button.dart';
 import 'package:e_fashion_flutter/features/profile/cubit/user_cubit.dart';
 import 'package:e_fashion_flutter/features/profile/cubit/user_state.dart';
@@ -110,16 +111,14 @@ class _ProfileChangePasswordScreenState
                                 previous.changePasswordRequestStatus !=
                                 current.changePasswordRequestStatus,
                         listener: (context, state) async {
-                          if (state.changePasswordRequestStatus ==
-                              RequestStatus.success) {
+                          if (state.changePasswordRequestStatus.isSuccess) {
                             context.pop();
                             await showToast(
                               message: state.changePasswordMessage,
                               state: ToastStates.success,
                             );
                           }
-                          if (state.changePasswordRequestStatus ==
-                              RequestStatus.error) {
+                          if (state.changePasswordRequestStatus.isError) {
                             await showToast(
                               message: state.changePasswordMessage,
                               state: ToastStates.error,
@@ -127,22 +126,18 @@ class _ProfileChangePasswordScreenState
                           }
                         },
                         builder: (context, state) {
-                          return SecondaryButton(
+                          return PrimaryButton(
                             isLoading:
-                                state.changePasswordRequestStatus ==
-                                RequestStatus.loading,
+                                state.changePasswordRequestStatus.isLoading,
                             onPressed: () async {
                               await _onPressed();
                             },
                             text: "done",
-                            backgroundColor: Theme.of(
-                              context,
-                            ).colorScheme.secondary.withValues(alpha: 0.5),
                           );
                         },
                       ),
                     ),
-                    const SizedBox(height: 100.0),
+                    const SizedBox(height: 60.0),
                   ],
                 ),
               ),

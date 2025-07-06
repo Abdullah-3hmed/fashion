@@ -12,9 +12,9 @@ class UserPasswordModel extends Equatable {
   });
 
   Map<String, dynamic> toJson() => {
-    "currentPassword": currentPassword,
+    "oldPassword": currentPassword,
     "newPassword": newPassword,
-    "confirmPassword": confirmPassword,
+    "newPasswordComfirmation": confirmPassword,
   };
 
   @override

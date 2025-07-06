@@ -24,7 +24,6 @@ class UserCubit extends HydratedCubit<UserState> {
         ),
       ),
       (userModel) {
-        debugPrint("user model ${userModel.toString()}");
         emit(
           state.copyWith(
             userModel: userModel,
@@ -40,7 +39,6 @@ class UserCubit extends HydratedCubit<UserState> {
   }
 
   Future<void> pickProfileImage() async {
-    emit(state.copyWith(editUserRequestStatus: RequestStatus.initial));
     final picker = ImagePicker();
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
@@ -57,18 +55,26 @@ class UserCubit extends HydratedCubit<UserState> {
     }
   }
 
-  Future<void> editProfile({String? userName, String? phone}) async {
+  Future<void> editProfile({
+    String? userName,
+    String? phone,
+    String? email,
+  }) async {
+    emit(
+      state.copyWith(
+        editUserRequestStatus: RequestStatus.loading,
+      ),
+    );
     final result = await userRepo.editProfile(
       editUserModel: EditUserModel(
         userName: userName ?? state.userModel.userName,
+        email: email ?? state.userModel.email,
         phone: phone ?? state.userModel.phone,
-        profileImage: state.userModel.profileImage,
         profileImageFile: state.editUserModel.profileImageFile,
       ),
     );
     result.fold(
       (failure) {
-        debugPrint(failure.errorMessage);
         emit(
           state.copyWith(
             editUserModel: EditUserModel.empty,
@@ -85,6 +91,7 @@ class UserCubit extends HydratedCubit<UserState> {
               profileImage: editUserModel.profileImage,
               userName: editUserModel.userName,
               phone: editUserModel.phone,
+              email: editUserModel.email,
             ),
             editUserRequestStatus: RequestStatus.success,
           ),

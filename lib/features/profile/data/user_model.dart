@@ -6,6 +6,7 @@ class UserModel extends Equatable {
   final String phone;
   final String profileImage;
   final String fcmToken;
+  final String token;
 
   const UserModel({
     required this.userName,
@@ -13,21 +14,25 @@ class UserModel extends Equatable {
     required this.phone,
     required this.fcmToken,
     required this.profileImage,
+    required this.token,
   });
+
   static const UserModel empty = UserModel(
     userName: '',
     phone: '',
     profileImage: '',
     email: '',
     fcmToken: '',
+    token: '',
   );
 
   factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
-    userName: json["userName"],
-    email: json["email"],
-    phone: json["phone"],
-    profileImage: json["imageUrl"],
-    fcmToken: json["fcmToken"] ?? "",
+    userName: json["fullName"] ?? "",
+    email: json["email"] ?? "",
+    phone: json["phoneNumber"] ?? "",
+    profileImage: json["profilePicture"] ?? "",
+    fcmToken: json["fcM_Token"] ?? "",
+    token: json["token"] ?? "",
   );
 
   Map<String, dynamic> toJson({
@@ -35,11 +40,13 @@ class UserModel extends Equatable {
     String? email,
     String? phone,
     String? profileImage,
+    String? fcmToken,
   }) => {
-    "userName": userName ?? this.userName,
+    "fullName": userName ?? this.userName,
     "email": email ?? this.email,
-    "phone": phone ?? this.phone,
-    "imageUrl": profileImage ?? this.profileImage,
+    "phoneNumber": phone ?? this.phone,
+    "profilePicture": profileImage ?? this.profileImage,
+    "fcM_Token": fcmToken ?? this.fcmToken,
   };
 
   UserModel copyWith({
@@ -48,6 +55,7 @@ class UserModel extends Equatable {
     String? phone,
     String? profileImage,
     String? fcmToken,
+    String? token,
   }) {
     return UserModel(
       userName: userName ?? this.userName,
@@ -55,9 +63,17 @@ class UserModel extends Equatable {
       phone: phone ?? this.phone,
       profileImage: profileImage ?? this.profileImage,
       fcmToken: fcmToken ?? this.fcmToken,
+      token: token ?? this.token,
     );
   }
 
   @override
-  List<Object?> get props => [userName, email, phone, profileImage];
+  List<Object?> get props => [
+    userName,
+    email,
+    phone,
+    profileImage,
+    fcmToken,
+    token,
+  ];
 }
