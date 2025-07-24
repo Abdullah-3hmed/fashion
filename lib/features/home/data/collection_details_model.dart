@@ -1,9 +1,9 @@
-import 'package:e_fashion_flutter/features/home/data/collection_details_product.dart';
+import 'package:e_fashion_flutter/features/home/data/collection_item_model.dart';
 import 'package:equatable/equatable.dart';
 
 class CollectionDetailsModel extends Equatable {
-  final int totalPrice;
-  final List<CollectionDetailsProduct> collectionProducts;
+  final num totalPrice;
+  final List<CollectionItemModel> collectionProducts;
 
   const CollectionDetailsModel({
     required this.totalPrice,
@@ -13,9 +13,9 @@ class CollectionDetailsModel extends Equatable {
   factory CollectionDetailsModel.fromJson(Map<String, dynamic> json) {
     return CollectionDetailsModel(
       totalPrice: json['price'],
-      collectionProducts: List<CollectionDetailsProduct>.from(
-        json["products"][r'$values'].map(
-          (product) => CollectionDetailsProduct.fromJson(product),
+      collectionProducts: List<CollectionItemModel>.from(
+       ( json["items"]as List).map(
+          (item) => CollectionItemModel.fromJson(item),
         ),
       ),
     );

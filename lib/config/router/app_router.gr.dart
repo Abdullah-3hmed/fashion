@@ -79,11 +79,16 @@ class ChatSupportRoute extends PageRouteInfo<void> {
 class CollectionRoute extends PageRouteInfo<CollectionRouteArgs> {
   CollectionRoute({
     Key? key,
-    required String collectionName,
+    required String title,
+    required String collectionId,
     List<PageRouteInfo>? children,
   }) : super(
          CollectionRoute.name,
-         args: CollectionRouteArgs(key: key, collectionName: collectionName),
+         args: CollectionRouteArgs(
+           key: key,
+           title: title,
+           collectionId: collectionId,
+         ),
          initialChildren: children,
        );
 
@@ -93,35 +98,46 @@ class CollectionRoute extends PageRouteInfo<CollectionRouteArgs> {
     name,
     builder: (data) {
       final args = data.argsAs<CollectionRouteArgs>();
-      return CollectionScreen(
-        key: args.key,
-        collectionName: args.collectionName,
+      return WrappedRoute(
+        child: CollectionScreen(
+          key: args.key,
+          title: args.title,
+          collectionId: args.collectionId,
+        ),
       );
     },
   );
 }
 
 class CollectionRouteArgs {
-  const CollectionRouteArgs({this.key, required this.collectionName});
+  const CollectionRouteArgs({
+    this.key,
+    required this.title,
+    required this.collectionId,
+  });
 
   final Key? key;
 
-  final String collectionName;
+  final String title;
+
+  final String collectionId;
 
   @override
   String toString() {
-    return 'CollectionRouteArgs{key: $key, collectionName: $collectionName}';
+    return 'CollectionRouteArgs{key: $key, title: $title, collectionId: $collectionId}';
   }
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     if (other is! CollectionRouteArgs) return false;
-    return key == other.key && collectionName == other.collectionName;
+    return key == other.key &&
+        title == other.title &&
+        collectionId == other.collectionId;
   }
 
   @override
-  int get hashCode => key.hashCode ^ collectionName.hashCode;
+  int get hashCode => key.hashCode ^ title.hashCode ^ collectionId.hashCode;
 }
 
 /// generated route for
@@ -329,7 +345,7 @@ class HomeRoute extends PageRouteInfo<void> {
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      return const HomeScreen();
+      return WrappedRoute(child: const HomeScreen());
     },
   );
 }

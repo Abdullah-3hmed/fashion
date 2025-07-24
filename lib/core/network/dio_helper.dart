@@ -11,6 +11,7 @@ class DioHelper {
       baseUrl: dotenv.env["API_URL"]!,
       connectTimeout: const Duration(seconds: 20),
       receiveTimeout: const Duration(seconds: 20),
+      receiveDataWhenStatusError: true,
     );
     _dio = Dio(options);
     _dio.interceptors.addAll([
@@ -35,20 +36,11 @@ class DioHelper {
 
   Future<Response> post({
     required String url,
-    Map<String, dynamic>? data,
+    dynamic data,
     Map<String, dynamic>? query,
     Map<String, dynamic>? headers,
-    bool isFormData = false,
   }) async {
     //_dio.options.headers = headers;
-    if (isFormData) {
-      return await _dio.post(
-        url,
-        data: FormData.fromMap(data!),
-        queryParameters: query,
-        options: Options(headers: headers),
-      );
-    }
     return await _dio.post(
       url,
       data: data,
@@ -79,6 +71,20 @@ class DioHelper {
     Map<String, dynamic>? headers,
   }) async {
     return await _dio.delete(
+      url,
+      data: data,
+      queryParameters: query,
+      options: Options(headers: headers),
+    );
+  }
+
+  Future<Response> patch({
+    required String url,
+    Map<String, dynamic>? data,
+    Map<String, dynamic>? query,
+    Map<String, dynamic>? headers,
+  }) async {
+    return await _dio.patch(
       url,
       data: data,
       queryParameters: query,

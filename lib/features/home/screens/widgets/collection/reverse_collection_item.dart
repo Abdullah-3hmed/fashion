@@ -1,11 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:e_fashion_flutter/features/home/data/collection_details_product.dart';
+import 'package:e_fashion_flutter/features/home/data/collection_item_model.dart';
 import 'package:flutter/material.dart';
 
 class ReverseCollectionItem extends StatelessWidget {
-  const ReverseCollectionItem({super.key, required this.product});
+  const ReverseCollectionItem({super.key, required this.collectionItemModel});
 
-  final CollectionDetailsProduct product;
+  final CollectionItemModel collectionItemModel;
 
   @override
   Widget build(BuildContext context) {
@@ -32,12 +32,12 @@ class ReverseCollectionItem extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    product.productName,
+                    collectionItemModel.title,
                     style: Theme.of(context).textTheme.bodyLarge,
                   ),
                   const SizedBox(width: 16.0),
                   Text(
-                    product.description,
+                    collectionItemModel.description,
                     maxLines: 8,
                     overflow: TextOverflow.ellipsis,
                     style: Theme.of(context).textTheme.bodySmall,
@@ -51,7 +51,7 @@ class ReverseCollectionItem extends StatelessWidget {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(16.0),
               child: CachedNetworkImage(
-                imageUrl: product.imageUrl,
+                imageUrl: collectionItemModel.imageUrl,
                 fit: BoxFit.cover,
                 errorWidget: (context, url, error) => const Icon(Icons.error),
               ),

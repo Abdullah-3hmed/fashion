@@ -2,11 +2,12 @@ import 'dart:ui';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:e_fashion_flutter/core/enums/request_status.dart';
+import 'package:e_fashion_flutter/core/services/service_locator.dart';
 import 'package:e_fashion_flutter/core/utils/app_constants.dart';
 import 'package:e_fashion_flutter/core/widgets/secondary_button.dart';
 import 'package:e_fashion_flutter/features/home/cubit/home_cubit.dart';
 import 'package:e_fashion_flutter/features/home/cubit/home_state.dart';
-import 'package:e_fashion_flutter/features/home/data/collection_details_product.dart';
+import 'package:e_fashion_flutter/features/home/data/collection_item_model.dart';
 import 'package:e_fashion_flutter/features/home/screens/widgets/collection/collection_container_clipper.dart';
 import 'package:e_fashion_flutter/features/home/screens/widgets/collection/collection_item.dart';
 import 'package:e_fashion_flutter/features/home/screens/widgets/collection/collection_items.dart';
@@ -16,15 +17,20 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 @RoutePage()
-class CollectionScreen extends StatelessWidget {
-  const CollectionScreen({super.key, required this.collectionName});
+class CollectionScreen extends StatelessWidget implements AutoRouteWrapper {
+  @override
+  Widget wrappedRoute(BuildContext context) =>
+      BlocProvider( create: (context) => getIt<HomeCubit>()..getCollectionDetails(collectionId: collectionId),child: this);
 
-  final String collectionName;
-  static const CollectionDetailsProduct dummyProduct = CollectionDetailsProduct(
-    id: 0,
-    productName: "Product name",
-    description: "Description",
-    imageUrl: AppConstants.imageUrl,
+  const CollectionScreen({super.key, required this.title, required this.collectionId});
+
+  final String title;
+  final String collectionId;
+  static const CollectionItemModel dummyProduct = CollectionItemModel(
+    id: "",
+    title: "*****************",
+    description: "**************",
+    imageUrl: "****************",
   );
 
   @override
@@ -32,7 +38,7 @@ class CollectionScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          collectionName,
+          title,
           style: Theme.of(context).textTheme.titleMedium,
         ),
       ),
@@ -55,9 +61,9 @@ class CollectionScreen extends StatelessWidget {
                       itemBuilder:
                           (context, index) =>
                               index % 2 == 0
-                                  ? const CollectionItem(product: dummyProduct)
+                                  ? const CollectionItem(collectionItemModel: dummyProduct)
                                   : const ReverseCollectionItem(
-                                    product: dummyProduct,
+                                    collectionItemModel: dummyProduct,
                                   ),
                     ),
                     ClipPath(

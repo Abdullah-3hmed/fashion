@@ -48,7 +48,7 @@ class ServiceLocator {
     getIt.registerLazySingleton<LocationService>(() => LocationService());
     getIt.registerLazySingleton<MapRepo>(() => MapRepoImpl());
     getIt.registerFactory<MapCubit>(() => MapCubit(mapRepo: getIt<MapRepo>()));
-    getIt.registerLazySingleton<HomeRepo>(() => HomeRepoImpl());
+    getIt.registerLazySingleton<HomeRepo>(() => HomeRepoImpl(dioHelper: getIt<DioHelper>()));
     getIt.registerFactory<HomeCubit>(
       () => HomeCubit(homeRepo: getIt<HomeRepo>()),
     );

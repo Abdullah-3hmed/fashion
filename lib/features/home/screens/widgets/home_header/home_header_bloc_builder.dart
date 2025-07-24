@@ -11,14 +11,13 @@ import 'package:skeletonizer/skeletonizer.dart';
 class HomeHeaderBlocBuilder extends StatelessWidget {
   const HomeHeaderBlocBuilder({super.key});
   static final dummyCollections = List.generate(
-    5,
+    2,
     (index) => const CollectionModel(
-      id: 0,
+      id: "",
       title: '•••••• ••••••',
-      imageUrl: AppConstants.imageUrl,
-      discount: '••% OFF',
+      imageUrl:"",
+      description: '••% OFF',
       subTitle: '•••••••••••••',
-      price: 0.0,
     ),
   );
   @override

@@ -37,13 +37,13 @@ class HomeState extends Equatable {
   final bool isConnected;
   const HomeState({
     this.collections = const [],
-    this.collectionsStatus = RequestStatus.initial,
+    this.collectionsStatus = RequestStatus.loading,
     this.collectionsErrorMessage = "",
     this.categories = const [],
     this.categoriesStatus = RequestStatus.loading,
     this.categoriesErrorMessage = "",
     this.collectionDetailsModel = CollectionDetailsModel.empty,
-    this.collectionDetailsStatus = RequestStatus.initial,
+    this.collectionDetailsStatus = RequestStatus.loading,
     this.collectionDetailsErrorMessage = "",
     this.offers = const [],
     this.offersStatus = RequestStatus.loading,

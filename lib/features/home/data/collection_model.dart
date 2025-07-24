@@ -1,32 +1,30 @@
 import 'package:equatable/equatable.dart';
 
 class CollectionModel extends Equatable {
-  final int id;
+  final String id;
   final String title;
   final String imageUrl;
-  final String discount;
+  final String description;
   final String subTitle;
-  final double price;
 
   const CollectionModel({
     required this.id,
     required this.title,
     required this.imageUrl,
-    required this.discount,
+    required this.description,
     required this.subTitle,
-    required this.price,
   });
+
   factory CollectionModel.fromJson(Map<String, dynamic> json) {
     return CollectionModel(
-      id: json["id"],
-      title: json["title"],
-      imageUrl: json["imageUrl"],
-      discount: json["discount"],
-      subTitle: json["subTitle"],
-      price: json["price"],
+      id: json["id"] ?? "",
+      title: json["title"] ?? "",
+      imageUrl: json["pictureUrl"] ?? "",
+      description: json["description"] ?? "",
+      subTitle: json["subTitle"] ?? "",
     );
   }
 
   @override
-  List<Object> get props => [id, title, imageUrl, discount, subTitle];
+  List<Object> get props => [id, title, imageUrl, description, subTitle];
 }

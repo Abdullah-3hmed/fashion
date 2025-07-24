@@ -12,7 +12,6 @@ class HomeCubit extends Cubit<HomeState> {
   final HomeRepo homeRepo;
 
   Future<void> getCollections() async {
-    emit(state.copyWith(collectionsStatus: RequestStatus.loading));
     final result = await homeRepo.getCollections();
     result.fold(
       (failure) {
@@ -35,7 +34,6 @@ class HomeCubit extends Cubit<HomeState> {
       },
       (collections) => emit(
         state.copyWith(
-          isConnected: true,
           collections: collections,
           collectionsStatus: RequestStatus.success,
         ),
@@ -62,13 +60,10 @@ class HomeCubit extends Cubit<HomeState> {
   }
 
   Future<void> getCollectionDetails({
-    required int collectionId,
-    required double price,
+    required String collectionId,
   }) async {
-    emit(state.copyWith(collectionDetailsStatus: RequestStatus.loading));
     final result = await homeRepo.getCollectionDetails(
       collectionId: collectionId,
-      price: price.toInt(),
     );
     result.fold(
       (failure) => emit(

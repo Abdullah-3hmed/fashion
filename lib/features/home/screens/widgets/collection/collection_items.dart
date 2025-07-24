@@ -27,11 +27,11 @@ class CollectionItems extends StatelessWidget {
                 (context, index) =>
                     index % 2 == 0
                         ? CollectionItem(
-                          product:
+                          collectionItemModel:
                               collectionDetailsModel.collectionProducts[index],
                         )
                         : ReverseCollectionItem(
-                          product:
+                          collectionItemModel:
                               collectionDetailsModel.collectionProducts[index],
                         ),
           ),

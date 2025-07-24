@@ -40,7 +40,8 @@ class OffersSection extends StatelessWidget {
                 ),
               ),
               onPressed: () {
-                context.pushRoute(DiscoverRoute(isOffer: true));
+                //context.pushRoute(DiscoverRoute(isOffer: true));
+                context.pushRoute(const SearchRoute());
               },
               child: Text(
                 "Discover",

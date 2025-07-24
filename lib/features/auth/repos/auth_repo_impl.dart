@@ -23,9 +23,8 @@ class AuthRepoImpl implements AuthRepo {
   }) async {
     try {
       final response = await dioHelper.post(
-        isFormData: true,
         url: ApiConstants.singUpEndpoint,
-        data: signUpRequestModel.toJson(),
+        data: FormData.fromMap(signUpRequestModel.toJson()),
       );
       if (response.data["statusCode"] == 200) {
         return Right(AuthResponseModel.fromJson(response.data));

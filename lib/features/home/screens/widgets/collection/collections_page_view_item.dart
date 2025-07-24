@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:e_fashion_flutter/config/router/app_router.dart';
+import 'package:e_fashion_flutter/core/widgets/custom_cached_network_image.dart';
 import 'package:e_fashion_flutter/core/widgets/secondary_button.dart';
 import 'package:e_fashion_flutter/features/home/cubit/home_cubit.dart';
 import 'package:e_fashion_flutter/features/home/data/collection_model.dart';
@@ -21,9 +22,8 @@ class CollectionsPageViewItem extends StatelessWidget {
       ),
       child: Stack(
         children: [
-          CachedNetworkImage(
+          CustomCachedNetworkImage(
             imageUrl: collection.imageUrl,
-            fit: BoxFit.cover,
             height: 320,
             width: double.infinity,
           ),
@@ -49,7 +49,7 @@ class CollectionsPageViewItem extends StatelessWidget {
                 ),
                 const SizedBox(height: 8.0),
                 Text(
-                  collection.discount,
+                  "50% OFF",
                   style: Theme.of(
                     context,
                   ).textTheme.displayLarge!.copyWith(color: Colors.white),
@@ -64,16 +64,12 @@ class CollectionsPageViewItem extends StatelessWidget {
             ),
           ),
           PositionedDirectional(
-            bottom: 32.0,
+            bottom: 20.0,
             end: 16.0,
             child: SecondaryButton(
               onPressed: () async {
                 context.pushRoute(
-                  CollectionRoute(collectionName: collection.title),
-                );
-                await context.read<HomeCubit>().getCollectionDetails(
-                  collectionId: collection.id,
-                  price: collection.price,
+                  CollectionRoute(collectionId: collection.id,title: collection.title),
                 );
               },
               text: "Shop now",

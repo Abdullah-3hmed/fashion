@@ -14,8 +14,7 @@ abstract class HomeRepo {
   Future<Either<Failure, List<CategoryModel>>> getCategories();
 
   Future<Either<Failure, CollectionDetailsModel>> getCollectionDetails({
-    required int collectionId,
-    required int price,
+    required String collectionId,
   });
 
   Future<Either<Failure, List<OfferModel>>> getOffers();
