@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:e_fashion_flutter/core/enums/request_status.dart';
 import 'package:e_fashion_flutter/core/services/service_locator.dart';
+import 'package:e_fashion_flutter/core/utils/app_constants.dart';
 import 'package:e_fashion_flutter/core/widgets/no_internet_widget.dart';
 import 'package:e_fashion_flutter/features/home/cubit/home_cubit.dart';
 import 'package:e_fashion_flutter/features/home/cubit/home_state.dart';
@@ -27,7 +28,7 @@ class HomeScreen extends StatelessWidget implements AutoRouteWrapper {
   }
 
   static const ProductModel dummyProductModel = ProductModel(
-    imageUrl: "",
+    imageUrl: AppConstants.imageUrl,
     basePrice: 0.0,
     colors: "",
     discountPrice: 0.0,

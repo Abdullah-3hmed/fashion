@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:e_fashion_flutter/config/router/app_router.dart';
+import 'package:e_fashion_flutter/core/widgets/custom_cached_network_image.dart';
 import 'package:e_fashion_flutter/core/widgets/modal_bottom_sheet_content.dart';
 import 'package:e_fashion_flutter/features/home/screens/widgets/shared/home_clipped_container.dart';
 import 'package:e_fashion_flutter/shared/data/product_model.dart';
@@ -28,13 +29,10 @@ class BrandSectionItem extends StatelessWidget {
           },
           child: ClipRRect(
             borderRadius: BorderRadius.circular(16.0),
-            child: CachedNetworkImage(
-              height: 200.0,
-              width: double.infinity,
-              fit: BoxFit.cover,
+            child: CustomCachedNetworkImage(
               imageUrl: productModel.imageUrl,
-              errorWidget: (context, url, error) => const Icon(Icons.error),
-            ),
+              height: 200.0,
+            )
           ),
         ),
         PositionedDirectional(
