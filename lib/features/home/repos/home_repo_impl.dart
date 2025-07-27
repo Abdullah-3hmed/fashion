@@ -98,11 +98,19 @@ class HomeRepoImpl implements HomeRepo {
   }
 
   @override
-  Future<Either<Failure, ProductsModel>> getProducts() async {
+  Future<Either<Failure, ProductsModel>> getProducts({required int? gender,required int? category}) async {
+    Map<String, dynamic> queryParameters = {};
+    if (gender != null) {
+      queryParameters['ProductType'] = gender;
+    }
+    if (category != null) {
+      queryParameters['CategoryId'] = category;
+    }
     try {
       final response = await dioHelper.get(
         url: ApiConstants.getProductsEndPoint,
         headers: {"Authorization": "Bearer ${AppConstants.token}"},
+        queryParameters: queryParameters,
       );
       if(response.statusCode == 200){
        return Right( ProductsModel.fromJson(response.data));

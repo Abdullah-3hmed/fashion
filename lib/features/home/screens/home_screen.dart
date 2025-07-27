@@ -78,6 +78,11 @@ class HomeScreen extends StatelessWidget implements AutoRouteWrapper {
     switch (state.productsState) {
       case RequestStatus.loading:
         return [
+          const SliverToBoxAdapter(
+            child:SizedBox(
+              height: 20.0,
+            ),
+          ),
           SliverToBoxAdapter(
             child: Skeletonizer(
               child: SizedBox(

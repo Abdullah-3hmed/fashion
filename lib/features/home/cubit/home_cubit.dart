@@ -39,20 +39,19 @@ class HomeCubit extends Cubit<HomeState> {
       ),
     );
   }
-  Future<void> getCollectionDetails({
-    required String collectionId,
-  }) async {
+
+  Future<void> getCollectionDetails({required String collectionId}) async {
     final result = await homeRepo.getCollectionDetails(
       collectionId: collectionId,
     );
     result.fold(
-          (failure) => emit(
+      (failure) => emit(
         state.copyWith(
           collectionDetailsErrorMessage: failure.errorMessage,
           collectionDetailsStatus: RequestStatus.error,
         ),
       ),
-          (collectionDetails) => emit(
+      (collectionDetails) => emit(
         state.copyWith(
           collectionDetailsModel: collectionDetails,
           collectionDetailsStatus: RequestStatus.success,
@@ -78,9 +77,13 @@ class HomeCubit extends Cubit<HomeState> {
       ),
     );
   }
+
   Future<void> getProducts() async {
     emit(state.copyWith(productsState: RequestStatus.loading));
-    final result = await homeRepo.getProducts();
+    final result = await homeRepo.getProducts(
+      category: state.selectedCategoryId,
+      gender: state.gender ?? 2,
+    );
     result.fold(
       (failure) => emit(
         state.copyWith(
@@ -88,35 +91,24 @@ class HomeCubit extends Cubit<HomeState> {
           productsState: RequestStatus.error,
         ),
       ),
-      (products) {
-        print(">>>>>>>>>>>>>>${products.offredProducts.length}");
-        print(">>>>>>>>>>>>>>${products.groupedBrandProducts.length}");
-        emit(
-          state.copyWith(
-            products: products,
-            productsState: RequestStatus.success,
-          ),
-        );
-      }
+      (products) => emit(
+        state.copyWith(
+          products: products,
+          productsState: RequestStatus.success,
+        ),
+      ),
     );
   }
 
-
-
   Future<void> getAllHomeData() async {
-    await Future.wait([
-      getCollections(),
-      getCategories(),
-      getProducts(),
-    ]);
+    await Future.wait([getCollections(), getCategories(), getProducts()]);
   }
 
   void selectCategory({required int categoryId}) {
     emit(state.copyWith(selectedCategoryId: categoryId));
   }
 
-  void selectGender({required String gender}) {
+  void selectGender({required int gender}) {
     emit(state.copyWith(gender: gender));
   }
-
 }

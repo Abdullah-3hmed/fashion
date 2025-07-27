@@ -7,7 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class FilterCategorySection extends StatefulWidget {
   const FilterCategorySection({
     super.key,
-    this.categories = const [],
+   required this.categories,
     this.isScroll = false,
   });
 
@@ -39,7 +39,7 @@ class _FilterCategorySectionState extends State<FilterCategorySection> {
                 setState(() {
                   activeIndex = index;
                   context.read<HomeCubit>().selectCategory(
-                    categoryId: categories[index].id,
+                    categoryId: categories[activeIndex].id,
                   );
                 });
               },

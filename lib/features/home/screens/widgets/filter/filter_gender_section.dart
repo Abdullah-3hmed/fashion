@@ -8,10 +8,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class FilterGenderModel extends Equatable {
   final String title;
   final String image;
+  final int id;
 
-  const FilterGenderModel({required this.title, required this.image});
+  const FilterGenderModel({required this.title, required this.image, required this.id});
   @override
-  List<Object?> get props => [title, image];
+  List<Object?> get props => [title, image,id];
 }
 
 class FilterGenderSection extends StatefulWidget {
@@ -23,8 +24,8 @@ class FilterGenderSection extends StatefulWidget {
 class _FilterGenderSectionState extends State<FilterGenderSection> {
   int activeIndex = -1;
   List<FilterGenderModel> filterGenderList = const [
-    FilterGenderModel(title: "women", image: AssetsManager.woman),
-    FilterGenderModel(title: "men", image: AssetsManager.man),
+    FilterGenderModel(title: "women", image: AssetsManager.woman,id: 1),
+    FilterGenderModel(title: "men", image: AssetsManager.man,id: 0),
   ];
 
   @override
@@ -41,7 +42,7 @@ class _FilterGenderSectionState extends State<FilterGenderSection> {
                 setState(() {
                   activeIndex = index;
                   context.read<HomeCubit>().selectGender(
-                    gender: filterGenderList[index].title,
+                    gender: filterGenderList[index].id,
                   );
                 });
               },

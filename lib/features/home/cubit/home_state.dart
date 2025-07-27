@@ -20,7 +20,7 @@ class HomeState extends Equatable {
   final RequestStatus productsState;
   final String productsErrorMessage;
   final int? selectedCategoryId;
-  final String? gender;
+  final int? gender;
   final bool isConnected;
 
   const HomeState({
@@ -55,7 +55,7 @@ class HomeState extends Equatable {
     RequestStatus? productsState,
     String? productsErrorMessage,
     int? selectedCategoryId,
-    String? gender,
+    int? gender,
     bool? isConnected,
   }) {
     return HomeState(

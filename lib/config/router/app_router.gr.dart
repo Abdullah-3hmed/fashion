@@ -143,47 +143,59 @@ class CollectionRouteArgs {
 /// generated route for
 /// [DiscoverScreen]
 class DiscoverRoute extends PageRouteInfo<DiscoverRouteArgs> {
-  DiscoverRoute({Key? key, bool isOffer = false, List<PageRouteInfo>? children})
-    : super(
-        DiscoverRoute.name,
-        args: DiscoverRouteArgs(key: key, isOffer: isOffer),
-        initialChildren: children,
-      );
+  DiscoverRoute({
+    Key? key,
+    required List<ProductModel> productsDiscoverList,
+    List<PageRouteInfo>? children,
+  }) : super(
+         DiscoverRoute.name,
+         args: DiscoverRouteArgs(
+           key: key,
+           productsDiscoverList: productsDiscoverList,
+         ),
+         initialChildren: children,
+       );
 
   static const String name = 'DiscoverRoute';
 
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      final args = data.argsAs<DiscoverRouteArgs>(
-        orElse: () => const DiscoverRouteArgs(),
+      final args = data.argsAs<DiscoverRouteArgs>();
+      return DiscoverScreen(
+        key: args.key,
+        productsDiscoverList: args.productsDiscoverList,
       );
-      return DiscoverScreen(key: args.key, isOffer: args.isOffer);
     },
   );
 }
 
 class DiscoverRouteArgs {
-  const DiscoverRouteArgs({this.key, this.isOffer = false});
+  const DiscoverRouteArgs({this.key, required this.productsDiscoverList});
 
   final Key? key;
 
-  final bool isOffer;
+  final List<ProductModel> productsDiscoverList;
 
   @override
   String toString() {
-    return 'DiscoverRouteArgs{key: $key, isOffer: $isOffer}';
+    return 'DiscoverRouteArgs{key: $key, productsDiscoverList: $productsDiscoverList}';
   }
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     if (other is! DiscoverRouteArgs) return false;
-    return key == other.key && isOffer == other.isOffer;
+    return key == other.key &&
+        const ListEquality().equals(
+          productsDiscoverList,
+          other.productsDiscoverList,
+        );
   }
 
   @override
-  int get hashCode => key.hashCode ^ isOffer.hashCode;
+  int get hashCode =>
+      key.hashCode ^ const ListEquality().hash(productsDiscoverList);
 }
 
 /// generated route for

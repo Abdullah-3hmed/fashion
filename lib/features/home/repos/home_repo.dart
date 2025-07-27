@@ -15,5 +15,5 @@ abstract class HomeRepo {
   Future<Either<Failure, CollectionDetailsModel>> getCollectionDetails({
     required String collectionId,
   });
-  Future<Either<Failure,ProductsModel>> getProducts();
+  Future<Either<Failure,ProductsModel>> getProducts({required int? gender,required int? category});
 }

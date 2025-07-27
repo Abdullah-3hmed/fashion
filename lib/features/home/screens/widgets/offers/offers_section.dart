@@ -16,9 +16,9 @@ class OffersSection extends StatelessWidget {
 
   static List<ProductModel> dummyOffers = List<ProductModel>.generate(
     3,
-    (index) =>  const ProductModel(
-     title: "*********",
-      imageUrl:AppConstants.imageUrl,
+    (index) => const ProductModel(
+      title: "*********",
+      imageUrl: AppConstants.imageUrl,
       id: "",
       basePrice: 0.0,
       colors: "",
@@ -37,65 +37,92 @@ class OffersSection extends StatelessWidget {
       builder: (context, state) {
         switch (state.productsState) {
           case RequestStatus.loading:
-            return Skeletonizer(
-              child: CarouselSlider(
-                items:
-                    dummyOffers
-                        .map(
-                          (offer) =>
-                              HomeCarouselSliderItem(offerModel: offer),
-                        )
-                        .toList(),
-                options: CarouselOptions(
-                  enlargeCenterPage: true,
-                  initialPage: 2,
-                  viewportFraction: 0.70,
-                  enableInfiniteScroll: false,
-                ),
-              ),
-            );
-          case RequestStatus.success:
             return Column(
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text("Offers", style: Theme.of(context).textTheme.bodyMedium),
-                    TextButton(
-                      style: ButtonStyle(
-                        padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
-                          EdgeInsets.zero,
-                        ),
-                      ),
-                      onPressed: () {
-                        context.pushRoute(DiscoverRoute(productsDiscoverList: state.products.offredProducts));
-                      },
-                      child: Text(
-                        "Discover",
-                        style: Theme.of(context).textTheme.labelMedium!.copyWith(
-                          color: Theme.of(context).colorScheme.primary,
-                        ),
-                      ),
-                    ),
-                  ],
+                const SizedBox(
+                  height: 20.0,
                 ),
-                CarouselSlider(
-                  items:
-                      state.products.offredProducts
-                          .map(
-                            (offer) =>
-                                HomeCarouselSliderItem(offerModel: offer),
-                          )
-                          .toList(),
-                  options: CarouselOptions(
-                    enlargeCenterPage: true,
-                    initialPage: 2,
-                    viewportFraction: 0.70,
-                    enableInfiniteScroll: false,
+                Skeletonizer(
+                  child: CarouselSlider(
+                    items:
+                        dummyOffers
+                            .map(
+                              (offer) => HomeCarouselSliderItem(offerModel: offer),
+                            )
+                            .toList(),
+                    options: CarouselOptions(
+                      enlargeCenterPage: true,
+                      initialPage: 2,
+                      viewportFraction: 0.70,
+                      enableInfiniteScroll: false,
+                    ),
                   ),
                 ),
               ],
             );
+          case RequestStatus.success:
+            return state.products.offredProducts.isEmpty
+                ? SizedBox(
+                  height: 180.0,
+                  child: Center(
+                    child: Text(
+                      "There is no products",
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
+                  ),
+                )
+                : Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "Offers",
+                          style: Theme.of(context).textTheme.bodyMedium,
+                        ),
+                        TextButton(
+                          style: ButtonStyle(
+                            padding:
+                                WidgetStateProperty.all<EdgeInsetsGeometry>(
+                                  EdgeInsets.zero,
+                                ),
+                          ),
+                          onPressed: () {
+                            context.pushRoute(
+                              DiscoverRoute(
+                                productsDiscoverList:
+                                    state.products.offredProducts,
+                              ),
+                            );
+                          },
+                          child: Text(
+                            "Discover",
+                            style: Theme.of(
+                              context,
+                            ).textTheme.labelMedium!.copyWith(
+                              color: Theme.of(context).colorScheme.primary,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    CarouselSlider(
+                      items:
+                          state.products.offredProducts
+                              .map(
+                                (offer) =>
+                                    HomeCarouselSliderItem(offerModel: offer),
+                              )
+                              .toList(),
+                      options: CarouselOptions(
+                        enlargeCenterPage: true,
+                        initialPage: 2,
+                        viewportFraction: 0.70,
+                        enableInfiniteScroll: false,
+                      ),
+                    ),
+                  ],
+                );
           case RequestStatus.error:
             return SizedBox(
               height: 180.0,
