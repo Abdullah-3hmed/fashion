@@ -10,17 +10,17 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
-import 'package:internet_state_manager/internet_state_manager.dart';
 import 'package:path_provider/path_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   HydratedBloc.storage = await HydratedStorage.build(
     storageDirectory: HydratedStorageDirectory(
       (await getTemporaryDirectory()).path,
     ),
   );
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
   ServiceLocator().init();
   await FcmInitHelper.initAwesomeNotification();
   await dotenv.load(fileName: "lib/.env");
@@ -29,6 +29,6 @@ void main() async {
   await FcmInitHelper.getFcmToken();
 
   Bloc.observer = MyBlocObserver();
-  await InternetStateManagerInitializer.initialize();
-  runApp(InternetStateManagerInitializer(child: const MyApp()));
+
+  runApp(const MyApp());
 }

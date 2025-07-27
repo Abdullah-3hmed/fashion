@@ -12,7 +12,7 @@ class SearchRepo {
   }) async {
     try {
       final response = await getIt<DioHelper>().get(
-        url: ApiConstants.getProductsEndpoint,
+        url:"",
         queryParameters: {"Search": query},
       );
       return Right(

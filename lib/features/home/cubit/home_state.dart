@@ -2,10 +2,8 @@ import 'package:e_fashion_flutter/core/enums/request_status.dart';
 import 'package:e_fashion_flutter/features/home/data/category_model.dart';
 import 'package:e_fashion_flutter/features/home/data/collection_details_model.dart';
 import 'package:e_fashion_flutter/features/home/data/collection_model.dart';
-import 'package:e_fashion_flutter/features/home/data/discover_model.dart';
-import 'package:e_fashion_flutter/features/home/data/offer_model.dart';
+import 'package:e_fashion_flutter/features/home/data/products_model.dart';
 import 'package:e_fashion_flutter/features/home/data/product_details_model.dart';
-import 'package:e_fashion_flutter/features/home/data/product_model.dart';
 import 'package:equatable/equatable.dart';
 
 class HomeState extends Equatable {
@@ -18,23 +16,13 @@ class HomeState extends Equatable {
   final CollectionDetailsModel collectionDetailsModel;
   final RequestStatus collectionDetailsStatus;
   final String collectionDetailsErrorMessage;
-  final List<OfferModel> offers;
-  final RequestStatus offersStatus;
-  final String offersErrorMessage;
-  final ProductDetailsModel productDetailsModel;
-  final RequestStatus productDetailsStatus;
-  final String productDetailsErrorMessage;
-  final List<ProductModel> products;
-  final RequestStatus productsStatus;
+  final ProductsModel products;
+  final RequestStatus productsState;
   final String productsErrorMessage;
-  final RequestStatus addReviewStatus;
-  final String addReviewErrorMessage;
-  final List<DiscoverModel> offersDiscoverList;
-  final List<DiscoverModel> productsDiscoverList;
   final int? selectedCategoryId;
   final String? gender;
-  final double rating;
   final bool isConnected;
+
   const HomeState({
     this.collections = const [],
     this.collectionsStatus = RequestStatus.loading,
@@ -45,22 +33,11 @@ class HomeState extends Equatable {
     this.collectionDetailsModel = CollectionDetailsModel.empty,
     this.collectionDetailsStatus = RequestStatus.loading,
     this.collectionDetailsErrorMessage = "",
-    this.offers = const [],
-    this.offersStatus = RequestStatus.loading,
-    this.offersErrorMessage = "",
-    this.productDetailsModel = ProductDetailsModel.empty,
-    this.productDetailsStatus = RequestStatus.initial,
-    this.productDetailsErrorMessage = "",
-    this.products = const [],
-    this.productsStatus = RequestStatus.initial,
+    this.products = ProductsModel.empty,
+    this.productsState = RequestStatus.initial,
     this.productsErrorMessage = "",
-    this.addReviewStatus = RequestStatus.initial,
-    this.addReviewErrorMessage = "",
-    this.offersDiscoverList = const [],
-    this.productsDiscoverList = const [],
     this.selectedCategoryId,
     this.gender,
-    this.rating = 0.0,
     this.isConnected = true,
   });
 
@@ -74,88 +51,53 @@ class HomeState extends Equatable {
     CollectionDetailsModel? collectionDetailsModel,
     RequestStatus? collectionDetailsStatus,
     String? collectionDetailsErrorMessage,
-    List<OfferModel>? offers,
-    RequestStatus? offersStatus,
-    String? offersErrorMessage,
-    ProductDetailsModel? productDetailsModel,
-    RequestStatus? productDetailsStatus,
-    String? productDetailsErrorMessage,
-    List<ProductModel>? products,
-    RequestStatus? productsStatus,
+    ProductsModel? products,
+    RequestStatus? productsState,
     String? productsErrorMessage,
-    RequestStatus? addReviewStatus,
-    String? addReviewErrorMessage,
-    List<DiscoverModel>? offersDiscoverList,
-    List<DiscoverModel>? productsDiscoverList,
     int? selectedCategoryId,
     String? gender,
-    double? rating,
     bool? isConnected,
   }) {
     return HomeState(
       collections: collections ?? this.collections,
       collectionsStatus: collectionsStatus ?? this.collectionsStatus,
       collectionsErrorMessage:
-          collectionsErrorMessage ?? this.collectionsErrorMessage,
+      collectionsErrorMessage ?? this.collectionsErrorMessage,
       categories: categories ?? this.categories,
       categoriesStatus: categoriesStatus ?? this.categoriesStatus,
       categoriesErrorMessage:
-          categoriesErrorMessage ?? this.categoriesErrorMessage,
+      categoriesErrorMessage ?? this.categoriesErrorMessage,
       collectionDetailsModel:
-          collectionDetailsModel ?? this.collectionDetailsModel,
+      collectionDetailsModel ?? this.collectionDetailsModel,
       collectionDetailsStatus:
-          collectionDetailsStatus ?? this.collectionDetailsStatus,
+      collectionDetailsStatus ?? this.collectionDetailsStatus,
       collectionDetailsErrorMessage:
-          collectionDetailsErrorMessage ?? this.collectionDetailsErrorMessage,
-      offers: offers ?? this.offers,
-      offersStatus: offersStatus ?? this.offersStatus,
-      offersErrorMessage: offersErrorMessage ?? this.offersErrorMessage,
-      productDetailsModel: productDetailsModel ?? this.productDetailsModel,
-      productDetailsStatus: productDetailsStatus ?? this.productDetailsStatus,
-      productDetailsErrorMessage:
-          productDetailsErrorMessage ?? this.productDetailsErrorMessage,
+      collectionDetailsErrorMessage ?? this.collectionDetailsErrorMessage,
       products: products ?? this.products,
-      productsStatus: productsStatus ?? this.productsStatus,
-      productsErrorMessage: productsErrorMessage ?? this.productsErrorMessage,
-      addReviewStatus: addReviewStatus ?? this.addReviewStatus,
-      addReviewErrorMessage:
-          addReviewErrorMessage ?? this.addReviewErrorMessage,
-      offersDiscoverList: offersDiscoverList ?? this.offersDiscoverList,
-      productsDiscoverList: productsDiscoverList ?? this.productsDiscoverList,
+      productsState: productsState ?? this.productsState,
       selectedCategoryId: selectedCategoryId ?? this.selectedCategoryId,
       gender: gender ?? this.gender,
-      rating: rating ?? this.rating,
       isConnected: isConnected ?? this.isConnected,
     );
   }
 
   @override
-  List<Object?> get props => [
-    collections,
-    collectionsStatus,
-    collectionsErrorMessage,
-    categories,
-    categoriesStatus,
-    categoriesErrorMessage,
-    collectionDetailsModel,
-    collectionDetailsStatus,
-    collectionDetailsErrorMessage,
-    offers,
-    offersStatus,
-    offersErrorMessage,
-    productDetailsModel,
-    productDetailsStatus,
-    productDetailsErrorMessage,
-    products,
-    productsStatus,
-    productsErrorMessage,
-    addReviewStatus,
-    addReviewErrorMessage,
-    offersDiscoverList,
-    productsDiscoverList,
-    selectedCategoryId,
-    gender,
-    rating,
-    isConnected,
-  ];
+  List<Object?> get props =>
+      [
+        collections,
+        collectionsStatus,
+        collectionsErrorMessage,
+        categories,
+        categoriesStatus,
+        categoriesErrorMessage,
+        collectionDetailsModel,
+        collectionDetailsStatus,
+        collectionDetailsErrorMessage,
+        products,
+        productsState,
+        productsErrorMessage,
+        selectedCategoryId,
+        gender,
+        isConnected,
+      ];
 }

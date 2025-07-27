@@ -5,8 +5,8 @@ import 'package:e_fashion_flutter/core/enums/request_status.dart';
 import 'package:e_fashion_flutter/core/utils/app_constants.dart';
 import 'package:e_fashion_flutter/features/home/cubit/home_cubit.dart';
 import 'package:e_fashion_flutter/features/home/cubit/home_state.dart';
-import 'package:e_fashion_flutter/features/home/data/offer_model.dart';
 import 'package:e_fashion_flutter/features/home/screens/widgets/shared/home_carousel_slider_item.dart';
+import 'package:e_fashion_flutter/shared/data/product_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:skeletonizer/skeletonizer.dart';
@@ -14,14 +14,17 @@ import 'package:skeletonizer/skeletonizer.dart';
 class OffersSection extends StatelessWidget {
   const OffersSection({super.key});
 
-  static List<OfferModel> dummyOffers = List<OfferModel>.generate(
-    5,
-    (index) => const OfferModel(
-      id: 1,
-      name: "dummy name",
-      imageUrl: AppConstants.imageUrl,
-      oldPrice: 300.0,
-      discountedPrice: 300.0,
+  static List<ProductModel> dummyOffers = List<ProductModel>.generate(
+    3,
+    (index) => const ProductModel(
+     title: "*********",
+      imageUrl: "",
+      id: "",
+      basePrice: 0.0,
+      colors: "",
+      discountPrice: 0.0,
+      isOffer: false,
+      sizes: "",
     ),
   );
 
@@ -41,7 +44,6 @@ class OffersSection extends StatelessWidget {
               ),
               onPressed: () {
                 //context.pushRoute(DiscoverRoute(isOffer: true));
-                context.pushRoute(const SearchRoute());
               },
               child: Text(
                 "Discover",
@@ -55,9 +57,9 @@ class OffersSection extends StatelessWidget {
         BlocBuilder<HomeCubit, HomeState>(
           buildWhen:
               (previous, current) =>
-                  previous.offersStatus != current.offersStatus,
+                  previous.productsState != current.productsState,
           builder: (context, state) {
-            switch (state.offersStatus) {
+            switch (state.productsState) {
               case RequestStatus.loading:
                 return Skeletonizer(
                   child: CarouselSlider(
@@ -79,7 +81,7 @@ class OffersSection extends StatelessWidget {
               case RequestStatus.success:
                 return CarouselSlider(
                   items:
-                      state.offers
+                      state.products.offredProducts
                           .map(
                             (offer) =>
                                 HomeCarouselSliderItem(offerModel: offer),
@@ -95,7 +97,7 @@ class OffersSection extends StatelessWidget {
               case RequestStatus.error:
                 return SizedBox(
                   height: 180.0,
-                  child: Text(state.offersErrorMessage),
+                  child: Text(state.productsErrorMessage),
                 );
               default:
                 return const SizedBox.shrink();

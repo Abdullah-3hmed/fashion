@@ -55,8 +55,8 @@ dependencies:
   dartz: ^0.10.1
   flutter_bloc: ^9.1.0
   bloc: ^9.0.0
-  firebase_core: ^3.13.0
-  firebase_messaging: ^15.2.5
+  firebase_core: ^3.15.2
+  firebase_messaging: ^15.2.10
   googleapis_auth: ^2.0.0
   awesome_notifications: ^0.10.1
   flutter_dotenv: ^5.2.1
@@ -73,8 +73,7 @@ dependencies:
   geocoding: ^3.0.0
   redacted: ^1.0.13
   skeletonizer: ^2.0.1
-  path_drawing: ^1.0.1
-  internet_state_manager: ^1.9.0
+  path_drawing: ^1.0.1 
   permission_handler: ^12.0.0+1
   dotted_dashed_line: ^0.0.3
 

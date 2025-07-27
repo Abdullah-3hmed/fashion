@@ -2,15 +2,15 @@ import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:e_fashion_flutter/config/router/app_router.dart';
 import 'package:e_fashion_flutter/core/widgets/modal_bottom_sheet_content.dart';
-import 'package:e_fashion_flutter/features/home/data/offer_model.dart';
 import 'package:e_fashion_flutter/features/home/screens/widgets/shared/home_clipped_container.dart';
+import 'package:e_fashion_flutter/shared/data/product_model.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 
 class HomeCarouselSliderItem extends StatelessWidget {
   const HomeCarouselSliderItem({super.key, required this.offerModel});
 
-  final OfferModel offerModel;
+  final ProductModel offerModel;
 
   @override
   Widget build(BuildContext context) {
@@ -18,12 +18,12 @@ class HomeCarouselSliderItem extends StatelessWidget {
       children: [
         InkWell(
           onTap: () {
-            context.pushRoute(
-              ProductDetailsRoute(
-                imageUrl: offerModel.imageUrl,
-                productId: offerModel.id,
-              ),
-            );
+            // context.pushRoute(
+            //   ProductDetailsRoute(
+            //     imageUrl: offerModel.imageUrl,
+            //     productId: offerModel.id,
+            //   ),
+            // );
           },
           child: ClipRRect(
             borderRadius: BorderRadius.circular(16.0),
@@ -42,12 +42,12 @@ class HomeCarouselSliderItem extends StatelessWidget {
           end: 0.0,
           child: InkWell(
             onTap: () {
-              context.pushRoute(
-                ProductDetailsRoute(
-                  imageUrl: offerModel.imageUrl,
-                  productId: offerModel.id,
-                ),
-              );
+              // context.pushRoute(
+              //   ProductDetailsRoute(
+              //     imageUrl: offerModel.imageUrl,
+              //     productId: offerModel.id,
+              //   ),
+              // );
             },
             child: HomeClippedContainer(
               child: Column(
@@ -55,11 +55,8 @@ class HomeCarouselSliderItem extends StatelessWidget {
                 children: [
                   const SizedBox(height: 10.0),
                   Text(
-                    offerModel.name.length > 20
-                        ? '${offerModel.name.substring(0, 20)}...'
-                        : offerModel.name,
+                    offerModel.title,
                     maxLines: 1,
-
                     overflow: TextOverflow.ellipsis,
                     style: Theme.of(
                       context,
@@ -71,7 +68,7 @@ class HomeCarouselSliderItem extends StatelessWidget {
                         TextSpan(
                           text:
                               r"$"
-                              "${offerModel.oldPrice}",
+                              "${offerModel.basePrice}",
                           style: Theme.of(
                             context,
                           ).textTheme.bodyLarge!.copyWith(
@@ -85,7 +82,7 @@ class HomeCarouselSliderItem extends StatelessWidget {
                         TextSpan(
                           text:
                               r"  $"
-                              "${offerModel.discountedPrice}",
+                              "${offerModel.discountPrice}",
                           style: Theme.of(
                             context,
                           ).textTheme.bodyLarge!.copyWith(color: Colors.white),

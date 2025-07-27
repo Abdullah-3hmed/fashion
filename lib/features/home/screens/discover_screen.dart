@@ -48,42 +48,42 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
           ),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24.0),
-        child: BlocBuilder<HomeCubit, HomeState>(
-          buildWhen:
-              (previous, current) =>
-                  previous.productsDiscoverList !=
-                      current.productsDiscoverList ||
-                  previous.offersDiscoverList != current.offersDiscoverList,
-          builder: (context, state) {
-            return AnimatedSwitcher(
-              duration: const Duration(milliseconds: 250),
-              transitionBuilder: (child, animation) {
-                final offsetAnimation = Tween<Offset>(
-                  begin: const Offset(1.0, 0.0), // Slide from right
-                  end: Offset.zero,
-                ).animate(animation);
-                return SlideTransition(position: offsetAnimation, child: child);
-              },
-              child:
-                  isGrid
-                      ? DiscoverGridView(
-                        discoverList:
-                            widget.isOffer
-                                ? state.offersDiscoverList
-                                : state.productsDiscoverList,
-                      )
-                      : DiscoverListView(
-                        discoverList:
-                            widget.isOffer
-                                ? state.offersDiscoverList
-                                : state.productsDiscoverList,
-                      ),
-            );
-          },
-        ),
-      ),
+      // body: Padding(
+      //   padding: const EdgeInsets.symmetric(horizontal: 24.0),
+      //   child: BlocBuilder<HomeCubit, HomeState>(
+      //     buildWhen:
+      //         (previous, current) =>
+      //             previous.productsDiscoverList !=
+      //                 current.productsDiscoverList ||
+      //             previous.offersDiscoverList != current.offersDiscoverList,
+      //     builder: (context, state) {
+      //       return AnimatedSwitcher(
+      //         duration: const Duration(milliseconds: 250),
+      //         transitionBuilder: (child, animation) {
+      //           final offsetAnimation = Tween<Offset>(
+      //             begin: const Offset(1.0, 0.0), // Slide from right
+      //             end: Offset.zero,
+      //           ).animate(animation);
+      //           return SlideTransition(position: offsetAnimation, child: child);
+      //         },
+      //         child:
+      //             isGrid
+      //                 ? DiscoverGridView(
+      //                   discoverList:
+      //                       widget.isOffer
+      //                           ? state.offersDiscoverList
+      //                           : state.productsDiscoverList,
+      //                 )
+      //                 : DiscoverListView(
+      //                   discoverList:
+      //                       widget.isOffer
+      //                           ? state.offersDiscoverList
+      //                           : state.productsDiscoverList,
+      //                 ),
+      //       );
+      //     },
+      //   ),
+      // ),
     );
   }
 }

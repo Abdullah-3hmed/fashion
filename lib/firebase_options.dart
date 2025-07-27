@@ -65,4 +65,5 @@ class DefaultFirebaseOptions {
     storageBucket: 'e-fashion-f1215.firebasestorage.app',
     iosBundleId: 'com.example.eFashionFlutter',
   );
+
 }

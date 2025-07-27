@@ -3,9 +3,8 @@ import 'package:e_fashion_flutter/core/error/failures.dart';
 import 'package:e_fashion_flutter/features/home/data/category_model.dart';
 import 'package:e_fashion_flutter/features/home/data/collection_details_model.dart';
 import 'package:e_fashion_flutter/features/home/data/collection_model.dart';
-import 'package:e_fashion_flutter/features/home/data/offer_model.dart';
+import 'package:e_fashion_flutter/features/home/data/products_model.dart';
 import 'package:e_fashion_flutter/features/home/data/product_details_model.dart';
-import 'package:e_fashion_flutter/features/home/data/product_model.dart';
 import 'package:e_fashion_flutter/features/home/data/review_model.dart';
 
 abstract class HomeRepo {
@@ -16,21 +15,5 @@ abstract class HomeRepo {
   Future<Either<Failure, CollectionDetailsModel>> getCollectionDetails({
     required String collectionId,
   });
-
-  Future<Either<Failure, List<OfferModel>>> getOffers();
-
-  Future<Either<Failure, ProductDetailsModel>> getProductDetails({
-    required int productId,
-  });
-
-  Future<Either<Failure, List<ProductModel>>> getProducts({
-    required int? categoryId,
-    required String? gender,
-  });
-
-  Future<Either<Failure, ReviewModel>> addReview({
-    required String review,
-    required int productId,
-    required int rating,
-  });
+  Future<Either<Failure,ProductsModel>> getProducts();
 }
