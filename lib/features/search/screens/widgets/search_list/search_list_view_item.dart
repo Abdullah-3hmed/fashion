@@ -1,13 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:e_fashion_flutter/features/search/data/search_model.dart';
+import 'package:e_fashion_flutter/core/widgets/custom_cached_network_image.dart';
 import 'package:e_fashion_flutter/features/search/screens/widgets/search_list/search_list_container_clipper.dart';
+import 'package:e_fashion_flutter/shared/data/product_model.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 
 class SearchListViewItem extends StatelessWidget {
-  const SearchListViewItem({super.key, required this.searchModel});
+  const SearchListViewItem({super.key, required this.product});
 
-  final SearchModel searchModel;
+  final ProductModel product;
 
   @override
   Widget build(BuildContext context) {
@@ -16,12 +17,9 @@ class SearchListViewItem extends StatelessWidget {
       children: [
         ClipRRect(
           borderRadius: BorderRadius.circular(16.0),
-          child: CachedNetworkImage(
-            imageUrl: searchModel.imageUrl,
-            errorWidget: (context, url, error) => const Icon(Icons.error),
-            fit: BoxFit.cover,
+          child: CustomCachedNetworkImage(
+            imageUrl: product.imageUrl,
             height: 220.0,
-            width: double.infinity,
           ),
         ),
         PositionedDirectional(
@@ -48,15 +46,15 @@ class SearchListViewItem extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        searchModel.name.length > 18
-                            ? '${searchModel.name.substring(0, 18)}...'
-                            : searchModel.name,
+                        product.title.length > 18
+                            ? '${product.title.substring(0, 18)}...'
+                            : product.title,
                         style: Theme.of(context).textTheme.titleLarge,
                         overflow: TextOverflow.ellipsis,
                       ),
                       Text(
                         r"$"
-                        "${searchModel.price}",
+                        "${product.basePrice}",
                         style: Theme.of(context).textTheme.titleSmall,
                       ),
                     ],

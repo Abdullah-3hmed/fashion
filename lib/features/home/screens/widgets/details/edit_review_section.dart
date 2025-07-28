@@ -38,7 +38,7 @@ class _EditReviewSectionState extends State<EditReviewSection> {
     //       child: RatingBar.builder(
     //         allowHalfRating: true,
     //         initialRating: context.select(
-    //           (HomeCubit cubit) => cubit.state.rating,
+    //           (HomeCubit bloc) => bloc.state.rating,
     //         ),
     //         itemSize: 32.0,
     //         itemPadding: const EdgeInsets.symmetric(horizontal: 14.0),

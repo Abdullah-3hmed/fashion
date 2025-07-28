@@ -1,19 +1,21 @@
 import 'package:e_fashion_flutter/core/enums/request_status.dart';
-import 'package:e_fashion_flutter/features/search/data/search_model.dart';
+import 'package:e_fashion_flutter/shared/data/product_model.dart';
 import 'package:equatable/equatable.dart';
 
 class SearchState extends Equatable {
   final RequestStatus searchStatus;
-  final List<SearchModel> searchProducts;
+  final List<ProductModel> searchProducts;
   final String searchErrorMessage;
+
   const SearchState({
     this.searchStatus = RequestStatus.initial,
     this.searchProducts = const [],
     this.searchErrorMessage = "",
   });
+
   SearchState copyWith({
     RequestStatus? searchStatus,
-    List<SearchModel>? searchProducts,
+    List<ProductModel>? searchProducts,
     String? searchErrorMessage,
   }) {
     return SearchState(

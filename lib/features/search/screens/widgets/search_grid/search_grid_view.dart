@@ -1,10 +1,10 @@
-import 'package:e_fashion_flutter/features/search/data/search_model.dart';
 import 'package:e_fashion_flutter/features/search/screens/widgets/search_grid/search_grid_item.dart';
+import 'package:e_fashion_flutter/shared/data/product_model.dart';
 import 'package:flutter/material.dart';
 
 class SearchGridView extends StatelessWidget {
-  const SearchGridView({super.key, required this.searchProducts});
-  final List<SearchModel> searchProducts;
+  const SearchGridView({super.key, required this.products});
+  final List<ProductModel> products;
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
@@ -17,8 +17,8 @@ class SearchGridView extends StatelessWidget {
       ),
       itemBuilder:
           (context, index) =>
-              SearchGridItem(searchModel: searchProducts[index]),
-      itemCount: searchProducts.length,
+              SearchGridItem(productModel: products[index]),
+      itemCount: products.length,
     );
   }
 }

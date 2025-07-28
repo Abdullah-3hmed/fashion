@@ -19,7 +19,7 @@ import 'package:e_fashion_flutter/features/profile/repos/map_repo.dart';
 import 'package:e_fashion_flutter/features/profile/repos/map_repo_impl.dart';
 import 'package:e_fashion_flutter/features/profile/repos/user_repo.dart';
 import 'package:e_fashion_flutter/features/profile/repos/user_repo_impl.dart';
-import 'package:e_fashion_flutter/features/search/cubit/search_cubit.dart';
+import 'package:e_fashion_flutter/features/search/bloc/search_bloc.dart';
 import 'package:e_fashion_flutter/features/search/repo/search_repo.dart';
 import 'package:e_fashion_flutter/shared/app_cubit/app_cubit.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -59,9 +59,9 @@ class ServiceLocator {
     getIt.registerFactory<ProductDetailsCubit>(
           () => ProductDetailsCubit(homeDetailsRepo: getIt<HomeDetailsRepo>()),
     );
-    getIt.registerLazySingleton<SearchRepo>(() => SearchRepo());
-    getIt.registerFactory<SearchCubit>(
-      () => SearchCubit(searchRepo: getIt<SearchRepo>()),
+    getIt.registerLazySingleton<SearchRepo>(() => SearchRepo(dioHelper: getIt<DioHelper>()));
+    getIt.registerFactory<SearchBloc>(
+      () => SearchBloc(searchRepo: getIt<SearchRepo>()),
     );
     getIt.registerFactory<AppCubit>(() => AppCubit());
   }

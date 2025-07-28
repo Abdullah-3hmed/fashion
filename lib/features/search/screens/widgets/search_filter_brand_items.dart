@@ -2,8 +2,8 @@ import 'package:e_fashion_flutter/features/search/screens/widgets/search_filter_
 import 'package:flutter/material.dart';
 
 class SearchFilterBrandItems extends StatefulWidget {
-  const SearchFilterBrandItems({super.key});
-
+  const SearchFilterBrandItems({super.key, required this.onBrandChanged});
+final ValueChanged<String> onBrandChanged;
   @override
   State<SearchFilterBrandItems> createState() => _SearchFilterBrandItemsState();
 }
@@ -23,6 +23,7 @@ class _SearchFilterBrandItemsState extends State<SearchFilterBrandItems> {
           onTap: () {
             setState(() {
               selectedIndex = index;
+              widget.onBrandChanged(brands[index]);
             });
           },
           child: SearchFilterBrandItem(

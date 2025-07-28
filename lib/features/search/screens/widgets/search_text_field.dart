@@ -1,4 +1,5 @@
-import 'package:e_fashion_flutter/features/search/cubit/search_cubit.dart';
+import 'package:e_fashion_flutter/features/search/bloc/search_bloc.dart';
+import 'package:e_fashion_flutter/features/search/bloc/search_events.dart';
 import 'package:e_fashion_flutter/features/search/screens/widgets/search_modal_bottom_sheet_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,69 +13,39 @@ class SearchTextField extends StatefulWidget {
 }
 
 class _SearchTextFieldState extends State<SearchTextField> {
-  bool isTapped = false;
-  late final TextEditingController controller;
-
-  @override
-  void initState() {
-    isTapped = false;
-    controller = TextEditingController();
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    controller.dispose();
-    super.dispose();
-  }
+  String query = "";
 
   @override
   Widget build(BuildContext context) {
     return TextField(
-      onSubmitted: (_) {
-        setState(() {
-          isTapped = false;
-        });
-        if (controller.text.isNotEmpty) {
-          context.read<SearchCubit>().searchProducts(query: controller.text);
-        }
+      onChanged: (value) {
+        query = value;
+        context.read<SearchBloc>().add(SearchProductEvent(query: value));
       },
-      onTap: () {
-        setState(() {
-          isTapped = true;
-        });
-      },
-      controller: controller,
       onTapOutside: (event) => FocusScope.of(context).unfocus(),
       decoration: InputDecoration(
         prefixIcon: const Icon(Iconsax.search_normal_1),
-        suffixIcon:
-            isTapped
-                ? IconButton(
-                  onPressed: () {
-                    if (controller.text.isNotEmpty) {
-                      controller.clear();
-                    }
-                  },
-                  icon: const Icon(Icons.close),
-                )
-                : IconButton(
-                  onPressed: () async {
-                    await showModalBottomSheet(
-                      context: context,
-                      isScrollControlled: true,
-                      shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadiusDirectional.only(
-                          topStart: Radius.circular(32.0),
-                          topEnd: Radius.circular(32.0),
-                        ),
-                      ),
-                      builder:
-                          (context) => const SearchModalBottomSheetContent(),
-                    );
-                  },
-                  icon: const Icon(Iconsax.filter_search),
+        suffixIcon: IconButton(
+          onPressed: () async {
+            final bloc = context.read<SearchBloc>();
+            await showModalBottomSheet(
+              context: context,
+              isScrollControlled: true,
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadiusDirectional.only(
+                  topStart: Radius.circular(32.0),
+                  topEnd: Radius.circular(32.0),
                 ),
+              ),
+              builder:
+                  (context) => BlocProvider.value(
+                    value: bloc,
+                    child: SearchModalBottomSheetContent(query: query),
+                  ),
+            );
+          },
+          icon: const Icon(Iconsax.filter_search),
+        ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12.0),
           borderSide: const BorderSide(color: Colors.transparent),

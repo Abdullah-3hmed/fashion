@@ -2,13 +2,13 @@ import 'package:auto_route/auto_route.dart';
 import 'package:e_fashion_flutter/core/enums/request_status.dart';
 import 'package:e_fashion_flutter/core/services/service_locator.dart';
 import 'package:e_fashion_flutter/core/utils/app_constants.dart';
-import 'package:e_fashion_flutter/features/search/cubit/search_cubit.dart';
-import 'package:e_fashion_flutter/features/search/cubit/search_state.dart';
-import 'package:e_fashion_flutter/features/search/data/search_model.dart';
+import 'package:e_fashion_flutter/features/search/bloc/search_bloc.dart';
+import 'package:e_fashion_flutter/features/search/bloc/search_state.dart';
 import 'package:e_fashion_flutter/features/search/screens/widgets/empty_search.dart';
 import 'package:e_fashion_flutter/features/search/screens/widgets/no_result_search_section.dart';
 import 'package:e_fashion_flutter/features/search/screens/widgets/result_search_section.dart';
 import 'package:e_fashion_flutter/features/search/screens/widgets/search_text_field.dart';
+import 'package:e_fashion_flutter/shared/data/product_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:skeletonizer/skeletonizer.dart';
@@ -23,19 +23,23 @@ class SearchScreen extends StatefulWidget implements AutoRouteWrapper {
 
   @override
   Widget wrappedRoute(BuildContext context) {
-    return BlocProvider(create: (context) => getIt<SearchCubit>(), child: this);
+    return BlocProvider(create: (context) => getIt<SearchBloc>(), child: this);
   }
 }
 
 class _SearchScreenState extends State<SearchScreen> {
   bool isGrid = false;
-  List<SearchModel> dummyList = List<SearchModel>.generate(
+  List<ProductModel> dummyList = List<ProductModel>.generate(
     5,
-    (index) => SearchModel(
-      name: "*********",
-      id: index + 1,
+    (index) => const ProductModel(
+      colors: "",
+      sizes: "",
+      title: "****",
+      id: "****",
+      isOffer: false,
+      discountPrice:  0.0,
+      basePrice: 0.0,
       imageUrl: AppConstants.imageUrl,
-      price: 100,
     ),
   );
 
@@ -76,7 +80,7 @@ class _SearchScreenState extends State<SearchScreen> {
           children: [
             const SearchTextField(),
             const SizedBox(height: 16.0),
-            BlocBuilder<SearchCubit, SearchState>(
+            BlocBuilder<SearchBloc, SearchState>(
               buildWhen:
                   (previous, current) =>
                       previous.searchStatus != current.searchStatus,

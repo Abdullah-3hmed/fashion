@@ -77,6 +77,8 @@ dependencies:
   permission_handler: ^12.0.0+1
   dotted_dashed_line: ^0.0.3
   collection: ^1.19.1
+  rxdart: ^0.28.0
+  bloc_concurrency: ^0.3.0
 
 
 dev_dependencies:
