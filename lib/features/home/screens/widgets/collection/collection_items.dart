@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import 'package:e_fashion_flutter/core/widgets/secondary_button.dart';
-import 'package:e_fashion_flutter/features/home/data/collection_details_model.dart';
+import 'package:e_fashion_flutter/features/home/data/home/collection_details_model.dart';
 import 'package:e_fashion_flutter/features/home/screens/widgets/collection/collection_container_clipper.dart';
 import 'package:e_fashion_flutter/features/home/screens/widgets/collection/collection_item.dart';
 import 'package:e_fashion_flutter/features/home/screens/widgets/collection/reverse_collection_item.dart';

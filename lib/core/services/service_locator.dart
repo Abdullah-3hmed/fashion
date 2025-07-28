@@ -8,8 +8,11 @@ import 'package:e_fashion_flutter/features/auth/cubit/auth_cubit.dart';
 import 'package:e_fashion_flutter/features/auth/repos/auth_repo.dart';
 import 'package:e_fashion_flutter/features/auth/repos/auth_repo_impl.dart';
 import 'package:e_fashion_flutter/features/home/cubit/home_cubit.dart';
-import 'package:e_fashion_flutter/features/home/repos/home_repo.dart';
-import 'package:e_fashion_flutter/features/home/repos/home_repo_impl.dart';
+import 'package:e_fashion_flutter/features/home/cubit/product_details_cubit.dart';
+import 'package:e_fashion_flutter/features/home/repos/home_details_repo/home_details_repo.dart';
+import 'package:e_fashion_flutter/features/home/repos/home_details_repo/home_details_repo_impl.dart';
+import 'package:e_fashion_flutter/features/home/repos/home_repo/home_repo.dart';
+import 'package:e_fashion_flutter/features/home/repos/home_repo/home_repo_impl.dart';
 import 'package:e_fashion_flutter/features/profile/cubit/map_cubit.dart';
 import 'package:e_fashion_flutter/features/profile/cubit/user_cubit.dart';
 import 'package:e_fashion_flutter/features/profile/repos/map_repo.dart';
@@ -49,8 +52,12 @@ class ServiceLocator {
     getIt.registerLazySingleton<MapRepo>(() => MapRepoImpl());
     getIt.registerFactory<MapCubit>(() => MapCubit(mapRepo: getIt<MapRepo>()));
     getIt.registerLazySingleton<HomeRepo>(() => HomeRepoImpl(dioHelper: getIt<DioHelper>()));
+    getIt.registerLazySingleton<HomeDetailsRepo>(() => HomeDetailsRepoImpl(dioHelper: getIt<DioHelper>()));
     getIt.registerFactory<HomeCubit>(
       () => HomeCubit(homeRepo: getIt<HomeRepo>()),
+    );
+    getIt.registerFactory<ProductDetailsCubit>(
+          () => ProductDetailsCubit(homeDetailsRepo: getIt<HomeDetailsRepo>()),
     );
     getIt.registerLazySingleton<SearchRepo>(() => SearchRepo());
     getIt.registerFactory<SearchCubit>(

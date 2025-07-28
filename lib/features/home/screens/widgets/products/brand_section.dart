@@ -34,7 +34,9 @@ class BrandSection extends StatelessWidget {
                 ),
               ),
               onPressed: () {
-                context.pushRoute(DiscoverRoute(productsDiscoverList:products ));
+                context.pushRoute(
+                  DiscoverRoute(productsDiscoverList: products),
+                );
               },
               child: Text(
                 "Discover",

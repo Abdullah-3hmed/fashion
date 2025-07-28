@@ -1,6 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:e_fashion_flutter/config/router/app_router.dart';
-import 'package:e_fashion_flutter/features/home/data/collection_model.dart';
+import 'package:e_fashion_flutter/features/home/data/home/collection_model.dart';
 import 'package:e_fashion_flutter/features/home/screens/widgets/collection/collections_page_view_item.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';

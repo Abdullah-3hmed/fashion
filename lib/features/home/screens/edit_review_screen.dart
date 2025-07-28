@@ -1,6 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:e_fashion_flutter/features/home/data/product_details_model.dart';
+import 'package:e_fashion_flutter/features/home/data/home_details/product_details_model.dart';
 import 'package:e_fashion_flutter/features/home/screens/widgets/details/edit_review_section.dart';
 import 'package:e_fashion_flutter/features/profile/cubit/user_cubit.dart';
 import 'package:flutter/material.dart';
@@ -29,7 +29,7 @@ class EditReviewScreen extends StatelessWidget {
                   ClipRRect(
                     borderRadius: BorderRadiusDirectional.circular(8.0),
                     child: CachedNetworkImage(
-                      imageUrl: productDetailsModel.productImage,
+                      imageUrl: productDetailsModel.title,
                       height: 140.0,
                       width: 120.0,
                       fit: BoxFit.cover,
@@ -42,7 +42,7 @@ class EditReviewScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        productDetailsModel.productName,
+                        productDetailsModel.title,
                         style: Theme.of(context).textTheme.titleMedium,
                       ),
                       const SizedBox(height: 8.0),
@@ -86,7 +86,7 @@ class EditReviewScreen extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 30.0),
-              EditReviewSection(productId: productDetailsModel.id),
+             // EditReviewSection(productId: productDetailsModel.id),
             ],
           ),
         ),

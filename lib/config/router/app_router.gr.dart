@@ -480,7 +480,7 @@ class ProductDetailsRoute extends PageRouteInfo<ProductDetailsRouteArgs> {
   ProductDetailsRoute({
     Key? key,
     required String imageUrl,
-    required int productId,
+    required String productId,
     List<PageRouteInfo>? children,
   }) : super(
          ProductDetailsRoute.name,
@@ -498,10 +498,12 @@ class ProductDetailsRoute extends PageRouteInfo<ProductDetailsRouteArgs> {
     name,
     builder: (data) {
       final args = data.argsAs<ProductDetailsRouteArgs>();
-      return ProductDetailsScreen(
-        key: args.key,
-        imageUrl: args.imageUrl,
-        productId: args.productId,
+      return WrappedRoute(
+        child: ProductDetailsScreen(
+          key: args.key,
+          imageUrl: args.imageUrl,
+          productId: args.productId,
+        ),
       );
     },
   );
@@ -518,7 +520,7 @@ class ProductDetailsRouteArgs {
 
   final String imageUrl;
 
-  final int productId;
+  final String productId;
 
   @override
   String toString() {

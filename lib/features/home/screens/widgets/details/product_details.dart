@@ -1,6 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:e_fashion_flutter/core/widgets/primary_button.dart';
-import 'package:e_fashion_flutter/features/home/data/product_details_model.dart';
+import 'package:e_fashion_flutter/features/home/data/home_details/product_details_model.dart';
 import 'package:e_fashion_flutter/features/home/screens/widgets/details/rating_section.dart';
 import 'package:e_fashion_flutter/features/home/screens/widgets/shared/colors_available.dart';
 import 'package:e_fashion_flutter/features/home/screens/widgets/shared/pieces_available.dart';
@@ -43,7 +43,7 @@ class ProductDetails extends StatelessWidget {
               ),
               const SizedBox(height: 24.0),
               Text(
-                productDetailsModel.productName,
+                productDetailsModel.title,
                 style: Theme.of(context).textTheme.titleMedium,
               ),
               Text(
@@ -61,7 +61,7 @@ class ProductDetails extends StatelessWidget {
                 },
               ),
               Text(
-                productDetailsModel.description,
+              "********",
                 style: Theme.of(context).textTheme.bodySmall,
               ),
               const SizedBox(height: 24.0),

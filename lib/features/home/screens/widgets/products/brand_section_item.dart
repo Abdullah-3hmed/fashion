@@ -20,12 +20,12 @@ class BrandSectionItem extends StatelessWidget {
       children: [
         InkWell(
           onTap: () {
-            // context.pushRoute(
-            //   ProductDetailsRoute(
-            //     imageUrl: productModel.imageUrl,
-            //     productId: productModel.id,
-            //   ),
-            // );
+            context.pushRoute(
+              ProductDetailsRoute(
+                imageUrl: productModel.imageUrl,
+                productId: productModel.id,
+              ),
+            );
           },
           child: ClipRRect(
             borderRadius: BorderRadius.circular(16.0),
@@ -41,12 +41,12 @@ class BrandSectionItem extends StatelessWidget {
           end: 0.0,
           child: InkWell(
             onTap: () {
-              // context.pushRoute(
-              //   ProductDetailsRoute(
-              //     imageUrl: productModel.imageUrl,
-              //     productId: productModel.id,
-              //   ),
-              // );
+              context.pushRoute(
+                ProductDetailsRoute(
+                  imageUrl: productModel.imageUrl,
+                  productId: productModel.id,
+                ),
+              );
             },
             child: HomeClippedContainer(
               child: Column(

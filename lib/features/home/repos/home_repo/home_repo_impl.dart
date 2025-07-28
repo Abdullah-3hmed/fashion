@@ -7,13 +7,12 @@ import 'package:e_fashion_flutter/core/network/api_constants.dart';
 import 'package:e_fashion_flutter/core/network/dio_helper.dart';
 import 'package:e_fashion_flutter/core/services/service_locator.dart';
 import 'package:e_fashion_flutter/core/utils/app_constants.dart';
-import 'package:e_fashion_flutter/features/home/data/category_model.dart';
-import 'package:e_fashion_flutter/features/home/data/collection_details_model.dart';
-import 'package:e_fashion_flutter/features/home/data/collection_model.dart';
-import 'package:e_fashion_flutter/features/home/data/products_model.dart';
-import 'package:e_fashion_flutter/features/home/data/product_details_model.dart';
-import 'package:e_fashion_flutter/features/home/data/review_model.dart';
-import 'package:e_fashion_flutter/features/home/repos/home_repo.dart';
+import 'package:e_fashion_flutter/features/home/data/home/category_model.dart';
+import 'package:e_fashion_flutter/features/home/data/home/collection_details_model.dart';
+import 'package:e_fashion_flutter/features/home/data/home/collection_model.dart';
+import 'package:e_fashion_flutter/features/home/data/home/products_model.dart';
+import 'package:e_fashion_flutter/features/home/data/home_details/review_model.dart';
+import 'package:e_fashion_flutter/features/home/repos/home_repo/home_repo.dart';
 
 class HomeRepoImpl implements HomeRepo {
   final DioHelper dioHelper;

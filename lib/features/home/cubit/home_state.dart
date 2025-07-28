@@ -1,9 +1,8 @@
 import 'package:e_fashion_flutter/core/enums/request_status.dart';
-import 'package:e_fashion_flutter/features/home/data/category_model.dart';
-import 'package:e_fashion_flutter/features/home/data/collection_details_model.dart';
-import 'package:e_fashion_flutter/features/home/data/collection_model.dart';
-import 'package:e_fashion_flutter/features/home/data/products_model.dart';
-import 'package:e_fashion_flutter/features/home/data/product_details_model.dart';
+import 'package:e_fashion_flutter/features/home/data/home/category_model.dart';
+import 'package:e_fashion_flutter/features/home/data/home/collection_details_model.dart';
+import 'package:e_fashion_flutter/features/home/data/home/collection_model.dart';
+import 'package:e_fashion_flutter/features/home/data/home/products_model.dart';
 import 'package:equatable/equatable.dart';
 
 class HomeState extends Equatable {

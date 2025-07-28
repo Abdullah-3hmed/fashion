@@ -7,7 +7,7 @@ import 'package:e_fashion_flutter/core/utils/app_constants.dart';
 import 'package:e_fashion_flutter/core/widgets/secondary_button.dart';
 import 'package:e_fashion_flutter/features/home/cubit/home_cubit.dart';
 import 'package:e_fashion_flutter/features/home/cubit/home_state.dart';
-import 'package:e_fashion_flutter/features/home/data/collection_item_model.dart';
+import 'package:e_fashion_flutter/features/home/data/home/collection_item_model.dart';
 import 'package:e_fashion_flutter/features/home/screens/widgets/collection/collection_container_clipper.dart';
 import 'package:e_fashion_flutter/features/home/screens/widgets/collection/collection_item.dart';
 import 'package:e_fashion_flutter/features/home/screens/widgets/collection/collection_items.dart';

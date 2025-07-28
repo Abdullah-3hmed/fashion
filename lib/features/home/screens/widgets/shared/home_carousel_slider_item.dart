@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:e_fashion_flutter/config/router/app_router.dart';
+import 'package:e_fashion_flutter/core/widgets/custom_cached_network_image.dart';
 import 'package:e_fashion_flutter/core/widgets/modal_bottom_sheet_content.dart';
 import 'package:e_fashion_flutter/features/home/screens/widgets/shared/home_clipped_container.dart';
 import 'package:e_fashion_flutter/shared/data/product_model.dart';
@@ -18,21 +19,20 @@ class HomeCarouselSliderItem extends StatelessWidget {
       children: [
         InkWell(
           onTap: () {
-            // context.pushRoute(
-            //   ProductDetailsRoute(
-            //     imageUrl: offerModel.imageUrl,
-            //     productId: offerModel.id,
-            //   ),
-            // );
+            context.pushRoute(
+              ProductDetailsRoute(
+                imageUrl: offerModel.imageUrl,
+                productId: offerModel.id,
+              ),
+            );
           },
           child: ClipRRect(
             borderRadius: BorderRadius.circular(16.0),
-            child: CachedNetworkImage(
+            child: CustomCachedNetworkImage(
               height: 180.0,
               width: double.infinity,
-              fit: BoxFit.cover,
               imageUrl: offerModel.imageUrl,
-              errorWidget: (context, url, error) => const Icon(Icons.error),
+
             ),
           ),
         ),
@@ -42,12 +42,12 @@ class HomeCarouselSliderItem extends StatelessWidget {
           end: 0.0,
           child: InkWell(
             onTap: () {
-              // context.pushRoute(
-              //   ProductDetailsRoute(
-              //     imageUrl: offerModel.imageUrl,
-              //     productId: offerModel.id,
-              //   ),
-              // );
+              context.pushRoute(
+                ProductDetailsRoute(
+                  imageUrl: offerModel.imageUrl,
+                  productId: offerModel.id,
+                ),
+              );
             },
             child: HomeClippedContainer(
               child: Column(

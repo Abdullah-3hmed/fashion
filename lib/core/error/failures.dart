@@ -18,6 +18,12 @@ class ServerFailure extends Failure {
 
   factory ServerFailure.fromDioError(DioException dioError) {
     switch (dioError.type) {
+      case DioExceptionType.connectionError:
+        return const ServerFailure(
+          // 'Connection to API server failed due to internet connection',
+          "No Internet Connection",
+          isConnected: false,
+        );
       case DioExceptionType.cancel:
         return const ServerFailure(
           'Request to API server was cancelled',
@@ -33,12 +39,7 @@ class ServerFailure extends Failure {
           'Send timeout in connection with API server',
           isConnected: false,
         );
-      case DioExceptionType.connectionError:
-        return const ServerFailure(
-          // 'Connection to API server failed due to internet connection',
-          "No Internet Connection",
-          isConnected: false,
-        );
+
       case DioExceptionType.receiveTimeout:
         return const ServerFailure(
           'Receive timeout in connection with API server',

@@ -1,5 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:e_fashion_flutter/features/home/data/collection_item_model.dart';
+import 'package:e_fashion_flutter/features/home/data/home/collection_item_model.dart';
 import 'package:flutter/material.dart';
 
 class ReverseCollectionItem extends StatelessWidget {

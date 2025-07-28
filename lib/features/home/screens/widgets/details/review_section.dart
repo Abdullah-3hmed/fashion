@@ -1,5 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:e_fashion_flutter/features/home/data/review_model.dart';
+import 'package:e_fashion_flutter/features/home/data/home_details/review_model.dart';
 import 'package:flutter/material.dart';
 
 class ReviewSection extends StatelessWidget {
@@ -29,12 +29,12 @@ class ReviewSection extends StatelessWidget {
                   CircleAvatar(
                     radius: 20.0,
                     backgroundImage: CachedNetworkImageProvider(
-                      review[index].userImage,
+                      review[index].imageUrl,
                     ),
                   ),
                   const SizedBox(width: 16.0),
                   Text(
-                    review[index].userName,
+                    review[index].name,
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                 ],
@@ -42,11 +42,11 @@ class ReviewSection extends StatelessWidget {
               const SizedBox(height: 4.0),
               Row(
                 children: [
-                  for (int i = 1; i <= review[index].rating; i++)
+                  for (int i = 1; i <= review[index].rate; i++)
                     const Icon(Icons.star, color: Colors.amber, size: 16.0),
                   const SizedBox(width: 11.0),
                   Text(
-                    review[index].date,
+                    review[index].name,
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
                 ],
