@@ -37,6 +37,23 @@ static const ProductDetailsModel empty = ProductDetailsModel(
   colors: "",
   price: 0.0,
 );
+ProductDetailsModel copyWith({
+  List<ReviewModel>? reviews,
+}) {
+  return ProductDetailsModel(
+    id:  id,
+    title: title,
+    colors: colors ,
+    sizes: sizes ,
+    price: price,
+    reviews: reviews ?? this.reviews,
+  );
+}
+  List<String> get parsedColors =>
+      colors.split(',').map((e) => e.trim()).where((e) => e.isNotEmpty).toList();
+
+  List<String> get parsedSizes =>
+      sizes.split(',').map((e) => e.trim()).where((e) => e.isNotEmpty).toList();
   @override
   List<Object> get props => [id, title, colors, sizes, price, reviews];
 }

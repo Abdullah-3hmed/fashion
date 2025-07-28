@@ -9,6 +9,9 @@ class DioHelper {
   static void init() {
     BaseOptions options = BaseOptions(
       baseUrl: dotenv.env["API_URL"]!,
+      queryParameters: {
+        "contentType": 'Application/json',
+      },
       connectTimeout: const Duration(seconds: 20),
       receiveTimeout: const Duration(seconds: 20),
       receiveDataWhenStatusError: true,

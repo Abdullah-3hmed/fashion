@@ -3,9 +3,9 @@ import 'package:e_fashion_flutter/features/home/data/home_details/review_model.d
 import 'package:flutter/material.dart';
 
 class ReviewSection extends StatelessWidget {
-  const ReviewSection({super.key, required this.review});
+  const ReviewSection({super.key, required this.reviews});
 
-  final List<ReviewModel> review;
+  final List<ReviewModel> reviews;
 
   @override
   Widget build(BuildContext context) {
@@ -29,12 +29,12 @@ class ReviewSection extends StatelessWidget {
                   CircleAvatar(
                     radius: 20.0,
                     backgroundImage: CachedNetworkImageProvider(
-                      review[index].imageUrl,
+                      reviews[index].imageUrl,
                     ),
                   ),
                   const SizedBox(width: 16.0),
                   Text(
-                    review[index].name,
+                    reviews[index].name,
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                 ],
@@ -42,11 +42,11 @@ class ReviewSection extends StatelessWidget {
               const SizedBox(height: 4.0),
               Row(
                 children: [
-                  for (int i = 1; i <= review[index].rate; i++)
+                  for (int i = 1; i <= reviews[index].rate; i++)
                     const Icon(Icons.star, color: Colors.amber, size: 16.0),
                   const SizedBox(width: 11.0),
                   Text(
-                    review[index].name,
+                    reviews[index].name,
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
                 ],
@@ -55,7 +55,7 @@ class ReviewSection extends StatelessWidget {
               Align(
                 alignment: AlignmentDirectional.centerStart,
                 child: Text(
-                  review[index].review,
+                  reviews[index].review.isEmpty?"No Comments Available":reviews[index].review,
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
               ),
@@ -64,7 +64,7 @@ class ReviewSection extends StatelessWidget {
         );
       },
       separatorBuilder: (context, index) => const SizedBox(height: 16.0),
-      itemCount: review.length,
+      itemCount: reviews.length,
     );
   }
 }

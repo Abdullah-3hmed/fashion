@@ -34,9 +34,9 @@ class ModalBottomSheetContent extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 30.0),
-          ColorsAvailable(
-            onColorChanged: (index) => debugPrint(index.toString()),
-          ),
+          // ColorsAvailable(
+          //   onColorChanged: (index) => debugPrint(index.toString()),
+          // ),
           const SizedBox(height: 24.0),
           SizesAvailable(
             onColorChanged: (size) {

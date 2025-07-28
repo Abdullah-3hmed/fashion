@@ -1,21 +1,28 @@
+import 'package:e_fashion_flutter/core/utils/color_map.dart';
 import 'package:flutter/material.dart';
 
 class ColorsAvailable extends StatefulWidget {
-  const ColorsAvailable({super.key, required this.onColorChanged});
+  const ColorsAvailable({
+    super.key,
+    required this.onColorChanged,
+    required this.colors,
+  });
+
   final ValueChanged<int> onColorChanged;
+  final List<String> colors;
+
   @override
   State<ColorsAvailable> createState() => _ColorsAvailableState();
 }
 
 class _ColorsAvailableState extends State<ColorsAvailable> {
-  int selectedColor = 0;
-  List<Color> colors = [
-    const Color(0xFF4AA8FF),
-    Colors.white,
-    const Color(0xFFFFA6A6),
-    const Color(0xFF497833),
-    Colors.black,
-  ];
+  final ValueNotifier<int> selectedColor = ValueNotifier<int>(0);
+
+  @override
+  void dispose() {
+    selectedColor.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,31 +33,33 @@ class _ColorsAvailableState extends State<ColorsAvailable> {
           Text("Color : ", style: Theme.of(context).textTheme.bodyMedium),
           const SizedBox(width: 18.0),
           Expanded(
-            child: ListView.separated(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              scrollDirection: Axis.horizontal,
-              itemCount: colors.length,
-              itemBuilder:
-                  (context, index) => CircleAvatar(
-                    radius: selectedColor == index ? 14.0 : 12.0,
+            child: ValueListenableBuilder<int>(
+              valueListenable: selectedColor,
+              builder: (context, value, _) {
+                return ListView.separated(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  scrollDirection: Axis.horizontal,
+                  itemCount: widget.colors.length,
+                  itemBuilder: (context, index) => CircleAvatar(
+                    radius: value == index ? 14.0 : 12.0,
                     backgroundColor: Theme.of(context).colorScheme.primary,
                     child: InkWell(
                       onTap: () {
-                        setState(() {
-                          selectedColor = index;
-                          widget.onColorChanged(index);
-                        });
+                        selectedColor.value = index;
+                        widget.onColorChanged(index);
                       },
                       child: CircleAvatar(
                         radius: 12.0,
-                        backgroundColor: colors[index],
+                        backgroundColor:
+                        Color(colorHexMap[widget.colors[index]]!),
                       ),
                     ),
                   ),
-              separatorBuilder:
-                  (BuildContext context, int index) =>
-                      const SizedBox(width: 18.0),
+                  separatorBuilder: (BuildContext context, int index) =>
+                  const SizedBox(width: 18.0),
+                );
+              },
             ),
           ),
         ],

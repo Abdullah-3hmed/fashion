@@ -3,13 +3,22 @@ import 'package:solar_icons/solar_icons.dart';
 
 class PiecesAvailable extends StatefulWidget {
   const PiecesAvailable({super.key, required this.onPiecesChanged});
+
   final ValueChanged<int> onPiecesChanged;
+
   @override
   State<PiecesAvailable> createState() => _PiecesAvailableState();
 }
 
 class _PiecesAvailableState extends State<PiecesAvailable> {
-  int _pieces = 1;
+  final ValueNotifier<int> _pieces = ValueNotifier<int>(1);
+
+  @override
+  void dispose() {
+    _pieces.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -18,30 +27,38 @@ class _PiecesAvailableState extends State<PiecesAvailable> {
           "10 Pieces available",
           style: Theme.of(context).textTheme.bodyMedium,
         ),
-        IconButton(
-          padding: EdgeInsets.zero,
-          onPressed: () {
-            if (_pieces > 1) {
-              setState(() {
-                _pieces--;
-              });
-              widget.onPiecesChanged(_pieces);
-            }
+        ValueListenableBuilder<int>(
+          valueListenable: _pieces,
+          builder: (context, value, _) {
+            return Row(
+              children: [
+                IconButton(
+                  padding: EdgeInsets.zero,
+                  onPressed: () {
+                    if (value > 1) {
+                      _pieces.value = value - 1;
+                      widget.onPiecesChanged(_pieces.value);
+                    }
+                  },
+                  icon: const Icon(SolarIconsOutline.minusCircle),
+                ),
+                Text(
+                  "$value",
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
+                IconButton(
+                  padding: EdgeInsets.zero,
+                  onPressed: () {
+                    if (value < 10) {
+                      _pieces.value = value + 1;
+                      widget.onPiecesChanged(_pieces.value);
+                    }
+                  },
+                  icon: const Icon(SolarIconsOutline.addCircle),
+                ),
+              ],
+            );
           },
-          icon: const Icon(SolarIconsOutline.minusCircle),
-        ),
-        Text("$_pieces", style: Theme.of(context).textTheme.bodyLarge),
-        IconButton(
-          padding: EdgeInsets.zero,
-          onPressed: () {
-            if (_pieces < 10) {
-              setState(() {
-                _pieces++;
-              });
-              widget.onPiecesChanged(_pieces);
-            }
-          },
-          icon: const Icon(SolarIconsOutline.addCircle),
         ),
       ],
     );

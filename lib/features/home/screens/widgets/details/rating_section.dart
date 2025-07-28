@@ -30,22 +30,20 @@ class RatingSection extends StatelessWidget {
           itemBuilder:
               (context, _) =>
                   const Icon(FontAwesomeIcons.star, color: Colors.amber),
-          onRatingUpdate: (newRating) {
-            context.read<ProductDetailsCubit>().rateProduct(rating: newRating);
+          onRatingUpdate: (double newRating) {
+            context.read<ProductDetailsCubit>().rateProduct(rate: newRating);
           },
         ),
         const SizedBox(height: 16.0),
         Align(
           child: TextButton(
             onPressed: () {
-              context.pushRoute(EditReviewRoute(productDetailsModel: productDetailsModel));
+              context.pushRoute(
+                EditReviewRoute(productDetailsModel: productDetailsModel),
+              );
             },
             child: Text(
-              context.select(
-                    (ProductDetailsCubit cubit) => cubit.state.rate,
-              ) == 0
-                  ? "Write a review"
-                  : "Edit review",
+               "Write a review",
               style: Theme.of(context).textTheme.bodySmall!.copyWith(
                 color: Theme.of(context).colorScheme.primary,
               ),
@@ -71,7 +69,9 @@ class RatingSection extends StatelessWidget {
         const SizedBox(height: 24.0),
         Align(
           child: RatingBarIndicator(
-            rating: context.select((ProductDetailsCubit cubit) => cubit.state.rate),
+            rating: context.select(
+              (ProductDetailsCubit cubit) => cubit.state.rate,
+            ),
             itemBuilder:
                 (context, index) => const Icon(Icons.star, color: Colors.amber),
             itemSize: 24.0,
@@ -119,7 +119,7 @@ class RatingSection extends StatelessWidget {
             final reviews = state.productDetailsModel.reviews;
             return reviews.isEmpty
                 ? const SizedBox.shrink()
-                : ReviewSection(review: reviews);
+                : ReviewSection(reviews: reviews);
           },
         ),
       ],

@@ -53,6 +53,7 @@ class ProductDetails extends StatelessWidget {
               ),
               const SizedBox(height: 24.0),
               ColorsAvailable(
+                colors: productDetailsModel.parsedColors,
                 onColorChanged: (color) => debugPrint(color.toString()),
               ),
               PiecesAvailable(
