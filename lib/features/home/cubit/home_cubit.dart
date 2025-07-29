@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:e_fashion_flutter/core/enums/request_status.dart';
+import 'package:e_fashion_flutter/core/utils/app_constants.dart';
 import 'package:e_fashion_flutter/features/home/cubit/home_state.dart';
 import 'package:e_fashion_flutter/features/home/data/home_details/review_model.dart';
 import 'package:e_fashion_flutter/features/home/repos/home_repo/home_repo.dart';
@@ -69,12 +70,15 @@ class HomeCubit extends Cubit<HomeState> {
           categoriesStatus: RequestStatus.error,
         ),
       ),
-      (categories) => emit(
-        state.copyWith(
-          categories: categories,
-          categoriesStatus: RequestStatus.success,
-        ),
-      ),
+      (categories) {
+        AppConstants.categories = categories;
+        emit(
+          state.copyWith(
+            categories: categories,
+            categoriesStatus: RequestStatus.success,
+          ),
+        );
+      },
     );
   }
 
@@ -82,7 +86,7 @@ class HomeCubit extends Cubit<HomeState> {
     emit(state.copyWith(productsState: RequestStatus.loading));
     final result = await homeRepo.getProducts(
       category: state.selectedCategoryId,
-      gender: state.gender ?? 2,
+      gender: state.gender,
     );
     result.fold(
       (failure) => emit(
@@ -95,6 +99,8 @@ class HomeCubit extends Cubit<HomeState> {
         state.copyWith(
           products: products,
           productsState: RequestStatus.success,
+          genderActiveIndex: -1,
+          categoryActiveIndex: -1,
         ),
       ),
     );
@@ -110,5 +116,12 @@ class HomeCubit extends Cubit<HomeState> {
 
   void selectGender({required int gender}) {
     emit(state.copyWith(gender: gender));
+  }
+
+  void changeGender({required int index}) {
+    emit(state.copyWith(genderActiveIndex: index));
+  }
+  void changeCategory({required int index}) {
+    emit(state.copyWith(categoryActiveIndex: index));
   }
 }

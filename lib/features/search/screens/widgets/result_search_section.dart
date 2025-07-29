@@ -19,7 +19,7 @@ class ResultSearchSection extends StatelessWidget {
       duration: const Duration(milliseconds: 300),
       transitionBuilder: (child, animation) {
         final offsetAnimation = Tween<Offset>(
-          begin: const Offset(1.0, 0.0), // Slide from right
+          begin: const Offset(1.0, 0.0),
           end: Offset.zero,
         ).animate(animation);
         return SlideTransition(position: offsetAnimation, child: child);

@@ -66,7 +66,7 @@ class DetailsContainerContent extends StatelessWidget {
                     ),
                     const SizedBox(height: 24.0),
                     ColorsAvailable(
-                        colors: [],
+                        colors: const [],
                       onColorChanged: (color) => debugPrint(color.toString()),
                     ),
                     PiecesAvailable(

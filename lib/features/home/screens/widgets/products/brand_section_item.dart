@@ -82,7 +82,7 @@ class BrandSectionItem extends StatelessWidget {
               await showModalBottomSheet(
                 context: context,
                 useRootNavigator: true,
-                builder: (context) => const ModalBottomSheetContent(),
+                builder: (context) =>  ModalBottomSheetContent(productModel: productModel,),
               );
             },
             icon: Icon(
@@ -95,7 +95,9 @@ class BrandSectionItem extends StatelessWidget {
           top: 0.0,
           end: 0.0,
           child: IconButton(
-            onPressed: () {},
+            onPressed: () {
+
+            },
             icon: Icon(
               Iconsax.heart,
               color: Theme.of(context).colorScheme.primary,

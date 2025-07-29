@@ -73,7 +73,7 @@ final ProductModel product;
                     onTap: () async {
                       await showModalBottomSheet(
                         context: context,
-                        builder: (context) => const ModalBottomSheetContent(),
+                        builder: (context) =>  ModalBottomSheetContent(productModel: product,),
                       );
                     },
                     child: Icon(

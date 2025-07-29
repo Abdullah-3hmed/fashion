@@ -2,12 +2,13 @@ import 'package:e_fashion_flutter/core/widgets/primary_button.dart';
 import 'package:e_fashion_flutter/features/home/screens/widgets/shared/colors_available.dart';
 import 'package:e_fashion_flutter/features/home/screens/widgets/shared/pieces_available.dart';
 import 'package:e_fashion_flutter/features/home/screens/widgets/shared/sizes_available.dart';
+import 'package:e_fashion_flutter/shared/data/product_model.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 
 class ModalBottomSheetContent extends StatelessWidget {
-  const ModalBottomSheetContent({super.key});
-
+  const ModalBottomSheetContent({super.key, required this.productModel});
+final ProductModel productModel;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -34,9 +35,10 @@ class ModalBottomSheetContent extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 30.0),
-          // ColorsAvailable(
-          //   onColorChanged: (index) => debugPrint(index.toString()),
-          // ),
+          ColorsAvailable(
+            colors: productModel.parsedColors,
+            onColorChanged: (index) => debugPrint(index.toString()),
+          ),
           const SizedBox(height: 24.0),
           SizesAvailable(
             onColorChanged: (size) {

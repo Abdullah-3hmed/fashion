@@ -103,7 +103,7 @@ class HomeCarouselSliderItem extends StatelessWidget {
               await showModalBottomSheet(
                 context: context,
                 useRootNavigator: true,
-                builder: (context) => const ModalBottomSheetContent(),
+                builder: (context) =>  ModalBottomSheetContent(productModel: offerModel,),
               );
             },
             icon: Icon(

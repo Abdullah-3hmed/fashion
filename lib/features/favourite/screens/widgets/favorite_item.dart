@@ -32,7 +32,7 @@ class FavoriteItem extends StatelessWidget {
                   await showModalBottomSheet(
                     context: context,
                     useRootNavigator: true,
-                    builder: (context) => const ModalBottomSheetContent(),
+                    builder: (context) => const SizedBox.shrink(),// const ModalBottomSheetContent(),
                   );
                 },
                 child: CircleAvatar(

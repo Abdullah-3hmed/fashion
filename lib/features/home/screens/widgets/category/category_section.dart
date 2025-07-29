@@ -36,13 +36,13 @@ class _CategorySectionState extends State<CategorySection> {
             BlocBuilder<HomeCubit, HomeState>(
               buildWhen:
                   (previous, current) =>
-                      previous.selectedCategoryId !=
-                          current.selectedCategoryId ||
-                      previous.gender != current.gender,
+                      previous.categoryActiveIndex !=
+                          current.categoryActiveIndex ||
+                      previous.genderActiveIndex != current.genderActiveIndex,
               builder: (context, state) {
-                return state.gender != null || state.selectedCategoryId != null
+                return state.genderActiveIndex != -1 || state.categoryActiveIndex != -1
                     ? SlideAnimation(
-                      duration: const Duration(milliseconds: 600),
+                      duration: const Duration(milliseconds: 300),
                       begin: const Offset(1.0, 0.0),
                       child: ThirdButton(
                         onPressed: () async {

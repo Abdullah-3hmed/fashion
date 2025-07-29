@@ -20,6 +20,8 @@ class HomeState extends Equatable {
   final String productsErrorMessage;
   final int? selectedCategoryId;
   final int? gender;
+  final int genderActiveIndex ;
+  final int categoryActiveIndex ;
   final bool isConnected;
 
   const HomeState({
@@ -37,6 +39,8 @@ class HomeState extends Equatable {
     this.productsErrorMessage = "",
     this.selectedCategoryId,
     this.gender,
+    this.genderActiveIndex = -1,
+    this.categoryActiveIndex = -1,
     this.isConnected = true,
   });
 
@@ -55,6 +59,8 @@ class HomeState extends Equatable {
     String? productsErrorMessage,
     int? selectedCategoryId,
     int? gender,
+    int? genderActiveIndex,
+    int? categoryActiveIndex,
     bool? isConnected,
   }) {
     return HomeState(
@@ -76,6 +82,10 @@ class HomeState extends Equatable {
       productsState: productsState ?? this.productsState,
       selectedCategoryId: selectedCategoryId ?? this.selectedCategoryId,
       gender: gender ?? this.gender,
+      genderActiveIndex: genderActiveIndex ?? this.genderActiveIndex,
+      categoryActiveIndex: categoryActiveIndex ?? this.categoryActiveIndex,
+      productsErrorMessage:
+      productsErrorMessage ?? this.productsErrorMessage,
       isConnected: isConnected ?? this.isConnected,
     );
   }
@@ -98,5 +108,7 @@ class HomeState extends Equatable {
         selectedCategoryId,
         gender,
         isConnected,
+        genderActiveIndex,
+        categoryActiveIndex
       ];
 }

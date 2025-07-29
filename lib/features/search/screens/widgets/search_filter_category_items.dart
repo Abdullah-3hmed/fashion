@@ -1,9 +1,11 @@
+import 'package:e_fashion_flutter/core/utils/app_constants.dart';
+import 'package:e_fashion_flutter/features/home/data/home/category_model.dart';
 import 'package:e_fashion_flutter/features/search/screens/widgets/search_filter_category_item.dart';
 import 'package:flutter/material.dart';
 
 class SearchFilterCategoryItems extends StatefulWidget {
   const SearchFilterCategoryItems({super.key, required this.onCategoryChanged});
-final ValueChanged<String> onCategoryChanged;
+final ValueChanged<int> onCategoryChanged;
   @override
   State<SearchFilterCategoryItems> createState() =>
       _SearchFilterCategoryItemsState();
@@ -11,38 +13,24 @@ final ValueChanged<String> onCategoryChanged;
 
 class _SearchFilterCategoryItemsState extends State<SearchFilterCategoryItems> {
   int selectedIndex = -1;
-  List<String> brands = const [
-    "Dress",
-    "T-Shirt",
-    "Pants",
-    "Blouse",
-    "Jackets",
-    "Suits",
-    "Sneakers",
-    "Perfume",
-    "Vests",
-    "Jeans",
-    "Shorts",
-    "Socks",
-    "Sweatshirt",
-  ];
 
   @override
   Widget build(BuildContext context) {
+   final List<CategoryModel> categories = AppConstants.categories;
     return Wrap(
       spacing: 8.0,
       runSpacing: 8.0,
       children: List.generate(
-        brands.length,
+        categories.length,
         (index) => GestureDetector(
           onTap: () {
             setState(() {
               selectedIndex = index;
-              widget.onCategoryChanged(brands[index]);
+              widget.onCategoryChanged(categories[index].id);
             });
           },
           child: SearchFilterCategoryItem(
-            brandName: brands[index],
+            brandName: categories[index].name,
             isSelected: index == selectedIndex,
           ),
         ),

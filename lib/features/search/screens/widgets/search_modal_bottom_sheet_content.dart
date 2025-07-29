@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:e_fashion_flutter/core/services/service_locator.dart';
 import 'package:e_fashion_flutter/core/widgets/primary_button.dart';
 import 'package:e_fashion_flutter/features/search/bloc/search_bloc.dart';
@@ -21,7 +22,7 @@ class SearchModalBottomSheetContent extends StatefulWidget {
 class _SearchModalBottomSheetContentState
     extends State<SearchModalBottomSheetContent> {
   String selectedBrand = '';
-  String selectedCategory = '';
+  int categoryId = 0;
   int minPrice = 0;
   int maxPrice = 0;
 
@@ -67,8 +68,8 @@ class _SearchModalBottomSheetContentState
               Divider(thickness: 1.0, color: Colors.grey[300]),
               const SizedBox(height: 8.0),
               SearchFilterCategoryItems(
-                onCategoryChanged: (String category) {
-                  selectedCategory = category;
+                onCategoryChanged: (int id) {
+                  categoryId = id;
                 },
               ),
               const SizedBox(height: 24.0),
@@ -89,11 +90,12 @@ class _SearchModalBottomSheetContentState
                       SearchProductEvent(
                         query: widget.query,
                         brand: selectedBrand,
-                        categoryId: 1,
+                        categoryId: categoryId,
                         minPrice: minPrice,
                         maxPrice: maxPrice,
                       ),
                     );
+                    context.pop();
                   },
                   text: "Apply Filters",
                 ),
