@@ -13,12 +13,12 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  late bool isClipped;
+  final ValueNotifier<bool> isClippedNotifier = ValueNotifier<bool>(true);
 
   @override
-  void initState() {
-    super.initState();
-    isClipped = true;
+  void dispose() {
+    isClippedNotifier.dispose();
+    super.dispose();
   }
 
   @override
@@ -34,16 +34,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
               return NotificationListener<DraggableScrollableNotification>(
                 onNotification: (notification) {
                   final newIsClipped = notification.extent < 0.85;
-                  if (newIsClipped != isClipped) {
-                    setState(() {
-                      isClipped = newIsClipped;
-                    });
+                  if (newIsClipped != isClippedNotifier.value) {
+                    isClippedNotifier.value = newIsClipped;
                   }
                   return true;
                 },
-                child: ProfileClippedContainer(
-                  isClipped: isClipped,
-                  child: ProfileContainerContent(controller: scrollController),
+                child: ValueListenableBuilder<bool>(
+                  valueListenable: isClippedNotifier,
+                  child: ProfileContainerContent(
+                    controller: scrollController,
+                  ),
+                  builder: (context, isClipped, child) {
+                    return ProfileClippedContainer(
+                      isClipped: isClipped,
+                      child: child!,
+                    );
+                  },
                 ),
               );
             },

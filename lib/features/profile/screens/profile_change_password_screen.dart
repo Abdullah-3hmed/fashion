@@ -42,6 +42,7 @@ class _ProfileChangePasswordScreenState
     return Scaffold(
       body: ProfileBackgroundImageAndLogo(
         child: ProfileClippedContainer(
+          isClipped: true,
           child: SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
             child: Form(

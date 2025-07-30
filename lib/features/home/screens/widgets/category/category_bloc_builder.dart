@@ -13,10 +13,10 @@ class CategoryBlocBuilder extends StatelessWidget {
 
   final ValueNotifier<double> genderWidth;
 
-  static List<CategoryModel> dummyCategories = List.generate(
+  static List<CategoryModel> dummyCategories = List<CategoryModel>.generate(
     5,
     (index) =>
-        const CategoryModel(id: 1, name: "jeans", image: AppConstants.imageUrl),
+        CategoryModel(id: index, name: "jeans", image: AppConstants.imageUrl),
   );
 
   @override
@@ -29,7 +29,7 @@ class CategoryBlocBuilder extends StatelessWidget {
         switch (state.categoriesStatus) {
           case RequestStatus.loading:
             return Skeletonizer(
-              child: CategoryContainer(categories: dummyCategories),
+              child: CategoryContainer(categories: dummyCategories,isLoading: true,),
             );
           case RequestStatus.success:
             return GestureDetector(

@@ -60,6 +60,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       body: ProfileBackgroundImageAndLogo(
         isEditProfileScreen: true,
         child: ProfileClippedContainer(
+          isClipped: true,
           child: SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
             child: Form(
