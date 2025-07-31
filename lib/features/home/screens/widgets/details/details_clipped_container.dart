@@ -12,10 +12,12 @@ class DetailsClippedContainer extends StatefulWidget {
   final bool isClipped;
 
   @override
-  State<DetailsClippedContainer> createState() => _DetailsClippedContainerState();
+  State<DetailsClippedContainer> createState() =>
+      _DetailsClippedContainerState();
 }
 
-class _DetailsClippedContainerState extends State<DetailsClippedContainer> with SingleTickerProviderStateMixin {
+class _DetailsClippedContainerState extends State<DetailsClippedContainer>
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
 
@@ -68,19 +70,21 @@ class _DetailsClippedContainerState extends State<DetailsClippedContainer> with 
             curve: Curves.easeInOut,
             width: double.infinity,
             padding: const EdgeInsets.symmetric(horizontal: 24.0),
-            decoration: widget.isClipped
-                ? null
-                : BoxDecoration(
-              color: Theme.of(context).colorScheme.onInverseSurface,
-              borderRadius: const BorderRadiusDirectional.only(
-                topEnd: Radius.circular(32.0),
-                topStart: Radius.circular(32.0),
-              ),
-            ),
-            color: widget.isClipped
-                ? Theme.of(context).colorScheme.onInverseSurface
-                : null,
-            child:child,
+            decoration:
+                widget.isClipped
+                    ? null
+                    : BoxDecoration(
+                      color: Theme.of(context).colorScheme.onInverseSurface,
+                      borderRadius: const BorderRadiusDirectional.only(
+                        topEnd: Radius.circular(32.0),
+                        topStart: Radius.circular(32.0),
+                      ),
+                    ),
+            color:
+                widget.isClipped
+                    ? Theme.of(context).colorScheme.onInverseSurface
+                    : null,
+            child: child,
           ),
         );
       },

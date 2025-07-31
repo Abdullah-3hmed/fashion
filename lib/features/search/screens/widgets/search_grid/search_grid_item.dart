@@ -39,30 +39,32 @@ class SearchGridItem extends StatelessWidget {
               ),
               child: Row(
                 children: [
-                  const SizedBox(width: 12.0),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        productModel.title.length > 8
-                            ? '${productModel.title.substring(0, 8)}...'
-                            : productModel.title,
-                        style: Theme.of(context).textTheme.bodyMedium,
-                      ),
-                      Text(
-                        r"$"
-                        "${productModel.basePrice}",
-                        style: Theme.of(context).textTheme.bodySmall,
-                      ),
-                    ],
+                  const SizedBox(width: 5.0),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                           productModel.title ,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: Theme.of(context).textTheme.bodyMedium,
+                        ),
+                        Text(
+                          r"$"
+                          "${productModel.basePrice}",
+                          maxLines: 1,
+                          style: Theme.of(context).textTheme.bodySmall,
+                        ),
+                      ],
+                    ),
                   ),
-                  const Spacer(),
                   IconButton(
                     onPressed: () {},
+                    padding: EdgeInsets.zero,
                     icon: const Icon(Iconsax.bag_2, color: Color(0xFF4A96D8)),
                   ),
-                  const Spacer(),
                 ],
               ),
             ),

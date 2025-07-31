@@ -42,26 +42,29 @@ class SearchListViewItem extends StatelessWidget {
                 children: [
                 const SizedBox(width: 8.0,),
                   Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          product.title * 3,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                            color: Colors.white,
+                    child: Center(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            product.title ,
+                            textAlign: TextAlign.center,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                              color: Colors.white,
+                            ),
                           ),
-                        ),
-                        Text(
-                          r"$"
-                          "${product.basePrice}",
-                          style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                            color: Colors.white,
+                          Text(
+                            r"$"
+                            "${product.basePrice}",
+                            style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                              color: Colors.white,
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 const SizedBox(width: 8.0,),

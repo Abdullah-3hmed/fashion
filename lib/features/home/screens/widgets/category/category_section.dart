@@ -61,7 +61,8 @@ class _CategorySectionState extends State<CategorySection> {
           children: [
             ValueListenableBuilder<double>(
               valueListenable: genderWidth,
-              builder: (context, value, _) {
+              child: const FilterGenderSection(),
+              builder: (context, value, child) {
                 return AnimatedContainer(
                   duration: const Duration(milliseconds: 300),
                   width: value,
@@ -78,7 +79,7 @@ class _CategorySectionState extends State<CategorySection> {
                     child: Align(
                       alignment: Alignment.centerLeft,
                       widthFactor: value / 145.0,
-                      child: const FilterGenderSection(),
+                      child: child,
                     ),
                   ),
                 );
