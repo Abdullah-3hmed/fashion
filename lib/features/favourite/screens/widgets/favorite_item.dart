@@ -1,11 +1,17 @@
 import 'package:e_fashion_flutter/core/utils/assets_manager.dart';
+import 'package:e_fashion_flutter/core/widgets/custom_cached_network_image.dart';
 import 'package:e_fashion_flutter/core/widgets/modal_bottom_sheet_content.dart';
+import 'package:e_fashion_flutter/features/favourite/cubit/favorite_cubit.dart';
+import 'package:e_fashion_flutter/features/favourite/data/favorite_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:solar_icons/solar_icons.dart';
 
 class FavoriteItem extends StatelessWidget {
-  const FavoriteItem({super.key});
+  const FavoriteItem({super.key, required this.favoriteModel});
+
+  final FavoriteModel favoriteModel;
 
   @override
   Widget build(BuildContext context) {
@@ -18,11 +24,9 @@ class FavoriteItem extends StatelessWidget {
           children: [
             ClipRRect(
               borderRadius: BorderRadiusDirectional.circular(16.0),
-              child: Image.asset(
-                width: double.infinity,
+              child: CustomCachedNetworkImage(
+                imageUrl: favoriteModel.image,
                 height: 200.0,
-                AssetsManager.welcomeImage,
-                fit: BoxFit.cover,
               ),
             ),
             PositionedDirectional(
@@ -32,7 +36,9 @@ class FavoriteItem extends StatelessWidget {
                   await showModalBottomSheet(
                     context: context,
                     useRootNavigator: true,
-                    builder: (context) => const SizedBox.shrink(),// const ModalBottomSheetContent(),
+                    builder:
+                        (context) =>
+                            const SizedBox.shrink(), // const ModalBottomSheetContent(),
                   );
                 },
                 child: CircleAvatar(
@@ -53,7 +59,11 @@ class FavoriteItem extends StatelessWidget {
               end: 6.0,
               top: 6.0,
               child: IconButton(
-                onPressed: () {},
+                onPressed: () async {
+                  await context.read<FavoriteCubit>().addAndRemoveFavorite(
+                    favoriteModel: favoriteModel,
+                  );
+                },
                 icon: Icon(
                   SolarIconsBold.heart,
                   size: 30.0,
@@ -65,10 +75,12 @@ class FavoriteItem extends StatelessWidget {
         ),
         const SizedBox(height: 20.0),
         Text(
-          "Black women shirt",
+          favoriteModel.title,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
           style: Theme.of(context).textTheme.labelMedium,
         ),
-        Text(r"$200", style: Theme.of(context).textTheme.bodyLarge),
+        Text(r"$""${favoriteModel.price}", style: Theme.of(context).textTheme.bodyLarge),
       ],
     );
   }

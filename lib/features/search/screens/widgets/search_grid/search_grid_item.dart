@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:e_fashion_flutter/core/widgets/custom_cached_network_image.dart';
+import 'package:e_fashion_flutter/core/widgets/custom_heart_icon.dart';
 import 'package:e_fashion_flutter/features/search/screens/widgets/search_grid/search_grid_container_clipper.dart';
 import 'package:e_fashion_flutter/shared/data/product_model.dart';
 import 'package:flutter/material.dart';
@@ -76,9 +77,8 @@ class SearchGridItem extends StatelessWidget {
           child: CircleAvatar(
             radius: 16.0,
             backgroundColor: Colors.white.withValues(alpha: 0.15),
-            child: Icon(
-              Iconsax.heart,
-              color: Theme.of(context).colorScheme.primary,
+            child:CustomHeartIcon(
+              productModel: productModel,
             ),
           ),
         ),

@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:e_fashion_flutter/config/router/app_router.dart';
 import 'package:e_fashion_flutter/core/widgets/custom_cached_network_image.dart';
+import 'package:e_fashion_flutter/core/widgets/custom_heart_icon.dart';
 import 'package:e_fashion_flutter/core/widgets/modal_bottom_sheet_content.dart';
 import 'package:e_fashion_flutter/features/home/screens/widgets/discover/discover_grid/discover_grid_clipped_reverse_container.dart';
 import 'package:e_fashion_flutter/features/home/screens/widgets/discover/discover_grid/discover_grid_clipped_reverse_image.dart';
@@ -102,10 +103,9 @@ final ProductModel product;
               onTap: () {},
               child: CircleAvatar(
                 radius: 16.0,
-                backgroundColor: Colors.white,
-                child: Icon(
-                  Iconsax.heart,
-                  color: Theme.of(context).colorScheme.primary,
+                backgroundColor: Colors.white.withValues(alpha: 0.15),
+                child: CustomHeartIcon(
+                  productModel: product,
                 ),
               ),
             ),

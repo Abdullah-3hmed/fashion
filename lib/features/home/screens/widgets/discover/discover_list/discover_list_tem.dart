@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:e_fashion_flutter/config/router/app_router.dart';
 import 'package:e_fashion_flutter/core/widgets/custom_cached_network_image.dart';
+import 'package:e_fashion_flutter/core/widgets/custom_heart_icon.dart';
 import 'package:e_fashion_flutter/core/widgets/modal_bottom_sheet_content.dart';
 import 'package:e_fashion_flutter/features/home/screens/widgets/discover/discover_list/discover_list_clipped_container.dart';
 import 'package:e_fashion_flutter/features/home/screens/widgets/discover/discover_list/discover_list_image_clipper.dart';
@@ -114,10 +115,7 @@ class DiscoverListItem extends StatelessWidget {
               child: CircleAvatar(
                 radius: 18.0,
                 backgroundColor: Colors.white.withValues(alpha: 0.15),
-                child: Icon(
-                  Iconsax.heart,
-                  color: Theme.of(context).colorScheme.primary,
-                ),
+                child: CustomHeartIcon(productModel: product,),
               ),
             ),
           ),

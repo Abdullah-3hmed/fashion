@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:e_fashion_flutter/config/router/app_router.dart';
 import 'package:e_fashion_flutter/core/widgets/custom_cached_network_image.dart';
+import 'package:e_fashion_flutter/core/widgets/custom_heart_icon.dart';
 import 'package:e_fashion_flutter/core/widgets/modal_bottom_sheet_content.dart';
 import 'package:e_fashion_flutter/features/home/screens/widgets/shared/home_clipped_container.dart';
 import 'package:e_fashion_flutter/shared/data/product_model.dart';
@@ -94,14 +95,8 @@ class BrandSectionItem extends StatelessWidget {
         PositionedDirectional(
           top: 0.0,
           end: 0.0,
-          child: IconButton(
-            onPressed: () {
-
-            },
-            icon: Icon(
-              Iconsax.heart,
-              color: Theme.of(context).colorScheme.primary,
-            ),
+          child: CustomHeartIcon(
+            productModel: productModel,
           ),
         ),
       ],

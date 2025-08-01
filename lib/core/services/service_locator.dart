@@ -7,6 +7,9 @@ import 'package:e_fashion_flutter/core/services/location_service.dart';
 import 'package:e_fashion_flutter/features/auth/cubit/auth_cubit.dart';
 import 'package:e_fashion_flutter/features/auth/repos/auth_repo.dart';
 import 'package:e_fashion_flutter/features/auth/repos/auth_repo_impl.dart';
+import 'package:e_fashion_flutter/features/favourite/cubit/favorite_cubit.dart';
+import 'package:e_fashion_flutter/features/favourite/repos/favorite_repo.dart';
+import 'package:e_fashion_flutter/features/favourite/repos/favorite_repo_impl.dart';
 import 'package:e_fashion_flutter/features/home/cubit/home_cubit.dart';
 import 'package:e_fashion_flutter/features/home/cubit/product_details_cubit.dart';
 import 'package:e_fashion_flutter/features/home/repos/home_details_repo/home_details_repo.dart';
@@ -62,6 +65,10 @@ class ServiceLocator {
     getIt.registerLazySingleton<SearchRepo>(() => SearchRepo(dioHelper: getIt<DioHelper>()));
     getIt.registerFactory<SearchBloc>(
       () => SearchBloc(searchRepo: getIt<SearchRepo>()),
+    );
+    getIt.registerLazySingleton<FavoriteRepo>(() => FavoriteRepoImpl(dioHelper: getIt<DioHelper>()));
+    getIt.registerFactory<FavoriteCubit>(
+          () => FavoriteCubit(favoriteRepo: getIt<FavoriteRepo>()),
     );
     getIt.registerFactory<AppCubit>(() => AppCubit());
   }

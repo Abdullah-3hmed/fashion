@@ -1,3 +1,4 @@
+import 'package:e_fashion_flutter/features/favourite/data/favorite_model.dart';
 import 'package:equatable/equatable.dart';
 
 class ProductModel extends Equatable {
@@ -21,9 +22,12 @@ class ProductModel extends Equatable {
     required this.isOffer,
   });
 
-
   List<String> get parsedColors =>
-      colors.split(',').map((e) => e.trim()).where((e) => e.isNotEmpty).toList();
+      colors
+          .split(',')
+          .map((e) => e.trim())
+          .where((e) => e.isNotEmpty)
+          .toList();
 
   List<String> get parsedSizes =>
       sizes.split(',').map((e) => e.trim()).where((e) => e.isNotEmpty).toList();
@@ -38,6 +42,9 @@ class ProductModel extends Equatable {
     sizes: json["sizes"] ?? "",
     isOffer: json["isOffred"] ?? false,
   );
+
+  FavoriteModel toFavoriteModel() =>
+      FavoriteModel(id: id, title: title, image: imageUrl, price: basePrice);
 
   @override
   List<Object> get props => [
