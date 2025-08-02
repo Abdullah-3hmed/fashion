@@ -7,11 +7,12 @@ class NoInternetWidget extends StatelessWidget {
   const NoInternetWidget({
     super.key,
     required this.onPressed,
-    this.isLoading = false,
+    this.isLoading = false, required this.errorMessage,
   });
 
   final void Function() onPressed;
   final bool isLoading;
+  final String errorMessage;
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +33,7 @@ class NoInternetWidget extends StatelessWidget {
           ),
           const SizedBox(height: 24.0),
           Text(
-            "No internet connection",
+            errorMessage,
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.bodyLarge,
           ),

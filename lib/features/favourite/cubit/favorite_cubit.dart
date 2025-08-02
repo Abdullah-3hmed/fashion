@@ -28,30 +28,56 @@ class FavoriteCubit extends Cubit<FavoriteState> {
       productId: favoriteModel.id,
     );
     result.fold(
-      (failure) => emit(
-        state.copyWith(
-          favoriteErrorMessage: failure.errorMessage,
-          favoriteState: RequestStatus.error,
-          inFavorites: oldInFavorites,
-          favorites: oldFavorites,
-        ),
-      ),
-      (_){
+      (failure) {
+        if (!failure.isConnected) {
+          emit(
+            state.copyWith(
+              favoriteErrorMessage: failure.errorMessage,
+              favoriteState: RequestStatus.error,
+              inFavorites: oldInFavorites,
+              favorites: oldFavorites,
+              isConnected: false,
+            ),
+          );
+        }
+        emit(
+          state.copyWith(
+            favoriteErrorMessage: failure.errorMessage,
+            favoriteState: RequestStatus.error,
+            inFavorites: oldInFavorites,
+            favorites: oldFavorites,
+          ),
+        );
+      },
+      (_) {
         emit(state.copyWith(favoriteState: RequestStatus.success));
       },
     );
   }
 
   Future<void> getFavorites() async {
-    emit(state.copyWith(favoriteState: RequestStatus.loading));
+    emit(
+      state.copyWith(favoriteState: RequestStatus.loading, isConnected: true),
+    );
     final result = await favoriteRepo.getFavorites();
     result.fold(
-      (failure) => emit(
-        state.copyWith(
-          favoriteErrorMessage: failure.errorMessage,
-          favoriteState: RequestStatus.error,
-        ),
-      ),
+      (failure) {
+        if (!failure.isConnected) {
+          emit(
+            state.copyWith(
+              favoriteErrorMessage: failure.errorMessage,
+              favoriteState: RequestStatus.error,
+              isConnected: false,
+            ),
+          );
+        }
+        emit(
+          state.copyWith(
+            favoriteErrorMessage: failure.errorMessage,
+            favoriteState: RequestStatus.error,
+          ),
+        );
+      },
       (favorites) {
         final Set<String> favoriteIds = favorites.map((e) => e.id).toSet();
         emit(

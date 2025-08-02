@@ -46,27 +46,23 @@ class HomeScreen extends StatelessWidget implements AutoRouteWrapper {
         builder: (context, isConnected) {
           return isConnected
               ? CustomScrollView(
-            physics: const BouncingScrollPhysics(),
-            slivers: [
-              const SliverToBoxAdapter(child:   HomeHeaderBlocBuilder(),),
-              const SliverToBoxAdapter(child: CategorySection()),
-              const SliverToBoxAdapter(child: OffersSection()),
-              ..._buildProductsSections(context),
-              const SliverToBoxAdapter(
-                child:SizedBox(
-                  height: 100.0,
-                ),
-              ),
-            ],
-          )
+                physics: const BouncingScrollPhysics(),
+                slivers: [
+                  const SliverToBoxAdapter(child: HomeHeaderBlocBuilder()),
+                  const SliverToBoxAdapter(child: CategorySection()),
+                  const SliverToBoxAdapter(child: OffersSection()),
+                  ..._buildProductsSections(context),
+                  const SliverToBoxAdapter(child: SizedBox(height: 100.0)),
+                ],
+              )
               : NoInternetWidget(
-            isLoading: context.select(
-                  (HomeCubit cubit) => cubit.state.collectionsStatus.isLoading,
-            ),
-            onPressed: () async {
-              await context.read<HomeCubit>().getAllHomeData();
-            },
-          );
+                errorMessage: context.select(
+                  (HomeCubit cubit) => cubit.state.collectionsErrorMessage,
+                ),
+                onPressed: () async {
+                  await context.read<HomeCubit>().getAllHomeData();
+                },
+              );
         },
       ),
     );
@@ -78,11 +74,7 @@ class HomeScreen extends StatelessWidget implements AutoRouteWrapper {
     switch (state.productsState) {
       case RequestStatus.loading:
         return [
-          const SliverToBoxAdapter(
-            child:SizedBox(
-              height: 20.0,
-            ),
-          ),
+          const SliverToBoxAdapter(child: SizedBox(height: 20.0)),
           SliverToBoxAdapter(
             child: Skeletonizer(
               child: SizedBox(
@@ -91,15 +83,19 @@ class HomeScreen extends StatelessWidget implements AutoRouteWrapper {
                   physics: const BouncingScrollPhysics(),
                   scrollDirection: Axis.horizontal,
                   itemCount: 3,
-                  itemBuilder: (context, index) => const SizedBox(
-                    width: 240.0,
-                    child: BrandSectionItem(productModel: dummyProductModel),
-                  ),
-                  separatorBuilder: (context, index) => const SizedBox(width: 12.0),
+                  itemBuilder:
+                      (context, index) => const SizedBox(
+                        width: 240.0,
+                        child: BrandSectionItem(
+                          productModel: dummyProductModel,
+                        ),
+                      ),
+                  separatorBuilder:
+                      (context, index) => const SizedBox(width: 12.0),
                 ),
               ),
             ),
-          )
+          ),
         ];
 
       case RequestStatus.success:
@@ -107,12 +103,13 @@ class HomeScreen extends StatelessWidget implements AutoRouteWrapper {
             .where((entry) => entry.value.isNotEmpty)
             .map(
               (entry) => SliverToBoxAdapter(
-            child: BrandSection(
-              brandName: entry.key,
-              products: entry.value,
-            ),
-          ),
-        ).toList();
+                child: BrandSection(
+                  brandName: entry.key,
+                  products: entry.value,
+                ),
+              ),
+            )
+            .toList();
 
       case RequestStatus.error:
         return [
@@ -123,7 +120,7 @@ class HomeScreen extends StatelessWidget implements AutoRouteWrapper {
                 style: Theme.of(context).textTheme.titleMedium,
               ),
             ),
-          )
+          ),
         ];
 
       default:
