@@ -2,13 +2,14 @@ import 'package:e_fashion_flutter/core/widgets/primary_button.dart';
 import 'package:e_fashion_flutter/features/home/screens/widgets/shared/colors_available.dart';
 import 'package:e_fashion_flutter/features/home/screens/widgets/shared/pieces_available.dart';
 import 'package:e_fashion_flutter/features/home/screens/widgets/shared/sizes_available.dart';
+import 'package:e_fashion_flutter/shared/data/bottom_sheet_model.dart';
 import 'package:e_fashion_flutter/shared/data/product_model.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 
 class ModalBottomSheetContent extends StatelessWidget {
-  const ModalBottomSheetContent({super.key, required this.productModel});
-final ProductModel productModel;
+  const ModalBottomSheetContent({super.key, required this.bottomSheetModel});
+final BottomSheetModel bottomSheetModel;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -27,20 +28,21 @@ final ProductModel productModel;
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                "Winter Jacket",
+              bottomSheetModel.title,
                 style: Theme.of(context).textTheme.titleMedium,
               ),
               const SizedBox(width: 46.0),
-              Text(r"$200", style: Theme.of(context).textTheme.bodyLarge),
+              Text(r"$""${bottomSheetModel.basePrice}", style: Theme.of(context).textTheme.bodyLarge),
             ],
           ),
           const SizedBox(height: 30.0),
           ColorsAvailable(
-            colors: productModel.parsedColors,
+            colors: bottomSheetModel.colors,
             onColorChanged: (index) => debugPrint(index.toString()),
           ),
           const SizedBox(height: 24.0),
           SizesAvailable(
+            sizes: bottomSheetModel.sizes,
             onColorChanged: (size) {
               debugPrint(size);
             },

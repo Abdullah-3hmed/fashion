@@ -7,6 +7,7 @@ import 'package:e_fashion_flutter/core/widgets/modal_bottom_sheet_content.dart';
 import 'package:e_fashion_flutter/features/home/screens/widgets/discover/discover_grid/discover_grid_clipped_container.dart';
 import 'package:e_fashion_flutter/features/home/screens/widgets/discover/discover_grid/discover_grid_clipped_image.dart';
 import 'package:e_fashion_flutter/features/home/screens/widgets/discover/discover_grid/discover_top_grid_clipped_image.dart';
+import 'package:e_fashion_flutter/shared/data/bottom_sheet_model.dart';
 import 'package:e_fashion_flutter/shared/data/product_model.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
@@ -66,7 +67,7 @@ class DiscoverGridItem extends StatelessWidget {
                     onTap: () async {
                       await showModalBottomSheet(
                         context: context,
-                        builder: (context) =>  ModalBottomSheetContent(productModel: product,),
+                        builder: (context) =>  ModalBottomSheetContent(bottomSheetModel: BottomSheetModel.fromProduct(product),),
                       );
                     },
                     child: Icon(

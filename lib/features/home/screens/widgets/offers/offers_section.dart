@@ -23,7 +23,6 @@ class OffersSection extends StatelessWidget {
       basePrice: 0.0,
       colors: "",
       discountPrice: 0.0,
-      isOffer: false,
       sizes: "",
     ),
   );

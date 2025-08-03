@@ -14,7 +14,8 @@
     <application
         android:label="e_fashion_flutter"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/ic_launcher"
+        android:enableOnBackInvokedCallback="true">
 
         <!-- مفتاح Google Maps -->
         <meta-data

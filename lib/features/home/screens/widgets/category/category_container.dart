@@ -6,19 +6,21 @@ class CategoryContainer extends StatelessWidget {
   const CategoryContainer({
     super.key,
     required this.categories,
-    this.isScroll = true,  this.isLoading = false,
+    this.isScroll = true,
+    this.isLoading = false,
   });
 
   final List<CategoryModel> categories;
   final bool isScroll;
   final bool isLoading;
+
   @override
   Widget build(BuildContext context) {
     return Stack(
       alignment: AlignmentDirectional.centerStart,
       children: [
         Container(
-          width: isLoading ?double.infinity : null,
+          width: isLoading ? double.infinity : null,
           height: isLoading ? 85.0 : null,
           padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
           decoration: BoxDecoration(

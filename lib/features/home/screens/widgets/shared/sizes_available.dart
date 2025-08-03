@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
 class SizesAvailable extends StatefulWidget {
-  const SizesAvailable({super.key, required this.onColorChanged});
+  const SizesAvailable({super.key, required this.onColorChanged, required this.sizes});
   final ValueChanged<String> onColorChanged;
+  final List<String> sizes;
   @override
   State<SizesAvailable> createState() => _SizesAvailableState();
 }
 
 class _SizesAvailableState extends State<SizesAvailable> {
   int selectedSize = 0;
-  List<String> sizes = ["S", "M", "L", "XL", "2XL"];
 
   @override
   Widget build(BuildContext context) {
@@ -24,12 +24,12 @@ class _SizesAvailableState extends State<SizesAvailable> {
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               scrollDirection: Axis.horizontal,
-              itemCount: sizes.length,
+              itemCount: widget.sizes.length,
               itemBuilder:
                   (context, index) => InkWell(
                     onTap: () {
                       selectedSize = index;
-                      widget.onColorChanged(sizes[index]);
+                      widget.onColorChanged(widget.sizes[index]);
                       setState(() {});
                     },
                     child: CircleAvatar(
@@ -39,7 +39,7 @@ class _SizesAvailableState extends State<SizesAvailable> {
                               ? Theme.of(context).colorScheme.primary
                               : Colors.transparent,
                       child: Text(
-                        sizes[index],
+                        widget.sizes[index],
                         style:
                             selectedSize == index
                                 ? Theme.of(

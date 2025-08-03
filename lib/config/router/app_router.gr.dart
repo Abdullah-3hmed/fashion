@@ -363,22 +363,6 @@ class HomeRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [HomeTab]
-class HomeTabRoute extends PageRouteInfo<void> {
-  const HomeTabRoute({List<PageRouteInfo>? children})
-    : super(HomeTabRoute.name, initialChildren: children);
-
-  static const String name = 'HomeTabRoute';
-
-  static PageInfo page = PageInfo(
-    name,
-    builder: (data) {
-      return const HomeTab();
-    },
-  );
-}
-
-/// generated route for
 /// [LayoutScreen]
 class LayoutRoute extends PageRouteInfo<void> {
   const LayoutRoute({List<PageRouteInfo>? children})

@@ -33,7 +33,6 @@ class HomeScreen extends StatelessWidget implements AutoRouteWrapper {
     basePrice: 0.0,
     colors: "",
     discountPrice: 0.0,
-    isOffer: false,
     sizes: "",
     id: "",
     title: "",
@@ -74,62 +73,71 @@ class HomeScreen extends StatelessWidget implements AutoRouteWrapper {
   }
 
   List<Widget> _buildProductsSections(BuildContext context) {
-    final state = context.watch<HomeCubit>().state;
-
-    switch (state.productsState) {
-      case RequestStatus.loading:
-        return [
-          const SliverToBoxAdapter(child: SizedBox(height: 20.0)),
-          SliverToBoxAdapter(
-            child: Skeletonizer(
-              child: SizedBox(
-                height: 180.0,
-                child: ListView.separated(
-                  physics: const BouncingScrollPhysics(),
-                  scrollDirection: Axis.horizontal,
-                  itemCount: 3,
-                  itemBuilder:
-                      (context, index) => const SizedBox(
-                        width: 240.0,
-                        child: BrandSectionItem(
-                          productModel: dummyProductModel,
+    return [
+      BlocBuilder<HomeCubit, HomeState>(
+        buildWhen: (previous, current) =>
+        previous.productsState != current.productsState,
+        builder: (context, state) {
+          switch (state.productsState) {
+            case RequestStatus.loading:
+              return SliverToBoxAdapter(
+                child: Column(
+                  children: [
+                    const SizedBox(height: 20.0),
+                    Skeletonizer(
+                      child: SizedBox(
+                        height: 180.0,
+                        child: ListView.separated(
+                          physics: const BouncingScrollPhysics(),
+                          scrollDirection: Axis.horizontal,
+                          itemCount: 3,
+                          itemBuilder: (context, index) =>
+                          const SizedBox(
+                            width: 240.0,
+                            child: BrandSectionItem(
+                              productModel: dummyProductModel,
+                            ),
+                          ),
+                          separatorBuilder:
+                              (context, index) => const SizedBox(width: 12.0),
                         ),
                       ),
-                  separatorBuilder:
-                      (context, index) => const SizedBox(width: 12.0),
+                    ),
+                  ],
                 ),
-              ),
-            ),
-          ),
-        ];
+              );
 
-      case RequestStatus.success:
-        return state.products.groupedBrandProducts.entries
-            .where((entry) => entry.value.isNotEmpty)
-            .map(
-              (entry) => SliverToBoxAdapter(
-                child: BrandSection(
-                  brandName: entry.key,
-                  products: entry.value,
+            case RequestStatus.success:
+              return SliverList(
+                delegate: SliverChildListDelegate(
+                  state.products.groupedBrandProducts.entries
+                      .where((entry) => entry.value.isNotEmpty)
+                      .map(
+                        (entry) => BrandSection(
+                      brandName: entry.key,
+                      products: entry.value,
+                    ),
+                  )
+                      .toList(),
                 ),
-              ),
-            )
-            .toList();
+              );
 
-      case RequestStatus.error:
-        return [
-          SliverToBoxAdapter(
-            child: Center(
-              child: Text(
-                state.productsErrorMessage,
-                style: Theme.of(context).textTheme.titleMedium,
-              ),
-            ),
-          ),
-        ];
+            case RequestStatus.error:
+              return SliverToBoxAdapter(
+                child: Center(
+                  child: Text(
+                    state.productsErrorMessage,
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                ),
+              );
 
-      default:
-        return [const SliverToBoxAdapter(child: SizedBox.shrink())];
-    }
+            default:
+              return const SliverToBoxAdapter(child: SizedBox.shrink());
+          }
+        },
+      ),
+    ];
   }
+
 }

@@ -18,7 +18,6 @@ class FilterCategorySection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<CategoryModel> categories = AppConstants.categories;
     return SizedBox(
       height: 70.0,
       child: BlocBuilder<HomeCubit, HomeState>(

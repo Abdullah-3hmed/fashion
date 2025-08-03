@@ -5,14 +5,27 @@ class FavoriteModel extends Equatable {
   final String title;
   final String image;
   final num price;
+  final String colors;
+  final String sizes;
+
 
   const FavoriteModel({
     required this.id,
     required this.title,
     required this.image,
     required this.price,
+     this.colors = "",
+     this.sizes="",
   });
+  List<String> get parsedColors =>
+      colors
+          .split(',')
+          .map((e) => e.trim())
+          .where((e) => e.isNotEmpty)
+          .toList();
 
+  List<String> get parsedSizes =>
+      sizes.split(',').map((e) => e.trim()).where((e) => e.isNotEmpty).toList();
   factory FavoriteModel.fromJson(Map<String, dynamic> json) =>
       FavoriteModel(
         id: json["id"] ?? "",
@@ -22,5 +35,5 @@ class FavoriteModel extends Equatable {
       );
 
   @override
-  List<Object> get props => [id, title, image, price];
+  List<Object> get props => [id, title, image, price, colors, sizes];
 }

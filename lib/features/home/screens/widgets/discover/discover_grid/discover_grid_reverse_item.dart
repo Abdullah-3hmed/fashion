@@ -7,6 +7,7 @@ import 'package:e_fashion_flutter/core/widgets/modal_bottom_sheet_content.dart';
 import 'package:e_fashion_flutter/features/home/screens/widgets/discover/discover_grid/discover_grid_clipped_reverse_container.dart';
 import 'package:e_fashion_flutter/features/home/screens/widgets/discover/discover_grid/discover_grid_clipped_reverse_image.dart';
 import 'package:e_fashion_flutter/features/home/screens/widgets/discover/discover_grid/discover_top_grid_clipped_reverse_image.dart';
+import 'package:e_fashion_flutter/shared/data/bottom_sheet_model.dart';
 import 'package:e_fashion_flutter/shared/data/product_model.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
@@ -14,14 +15,17 @@ import 'package:iconsax/iconsax.dart';
 class DiscoverGridReverseItem extends StatelessWidget {
   const DiscoverGridReverseItem({
     super.key,
-    required this.isFirstItem, required this.product,
+    required this.isFirstItem,
+    required this.product,
   });
-final ProductModel product;
+
+  final ProductModel product;
   final bool isFirstItem;
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: (){
+      onTap: () {
         context.pushRoute(
           ProductDetailsRoute(
             productId: product.id,
@@ -44,7 +48,10 @@ final ProductModel product;
                         topEnd: Radius.circular(16.0),
                       )
                       : BorderRadiusDirectional.zero,
-              child: CustomCachedNetworkImage(imageUrl: product.imageUrl,  height: isFirstItem ? 200.0 : 220.0,),
+              child: CustomCachedNetworkImage(
+                imageUrl: product.imageUrl,
+                height: isFirstItem ? 200.0 : 220.0,
+              ),
             ),
           ),
           CustomPaint(
@@ -59,7 +66,12 @@ final ProductModel product;
                     onTap: () async {
                       await showModalBottomSheet(
                         context: context,
-                        builder: (context) =>  ModalBottomSheetContent(productModel: product,),
+                        builder:
+                            (context) => ModalBottomSheetContent(
+                              bottomSheetModel: BottomSheetModel.fromProduct(
+                                product,
+                              ),
+                            ),
                       );
                     },
                     child: Icon(
@@ -76,10 +88,8 @@ final ProductModel product;
                           product.title,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                            color: Colors.white,
-                            height: 1.0,
-                          ),
+                          style: Theme.of(context).textTheme.bodyLarge!
+                              .copyWith(color: Colors.white, height: 1.0),
                         ),
                         Text(
                           r"$"
@@ -104,9 +114,7 @@ final ProductModel product;
               child: CircleAvatar(
                 radius: 16.0,
                 backgroundColor: Colors.white.withValues(alpha: 0.15),
-                child: CustomHeartIcon(
-                  productModel: product,
-                ),
+                child: CustomHeartIcon(productModel: product),
               ),
             ),
           ),

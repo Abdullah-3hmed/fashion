@@ -6,6 +6,7 @@ import 'package:e_fashion_flutter/core/widgets/custom_heart_icon.dart';
 import 'package:e_fashion_flutter/core/widgets/modal_bottom_sheet_content.dart';
 import 'package:e_fashion_flutter/features/favourite/cubit/favorite_cubit.dart';
 import 'package:e_fashion_flutter/features/home/screens/widgets/shared/home_clipped_container.dart';
+import 'package:e_fashion_flutter/shared/data/bottom_sheet_model.dart';
 import 'package:e_fashion_flutter/shared/data/product_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -108,7 +109,9 @@ class HomeCarouselSliderItem extends StatelessWidget {
                 useRootNavigator: true,
                 builder:
                     (context) =>
-                        ModalBottomSheetContent(productModel: offerModel),
+                        ModalBottomSheetContent(
+                          bottomSheetModel: BottomSheetModel.fromProduct(offerModel),
+                        ),
               );
             },
             icon: Icon(

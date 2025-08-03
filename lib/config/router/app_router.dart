@@ -65,19 +65,21 @@ class AppRouter extends RootStackRouter {
           initial: true,
           page: LayoutRoute.page,
           children: [
-            _buildCustomRoute(
-              initial: true,
-              page: HomeTabRoute.page,
-              children: [
-                _buildCustomRoute(initial: true, page: HomeRoute.page),
-                _buildCustomRoute(page: CollectionRoute.page),
-              ],
-            ),
+            // _buildCustomRoute(
+            //   initial: true,
+            //   page: HomeTabRoute.page,
+            //   children: [
+            //     _buildCustomRoute(initial: true, page: HomeRoute.page),
+            //     _buildCustomRoute(page: CollectionRoute.page),
+            //   ],
+           // ),
+            _buildCustomRoute(initial: true, page: HomeRoute.page),
             _buildCustomRoute(page: CartRoute.page),
             _buildCustomRoute(page: FavoriteRoute.page),
             _buildCustomRoute(page: ProfileRoute.page),
           ],
         ),
+        _buildCustomRoute(page: CollectionRoute.page),
         _buildCustomRoute(page: ProductDetailsRoute.page),
         _buildCustomRoute(page: EditProfileRoute.page),
         _buildCustomRoute(page: ProfileChangePasswordRoute.page),
@@ -144,10 +146,10 @@ class Authenticated extends AutoRouter implements AutoRouteWrapper {
   );
 }
 
-@RoutePage(name: 'HomeTabRoute')
-class HomeTab extends AutoRouter {
-  const HomeTab({super.key});
-}
+// @RoutePage(name: 'HomeTabRoute')
+// class HomeTab extends AutoRouter {
+//   const HomeTab({super.key});
+// }
 
 @RoutePage(name: 'CartRoute')
 class Cart extends AutoRouter {

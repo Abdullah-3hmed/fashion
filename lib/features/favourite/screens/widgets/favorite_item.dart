@@ -3,6 +3,7 @@ import 'package:e_fashion_flutter/core/widgets/custom_cached_network_image.dart'
 import 'package:e_fashion_flutter/core/widgets/modal_bottom_sheet_content.dart';
 import 'package:e_fashion_flutter/features/favourite/cubit/favorite_cubit.dart';
 import 'package:e_fashion_flutter/features/favourite/data/favorite_model.dart';
+import 'package:e_fashion_flutter/shared/data/bottom_sheet_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
@@ -38,7 +39,7 @@ class FavoriteItem extends StatelessWidget {
                     useRootNavigator: true,
                     builder:
                         (context) =>
-                            const SizedBox.shrink(), // const ModalBottomSheetContent(),
+                              ModalBottomSheetContent(bottomSheetModel:BottomSheetModel.fromFav(favoriteModel) ,),
                   );
                 },
                 child: CircleAvatar(
