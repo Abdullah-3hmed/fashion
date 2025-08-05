@@ -1,9 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:e_fashion_flutter/core/widgets/custom_cached_network_image.dart';
+import 'package:e_fashion_flutter/core/widgets/modal_bottom_sheet_content.dart';
+import 'package:e_fashion_flutter/features/cart/cubit/cart_cubit.dart';
 import 'package:e_fashion_flutter/features/search/screens/widgets/search_list/search_list_container_clipper.dart';
+import 'package:e_fashion_flutter/shared/data/bottom_sheet_model.dart';
 import 'package:e_fashion_flutter/shared/data/product_model.dart';
 import 'package:e_fashion_flutter/shared/widgets/custom_heart_icon.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
 
 class SearchListViewItem extends StatelessWidget {
@@ -68,7 +72,20 @@ class SearchListViewItem extends StatelessWidget {
                   ),
                   const SizedBox(width: 8.0),
                   IconButton(
-                    onPressed: () {},
+                    onPressed: () async {
+                      await showModalBottomSheet(
+                        context: context,
+                        builder:
+                            (_) => BlocProvider.value(
+                              value: context.read<CartCubit>(),
+                              child: ModalBottomSheetContent(
+                                bottomSheetModel: BottomSheetModel.fromProduct(
+                                  product,
+                                ),
+                              ),
+                            ),
+                      );
+                    },
                     icon: const Icon(Iconsax.bag_2, color: Colors.white),
                   ),
                   const SizedBox(width: 16.0),

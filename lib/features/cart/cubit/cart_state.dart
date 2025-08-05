@@ -6,8 +6,8 @@ class CartState extends Equatable {
   final RequestStatus cartState;
   final String cartErrorMessage;
   final RequestStatus changeQuantityState;
-  final Map<String, CartModel> cartMap;
 
+  final Map<String, CartModel> cartMap;
   const CartState({
     this.cartState = RequestStatus.initial,
     this.cartErrorMessage = '',

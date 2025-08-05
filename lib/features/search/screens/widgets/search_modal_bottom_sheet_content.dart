@@ -99,9 +99,7 @@ class _SearchModalBottomSheetContentState
                   },
                   text: "Apply Filters",
                 ),
-
               const SizedBox(height: 60.0),
-              const SizedBox(height: 50.0),
             ],
           ),
         ),

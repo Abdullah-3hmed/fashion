@@ -3,6 +3,7 @@ import 'package:e_fashion_flutter/core/enums/request_status.dart';
 import 'package:e_fashion_flutter/core/services/service_locator.dart';
 import 'package:e_fashion_flutter/core/utils/app_constants.dart';
 import 'package:e_fashion_flutter/core/widgets/no_internet_widget.dart';
+import 'package:e_fashion_flutter/features/cart/cubit/cart_cubit.dart';
 import 'package:e_fashion_flutter/features/favourite/cubit/favorite_cubit.dart';
 import 'package:e_fashion_flutter/features/home/cubit/home_cubit.dart';
 import 'package:e_fashion_flutter/features/home/cubit/home_state.dart';
@@ -64,7 +65,9 @@ class HomeScreen extends StatelessWidget implements AutoRouteWrapper {
                  if(context.mounted) {
                    await context.read<FavoriteCubit>().getFavorites();
                  }
-
+                 if(context.mounted) {
+                   await context.read<CartCubit>().getCartItems();
+                 }
                 },
               );
         },
