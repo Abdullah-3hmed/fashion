@@ -1,4 +1,4 @@
-import 'package:e_fashion_flutter/features/home/screens/widgets/shared/home_container_clipper.dart';
+import 'package:e_fashion_flutter/features/home/screens/widgets/offers/home_container_clipper.dart';
 import 'package:flutter/material.dart';
 
 class HomeClippedContainer extends StatelessWidget {

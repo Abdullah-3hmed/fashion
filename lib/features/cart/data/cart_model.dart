@@ -21,26 +21,38 @@ class CartModel extends Equatable {
 
   factory CartModel.fromJson(Map<String, dynamic> json) {
     return CartModel(
-      productId: json['productId']??"",
-      imageUrl: json['image']??"",
-      name: json['productTitle']??"",
-      price: json['price']??"",
-      quantity: json['quantity']??"",
-      color: json['color']??"",
-      size: json['size']??"",
+      productId: json['productId'] ?? "",
+      imageUrl: json['image'] ?? "",
+      name: json['productTitle'] ?? "",
+      price: json['price'] ?? "",
+      quantity: json['quantity'] ?? "",
+      color: json['color'] ?? "",
+      size: json['size'] ?? "",
     );
   }
+
   num get totalPrice => price * quantity;
 
+  CartModel copyWith({int? quantity}) {
+    return CartModel(
+      productId: productId,
+      imageUrl: imageUrl,
+      name: name,
+      price: price,
+      quantity: quantity ?? this.quantity,
+      color: color,
+      size: size,
+    );
+  }
+
   @override
-  List<Object> get props =>
-      [
-        productId,
-        imageUrl,
-        name,
-        price,
-        quantity,
-        color,
-        size,
-      ];
+  List<Object> get props => [
+    productId,
+    imageUrl,
+    name,
+    price,
+    quantity,
+    color,
+    size,
+  ];
 }

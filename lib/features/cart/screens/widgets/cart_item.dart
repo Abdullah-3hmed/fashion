@@ -1,14 +1,20 @@
 import 'package:e_fashion_flutter/core/utils/assets_manager.dart';
 import 'package:e_fashion_flutter/core/utils/color_map.dart';
 import 'package:e_fashion_flutter/core/widgets/custom_cached_network_image.dart';
+import 'package:e_fashion_flutter/features/cart/cubit/cart_cubit.dart';
+import 'package:e_fashion_flutter/features/cart/cubit/cart_state.dart';
 import 'package:e_fashion_flutter/features/cart/data/cart_model.dart';
 import 'package:e_fashion_flutter/features/cart/screens/widgets/cart_item_count.dart';
+import 'package:e_fashion_flutter/shared/widgets/pieces_available.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
 
 class CartItem extends StatelessWidget {
   const CartItem({super.key, required this.cartModel});
-final CartModel cartModel;
+
+  final CartModel cartModel;
+
   @override
   Widget build(BuildContext context) {
     return Dismissible(
@@ -22,8 +28,7 @@ final CartModel cartModel;
         ),
         child: const Icon(Iconsax.trash, color: Colors.white, size: 24.0),
       ),
-      onDismissed: (direction) {
-      },
+      onDismissed: (direction) {},
       key: ValueKey(cartModel.productId),
       child: Container(
         padding: const EdgeInsetsDirectional.symmetric(
@@ -50,29 +55,61 @@ final CartModel cartModel;
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                 cartModel.name,
+                  cartModel.name,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
                 const SizedBox(height: 4.0),
-                Text("Size : ${cartModel.size}", style: Theme.of(context).textTheme.bodySmall),
+                Text(
+                  "Size : ${cartModel.size}",
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
                 const SizedBox(height: 4.0),
                 Row(
                   children: [
                     Text("Color", style: Theme.of(context).textTheme.bodySmall),
                     const SizedBox(width: 8.0),
-                     const CircleAvatar(
+                    const CircleAvatar(
                       radius: 8.0,
-                      backgroundColor: Colors.indigo,//Color(colorHexMap[cartModel.color]),
+                      backgroundColor:
+                          Colors.indigo, //Color(colorHexMap[cartModel.color]),
                     ),
                   ],
                 ),
                 Row(
                   children: [
-                    Text(r"$""${cartModel.price}", style: Theme.of(context).textTheme.bodySmall),
+                    BlocSelector<CartCubit, CartState, num>(
+                      selector: (state) {
+                     return state.cartItems
+                          .firstWhere((element) => element.productId == cartModel.productId)
+                          .totalPrice;
+                      },
+                      builder: (context, state) {
+                        print("rebuild>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" );
+                        return Text(
+                          r"$""$state",
+                          style: Theme.of(context).textTheme.bodySmall,
+                        );
+                      },
+                    ),
                     const SizedBox(width: 16.0),
-                    CartItemCounter(onPiecesChanged: (int value) {}),
+                    CartItemCounter(
+                      numberOfPieces: cartModel.quantity,
+                      onChanged: (int pieces) async {
+                        if (pieces > cartModel.quantity) {
+                          await context.read<CartCubit>().incrementQuantity(
+                            pieces,
+                            cartModel.productId,
+                          );
+                        } else {
+                          await context.read<CartCubit>().decrementQuantity(
+                            pieces,
+                            cartModel.productId,
+                          );
+                        }
+                      },
+                    ),
                   ],
                 ),
               ],

@@ -6,8 +6,8 @@ import 'package:e_fashion_flutter/features/home/cubit/product_details_cubit.dart
 import 'package:e_fashion_flutter/features/home/cubit/product_details_state.dart';
 import 'package:e_fashion_flutter/features/home/data/home_details/product_details_model.dart';
 import 'package:e_fashion_flutter/features/home/screens/widgets/details/product_details.dart';
-import 'package:e_fashion_flutter/features/home/screens/widgets/shared/colors_available.dart';
-import 'package:e_fashion_flutter/features/home/screens/widgets/shared/pieces_available.dart';
+import 'package:e_fashion_flutter/shared/widgets/colors_available.dart';
+import 'package:e_fashion_flutter/shared/widgets/pieces_available.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';

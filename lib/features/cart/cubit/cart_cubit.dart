@@ -9,9 +9,7 @@ class CartCubit extends Cubit<CartState> {
 
   CartCubit({required this.cartRepo}) : super(const CartState());
 
-  Future<void> addToCart({
-    required CartModel cartModel,
-  }) async {
+  Future<void> addToCart({required CartModel cartModel}) async {
     emit(state.copyWith(cartState: RequestStatus.loading));
     final result = await cartRepo.addToCart(
       productId: cartModel.productId,
@@ -33,6 +31,7 @@ class CartCubit extends Cubit<CartState> {
       ),
     );
   }
+
   Future<void> getCartItems() async {
     emit(state.copyWith(cartState: RequestStatus.loading));
     final result = await cartRepo.getCartItems();
@@ -44,11 +43,50 @@ class CartCubit extends Cubit<CartState> {
         ),
       ),
       (cartItems) => emit(
+        state.copyWith(cartState: RequestStatus.success, cartItems: cartItems),
+      ),
+    );
+  }
+
+  Future<void> incrementQuantity(int quantity, String productId) async {
+    final cartItems =
+        state.cartItems.map((e) {
+          if (e.productId == productId) {
+            return e.copyWith(quantity:  quantity);
+          }
+          return e;
+        }).toList();
+    emit(state.copyWith(cartItems: cartItems));
+    final result = await cartRepo.incrementQuantity(productId: productId);
+    result.fold(
+      (failure) => emit(
         state.copyWith(
-          cartState: RequestStatus.success,
-          cartItems: cartItems,
+          changeQuantityState: RequestStatus.error,
+          cartErrorMessage: failure.errorMessage,
         ),
       ),
+      (success) => null,
+    );
+  }
+
+  Future<void> decrementQuantity(int quantity, String productId) async{
+    final cartItems =
+        state.cartItems.map((e) {
+          if (e.productId == productId) {
+            return e.copyWith(quantity:quantity);
+          }
+          return e;
+        }).toList();
+    emit(state.copyWith(cartItems: cartItems));
+    final result = await cartRepo.decrementQuantity(productId: productId);
+    result.fold(
+      (failure) => emit(
+        state.copyWith(
+          changeQuantityState: RequestStatus.error,
+          cartErrorMessage: failure.errorMessage,
+        ),
+      ),
+      (success) => null,
     );
   }
 }

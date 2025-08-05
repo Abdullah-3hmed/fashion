@@ -1,8 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:e_fashion_flutter/core/widgets/custom_cached_network_image.dart';
-import 'package:e_fashion_flutter/core/widgets/custom_heart_icon.dart';
 import 'package:e_fashion_flutter/features/search/screens/widgets/search_grid/search_grid_container_clipper.dart';
 import 'package:e_fashion_flutter/shared/data/product_model.dart';
+import 'package:e_fashion_flutter/shared/widgets/custom_heart_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 

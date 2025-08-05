@@ -1,8 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:e_fashion_flutter/core/widgets/custom_cached_network_image.dart';
-import 'package:e_fashion_flutter/core/widgets/custom_heart_icon.dart';
 import 'package:e_fashion_flutter/features/search/screens/widgets/search_list/search_list_container_clipper.dart';
 import 'package:e_fashion_flutter/shared/data/product_model.dart';
+import 'package:e_fashion_flutter/shared/widgets/custom_heart_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 
@@ -41,7 +41,7 @@ class SearchListViewItem extends StatelessWidget {
               ),
               child: Row(
                 children: [
-                const SizedBox(width: 8.0,),
+                  const SizedBox(width: 8.0),
                   Expanded(
                     child: Center(
                       child: Column(
@@ -49,26 +49,24 @@ class SearchListViewItem extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            product.title ,
+                            product.title,
                             textAlign: TextAlign.center,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
-                            style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                              color: Colors.white,
-                            ),
+                            style: Theme.of(context).textTheme.titleLarge!
+                                .copyWith(color: Colors.white),
                           ),
                           Text(
                             r"$"
                             "${product.basePrice}",
-                            style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                              color: Colors.white,
-                            ),
+                            style: Theme.of(context).textTheme.titleSmall!
+                                .copyWith(color: Colors.white),
                           ),
                         ],
                       ),
                     ),
                   ),
-                const SizedBox(width: 8.0,),
+                  const SizedBox(width: 8.0),
                   IconButton(
                     onPressed: () {},
                     icon: const Icon(Iconsax.bag_2, color: Colors.white),

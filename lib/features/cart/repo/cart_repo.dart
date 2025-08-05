@@ -9,4 +9,10 @@ abstract class CartRepo {
     required String size,
   });
   Future<Either<Failure, List<CartModel>>> getCartItems();
+  Future<Either<Failure, void>> incrementQuantity({
+    required String productId,
+  });
+  Future<Either<Failure, void>> decrementQuantity({
+    required String productId,
+  });
 }

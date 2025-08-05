@@ -7,14 +7,12 @@ class FavoriteState extends Equatable {
   final String favoriteErrorMessage;
   final List<FavoriteModel> favorites;
   final Set<String> inFavorites;
-  final bool isConnected;
 
   const FavoriteState({
     this.favoriteState = RequestStatus.initial,
     this.favoriteErrorMessage = "",
     this.favorites = const [],
     this.inFavorites = const {},
-    this.isConnected = true,
   });
 
   FavoriteState copyWith({
@@ -22,14 +20,12 @@ class FavoriteState extends Equatable {
     String? favoriteErrorMessage,
     List<FavoriteModel>? favorites,
     Set<String>? inFavorites,
-    bool? isConnected,
   }) {
     return FavoriteState(
       favoriteState: favoriteState ?? this.favoriteState,
       favoriteErrorMessage: favoriteErrorMessage ?? this.favoriteErrorMessage,
       favorites: favorites ?? this.favorites,
       inFavorites: inFavorites ?? this.inFavorites,
-      isConnected: isConnected ?? this.isConnected,
     );
   }
 
@@ -39,6 +35,5 @@ class FavoriteState extends Equatable {
     favoriteErrorMessage,
     favorites,
     inFavorites,
-    isConnected,
   ];
 }

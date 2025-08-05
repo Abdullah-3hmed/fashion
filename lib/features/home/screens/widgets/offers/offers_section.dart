@@ -5,7 +5,7 @@ import 'package:e_fashion_flutter/core/enums/request_status.dart';
 import 'package:e_fashion_flutter/core/utils/app_constants.dart';
 import 'package:e_fashion_flutter/features/home/cubit/home_cubit.dart';
 import 'package:e_fashion_flutter/features/home/cubit/home_state.dart';
-import 'package:e_fashion_flutter/features/home/screens/widgets/shared/home_carousel_slider_item.dart';
+import 'package:e_fashion_flutter/features/home/screens/widgets/offers/home_carousel_slider_item.dart';
 import 'package:e_fashion_flutter/shared/data/product_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

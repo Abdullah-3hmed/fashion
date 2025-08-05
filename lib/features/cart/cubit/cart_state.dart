@@ -6,11 +6,13 @@ class CartState extends Equatable {
   final RequestStatus cartState;
   final String cartErrorMessage;
   final List<CartModel> cartItems;
+  final RequestStatus changeQuantityState ;
 
   const CartState({
     this.cartState = RequestStatus.initial,
     this.cartErrorMessage = '',
     this.cartItems = const [],
+    this.changeQuantityState = RequestStatus.initial
   });
 
   double get totalPrice =>
@@ -20,14 +22,16 @@ class CartState extends Equatable {
     RequestStatus? cartState,
     String? cartErrorMessage,
     List<CartModel>? cartItems,
+    changeQuantityState,
   }) {
     return CartState(
       cartState: cartState ?? this.cartState,
       cartErrorMessage: cartErrorMessage ?? this.cartErrorMessage,
       cartItems: cartItems ?? this.cartItems,
+      changeQuantityState: changeQuantityState ?? this.changeQuantityState
     );
   }
 
   @override
-  List<Object> get props => [cartState, cartErrorMessage, cartItems];
+  List<Object> get props => [cartState, cartErrorMessage, cartItems, changeQuantityState];
 }
