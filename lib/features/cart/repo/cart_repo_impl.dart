@@ -108,4 +108,25 @@ class CartRepoImpl implements CartRepo {
       return Left(ServerFailure(e.toString()));
     }
   }
+
+  @override
+  Future<Either<Failure, void>> deleteFromCart({required String productId})async {
+    try{
+      final response = await dioHelper.delete(
+        url: ApiConstants.deleteFromCartEndPoint(productId: productId),
+        headers: {"Authorization": "Bearer ${AppConstants.token}"},
+      );
+      if(response.statusCode == 200){
+        return const Right(null);
+      }else{
+        throw ServerException(errorModel: ErrorModel.fromJson(response.data));
+      }
+    }on DioException catch (e) {
+      return Left(ServerFailure.fromDioError(e));
+    } on ServerException catch (e) {
+      return Left(ServerFailure(e.errorModel.errors.join(" \n")));
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
 }

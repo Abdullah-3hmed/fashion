@@ -8,7 +8,7 @@ class CartItemCounter extends StatefulWidget {
     required this.numberOfPieces,
   });
 
-  final ValueChanged<int> onChanged;
+  final void Function({required int value, required bool isIncrement}) onChanged;
   final int numberOfPieces;
 
   @override
@@ -22,13 +22,6 @@ class _CartItemCounterState extends State<CartItemCounter> {
   void initState() {
     super.initState();
     _count = ValueNotifier<int>(widget.numberOfPieces);
-  }
-  @override
-  void didUpdateWidget(covariant CartItemCounter oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if (oldWidget.numberOfPieces != widget.numberOfPieces) {
-      _count.value = widget.numberOfPieces;
-    }
   }
 
   @override
@@ -49,7 +42,7 @@ class _CartItemCounterState extends State<CartItemCounter> {
               onPressed: () {
                 if (value > 1) {
                   _count.value = value - 1;
-                  widget.onChanged(_count.value);
+                  widget.onChanged(value: _count.value, isIncrement: false);
                 }
               },
               icon: const Icon(SolarIconsOutline.minusCircle),
@@ -62,7 +55,7 @@ class _CartItemCounterState extends State<CartItemCounter> {
               padding: EdgeInsets.zero,
               onPressed: () {
                 _count.value = value + 1;
-                widget.onChanged(_count.value);
+                widget.onChanged(value: _count.value, isIncrement: true);
               },
               icon: const Icon(SolarIconsOutline.addCircle),
             ),

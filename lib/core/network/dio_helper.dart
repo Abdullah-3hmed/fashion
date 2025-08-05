@@ -9,9 +9,7 @@ class DioHelper {
   static void init() {
     BaseOptions options = BaseOptions(
       baseUrl: dotenv.env["API_URL"]!,
-      queryParameters: {
-        "contentType": 'Application/json',
-      },
+      queryParameters: {"contentType": 'Application/json'},
       connectTimeout: const Duration(seconds: 20),
       receiveTimeout: const Duration(seconds: 20),
       receiveDataWhenStatusError: true,
@@ -67,8 +65,8 @@ class DioHelper {
     );
   }
 
-  Future<Response> delete(
-    String url, {
+  Future<Response> delete({
+    required String url,
     Map<String, dynamic>? data,
     Map<String, dynamic>? query,
     Map<String, dynamic>? headers,

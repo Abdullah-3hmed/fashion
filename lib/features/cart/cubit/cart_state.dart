@@ -5,15 +5,12 @@ import 'package:equatable/equatable.dart';
 class CartState extends Equatable {
   final RequestStatus cartState;
   final String cartErrorMessage;
-  final List<CartModel> cartItems;
   final RequestStatus changeQuantityState;
-
   final Map<String, CartModel> cartMap;
 
   const CartState({
     this.cartState = RequestStatus.initial,
     this.cartErrorMessage = '',
-    this.cartItems = const [],
     this.changeQuantityState = RequestStatus.initial,
     this.cartMap = const {},
   });
@@ -24,14 +21,12 @@ class CartState extends Equatable {
   CartState copyWith({
     RequestStatus? cartState,
     String? cartErrorMessage,
-    List<CartModel>? cartItems,
     changeQuantityState,
     Map<String, CartModel>? cartMap,
   }) {
     return CartState(
       cartState: cartState ?? this.cartState,
       cartErrorMessage: cartErrorMessage ?? this.cartErrorMessage,
-      cartItems: cartItems ?? this.cartItems,
       changeQuantityState: changeQuantityState ?? this.changeQuantityState,
       cartMap: cartMap ?? this.cartMap,
     );
@@ -41,7 +36,6 @@ class CartState extends Equatable {
   List<Object> get props => [
     cartState,
     cartErrorMessage,
-    cartItems,
     changeQuantityState,
     cartMap,
   ];

@@ -32,7 +32,7 @@ class CartItemsList extends StatelessWidget {
         Expanded(
           child: BlocBuilder<CartCubit, CartState>(
             buildWhen:
-                (previous, current) => previous.cartState != current.cartState,
+                (previous, current) => previous.cartState != current.cartState || previous.cartMap != current.cartMap,
             builder: (context, state) {
               switch (state.cartState) {
                 case RequestStatus.loading:
@@ -47,11 +47,11 @@ class CartItemsList extends StatelessWidget {
                     ),
                   );
                 case RequestStatus.success:
-                  return state.cartItems.isEmpty
+                  return state.cartMap.isEmpty
                       ? const NoItemsInCart()
                       : _buildCartList(state);
                 case RequestStatus.error:
-                  return state.cartItems.isEmpty
+                  return state.cartMap.isEmpty
                       ? const NoItemsInCart()
                       : _buildCartList(state);
                 default:
@@ -86,12 +86,13 @@ class CartItemsList extends StatelessWidget {
   }
 
   ListView _buildCartList(CartState state) {
+    final cartItems = state.cartMap.values.toList();
     return ListView.separated(
       physics: const BouncingScrollPhysics(),
       itemBuilder:
-          (context, index) => CartItem(cartModel: state.cartItems[index]),
+          (context, index) => CartItem(cartModel: cartItems[index]),
       separatorBuilder: (_, __) => const SizedBox(height: 8.0),
-      itemCount: state.cartItems.length,
+      itemCount: cartItems.length,
     );
   }
 }

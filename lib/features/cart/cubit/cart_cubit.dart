@@ -25,12 +25,12 @@ class CartCubit extends Cubit<CartState> {
         ),
       ),
       (_) {
-        final List<CartModel> updatedItems = [...state.cartItems, cartModel];
+        final updatedMap = Map<String, CartModel>.from(state.cartMap)
+          ..update(cartModel.productId, (_) => cartModel, ifAbsent: () => cartModel);
         emit(
           state.copyWith(
             cartState: RequestStatus.success,
-            cartItems: updatedItems,
-            cartMap: _generateCartMap(updatedItems),
+            cartMap: updatedMap,
           ),
         );
       },
@@ -50,7 +50,6 @@ class CartCubit extends Cubit<CartState> {
       (cartItems) => emit(
         state.copyWith(
           cartState: RequestStatus.success,
-          cartItems: cartItems,
           cartMap: _generateCartMap(cartItems),
         ),
       ),
@@ -68,14 +67,15 @@ class CartCubit extends Cubit<CartState> {
 
     final result = await cartRepo.incrementQuantity(productId: productId);
     result.fold(
-          (failure) => emit(state.copyWith(
-        changeQuantityState: RequestStatus.error,
-        cartErrorMessage: failure.errorMessage,
-      )),
-          (success) => null,
+      (failure) => emit(
+        state.copyWith(
+          changeQuantityState: RequestStatus.error,
+          cartErrorMessage: failure.errorMessage,
+        ),
+      ),
+      (success) => null,
     );
   }
-
 
   Future<void> decrementQuantity(int quantity, String productId) async {
     final updatedItem = state.cartMap[productId]?.copyWith(quantity: quantity);
@@ -88,16 +88,37 @@ class CartCubit extends Cubit<CartState> {
 
     final result = await cartRepo.decrementQuantity(productId: productId);
     result.fold(
-          (failure) => emit(state.copyWith(
-        changeQuantityState: RequestStatus.error,
-        cartErrorMessage: failure.errorMessage,
-      )),
-          (success) => null,
+      (failure) => emit(
+        state.copyWith(
+          changeQuantityState: RequestStatus.error,
+          cartErrorMessage: failure.errorMessage,
+        ),
+      ),
+      (success) => null,
     );
   }
-
 
   Map<String, CartModel> _generateCartMap(List<CartModel> items) => {
     for (var item in items) item.productId: item,
   };
+
+  Future<void> deleteFromCart({required String productId}) async {
+    final previousMap = Map<String, CartModel>.from(state.cartMap);
+    final updatedMap = Map<String, CartModel>.from(state.cartMap)
+      ..remove(productId);
+
+    emit(state.copyWith(cartMap: updatedMap, cartState: RequestStatus.success));
+
+    final result = await cartRepo.deleteFromCart(productId: productId);
+
+    result.fold((failure) {
+      emit(
+        state.copyWith(
+          cartMap: previousMap,
+          cartState: RequestStatus.error,
+          cartErrorMessage: failure.errorMessage,
+        ),
+      );
+    }, (_) => null);
+  }
 }

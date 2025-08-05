@@ -16,4 +16,7 @@ abstract class CartRepo {
   Future<Either<Failure, void>> decrementQuantity({
     required String productId,
   });
+  Future<Either<Failure, void>> deleteFromCart({
+    required String productId,
+  });
 }
