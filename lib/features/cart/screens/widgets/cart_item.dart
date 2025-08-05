@@ -1,11 +1,14 @@
 import 'package:e_fashion_flutter/core/utils/assets_manager.dart';
+import 'package:e_fashion_flutter/core/utils/color_map.dart';
+import 'package:e_fashion_flutter/core/widgets/custom_cached_network_image.dart';
+import 'package:e_fashion_flutter/features/cart/data/cart_model.dart';
 import 'package:e_fashion_flutter/features/cart/screens/widgets/cart_item_count.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 
 class CartItem extends StatelessWidget {
-  const CartItem({super.key});
-
+  const CartItem({super.key, required this.cartModel});
+final CartModel cartModel;
   @override
   Widget build(BuildContext context) {
     return Dismissible(
@@ -20,9 +23,8 @@ class CartItem extends StatelessWidget {
         child: const Icon(Iconsax.trash, color: Colors.white, size: 24.0),
       ),
       onDismissed: (direction) {
-        debugPrint("Item deleted");
       },
-      key: UniqueKey(),
+      key: ValueKey(cartModel.productId),
       child: Container(
         padding: const EdgeInsetsDirectional.symmetric(
           horizontal: 8.0,
@@ -36,11 +38,10 @@ class CartItem extends StatelessWidget {
           children: [
             ClipRRect(
               borderRadius: BorderRadiusDirectional.circular(16.0),
-              child: Image.asset(
-                AssetsManager.welcomeImage,
+              child: CustomCachedNetworkImage(
+                imageUrl: cartModel.imageUrl,
                 width: 90.0,
                 height: 100.0,
-                fit: BoxFit.cover,
               ),
             ),
             const SizedBox(width: 24.0),
@@ -49,25 +50,27 @@ class CartItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Denim Jacket",
+                 cartModel.name,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
                 const SizedBox(height: 4.0),
-                Text("Size : XL", style: Theme.of(context).textTheme.bodySmall),
+                Text("Size : ${cartModel.size}", style: Theme.of(context).textTheme.bodySmall),
                 const SizedBox(height: 4.0),
                 Row(
                   children: [
                     Text("Color", style: Theme.of(context).textTheme.bodySmall),
                     const SizedBox(width: 8.0),
-                    const CircleAvatar(
-                      radius: 6.0,
-                      backgroundColor: Colors.black,
+                     const CircleAvatar(
+                      radius: 8.0,
+                      backgroundColor: Colors.indigo,//Color(colorHexMap[cartModel.color]),
                     ),
                   ],
                 ),
                 Row(
                   children: [
-                    Text(r"$200", style: Theme.of(context).textTheme.bodySmall),
+                    Text(r"$""${cartModel.price}", style: Theme.of(context).textTheme.bodySmall),
                     const SizedBox(width: 16.0),
                     CartItemCounter(onPiecesChanged: (int value) {}),
                   ],

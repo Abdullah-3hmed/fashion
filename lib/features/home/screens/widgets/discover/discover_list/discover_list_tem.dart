@@ -111,13 +111,10 @@ class DiscoverListItem extends StatelessWidget {
           PositionedDirectional(
             top: isFirstItem ? 8.0 : 45.0,
             end: 16.0,
-            child: InkWell(
-              onTap: () {},
-              child: CircleAvatar(
-                radius: 18.0,
-                backgroundColor: Colors.white.withValues(alpha: 0.15),
-                child: CustomHeartIcon(productModel: product,),
-              ),
+            child: CircleAvatar(
+              radius: 18.0,
+              backgroundColor: Colors.white.withValues(alpha: 0.15),
+              child: CustomHeartIcon(productModel: product,),
             ),
           ),
         ],

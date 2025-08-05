@@ -4,10 +4,12 @@ import 'package:e_fashion_flutter/config/router/app_router.dart';
 import 'package:e_fashion_flutter/core/widgets/custom_cached_network_image.dart';
 import 'package:e_fashion_flutter/core/widgets/custom_heart_icon.dart';
 import 'package:e_fashion_flutter/core/widgets/modal_bottom_sheet_content.dart';
+import 'package:e_fashion_flutter/features/cart/cubit/cart_cubit.dart';
 import 'package:e_fashion_flutter/features/home/screens/widgets/shared/home_clipped_container.dart';
 import 'package:e_fashion_flutter/shared/data/bottom_sheet_model.dart';
 import 'package:e_fashion_flutter/shared/data/product_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
 
 class BrandSectionItem extends StatelessWidget {
@@ -84,9 +86,12 @@ class BrandSectionItem extends StatelessWidget {
                 context: context,
                 useRootNavigator: true,
                 builder:
-                    (context) => ModalBottomSheetContent(
-                      bottomSheetModel: BottomSheetModel.fromProduct(
-                        productModel,
+                    (_) => BlocProvider.value(
+                      value: context.read<CartCubit>(),
+                      child: ModalBottomSheetContent(
+                        bottomSheetModel: BottomSheetModel.fromProduct(
+                          productModel,
+                        ),
                       ),
                     ),
               );

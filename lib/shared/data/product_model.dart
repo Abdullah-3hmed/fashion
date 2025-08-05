@@ -40,8 +40,14 @@ class ProductModel extends Equatable {
     sizes: json["sizes"] ?? "",
   );
 
-  FavoriteModel toFavoriteModel() =>
-      FavoriteModel(id: id, title: title, image: imageUrl, price: basePrice);
+  FavoriteModel toFavoriteModel() => FavoriteModel(
+    id: id,
+    title: title,
+    image: imageUrl,
+    price: basePrice,
+    colors: colors,
+    sizes: sizes,
+  );
 
   @override
   List<Object> get props => [

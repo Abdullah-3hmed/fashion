@@ -3,7 +3,9 @@ import 'package:e_fashion_flutter/shared/data/product_model.dart';
 import 'package:equatable/equatable.dart';
 
 class BottomSheetModel extends Equatable {
+  final String id;
   final String title;
+  final String imageUrl;
   final num basePrice;
   final List<String> colors;
   final List<String> sizes;
@@ -13,6 +15,8 @@ class BottomSheetModel extends Equatable {
     required this.basePrice,
     required this.colors,
     required this.sizes,
+    required this.imageUrl,
+    required this.id,
   });
 
   factory BottomSheetModel.fromProduct(ProductModel product) {
@@ -21,6 +25,8 @@ class BottomSheetModel extends Equatable {
       basePrice: product.basePrice,
       colors: product.parsedColors,
       sizes: product.parsedSizes,
+      imageUrl: product.imageUrl,
+      id: product.id,
     );
   }
 
@@ -30,9 +36,11 @@ class BottomSheetModel extends Equatable {
       basePrice: fav.price,
       colors: fav.parsedColors,
       sizes: fav.parsedSizes,
+      imageUrl: fav.image,
+      id: fav.id,
     );
   }
 
   @override
-  List<Object> get props => [title, basePrice, colors, sizes];
+  List<Object> get props => [title, basePrice, colors, sizes, imageUrl, id];
 }

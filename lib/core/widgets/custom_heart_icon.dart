@@ -17,13 +17,13 @@ class CustomHeartIcon extends StatelessWidget {
         return state.inFavorites.contains(productModel.id);
       },
       builder: (context, inFavorites) {
-        return IconButton(
-          onPressed: () async {
+        return GestureDetector(
+          onTap: () async {
             await context.read<FavoriteCubit>().addAndRemoveFavorite(
               favoriteModel: productModel.toFavoriteModel(),
             );
           },
-          icon: Icon(
+          child: Icon(
             inFavorites ? SolarIconsBold.heart : SolarIconsOutline.heart,
             color: Theme.of(context).colorScheme.primary,
           ),

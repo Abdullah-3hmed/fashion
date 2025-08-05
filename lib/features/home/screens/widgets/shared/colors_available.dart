@@ -8,7 +8,7 @@ class ColorsAvailable extends StatefulWidget {
     required this.colors,
   });
 
-  final ValueChanged<int> onColorChanged;
+  final ValueChanged<String> onColorChanged;
   final List<String> colors;
 
   @override
@@ -47,7 +47,7 @@ class _ColorsAvailableState extends State<ColorsAvailable> {
                     child: InkWell(
                       onTap: () {
                         selectedColor.value = index;
-                        widget.onColorChanged(index);
+                        widget.onColorChanged(widget.colors[index]);
                       },
                       child: CircleAvatar(
                         radius: 12.0,

@@ -109,13 +109,10 @@ class DiscoverGridReverseItem extends StatelessWidget {
           PositionedDirectional(
             top: 30.0,
             end: 10.0,
-            child: InkWell(
-              onTap: () {},
-              child: CircleAvatar(
-                radius: 16.0,
-                backgroundColor: Colors.white.withValues(alpha: 0.15),
-                child: CustomHeartIcon(productModel: product),
-              ),
+            child: CircleAvatar(
+              radius: 16.0,
+              backgroundColor: Colors.white.withValues(alpha: 0.15),
+              child: CustomHeartIcon(productModel: product),
             ),
           ),
         ],

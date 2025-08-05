@@ -4,6 +4,7 @@ import 'package:e_fashion_flutter/config/router/app_router.dart';
 import 'package:e_fashion_flutter/core/widgets/custom_cached_network_image.dart';
 import 'package:e_fashion_flutter/core/widgets/custom_heart_icon.dart';
 import 'package:e_fashion_flutter/core/widgets/modal_bottom_sheet_content.dart';
+import 'package:e_fashion_flutter/features/cart/cubit/cart_cubit.dart';
 import 'package:e_fashion_flutter/features/favourite/cubit/favorite_cubit.dart';
 import 'package:e_fashion_flutter/features/home/screens/widgets/shared/home_clipped_container.dart';
 import 'package:e_fashion_flutter/shared/data/bottom_sheet_model.dart';
@@ -108,10 +109,14 @@ class HomeCarouselSliderItem extends StatelessWidget {
                 context: context,
                 useRootNavigator: true,
                 builder:
-                    (context) =>
-                        ModalBottomSheetContent(
-                          bottomSheetModel: BottomSheetModel.fromProduct(offerModel),
+                    (_) => BlocProvider.value(
+                      value: context.read<CartCubit>(),
+                      child: ModalBottomSheetContent(
+                        bottomSheetModel: BottomSheetModel.fromProduct(
+                          offerModel,
                         ),
+                      ),
+                    ),
               );
             },
             icon: Icon(
@@ -123,9 +128,7 @@ class HomeCarouselSliderItem extends StatelessWidget {
         PositionedDirectional(
           top: 0.0,
           end: 0.0,
-          child: CustomHeartIcon(
-            productModel: offerModel,
-          ),
+          child: CustomHeartIcon(productModel: offerModel),
         ),
       ],
     );

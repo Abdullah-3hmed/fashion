@@ -21,6 +21,8 @@ class FavoriteGridView extends StatelessWidget {
     title: "",
     price: 0.0,
     image: AppConstants.imageUrl,
+    colors: "",
+    sizes: "",
   );
 
   @override

@@ -1,15 +1,35 @@
+import 'package:auto_route/auto_route.dart';
+import 'package:e_fashion_flutter/core/enums/request_status.dart';
+import 'package:e_fashion_flutter/core/utils/show_toast.dart';
+import 'package:e_fashion_flutter/core/utils/toast_states.dart';
 import 'package:e_fashion_flutter/core/widgets/primary_button.dart';
+import 'package:e_fashion_flutter/features/cart/cubit/cart_cubit.dart';
+import 'package:e_fashion_flutter/features/cart/cubit/cart_state.dart';
+import 'package:e_fashion_flutter/features/cart/data/cart_model.dart';
 import 'package:e_fashion_flutter/features/home/screens/widgets/shared/colors_available.dart';
 import 'package:e_fashion_flutter/features/home/screens/widgets/shared/pieces_available.dart';
 import 'package:e_fashion_flutter/features/home/screens/widgets/shared/sizes_available.dart';
 import 'package:e_fashion_flutter/shared/data/bottom_sheet_model.dart';
 import 'package:e_fashion_flutter/shared/data/product_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
 
-class ModalBottomSheetContent extends StatelessWidget {
+class ModalBottomSheetContent extends StatefulWidget {
   const ModalBottomSheetContent({super.key, required this.bottomSheetModel});
-final BottomSheetModel bottomSheetModel;
+
+  final BottomSheetModel bottomSheetModel;
+
+  @override
+  State<ModalBottomSheetContent> createState() =>
+      _ModalBottomSheetContentState();
+}
+
+class _ModalBottomSheetContentState extends State<ModalBottomSheetContent> {
+  String selectedColor = '';
+  String selectedSize = '';
+  int selectedPieces = 1;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -28,39 +48,73 @@ final BottomSheetModel bottomSheetModel;
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-              bottomSheetModel.title,
+                widget.bottomSheetModel.title,
                 style: Theme.of(context).textTheme.titleMedium,
               ),
               const SizedBox(width: 46.0),
-              Text(r"$""${bottomSheetModel.basePrice}", style: Theme.of(context).textTheme.bodyLarge),
+              Text(
+                r"$"
+                "${widget.bottomSheetModel.basePrice}",
+                style: Theme.of(context).textTheme.bodyLarge,
+              ),
             ],
           ),
           const SizedBox(height: 30.0),
           ColorsAvailable(
-            colors: bottomSheetModel.colors,
-            onColorChanged: (index) => debugPrint(index.toString()),
+            colors: widget.bottomSheetModel.colors,
+            onColorChanged: (String color) => selectedColor = color,
           ),
           const SizedBox(height: 24.0),
           SizesAvailable(
-            sizes: bottomSheetModel.sizes,
-            onColorChanged: (size) {
-              debugPrint(size);
-            },
+            sizes: widget.bottomSheetModel.sizes,
+            onColorChanged: (String size) => selectedSize = size,
           ),
           const SizedBox(height: 22),
           PiecesAvailable(
-            onPiecesChanged: (value) {
-              debugPrint(value.toString());
-            },
+            onPiecesChanged: (int pieces) => selectedPieces = pieces,
           ),
           const SizedBox(height: 37),
-          PrimaryButton(
-            onPressed: () {},
-            text: "Add to bag",
-            icon: Icon(
-              Iconsax.bag_2,
-              color: Theme.of(context).colorScheme.onPrimary,
-            ),
+          BlocConsumer<CartCubit, CartState>(
+            listenWhen:
+                (previous, current) => previous.cartState != current.cartState,
+            listener: (context, state) {
+              if (state.cartState.isError) {
+                showToast(
+                  message: state.cartErrorMessage,
+                  state: ToastStates.error,
+                );
+              }
+              if (state.cartState.isSuccess) {
+                context.pop();
+                showToast(message: "Added to cart", state: ToastStates.success);
+              }
+            },
+            buildWhen:
+                (previous, current) => previous.cartState != current.cartState,
+            builder: (context, state) {
+              return PrimaryButton(
+                isLoading: state.cartState.isLoading,
+                onPressed: () async {
+                  CartModel cartModel = CartModel(
+                    color: selectedColor,
+                    imageUrl: widget.bottomSheetModel.imageUrl,
+                    name: widget.bottomSheetModel.title,
+                    price: widget.bottomSheetModel.basePrice,
+                    productId: widget.bottomSheetModel.id,
+                    quantity: selectedPieces,
+                    size: selectedSize,
+                  );
+                  await context.read<CartCubit>().addToCart(
+                    cartModel: cartModel,
+                  );
+                },
+                text: "Add to bag",
+                icon: Icon(
+                  Iconsax.bag_2,
+                  color: Theme.of(context).colorScheme.onPrimary,
+                ),
+              );
+            },
           ),
         ],
       ),

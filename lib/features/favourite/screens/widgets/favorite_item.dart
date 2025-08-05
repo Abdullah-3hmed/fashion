@@ -1,6 +1,7 @@
 import 'package:e_fashion_flutter/core/utils/assets_manager.dart';
 import 'package:e_fashion_flutter/core/widgets/custom_cached_network_image.dart';
 import 'package:e_fashion_flutter/core/widgets/modal_bottom_sheet_content.dart';
+import 'package:e_fashion_flutter/features/cart/cubit/cart_cubit.dart';
 import 'package:e_fashion_flutter/features/favourite/cubit/favorite_cubit.dart';
 import 'package:e_fashion_flutter/features/favourite/data/favorite_model.dart';
 import 'package:e_fashion_flutter/shared/data/bottom_sheet_model.dart';
@@ -38,8 +39,11 @@ class FavoriteItem extends StatelessWidget {
                     context: context,
                     useRootNavigator: true,
                     builder:
-                        (context) =>
-                              ModalBottomSheetContent(bottomSheetModel:BottomSheetModel.fromFav(favoriteModel) ,),
+                        (context) => ModalBottomSheetContent(
+                          bottomSheetModel: BottomSheetModel.fromFav(
+                            favoriteModel,
+                          ),
+                        ),
                   );
                 },
                 child: CircleAvatar(
@@ -47,9 +51,22 @@ class FavoriteItem extends StatelessWidget {
                   child: CircleAvatar(
                     radius: 16.0,
                     backgroundColor: Theme.of(context).colorScheme.primary,
-                    child: Icon(
-                      Iconsax.bag_2,
-                      size: 16.0,
+                    child: IconButton(
+                      onPressed: () async {
+                        await showModalBottomSheet(
+                          context: context,
+                          builder:
+                              (_) => BlocProvider.value(
+                                value: context.read<CartCubit>(),
+                                child: ModalBottomSheetContent(
+                                  bottomSheetModel: BottomSheetModel.fromFav(
+                                    favoriteModel,
+                                  ),
+                                ),
+                              ),
+                        );
+                      },
+                      icon: const Icon(Iconsax.bag_2, size: 16.0),
                       color: Theme.of(context).colorScheme.onPrimary,
                     ),
                   ),
@@ -81,7 +98,11 @@ class FavoriteItem extends StatelessWidget {
           overflow: TextOverflow.ellipsis,
           style: Theme.of(context).textTheme.labelMedium,
         ),
-        Text(r"$""${favoriteModel.price}", style: Theme.of(context).textTheme.bodyLarge),
+        Text(
+          r"$"
+          "${favoriteModel.price}",
+          style: Theme.of(context).textTheme.bodyLarge,
+        ),
       ],
     );
   }
