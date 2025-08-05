@@ -19,6 +19,7 @@ class CartRepoImpl implements CartRepo {
     required String productId,
     required int quantity,
     required String size,
+    required String color,
   }) async {
     try {
       final response = await dioHelper.post(
@@ -27,6 +28,7 @@ class CartRepoImpl implements CartRepo {
           "productId": productId,
           "quantity": quantity,
           "size": size,
+          "color":color,
         },
         headers: {"Authorization": "Bearer ${AppConstants.token}"},
       );

@@ -26,10 +26,15 @@ class ModalBottomSheetContent extends StatefulWidget {
 }
 
 class _ModalBottomSheetContentState extends State<ModalBottomSheetContent> {
-  String selectedColor = '';
-  String selectedSize = '';
+ late String selectedColor;
+  late String selectedSize;
   int selectedPieces = 1;
-
+@override
+  void initState() {
+   selectedColor = widget.bottomSheetModel.colors.first;
+    selectedSize = widget.bottomSheetModel.sizes.first;
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Container(

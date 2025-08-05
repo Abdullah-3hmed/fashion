@@ -1,5 +1,8 @@
+import 'package:e_fashion_flutter/core/enums/request_status.dart';
 import 'package:e_fashion_flutter/core/utils/assets_manager.dart';
 import 'package:e_fashion_flutter/core/utils/color_map.dart';
+import 'package:e_fashion_flutter/core/utils/show_toast.dart';
+import 'package:e_fashion_flutter/core/utils/toast_states.dart';
 import 'package:e_fashion_flutter/core/widgets/custom_cached_network_image.dart';
 import 'package:e_fashion_flutter/features/cart/cubit/cart_cubit.dart';
 import 'package:e_fashion_flutter/features/cart/cubit/cart_state.dart';
@@ -80,35 +83,48 @@ class CartItem extends StatelessWidget {
                 Row(
                   children: [
                     BlocSelector<CartCubit, CartState, num>(
-                      selector: (state) {
-                     return state.cartItems
-                          .firstWhere((element) => element.productId == cartModel.productId)
-                          .totalPrice;
-                      },
+                      selector:
+                          (state) =>
+                              state.cartMap[cartModel.productId]?.totalPrice ??
+                              0,
                       builder: (context, state) {
-                        print("rebuild>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" );
                         return Text(
-                          r"$""$state",
+                          r"$"
+                          "$state",
                           style: Theme.of(context).textTheme.bodySmall,
                         );
                       },
                     ),
                     const SizedBox(width: 16.0),
-                    CartItemCounter(
-                      numberOfPieces: cartModel.quantity,
-                      onChanged: (int pieces) async {
-                        if (pieces > cartModel.quantity) {
-                          await context.read<CartCubit>().incrementQuantity(
-                            pieces,
-                            cartModel.productId,
-                          );
-                        } else {
-                          await context.read<CartCubit>().decrementQuantity(
-                            pieces,
-                            cartModel.productId,
+                    BlocListener<CartCubit, CartState>(
+                      listenWhen:
+                          (pre, cur) =>
+                              pre.changeQuantityState !=
+                              cur.changeQuantityState,
+                      listener: (context, state) {
+                        if (state.changeQuantityState.isError) {
+                          showToast(
+                            message: state.cartErrorMessage,
+                            state: ToastStates.error,
                           );
                         }
                       },
+                      child: CartItemCounter(
+                        numberOfPieces: cartModel.quantity,
+                        onChanged: (int pieces) async {
+                          if (pieces > cartModel.quantity) {
+                            await context.read<CartCubit>().incrementQuantity(
+                              pieces,
+                              cartModel.productId,
+                            );
+                          } else {
+                            await context.read<CartCubit>().decrementQuantity(
+                              pieces,
+                              cartModel.productId,
+                            );
+                          }
+                        },
+                      ),
                     ),
                   ],
                 ),

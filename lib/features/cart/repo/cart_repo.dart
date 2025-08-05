@@ -7,6 +7,7 @@ abstract class CartRepo {
     required String productId,
     required int quantity,
     required String size,
+    required String color,
   });
   Future<Either<Failure, List<CartModel>>> getCartItems();
   Future<Either<Failure, void>> incrementQuantity({
