@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class SizesAvailable extends StatefulWidget {
-  const SizesAvailable({super.key, required this.onColorChanged, required this.sizes});
-  final ValueChanged<String> onColorChanged;
+  const SizesAvailable({super.key, required this.onSizeChanged, required this.sizes});
+  final ValueChanged<String> onSizeChanged;
   final List<String> sizes;
   @override
   State<SizesAvailable> createState() => _SizesAvailableState();
@@ -29,7 +29,7 @@ class _SizesAvailableState extends State<SizesAvailable> {
                   (context, index) => InkWell(
                     onTap: () {
                       selectedSize = index;
-                      widget.onColorChanged(widget.sizes[index]);
+                      widget.onSizeChanged(widget.sizes[index]);
                       setState(() {});
                     },
                     child: CircleAvatar(

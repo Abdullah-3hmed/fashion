@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:e_fashion_flutter/config/router/app_router.dart';
 import 'package:e_fashion_flutter/core/enums/request_status.dart';
+import 'package:e_fashion_flutter/core/payment/payment_manager.dart';
 import 'package:e_fashion_flutter/core/utils/app_constants.dart';
 import 'package:e_fashion_flutter/core/widgets/primary_button.dart';
 import 'package:e_fashion_flutter/features/cart/cubit/cart_cubit.dart';
@@ -74,9 +75,9 @@ class CartItemsList extends StatelessWidget {
         ),
         const SizedBox(height: 8.0),
         PrimaryButton(
-          onPressed: () {
-            //await PaymentManager.payWithStripe(amount: 600);
-            context.pushRoute(const PaymentSuccessRoute());
+          onPressed: () async{
+            await PaymentManager.payWithStripe(amount: 600);
+           // context.pushRoute(const PaymentSuccessRoute());
           },
           text: "Checkout",
         ),

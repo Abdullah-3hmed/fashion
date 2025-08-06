@@ -72,7 +72,7 @@ class _ModalBottomSheetContentState extends State<ModalBottomSheetContent> {
           const SizedBox(height: 24.0),
           SizesAvailable(
             sizes: widget.bottomSheetModel.sizes,
-            onColorChanged: (String size) => selectedSize = size,
+            onSizeChanged: (String size) => selectedSize = size,
           ),
           const SizedBox(height: 22),
           PiecesAvailable(

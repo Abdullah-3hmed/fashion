@@ -52,7 +52,6 @@ class HomeDetailsRepoImpl implements HomeDetailsRepo {
           "productId": productId,
           "comment": review,
           "rate": rate,
-          "review": review,
         },
       );
       if (response.statusCode == 200) {

@@ -13,15 +13,15 @@ class FavoriteCubit extends Cubit<FavoriteState> {
     required FavoriteModel favoriteModel,
   }) async {
     final Set<String> oldInFavorites = {...state.inFavorites};
-    final List<FavoriteModel> oldFavorites = [...state.favorites];
     final Set<String> inFavorites = {...state.inFavorites};
-    final List<FavoriteModel> favorites = [...state.favorites];
+    final Map<String, FavoriteModel> oldFavorites = {...state.favorites};
+    final Map<String, FavoriteModel> favorites = {...state.favorites};
     if (inFavorites.contains(favoriteModel.id)) {
       inFavorites.remove(favoriteModel.id);
-      favorites.removeWhere((element) => element.id == favoriteModel.id);
+      favorites.remove(favoriteModel.id);
     } else {
       inFavorites.add(favoriteModel.id);
-      favorites.add(favoriteModel);
+      favorites.putIfAbsent(favoriteModel.id, () => favoriteModel);
     }
     emit(state.copyWith(inFavorites: inFavorites, favorites: favorites));
     final result = await favoriteRepo.addAndRemoveToFavorite(
@@ -54,9 +54,12 @@ class FavoriteCubit extends Cubit<FavoriteState> {
       ),
       (favorites) {
         final Set<String> favoriteIds = favorites.map((e) => e.id).toSet();
+        final Map<String, FavoriteModel> favoritesMap = {
+          for (var item in favorites) item.id: item,
+        };
         emit(
           state.copyWith(
-            favorites: favorites,
+            favorites: favoritesMap,
             favoriteState: RequestStatus.success,
             inFavorites: favoriteIds,
           ),

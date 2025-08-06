@@ -40,7 +40,7 @@ class RatingSection extends StatelessWidget {
               rate: newRating.toInt(),
               productId: productDetailsModel.id,
               imageUrl: context.read<UserCubit>().state.userModel.profileImage,
-              name: context.read<UserCubit>().state.userModel.userName,
+              name: "Abdullah",
             );
             await context.read<ProductDetailsCubit>().addReview(
               reviewModel: reviewModel,
@@ -130,12 +130,12 @@ class RatingSection extends StatelessWidget {
           buildWhen:
               (previous, current) =>
                   previous.productDetailsModel.reviews !=
-                  current.productDetailsModel.reviews,
+                      current.productDetailsModel.reviews ||
+                  previous.addReviewState != previous.addReviewState,
           builder: (context, state) {
-            final reviews = state.productDetailsModel.reviews;
-            return reviews.isEmpty
+            return state.productDetailsModel.reviews.isEmpty
                 ? const SizedBox.shrink()
-                : ReviewSection(reviews: reviews);
+                : ReviewSection(reviews: state.productDetailsModel.reviews);
           },
         ),
       ],

@@ -9,6 +9,7 @@ import 'package:e_fashion_flutter/features/home/cubit/product_details_cubit.dart
 import 'package:e_fashion_flutter/features/home/cubit/product_details_state.dart';
 import 'package:e_fashion_flutter/features/home/data/home_details/review_model.dart';
 import 'package:e_fashion_flutter/features/profile/cubit/user_cubit.dart';
+import 'package:e_fashion_flutter/features/profile/data/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -91,7 +92,6 @@ class _EditReviewSectionState extends State<EditReviewSection> {
               );
             }
             if (state.addReviewState.isError) {
-              print(state.addReviewErrorMessage);
               showToast(
                 message: state.addReviewErrorMessage,
                 state: ToastStates.error,
@@ -113,12 +113,13 @@ class _EditReviewSectionState extends State<EditReviewSection> {
   }
 
   Future<void>   _onPressed() async {
+    final UserModel userModel = context.read<UserCubit>().state.userModel;
     ReviewModel reviewModel = ReviewModel(
       productId: widget.productId,
       review: review,
       rate: context.read<ProductDetailsCubit>().state.rate.toInt(),
-      imageUrl: context.read<UserCubit>().state.userModel.profileImage,
-      name: context.read<UserCubit>().state.userModel.userName,
+      imageUrl: userModel.profileImage,
+      name: userModel.userName,
       reviewId: "",
     );
     await context.read<ProductDetailsCubit>().addReview(

@@ -28,8 +28,7 @@ class FavoriteGridView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<FavoriteCubit, FavoriteState>(
-      listenWhen:
-          (pre, cur) => pre.favoriteState != cur.favoriteState,
+      listenWhen: (pre, cur) => pre.favoriteState != cur.favoriteState,
       listener: (context, state) {
         if (state.favoriteState.isError) {
           showToast(
@@ -76,16 +75,20 @@ class FavoriteGridView extends StatelessWidget {
     );
   }
 
-  GridView _buildGridView({required FavoriteState state}) => GridView.builder(
-    physics: const BouncingScrollPhysics(),
-    gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-      maxCrossAxisExtent: 200.0,
-      crossAxisSpacing: 12.0,
-      mainAxisSpacing: 10.0,
-      childAspectRatio: 0.63,
-    ),
-    itemCount: state.favorites.length,
-    itemBuilder:
-        (context, index) => FavoriteItem(favoriteModel: state.favorites[index]),
-  );
+  GridView _buildGridView({required FavoriteState state}) {
+    final List<FavoriteModel> favorites = state.favorites.values.toList();
+    return GridView.builder(
+      physics: const BouncingScrollPhysics(),
+      gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+        maxCrossAxisExtent: 200.0,
+        crossAxisSpacing: 12.0,
+        mainAxisSpacing: 10.0,
+        childAspectRatio: 0.63,
+      ),
+      itemCount: state.favorites.length,
+      itemBuilder:
+          (context, index) =>
+              FavoriteItem(favoriteModel: favorites[index]),
+    );
+  }
 }

@@ -5,20 +5,20 @@ import 'package:equatable/equatable.dart';
 class FavoriteState extends Equatable {
   final RequestStatus favoriteState;
   final String favoriteErrorMessage;
-  final List<FavoriteModel> favorites;
+  final Map<String, FavoriteModel> favorites;
   final Set<String> inFavorites;
 
   const FavoriteState({
     this.favoriteState = RequestStatus.initial,
     this.favoriteErrorMessage = "",
-    this.favorites = const [],
+    this.favorites = const {},
     this.inFavorites = const {},
   });
 
   FavoriteState copyWith({
     RequestStatus? favoriteState,
     String? favoriteErrorMessage,
-    List<FavoriteModel>? favorites,
+    Map<String, FavoriteModel>? favorites,
     Set<String>? inFavorites,
   }) {
     return FavoriteState(
