@@ -9,7 +9,6 @@ class ProductDetailsState extends Equatable {
   final String productDetailsErrorMessage;
   final double rate;
   final RequestStatus addReviewState;
-  final ReviewModel reviewModel;
   final String addReviewErrorMessage;
 
   const ProductDetailsState({
@@ -18,7 +17,6 @@ class ProductDetailsState extends Equatable {
     this.productDetailsErrorMessage = "",
     this.rate = 0.0,
     this.addReviewState = RequestStatus.initial,
-    this.reviewModel = ReviewModel.empty,
     this.addReviewErrorMessage = "",
   });
 
@@ -28,7 +26,6 @@ class ProductDetailsState extends Equatable {
     String? productDetailsErrorMessage,
     double? rate,
     RequestStatus? addReviewState,
-    ReviewModel? reviewModel,
     String? addReviewErrorMessage,
   }) {
     return ProductDetailsState(
@@ -38,8 +35,9 @@ class ProductDetailsState extends Equatable {
           productDetailsErrorMessage ?? this.productDetailsErrorMessage,
       rate: rate ?? this.rate,
       addReviewState: addReviewState ?? this.addReviewState,
-      reviewModel: reviewModel ?? this.reviewModel,
-      addReviewErrorMessage: addReviewErrorMessage ?? this.addReviewErrorMessage,
+
+      addReviewErrorMessage:
+          addReviewErrorMessage ?? this.addReviewErrorMessage,
     );
   }
 
@@ -50,7 +48,6 @@ class ProductDetailsState extends Equatable {
     productDetailsErrorMessage,
     rate,
     addReviewState,
-    reviewModel,
     addReviewErrorMessage,
   ];
 }

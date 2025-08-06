@@ -51,9 +51,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
               imageUrl: widget.imageUrl,
             ),
           ),
-          ValueListenableBuilder(
+          ValueListenableBuilder<bool>(
             valueListenable: isClipped,
-            builder: (context, value, child) {
+            builder: (context, value, _) {
               return DraggableScrollableSheet(
                 initialChildSize: 0.47,
                 minChildSize: 0.47,

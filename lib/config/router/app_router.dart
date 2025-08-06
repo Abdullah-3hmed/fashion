@@ -14,6 +14,7 @@ import 'package:e_fashion_flutter/features/cart/screens/widgets/payment_success_
 import 'package:e_fashion_flutter/features/favourite/cubit/favorite_cubit.dart';
 import 'package:e_fashion_flutter/features/favourite/screens/favorite_screen.dart';
 import 'package:e_fashion_flutter/features/home/cubit/home_cubit.dart';
+import 'package:e_fashion_flutter/features/home/cubit/product_details_cubit.dart';
 import 'package:e_fashion_flutter/features/home/data/home_details/product_details_model.dart';
 import 'package:e_fashion_flutter/features/home/screens/collection_screen.dart';
 import 'package:e_fashion_flutter/features/home/screens/discover_screen.dart';
@@ -136,7 +137,7 @@ class Authenticated extends AutoRouter implements AutoRouteWrapper {
     providers: [
       BlocProvider(
         lazy: false,
-        create: (context) => getIt<UserCubit>(),//..getUserProfile(),
+        create: (context) => getIt<UserCubit>()..getUserProfile(),
       ),
       BlocProvider(
         lazy: false,

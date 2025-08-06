@@ -42,7 +42,7 @@ class HomeDetailsRepoImpl implements HomeDetailsRepo {
   Future<Either<Failure, ReviewModel>> addReview({
     required String productId,
     required String review,
-    required double rate,
+    required int rate,
   }) async {
     try {
       final response = await dioHelper.post(

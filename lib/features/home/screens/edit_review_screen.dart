@@ -1,5 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:e_fashion_flutter/core/widgets/custom_cached_network_image.dart';
+import 'package:e_fashion_flutter/features/home/cubit/product_details_cubit.dart';
 import 'package:e_fashion_flutter/features/home/data/home_details/product_details_model.dart';
 import 'package:e_fashion_flutter/features/home/screens/widgets/details/edit_review_section.dart';
 import 'package:e_fashion_flutter/features/profile/cubit/user_cubit.dart';
@@ -7,11 +9,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 @RoutePage()
-class EditReviewScreen extends StatelessWidget {
-  const EditReviewScreen({super.key, required this.productDetailsModel});
+class EditReviewScreen extends StatelessWidget implements AutoRouteWrapper {
+  const EditReviewScreen({super.key, required this.productDetailsModel, required this.productDetailsCubit});
 
   final ProductDetailsModel productDetailsModel;
-
+  final ProductDetailsCubit productDetailsCubit;
+  @override
+  Widget wrappedRoute(BuildContext context) => BlocProvider.value(value: productDetailsCubit, child: this);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,13 +32,10 @@ class EditReviewScreen extends StatelessWidget {
                 children: [
                   ClipRRect(
                     borderRadius: BorderRadiusDirectional.circular(8.0),
-                    child: CachedNetworkImage(
-                      imageUrl: productDetailsModel.title,
+                    child: CustomCachedNetworkImage(
+                      imageUrl: productDetailsModel.imageUrl,
                       height: 140.0,
                       width: 120.0,
-                      fit: BoxFit.cover,
-                      errorWidget:
-                          (context, url, error) => const Icon(Icons.error),
                     ),
                   ),
                   const SizedBox(width: 16.0),
@@ -58,12 +59,14 @@ class EditReviewScreen extends StatelessWidget {
               const SizedBox(height: 32.0),
               Row(
                 children: [
-                  CircleAvatar(
-                    radius: 20.0,
-                    backgroundImage: CachedNetworkImageProvider(
-                      context.select(
-                        (UserCubit cubit) => cubit.state.userModel.profileImage,
-                      ),
+                  Container(
+                    width: 40.0,
+                    height: 40.0,
+                    decoration: const BoxDecoration(
+                      shape: BoxShape.circle,
+                    ),
+                    child: CustomCachedNetworkImage(
+                      imageUrl: context.read<UserCubit>().state.userModel.profileImage,
                     ),
                   ),
                   const SizedBox(width: 16.0),
@@ -86,11 +89,13 @@ class EditReviewScreen extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 30.0),
-             // EditReviewSection(productId: productDetailsModel.id),
+              EditReviewSection(productId: productDetailsModel.id),
             ],
           ),
         ),
       ),
     );
   }
+
+
 }

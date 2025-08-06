@@ -10,6 +10,6 @@ abstract class HomeDetailsRepo {
   Future<Either<Failure, ReviewModel>> addReview({
     required String productId,
     required String review,
-    required double rate,
+    required int rate,
   });
 }

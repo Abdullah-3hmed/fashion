@@ -5,7 +5,9 @@ import 'package:e_fashion_flutter/features/home/cubit/home_state.dart';
 import 'package:e_fashion_flutter/features/home/cubit/product_details_cubit.dart';
 import 'package:e_fashion_flutter/features/home/cubit/product_details_state.dart';
 import 'package:e_fashion_flutter/features/home/data/home_details/product_details_model.dart';
+import 'package:e_fashion_flutter/features/home/data/home_details/review_model.dart';
 import 'package:e_fashion_flutter/features/home/screens/widgets/details/review_section.dart';
+import 'package:e_fashion_flutter/features/profile/cubit/user_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -30,8 +32,19 @@ class RatingSection extends StatelessWidget {
           itemBuilder:
               (context, _) =>
                   const Icon(FontAwesomeIcons.star, color: Colors.amber),
-          onRatingUpdate: (double newRating) {
+          onRatingUpdate: (double newRating) async {
             context.read<ProductDetailsCubit>().rateProduct(rate: newRating);
+            ReviewModel reviewModel = ReviewModel(
+              reviewId: "",
+              review: "",
+              rate: newRating.toInt(),
+              productId: productDetailsModel.id,
+              imageUrl: context.read<UserCubit>().state.userModel.profileImage,
+              name: context.read<UserCubit>().state.userModel.userName,
+            );
+            await context.read<ProductDetailsCubit>().addReview(
+              reviewModel: reviewModel,
+            );
           },
         ),
         const SizedBox(height: 16.0),
@@ -39,11 +52,14 @@ class RatingSection extends StatelessWidget {
           child: TextButton(
             onPressed: () {
               context.pushRoute(
-                EditReviewRoute(productDetailsModel: productDetailsModel),
+                EditReviewRoute(
+                  productDetailsModel: productDetailsModel,
+                  productDetailsCubit: context.read<ProductDetailsCubit>(),
+                ),
               );
             },
             child: Text(
-               "Write a review",
+              "Write a review",
               style: Theme.of(context).textTheme.bodySmall!.copyWith(
                 color: Theme.of(context).colorScheme.primary,
               ),

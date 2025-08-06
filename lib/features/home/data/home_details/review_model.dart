@@ -1,13 +1,15 @@
 import 'package:equatable/equatable.dart';
 
 class ReviewModel extends Equatable {
+  final String productId;
   final String reviewId;
   final String review;
-  final num rate;
+  final int rate;
   final String name;
   final String imageUrl;
 
   const ReviewModel({
+    required this.productId,
     required this.reviewId,
     required this.review,
     required this.rate,
@@ -17,21 +19,15 @@ class ReviewModel extends Equatable {
 
   factory ReviewModel.fromJson(Map<String, dynamic> json) {
     return ReviewModel(
+      productId: json['productId'] ?? "",
       reviewId: json['id'] ?? "",
       review: json['comment'] ?? "",
-      rate: json['rate'] ?? 0.0,
+      rate: json['rate'] ?? 0,
       name: json["user"]['userName'] ?? "",
       imageUrl: json["user"]['profilePictureUrl'] ?? "",
     );
   }
-static const ReviewModel empty = ReviewModel(
-      reviewId: "",
-      review: "",
-      rate: 0.0,
-      name: "",
-      imageUrl: "",
-    );
 
   @override
-  List<Object> get props => [reviewId, review, rate, name, imageUrl];
+  List<Object> get props => [productId, reviewId, review, rate, name, imageUrl];
 }

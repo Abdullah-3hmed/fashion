@@ -1,4 +1,5 @@
 import 'package:e_fashion_flutter/core/enums/request_status.dart';
+import 'package:e_fashion_flutter/core/utils/app_constants.dart';
 import 'package:e_fashion_flutter/core/widgets/primary_button.dart';
 import 'package:e_fashion_flutter/features/home/cubit/home_cubit.dart';
 import 'package:e_fashion_flutter/features/home/cubit/home_state.dart';
@@ -24,6 +25,7 @@ class DetailsContainerContent extends StatelessWidget {
   static const ProductDetailsModel dummyProductDetailsModel =
   ProductDetailsModel(
     id: "",
+    imageUrl: AppConstants.imageUrl,
     title: "Product Name",
     colors: "*****",
     price: 0.0,

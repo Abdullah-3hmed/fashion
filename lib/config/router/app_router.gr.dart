@@ -220,12 +220,14 @@ class EditReviewRoute extends PageRouteInfo<EditReviewRouteArgs> {
   EditReviewRoute({
     Key? key,
     required ProductDetailsModel productDetailsModel,
+    required ProductDetailsCubit productDetailsCubit,
     List<PageRouteInfo>? children,
   }) : super(
          EditReviewRoute.name,
          args: EditReviewRouteArgs(
            key: key,
            productDetailsModel: productDetailsModel,
+           productDetailsCubit: productDetailsCubit,
          ),
          initialChildren: children,
        );
@@ -236,35 +238,49 @@ class EditReviewRoute extends PageRouteInfo<EditReviewRouteArgs> {
     name,
     builder: (data) {
       final args = data.argsAs<EditReviewRouteArgs>();
-      return EditReviewScreen(
-        key: args.key,
-        productDetailsModel: args.productDetailsModel,
+      return WrappedRoute(
+        child: EditReviewScreen(
+          key: args.key,
+          productDetailsModel: args.productDetailsModel,
+          productDetailsCubit: args.productDetailsCubit,
+        ),
       );
     },
   );
 }
 
 class EditReviewRouteArgs {
-  const EditReviewRouteArgs({this.key, required this.productDetailsModel});
+  const EditReviewRouteArgs({
+    this.key,
+    required this.productDetailsModel,
+    required this.productDetailsCubit,
+  });
 
   final Key? key;
 
   final ProductDetailsModel productDetailsModel;
 
+  final ProductDetailsCubit productDetailsCubit;
+
   @override
   String toString() {
-    return 'EditReviewRouteArgs{key: $key, productDetailsModel: $productDetailsModel}';
+    return 'EditReviewRouteArgs{key: $key, productDetailsModel: $productDetailsModel, productDetailsCubit: $productDetailsCubit}';
   }
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     if (other is! EditReviewRouteArgs) return false;
-    return key == other.key && productDetailsModel == other.productDetailsModel;
+    return key == other.key &&
+        productDetailsModel == other.productDetailsModel &&
+        productDetailsCubit == other.productDetailsCubit;
   }
 
   @override
-  int get hashCode => key.hashCode ^ productDetailsModel.hashCode;
+  int get hashCode =>
+      key.hashCode ^
+      productDetailsModel.hashCode ^
+      productDetailsCubit.hashCode;
 }
 
 /// generated route for

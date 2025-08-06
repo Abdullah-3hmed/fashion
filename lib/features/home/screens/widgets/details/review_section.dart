@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:e_fashion_flutter/core/widgets/custom_cached_network_image.dart';
 import 'package:e_fashion_flutter/features/home/data/home_details/review_model.dart';
 import 'package:flutter/material.dart';
 
@@ -26,10 +27,14 @@ class ReviewSection extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  CircleAvatar(
-                    radius: 20.0,
-                    backgroundImage: CachedNetworkImageProvider(
-                      reviews[index].imageUrl,
+                  Container(
+                   width: 40.0,
+                    height: 40.0,
+                    decoration: const BoxDecoration(
+                      shape: BoxShape.circle,
+                    ),
+                    child: CustomCachedNetworkImage(
+                      imageUrl: reviews[index].imageUrl,
                     ),
                   ),
                   const SizedBox(width: 16.0),

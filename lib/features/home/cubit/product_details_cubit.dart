@@ -30,36 +30,51 @@ class ProductDetailsCubit extends Cubit<ProductDetailsState> {
     );
   }
 
-  Future<void> addReview({
-    required String productId,
-    required String review,
-    required double rate,
-  }) async {
-    emit(state.copyWith(addReviewState: RequestStatus.loading));
-    final response = await homeDetailsRepo.addReview(
-      productId: productId,
-      review: review,
-      rate: rate,
+  Future<void> addReview({required ReviewModel reviewModel}) async {
+    final List<ReviewModel> oldReviews = [...state.productDetailsModel.reviews];
+    emit(
+      state.copyWith(
+        addReviewState: RequestStatus.loading,
+        productDetailsModel: state.productDetailsModel.copyWith(
+          reviews: [...oldReviews, reviewModel],
+        ),
+      ),
     );
+
+    final response = await homeDetailsRepo.addReview(
+      productId: reviewModel.productId,
+      review: reviewModel.review,
+      rate: reviewModel.rate,
+    );
+
     response.fold(
-      (failure) => emit(
-        state.copyWith(
-          addReviewErrorMessage: failure.errorMessage,
-          addReviewState: RequestStatus.error,
-        ),
-      ),
-      (reviewModel) => emit(
-        state.copyWith(
-          reviewModel: reviewModel,
-          productDetailsModel: state.productDetailsModel.copyWith(
-            reviews: [...state.productDetailsModel.reviews, reviewModel],
+          (failure) {
+        emit(
+          state.copyWith(
+            addReviewErrorMessage: failure.errorMessage,
+            addReviewState: RequestStatus.error,
+            productDetailsModel: state.productDetailsModel.copyWith(
+              reviews: oldReviews,
+            ),
           ),
-          productDetailsState: RequestStatus.success,
-        ),
-      ),
+        );
+      },
+          (newReviewModel) {
+        final updatedReviews = [...oldReviews, newReviewModel];
+        emit(
+          state.copyWith(
+            addReviewState: RequestStatus.success,
+            productDetailsModel: state.productDetailsModel.copyWith(
+              reviews: updatedReviews,
+            ),
+          ),
+        );
+      },
     );
   }
-  void rateProduct({required double rate}){
+
+
+  void rateProduct({required double rate}) {
     emit(state.copyWith(rate: rate));
   }
 }
