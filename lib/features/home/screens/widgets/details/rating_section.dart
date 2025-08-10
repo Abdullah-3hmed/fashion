@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:intl/intl.dart';
 
 class RatingSection extends StatelessWidget {
   const RatingSection({super.key, required this.productDetailsModel});
@@ -34,6 +35,8 @@ class RatingSection extends StatelessWidget {
                   const Icon(FontAwesomeIcons.star, color: Colors.amber),
           onRatingUpdate: (double newRating) async {
             context.read<ProductDetailsCubit>().rateProduct(rate: newRating);
+            DateTime today = DateTime.now();
+            String formattedDate = DateFormat('yyyy-M-d').format(today);
             ReviewModel reviewModel = ReviewModel(
               reviewId: "",
               review: "",
@@ -41,6 +44,7 @@ class RatingSection extends StatelessWidget {
               productId: productDetailsModel.id,
               imageUrl: context.read<UserCubit>().state.userModel.profileImage,
               name: "Abdullah",
+              createdAt: formattedDate,
             );
             await context.read<ProductDetailsCubit>().addReview(
               reviewModel: reviewModel,

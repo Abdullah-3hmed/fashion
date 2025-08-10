@@ -30,7 +30,6 @@ import 'package:e_fashion_flutter/features/search/repo/search_repo.dart';
 import 'package:e_fashion_flutter/shared/app_cubit/app_cubit.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
-import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 
 // dependency injection
 final GetIt getIt = GetIt.instance;
@@ -38,10 +37,6 @@ final GetIt getIt = GetIt.instance;
 class ServiceLocator {
   void init() {
     getIt.registerSingleton<AppRouter>(AppRouter());
-    getIt.registerLazySingleton<InternetConnection>(() => InternetConnection());
-    getIt.registerLazySingleton<NetworkInfo>(
-      () => NetworkInfo(internetConnection: getIt<InternetConnection>()),
-    );
     getIt.registerLazySingleton<FcmHelper>(() => FcmHelper());
     getIt.registerLazySingleton<FlutterSecureStorage>(
       () => const FlutterSecureStorage(),

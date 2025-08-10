@@ -50,7 +50,6 @@ dependencies:
   intl: ^0.20.2
   dio: ^5.8.0+1
   pretty_dio_logger: ^1.4.0
-  internet_connection_checker_plus: ^2.7.1
   equatable: ^2.0.7
   dartz: ^0.10.1
   flutter_bloc: ^9.1.0
@@ -79,6 +78,8 @@ dependencies:
   collection: ^1.19.1
   rxdart: ^0.28.0
   bloc_concurrency: ^0.3.0
+  flutter_native_splash: ^2.4.6
+
 
 
 dev_dependencies:
@@ -135,3 +136,12 @@ flutter:
       fonts:
         - asset: assets/fonts/DMSerifDisplay-Regular.ttf
           weight: 400
+
+
+flutter_native_splash:
+  color: "#000000"
+  image: assets/images/app_icon.png
+
+  android_12:
+    image: assets/images/app_icon.png
+    icon_background_color: "#000000"

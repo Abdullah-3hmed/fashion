@@ -53,7 +53,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
           ),
           ValueListenableBuilder<bool>(
             valueListenable: isClipped,
-            builder: (context, value, _) {
+            builder: (context, value, child) {
               return DraggableScrollableSheet(
                 initialChildSize: 0.47,
                 minChildSize: 0.47,

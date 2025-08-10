@@ -31,12 +31,17 @@ class SplashScreenBody extends StatelessWidget {
             ),
           ),
           const PositionedDirectional(
-            top: 75.0,
+            top: 150.0,
             start: 0.0,
             end: 0.0,
             child: FadeInAnimation(
               duration: Duration(seconds: 2),
-              child: Image(image: AssetImage(AssetsManager.appLogo)),
+              child: Image(
+                alignment:AlignmentDirectional.bottomCenter,
+                width: 200.0,
+                height: 200.0,
+                image: AssetImage(AssetsManager.appLogo),
+              ),
             ),
           ),
           PositionedDirectional(

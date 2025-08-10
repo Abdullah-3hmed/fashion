@@ -14,6 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:intl/intl.dart';
 
 class EditReviewSection extends StatefulWidget {
   const EditReviewSection({super.key, required this.productId});
@@ -114,6 +115,9 @@ class _EditReviewSectionState extends State<EditReviewSection> {
 
   Future<void>   _onPressed() async {
     final UserModel userModel = context.read<UserCubit>().state.userModel;
+   final DateTime today = DateTime.now();
+    String formattedDate = DateFormat('yyyy-M-d').format(today);
+
     ReviewModel reviewModel = ReviewModel(
       productId: widget.productId,
       review: review,
@@ -121,6 +125,7 @@ class _EditReviewSectionState extends State<EditReviewSection> {
       imageUrl: userModel.profileImage,
       name: userModel.userName,
       reviewId: "",
+      createdAt: formattedDate
     );
     await context.read<ProductDetailsCubit>().addReview(
       reviewModel: reviewModel,

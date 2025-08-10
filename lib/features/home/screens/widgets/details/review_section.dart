@@ -51,7 +51,7 @@ class ReviewSection extends StatelessWidget {
                     const Icon(Icons.star, color: Colors.amber, size: 16.0),
                   const SizedBox(width: 11.0),
                   Text(
-                    reviews[index].name,
+                    reviews[index].createdAt,
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
                 ],
