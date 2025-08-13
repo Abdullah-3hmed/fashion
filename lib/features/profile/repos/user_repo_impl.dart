@@ -42,7 +42,7 @@ class UserRepoImpl implements UserRepo {
   @override
   Future<Either<Failure, void>> logOut({required String email}) async {
     try {
-      await getIt<DioHelper>().get(
+      await dioHelper.get(
         url: "",
         data: {"email": email},
         headers: {"Authorization": "Bearer ${AppConstants.token}"},
@@ -85,13 +85,41 @@ class UserRepoImpl implements UserRepo {
     required UserPasswordModel passwordModel,
   }) async {
     try {
-      final response = await getIt<DioHelper>().post(
+      final response = await dioHelper.post(
         url: ApiConstants.changePasswordEndpoint,
         data: passwordModel.toJson(),
         headers: {"Authorization": "Bearer ${AppConstants.token}"},
       );
       if (response.data["statusCode"] == 200) {
         return Right(response.data["message"]);
+      }
+      throw ServerException(errorModel: ErrorModel.fromJson(response.data));
+    } on DioException catch (e) {
+      return Left(ServerFailure.fromDioError(e));
+    } on ServerException catch (e) {
+      return Left(ServerFailure(e.errorModel.errors.join(" \n")));
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> sendMessage({
+    required String message,
+}) async{
+    try {
+      final response = await dioHelper.post(
+        url: ApiConstants.sendMessageEndpoint,
+        headers: {"Authorization": "Bearer ${AppConstants.token}"},
+        data: {
+          "senderUserId":AppConstants.token,
+          "receiverUserId":AppConstants.adminToken,
+          "content":message,
+          "chatId":0,
+        },
+      );
+      if (response.statusCode == 200) {
+        return const Right(null);
       }
       throw ServerException(errorModel: ErrorModel.fromJson(response.data));
     } on DioException catch (e) {

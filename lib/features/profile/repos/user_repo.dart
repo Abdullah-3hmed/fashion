@@ -16,4 +16,5 @@ abstract class UserRepo {
   Future<Either<Failure, String>> changePassword({
     required UserPasswordModel passwordModel,
   });
+  Future<Either<Failure, void>> sendMessage({required String message});
 }

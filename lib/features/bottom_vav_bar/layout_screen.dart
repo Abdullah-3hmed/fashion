@@ -37,13 +37,6 @@ class _LayoutScreenState extends State<LayoutScreen>
   }
 
   @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.resumed) {
-      context.read<AppCubit>().syncNotificationStatusWithSystem();
-    }
-  }
-
-  @override
   Widget build(BuildContext context) {
     return AutoTabsScaffold(
       extendBody: true,

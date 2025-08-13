@@ -5,19 +5,18 @@ import 'package:e_fashion_flutter/core/notifications/notification_controller.dar
 import 'package:e_fashion_flutter/core/utils/app_constants.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 class FcmInitHelper {
   static final FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
   static final AwesomeNotifications _awesomeNotifications =
       AwesomeNotifications();
-  static final Permission permissionHandler = Permission.notification;
+
   static Future<bool> isNotificationAllowed() async {
-    return await permissionHandler.isGranted;
+    return await _awesomeNotifications.isNotificationAllowed();
   }
 
   static Future<bool> requestPermission() async {
-    return await permissionHandler.request().isGranted;
+    return await _awesomeNotifications.requestPermissionToSendNotifications();
   }
 
   static Future<void> initAwesomeNotification() async {
@@ -43,26 +42,6 @@ class FcmInitHelper {
         body: message.notification?.body ?? 'No body',
         payload: {},
       ),
-    );
-  }
-
-  static Future<void> disableNotifications() async {
-    // await _awesomeNotifications.cancelAll();
-    // await _awesomeNotifications.dismissAllNotifications();
-    await firebaseMessaging.setForegroundNotificationPresentationOptions(
-      
-    );
-    // await _awesomeNotifications.removeChannel("fcm_channel");
-    await firebaseMessaging.deleteToken();
-  }
-
-  static Future<void> enableNotifications() async {
-    // await initAwesomeNotification();
-    await getFcmToken();
-    await firebaseMessaging.setForegroundNotificationPresentationOptions(
-      alert: true,
-      badge: true,
-      sound: true,
     );
   }
 

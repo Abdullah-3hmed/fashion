@@ -4,6 +4,9 @@ import 'package:e_fashion_flutter/core/network/dio_helper.dart';
 import 'package:e_fashion_flutter/core/network/network_info.dart';
 import 'package:e_fashion_flutter/core/notifications/fcm_helper.dart';
 import 'package:e_fashion_flutter/core/services/location_service.dart';
+import 'package:e_fashion_flutter/features/admin/admin_repo/admin_repo.dart';
+import 'package:e_fashion_flutter/features/admin/admin_repo/admin_repo_impl.dart';
+import 'package:e_fashion_flutter/features/admin/cubit/admin_cubit.dart';
 import 'package:e_fashion_flutter/features/auth/cubit/auth_cubit.dart';
 import 'package:e_fashion_flutter/features/auth/repos/auth_repo.dart';
 import 'package:e_fashion_flutter/features/auth/repos/auth_repo_impl.dart';
@@ -73,5 +76,9 @@ class ServiceLocator {
           () => CartCubit(cartRepo: getIt<CartRepo>()),
     );
     getIt.registerFactory<AppCubit>(() => AppCubit());
+    getIt.registerLazySingleton<AdminRepo>(() => AdminRepoImpl(dioHelper: getIt<DioHelper>()));
+    getIt.registerFactory<AdminCubit>(
+          () => AdminCubit(adminRepo: getIt<AdminRepo>()),
+    );
   }
 }

@@ -11,6 +11,22 @@
 part of 'app_router.dart';
 
 /// generated route for
+/// [AllChatsScreen]
+class AllChatsRoute extends PageRouteInfo<void> {
+  const AllChatsRoute({List<PageRouteInfo>? children})
+    : super(AllChatsRoute.name, initialChildren: children);
+
+  static const String name = 'AllChatsRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return WrappedRoute(child: const AllChatsScreen());
+    },
+  );
+}
+
+/// generated route for
 /// [Auth]
 class AuthRoute extends PageRouteInfo<void> {
   const AuthRoute({List<PageRouteInfo>? children})

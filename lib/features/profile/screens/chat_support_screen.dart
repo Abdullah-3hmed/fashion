@@ -1,6 +1,10 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:e_fashion_flutter/core/utils/assets_manager.dart';
+import 'package:e_fashion_flutter/features/profile/cubit/user_cubit.dart';
 import 'package:e_fashion_flutter/features/profile/screens/widgets/messages_list.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:iconsax/iconsax.dart';
 
 @RoutePage()
@@ -45,11 +49,6 @@ class _ChatSupportScreenState extends State<ChatSupportScreen> {
               children: [
                 Expanded(
                   child: TextField(
-                    onSubmitted: (value) {
-                      debugPrint(value);
-                      message = value;
-                      controller.clear();
-                    },
                     onChanged: (value) {
                       message = value;
                     },
@@ -75,12 +74,23 @@ class _ChatSupportScreenState extends State<ChatSupportScreen> {
                   ),
                 ),
                 IconButton(
-                  onPressed: () {
-                    debugPrint(message);
+                  onPressed: () async {
+                    if (message.isNotEmpty) {
+                      await context.read<UserCubit>().sendMessage(
+                        message: message,
+                      );
+                    }
+                    message = "";
                     controller.clear();
                     // setState(() {});
                   },
-                  icon: const Icon(Iconsax.send),
+                  icon: SvgPicture.asset(
+                    AssetsManager.sendIcon,
+                    colorFilter: ColorFilter.mode(
+                      Theme.of(context).colorScheme.primary,
+                      BlendMode.srcIn,
+                    ),
+                  ),
                 ),
               ],
             ),

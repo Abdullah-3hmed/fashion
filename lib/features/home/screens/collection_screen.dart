@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:auto_route/auto_route.dart';
+import 'package:e_fashion_flutter/config/router/app_router.dart';
 import 'package:e_fashion_flutter/core/enums/request_status.dart';
 import 'package:e_fashion_flutter/core/services/service_locator.dart';
 import 'package:e_fashion_flutter/core/utils/app_constants.dart';
@@ -19,10 +20,19 @@ import 'package:skeletonizer/skeletonizer.dart';
 @RoutePage()
 class CollectionScreen extends StatelessWidget implements AutoRouteWrapper {
   @override
-  Widget wrappedRoute(BuildContext context) =>
-      BlocProvider( create: (context) => getIt<HomeCubit>()..getCollectionDetails(collectionId: collectionId),child: this);
+  Widget wrappedRoute(BuildContext context) => BlocProvider(
+    create:
+        (context) =>
+            getIt<HomeCubit>()
+              ..getCollectionDetails(collectionId: collectionId),
+    child: this,
+  );
 
-  const CollectionScreen({super.key, required this.title, required this.collectionId});
+  const CollectionScreen({
+    super.key,
+    required this.title,
+    required this.collectionId,
+  });
 
   final String title;
   final String collectionId;
@@ -37,10 +47,7 @@ class CollectionScreen extends StatelessWidget implements AutoRouteWrapper {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          title,
-          style: Theme.of(context).textTheme.titleMedium,
-        ),
+        title: Text(title, style: Theme.of(context).textTheme.titleMedium),
       ),
       body: BlocBuilder<HomeCubit, HomeState>(
         buildWhen:
@@ -61,7 +68,9 @@ class CollectionScreen extends StatelessWidget implements AutoRouteWrapper {
                       itemBuilder:
                           (context, index) =>
                               index % 2 == 0
-                                  ? const CollectionItem(collectionItemModel: dummyProduct)
+                                  ? const CollectionItem(
+                                    collectionItemModel: dummyProduct,
+                                  )
                                   : const ReverseCollectionItem(
                                     collectionItemModel: dummyProduct,
                                   ),

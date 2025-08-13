@@ -81,7 +81,6 @@ class ProfileContainerContent extends StatelessWidget {
           ),
           const SizedBox(height: 24.0),
           ProfileInfoItem(
-            onTap: () {},
             text: "Notification",
             icon: Iconsax.notification,
             suffixWidget: Switch(
@@ -90,17 +89,14 @@ class ProfileContainerContent extends StatelessWidget {
               value: context.select(
                 (AppCubit cubit) => cubit.state.areNotificationsEnabled,
               ),
-              onChanged: (value) async {
-                await context.read<AppCubit>().handleUserNotificationRequest(
-                  value,
-                );
+              onChanged: (value)  {
+                context.read<AppCubit>().toggleNotifications(isNotificationAllowed: value);
               },
             ),
           ),
 
           const SizedBox(height: 10.0),
           ProfileInfoItem(
-            onTap: () {},
             text: "Theme Mode",
             icon: SolarIconsOutline.sun,
             suffixWidget: Switch(

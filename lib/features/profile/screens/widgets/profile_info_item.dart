@@ -4,13 +4,13 @@ class ProfileInfoItem extends StatelessWidget {
   const ProfileInfoItem({
     super.key,
     required this.text,
-    required this.onTap,
+     this.onTap,
     required this.icon,
     this.suffixWidget,
   });
 
   final String text;
-  final void Function() onTap;
+  final void Function()? onTap;
   final IconData icon;
   final Widget? suffixWidget;
 

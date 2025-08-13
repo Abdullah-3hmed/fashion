@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:collection/collection.dart';
 import 'package:e_fashion_flutter/core/services/service_locator.dart';
+import 'package:e_fashion_flutter/features/admin/screens/all_chats_screen.dart';
 import 'package:e_fashion_flutter/features/auth/cubit/auth_cubit.dart';
 import 'package:e_fashion_flutter/features/auth/screens/email_verification_screen.dart';
 import 'package:e_fashion_flutter/features/auth/screens/forget_password_screen.dart';
@@ -92,6 +93,7 @@ class AppRouter extends RootStackRouter {
         _buildCustomRoute(page: NotificationRoute.page),
         _buildCustomRoute(page: MapRoute.page),
         _buildCustomRoute(page: PaymentSuccessRoute.page),
+        _buildCustomRoute(page: AllChatsRoute.page),
       ],
     ),
   ];

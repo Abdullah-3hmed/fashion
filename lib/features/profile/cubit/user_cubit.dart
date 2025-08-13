@@ -129,6 +129,24 @@ class UserCubit extends HydratedCubit<UserState> {
       },
     );
   }
+  Future<void>sendMessage({required String message})async{
+    final result = await userRepo.sendMessage(message: message);
+    result.fold(
+      (failure) => emit(
+        state.copyWith(
+          sendMessageErrorMessage: failure.errorMessage,
+          sendMessageState: RequestStatus.error,
+        ),
+      ),
+      (_) {
+        emit(
+          state.copyWith(
+            sendMessageState: RequestStatus.success,
+          ),
+        );
+      },
+    );
+  }
 
   @override
   UserState? fromJson(Map<String, dynamic> json) {
