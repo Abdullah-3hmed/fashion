@@ -1,8 +1,15 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:e_fashion_flutter/core/enums/request_status.dart';
+import 'package:e_fashion_flutter/core/local/cache_helper.dart';
+import 'package:e_fashion_flutter/core/services/connection_service.dart';
+import 'package:e_fashion_flutter/core/services/service_locator.dart';
+import 'package:e_fashion_flutter/core/utils/app_constants.dart';
 import 'package:e_fashion_flutter/features/profile/cubit/user_state.dart';
 import 'package:e_fashion_flutter/features/profile/data/edit_user_model.dart';
+import 'package:e_fashion_flutter/features/profile/data/message_model.dart';
+import 'package:e_fashion_flutter/features/profile/data/send_message_model.dart';
 import 'package:e_fashion_flutter/features/profile/data/user_model.dart';
 import 'package:e_fashion_flutter/features/profile/data/user_password_model.dart';
 import 'package:e_fashion_flutter/features/profile/repos/user_repo.dart';
@@ -35,7 +42,8 @@ class UserCubit extends HydratedCubit<UserState> {
   }
 
   Future<void> logOut() async {
-    await userRepo.logOut(email: state.userModel.email);
+    AppConstants.token = "";
+    await getIt<CacheHelper>().deleteAll();
   }
 
   Future<void> pickProfileImage() async {
@@ -49,7 +57,7 @@ class UserCubit extends HydratedCubit<UserState> {
           ),
         ),
       );
-      await editProfile();
+      // await editProfile();
     } else {
       return;
     }
@@ -60,11 +68,7 @@ class UserCubit extends HydratedCubit<UserState> {
     String? phone,
     String? email,
   }) async {
-    emit(
-      state.copyWith(
-        editUserRequestStatus: RequestStatus.loading,
-      ),
-    );
+    emit(state.copyWith(editUserRequestStatus: RequestStatus.loading));
     final result = await userRepo.editProfile(
       editUserModel: EditUserModel(
         userName: userName ?? state.userModel.userName,
@@ -129,19 +133,78 @@ class UserCubit extends HydratedCubit<UserState> {
       },
     );
   }
-  Future<void>sendMessage({required String message})async{
-    final result = await userRepo.sendMessage(message: message);
+
+  Future<void> sendMessage({
+    required String message,
+    required String senderId,
+    required String receiverId,
+  }) async {
+    await ConnectionsService.checkConnection();
+
+    final sendMessageModel = SendMessageModel(
+      content: message,
+      senderId: senderId,
+      receiverId: receiverId,
+      chatId: 0,
+    );
+
+    try {
+      await ConnectionsService.connection.invoke(
+        "MessageSent",
+        args: [sendMessageModel.toJson()],
+      );
+      log("✅ Message sent successfully: ${sendMessageModel.toJson()}");
+    } catch (error, stackTrace) {
+      log("❌ Error sending message: $error");
+      log("StackTrace: $stackTrace");
+    }
+  }
+
+  Future<void> listenToMessage() async {
+    await ConnectionsService.checkConnection();
+    ConnectionsService.connection.off("ReceiveMessage");
+    ConnectionsService.connection.on("ReceiveMessage", (arguments) {
+      try {
+        if (arguments != null && arguments.isNotEmpty) {
+          final data = arguments[0];
+
+          if (data is Map) {
+            final Map<String, dynamic> jsonData = Map<String, dynamic>.from(
+              data,
+            );
+
+            final message = MessageModel.fromJson(jsonData);
+
+            emit(state.copyWith(messageList: [...state.messageList, message]));
+            log("📩 New message received: ${message.toString()}");
+          } else {
+            log("⚠️ Received data is not a valid map: $data");
+          }
+        }
+      } catch (e, stackTrace) {
+        log("❌ Error handling incoming message: $e");
+        log("StackTrace: $stackTrace");
+      }
+    });
+  }
+
+  Future<void> getChatHistory({required String? receiverId}) async {
+    if (state.messageList.isNotEmpty) return;
+    final result = await userRepo.getChatHistory(
+      receiverId: receiverId ?? AppConstants.supportId,
+    );
     result.fold(
       (failure) => emit(
         state.copyWith(
-          sendMessageErrorMessage: failure.errorMessage,
-          sendMessageState: RequestStatus.error,
+          getChatHistoryErrorMessage: failure.errorMessage,
+          getChatHistoryState: RequestStatus.error,
         ),
       ),
-      (_) {
+      (messageList) {
         emit(
           state.copyWith(
-            sendMessageState: RequestStatus.success,
+            getChatHistoryState: RequestStatus.success,
+            messageList: messageList,
           ),
         );
       },

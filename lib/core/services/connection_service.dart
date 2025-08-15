@@ -1,49 +1,48 @@
 import 'dart:developer';
 
-import 'package:e_fashion_flutter/core/utils/app_constants.dart';
+import 'package:e_fashion_flutter/core/network/api_constants.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:signalr_netcore/http_connection_options.dart';
 import 'package:signalr_netcore/hub_connection.dart';
 import 'package:signalr_netcore/hub_connection_builder.dart';
 
-class ConnectionsServices {
+class ConnectionsService {
   static late HubConnection connection;
 
   static Future<void> initConnection() async {
-    if (AppConstants.token.isEmpty) return;
-    connection =
-        HubConnectionBuilder()
-            .withUrl(
-         // "${ApiEndPoints.chatServices}$token",
-          "",
-          options: HttpConnectionOptions(requestTimeout: 5000),
-        )
-            .withAutomaticReconnect()
-            .build();
+    try {
+      final url = "${dotenv.env["API_URL"]!}${ApiConstants.sendMessageEndpoint}";
+      log("Connecting to: $url");
+      connection = HubConnectionBuilder()
+          .withUrl(
+        url,
+        options: HttpConnectionOptions(requestTimeout: 5000),
+      )
+          .withAutomaticReconnect()
+          .build();
 
-    await connection
-        .start()
-        ?.then((value) {
-      log("Connection started");
-    })
-        .catchError((error) {
-      log("Error starting connection: $error");
-    });
+      await connection.start();
+      log("✅ Connection started");
 
-    connection.onclose(({error}) {
-      log("Connection closed${error != null ? ': $error' : ''}");
-      // Optional: Try reconnecting or alert the user
-    });
+      connection.onclose(({error}) {
+        log("⚠️ Connection closed${error != null ? ': $error' : ''}");
+        // Optional: إعادة المحاولة أو تنبيه المستخدم
+      });
+    } catch (e, stackTrace) {
+      log("❌ Error starting connection: $e");
+      log("StackTrace: $stackTrace");
+    }
   }
 
   static void onConnectionClosed() {
     connection.onclose(({error}) {
-      log("Connection closed${error != null ? ': $error' : ''}");
+      log("⚠️ Connection closed${error != null ? ': $error' : ''}");
     });
   }
 
   static Future<void> checkConnection() async {
     if (connection.state != HubConnectionState.Connected) {
-      log("I init Connections");
+      log("🔄 Re-initializing connection...");
       await initConnection();
     }
   }

@@ -9,6 +9,7 @@ import 'package:e_fashion_flutter/core/network/dio_helper.dart';
 import 'package:e_fashion_flutter/core/services/service_locator.dart';
 import 'package:e_fashion_flutter/core/utils/app_constants.dart';
 import 'package:e_fashion_flutter/features/profile/data/edit_user_model.dart';
+import 'package:e_fashion_flutter/features/profile/data/message_model.dart';
 import 'package:e_fashion_flutter/features/profile/data/user_model.dart';
 import 'package:e_fashion_flutter/features/profile/data/user_password_model.dart';
 import 'package:e_fashion_flutter/features/profile/repos/user_repo.dart';
@@ -34,24 +35,6 @@ class UserRepoImpl implements UserRepo {
       return Left(ServerFailure.fromDioError(e));
     } on ServerException catch (e) {
       return Left(ServerFailure(e.errorModel.errors.join(" \n")));
-    } catch (e) {
-      return Left(ServerFailure(e.toString()));
-    }
-  }
-
-  @override
-  Future<Either<Failure, void>> logOut({required String email}) async {
-    try {
-      await dioHelper.get(
-        url: "",
-        data: {"email": email},
-        headers: {"Authorization": "Bearer ${AppConstants.token}"},
-      );
-      await getIt<CacheHelper>().delete(key: "token");
-      AppConstants.token = "";
-      return const Right(null);
-    } on DioException catch (e) {
-      return Left(ServerFailure.fromDioError(e));
     } catch (e) {
       return Left(ServerFailure(e.toString()));
     }
@@ -104,18 +87,16 @@ class UserRepoImpl implements UserRepo {
   }
 
   @override
-  Future<Either<Failure, void>> sendMessage({
-    required String message,
-}) async{
+  Future<Either<Failure, void>> sendMessage({required String message}) async {
     try {
       final response = await dioHelper.post(
         url: ApiConstants.sendMessageEndpoint,
         headers: {"Authorization": "Bearer ${AppConstants.token}"},
         data: {
-          "senderUserId":AppConstants.token,
-          "receiverUserId":AppConstants.adminToken,
-          "content":message,
-          "chatId":0,
+          "senderUserId": AppConstants.userId,
+          "receiverUserId": AppConstants.supportId,
+          "content": message,
+          "chatId": 0,
         },
       );
       if (response.statusCode == 200) {
@@ -126,6 +107,33 @@ class UserRepoImpl implements UserRepo {
       return Left(ServerFailure.fromDioError(e));
     } on ServerException catch (e) {
       return Left(ServerFailure(e.errorModel.errors.join(" \n")));
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<MessageModel>>> getChatHistory({
+    required String receiverId,
+  }) async {
+    try {
+      final response = await dioHelper.get(
+        url: ApiConstants.getChatHistoryEndPoint(receiverId: receiverId),
+        headers: {"Authorization": "Bearer ${AppConstants.token}"},
+      );
+      if (response.statusCode == 200) {
+        return Right(
+          List<MessageModel>.from(
+            (response.data as List? ?? []).map(
+              (message) => MessageModel.fromJson(message),
+            ),
+          ),
+        );
+      } else {
+        throw ServerException(errorModel: ErrorModel.fromJson(response.data));
+      }
+    } on DioException catch (e) {
+      return Left(ServerFailure.fromDioError(e));
     } catch (e) {
       return Left(ServerFailure(e.toString()));
     }

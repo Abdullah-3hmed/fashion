@@ -36,10 +36,7 @@ class ProfileBackgroundImageAndLogo extends StatelessWidget {
                         ) !=
                         null
                     ? Image.file(
-                      context.select(
-                        (UserCubit cubit) =>
-                            cubit.state.editUserModel.profileImageFile!,
-                      ),
+                      context.read<UserCubit>().state.editUserModel.profileImageFile!,
                       fit: BoxFit.cover,
                     )
                     : CustomCachedNetworkImage(
@@ -62,7 +59,6 @@ class ProfileBackgroundImageAndLogo extends StatelessWidget {
                           isEditProfileScreen,
                   listener: (context, state) {
                     if (state.editUserRequestStatus.isSuccess) {
-                      context.pop();
                       showToast(
                         message: "Profile Updated Successfully",
                         state: ToastStates.success,

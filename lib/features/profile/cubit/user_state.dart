@@ -1,5 +1,6 @@
 import 'package:e_fashion_flutter/core/enums/request_status.dart';
 import 'package:e_fashion_flutter/features/profile/data/edit_user_model.dart';
+import 'package:e_fashion_flutter/features/profile/data/message_model.dart';
 import 'package:e_fashion_flutter/features/profile/data/user_model.dart';
 import 'package:equatable/equatable.dart';
 
@@ -12,8 +13,9 @@ class UserState extends Equatable {
   final String editUserErrorMessage;
   final String changePasswordMessage;
   final RequestStatus changePasswordRequestStatus;
-  final RequestStatus sendMessageState;
-  final String sendMessageErrorMessage;
+  final RequestStatus getChatHistoryState;
+  final List<MessageModel> messageList;
+  final String getChatHistoryErrorMessage;
 
   const UserState({
     this.userModel = UserModel.empty,
@@ -24,8 +26,9 @@ class UserState extends Equatable {
     this.editUserErrorMessage = "",
     this.changePasswordMessage = "",
     this.changePasswordRequestStatus = RequestStatus.initial,
-    this.sendMessageState = RequestStatus.initial,
-    this.sendMessageErrorMessage = "",
+    this.getChatHistoryState = RequestStatus.loading,
+    this.messageList = const [],
+    this.getChatHistoryErrorMessage = "",
   });
 
   UserState copyWith({
@@ -37,9 +40,9 @@ class UserState extends Equatable {
     String? editUserErrorMessage,
     String? changePasswordMessage,
     RequestStatus? changePasswordRequestStatus,
-    RequestStatus? sendMessageState,
-    String? sendMessageErrorMessage,
-
+    RequestStatus? getChatHistoryState,
+    List<MessageModel>? messageList,
+    String? getChatHistoryErrorMessage,
   }) {
     return UserState(
       userModel: userModel ?? this.userModel,
@@ -53,8 +56,10 @@ class UserState extends Equatable {
           changePasswordMessage ?? this.changePasswordMessage,
       changePasswordRequestStatus:
           changePasswordRequestStatus ?? this.changePasswordRequestStatus,
-      sendMessageState: sendMessageState ?? this.sendMessageState,
-      sendMessageErrorMessage: sendMessageErrorMessage ?? this.sendMessageErrorMessage,
+      getChatHistoryState: getChatHistoryState ?? this.getChatHistoryState,
+      messageList: messageList ?? this.messageList,
+      getChatHistoryErrorMessage:
+          getChatHistoryErrorMessage ?? this.getChatHistoryErrorMessage,
     );
   }
 
@@ -68,7 +73,8 @@ class UserState extends Equatable {
     editUserErrorMessage,
     changePasswordMessage,
     changePasswordRequestStatus,
-    sendMessageState,
-    sendMessageErrorMessage
+    getChatHistoryState,
+    messageList,
+    getChatHistoryErrorMessage,
   ];
 }

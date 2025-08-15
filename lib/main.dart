@@ -2,6 +2,7 @@ import 'package:e_fashion_flutter/bloc_observer.dart';
 import 'package:e_fashion_flutter/core/local/cache_helper.dart';
 import 'package:e_fashion_flutter/core/network/dio_helper.dart';
 import 'package:e_fashion_flutter/core/notifications/fcm_init_helper.dart';
+import 'package:e_fashion_flutter/core/services/connection_service.dart';
 import 'package:e_fashion_flutter/core/services/service_locator.dart';
 import 'package:e_fashion_flutter/core/utils/app_constants.dart';
 import 'package:e_fashion_flutter/firebase_options.dart';
@@ -26,8 +27,8 @@ void main() async {
   await dotenv.load(fileName: "lib/.env");
   DioHelper.init();
   AppConstants.token = await getIt<CacheHelper>().readData(key: "token") ?? "";
- // await FcmInitHelper.getFcmToken();
-
+  AppConstants.userId = await getIt<CacheHelper>().readData(key: "user_id") ?? "";
+  await ConnectionsService.initConnection();
   Bloc.observer = MyBlocObserver();
 
   runApp(const MyApp());

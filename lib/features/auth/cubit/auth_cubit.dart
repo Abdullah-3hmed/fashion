@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:e_fashion_flutter/core/enums/request_status.dart';
 import 'package:e_fashion_flutter/core/local/cache_helper.dart';
 import 'package:e_fashion_flutter/core/notifications/fcm_init_helper.dart';
@@ -40,6 +42,7 @@ class AuthCubit extends Cubit<AuthState> {
       ),
       (authResponseModel) async {
         AppConstants.token = authResponseModel.token;
+        AppConstants.userId = authResponseModel.userId;
         emit(
           state.copyWith(
             authResponseModel: authResponseModel,
@@ -49,6 +52,10 @@ class AuthCubit extends Cubit<AuthState> {
         await getIt<CacheHelper>().saveData(
           key: "token",
           value: authResponseModel.token,
+        );
+        await getIt<CacheHelper>().saveData(
+          key: "user_id",
+          value: authResponseModel.userId,
         );
       },
     );
@@ -76,6 +83,7 @@ class AuthCubit extends Cubit<AuthState> {
       ),
       (authResponseModel) async {
         AppConstants.token = authResponseModel.token;
+        AppConstants.userId = authResponseModel.userId;
         emit(
           state.copyWith(
             authResponseModel: authResponseModel,
@@ -85,6 +93,10 @@ class AuthCubit extends Cubit<AuthState> {
         await getIt<CacheHelper>().saveData(
           key: "token",
           value: authResponseModel.token,
+        );
+        await getIt<CacheHelper>().saveData(
+          key: "user_id",
+          value: authResponseModel.userId,
         );
       },
     );

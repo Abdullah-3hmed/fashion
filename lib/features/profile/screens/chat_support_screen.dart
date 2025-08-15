@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:e_fashion_flutter/core/utils/app_constants.dart';
 import 'package:e_fashion_flutter/core/utils/assets_manager.dart';
 import 'package:e_fashion_flutter/features/profile/cubit/user_cubit.dart';
 import 'package:e_fashion_flutter/features/profile/screens/widgets/messages_list.dart';
@@ -22,6 +23,8 @@ class _ChatSupportScreenState extends State<ChatSupportScreen> {
   @override
   void initState() {
     controller = TextEditingController();
+    context.read<UserCubit>().getChatHistory(receiverId: null);
+    context.read<UserCubit>().listenToMessage();
     super.initState();
   }
 
@@ -78,11 +81,12 @@ class _ChatSupportScreenState extends State<ChatSupportScreen> {
                     if (message.isNotEmpty) {
                       await context.read<UserCubit>().sendMessage(
                         message: message,
+                        senderId: AppConstants.userId,
+                        receiverId: AppConstants.supportId,
                       );
                     }
                     message = "";
                     controller.clear();
-                    // setState(() {});
                   },
                   icon: SvgPicture.asset(
                     AssetsManager.sendIcon,

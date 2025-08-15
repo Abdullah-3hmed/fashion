@@ -148,8 +148,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                 previous.editUserRequestStatus !=
                                 current.editUserRequestStatus,
                         listener: (context, state) {
-                       if (state.editUserRequestStatus.isSuccess) {
-                         context.pop();
+                       if (state.editUserRequestStatus.isSuccess ) {
                          showToast(message: "Profile Updated Successfully", state: ToastStates.success);
                        }
                        if (state.editUserRequestStatus.isError) {

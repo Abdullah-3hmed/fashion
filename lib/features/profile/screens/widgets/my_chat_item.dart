@@ -1,7 +1,11 @@
+import 'package:e_fashion_flutter/features/profile/data/message_model.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class MyChatItem extends StatelessWidget {
-  const MyChatItem({super.key});
+  const MyChatItem({super.key, required this.messageModel});
+
+  final MessageModel messageModel;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +27,7 @@ class MyChatItem extends StatelessWidget {
                   ),
                 ),
                 child: Text(
-                  "Lorem ipsum dolor",
+                  messageModel.content,
                   textAlign: TextAlign.end,
                   style: Theme.of(context).textTheme.bodySmall!.copyWith(
                     color: Theme.of(context).colorScheme.onPrimary,
@@ -37,7 +41,9 @@ class MyChatItem extends StatelessWidget {
         Align(
           alignment: AlignmentDirectional.centerEnd,
           child: Text(
-            " 11:50 AM",
+            DateFormat(
+              'hh:mm a',
+            ).format(DateTime.parse(messageModel.createdAt)),
             style: Theme.of(context).textTheme.labelSmall!.copyWith(
               color: Theme.of(context).colorScheme.primary,
             ),

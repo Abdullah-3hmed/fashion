@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:e_fashion_flutter/features/profile/data/user_model.dart';
 import 'package:equatable/equatable.dart';
 
 class EditUserModel extends Equatable {
@@ -13,16 +14,16 @@ class EditUserModel extends Equatable {
   const EditUserModel({
     required this.userName,
     required this.phone,
-     this.profileImage = "",
+    this.profileImage = "",
     required this.email,
     this.profileImageFile,
   });
 
   factory EditUserModel.fromJson(Map<String, dynamic> json) => EditUserModel(
-    userName: json["fullName"]??"",
-    phone: json["phoneNumber"]??"",
-    profileImage: json["profilePicture"]??"",
-    email: json["email"]??"",
+    userName: json["fullName"] ?? "",
+    phone: json["phoneNumber"] ?? "",
+    profileImage: json["profilePicture"] ?? "",
+    email: json["email"] ?? "",
   );
 
   Map<String, dynamic> toJson() {
@@ -48,18 +49,12 @@ class EditUserModel extends Equatable {
     phone: '',
   );
 
-  EditUserModel copyWith({
-    String? userName,
-    String? phone,
-    String? profileImage,
-    File? profileImageFile,
-    String? email,
-  }) => EditUserModel(
-    userName: userName ?? this.userName,
-    phone: phone ?? this.phone,
-    profileImage: profileImage ?? this.profileImage,
+  EditUserModel copyWith({File? profileImageFile}) => EditUserModel(
+    userName: userName,
+    phone: phone,
+    profileImage: profileImage,
     profileImageFile: profileImageFile ?? this.profileImageFile,
-    email: email ?? this.email,
+    email: email,
   );
 
   @override
