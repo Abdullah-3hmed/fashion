@@ -1,7 +1,9 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:e_fashion_flutter/core/services/service_locator.dart';
 import 'package:e_fashion_flutter/core/utils/app_constants.dart';
 import 'package:e_fashion_flutter/core/utils/assets_manager.dart';
-import 'package:e_fashion_flutter/features/profile/cubit/user_cubit.dart';
+import 'package:e_fashion_flutter/features/profile/cubit/chat_cubit/chat_cubit.dart';
+import 'package:e_fashion_flutter/features/profile/cubit/user_cubit/user_cubit.dart';
 import 'package:e_fashion_flutter/features/profile/screens/widgets/messages_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,11 +11,20 @@ import 'package:flutter_svg/svg.dart';
 import 'package:iconsax/iconsax.dart';
 
 @RoutePage()
-class ChatSupportScreen extends StatefulWidget {
-  const ChatSupportScreen({super.key, required this.receiverId});
+class ChatSupportScreen extends StatefulWidget implements AutoRouteWrapper {
+
+  const ChatSupportScreen({super.key, required this.receiverId,this.chatId = 0});
     final String receiverId;
+    final int chatId;
   @override
   State<ChatSupportScreen> createState() => _ChatSupportScreenState();
+
+  @override
+  Widget wrappedRoute(BuildContext context) => BlocProvider(
+    lazy: false,
+    create: (context) => getIt<ChatCubit>()..getChatHistory(receiverId: receiverId),
+    child: this,
+  );
 }
 
 class _ChatSupportScreenState extends State<ChatSupportScreen> {
@@ -23,8 +34,7 @@ class _ChatSupportScreenState extends State<ChatSupportScreen> {
   @override
   void initState() {
     controller = TextEditingController();
-    context.read<UserCubit>().getChatHistory(receiverId: widget.receiverId);
-    context.read<UserCubit>().listenToMessage();
+    context.read<ChatCubit>().listenToMessages();
     super.initState();
   }
 
@@ -79,10 +89,11 @@ class _ChatSupportScreenState extends State<ChatSupportScreen> {
                 IconButton(
                   onPressed: () async {
                     if (message.isNotEmpty) {
-                      await context.read<UserCubit>().sendMessage(
-                        message: message,
+                      await context.read<ChatCubit>().sendChatMessage(
+                        content: message,
                         senderId: AppConstants.userId,
                         receiverId: AppConstants.supportId,
+                        chatId: widget.chatId,
                       );
                     }
                     message = "";

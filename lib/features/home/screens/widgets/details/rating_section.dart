@@ -7,7 +7,7 @@ import 'package:e_fashion_flutter/features/home/cubit/product_details_state.dart
 import 'package:e_fashion_flutter/features/home/data/home_details/product_details_model.dart';
 import 'package:e_fashion_flutter/features/home/data/home_details/review_model.dart';
 import 'package:e_fashion_flutter/features/home/screens/widgets/details/review_section.dart';
-import 'package:e_fashion_flutter/features/profile/cubit/user_cubit.dart';
+import 'package:e_fashion_flutter/features/profile/cubit/user_cubit/user_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';

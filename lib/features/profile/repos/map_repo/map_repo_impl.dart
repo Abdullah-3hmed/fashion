@@ -2,7 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:e_fashion_flutter/core/error/failures.dart';
 import 'package:e_fashion_flutter/core/services/location_service.dart';
 import 'package:e_fashion_flutter/core/services/service_locator.dart';
-import 'package:e_fashion_flutter/features/profile/repos/map_repo.dart';
+import 'package:e_fashion_flutter/features/profile/repos/map_repo/map_repo.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 

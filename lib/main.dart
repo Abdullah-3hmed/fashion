@@ -28,7 +28,6 @@ void main() async {
   DioHelper.init();
   AppConstants.token = await getIt<CacheHelper>().readData(key: "token") ?? "";
   AppConstants.userId = await getIt<CacheHelper>().readData(key: "user_id") ?? "";
-  await ConnectionsService.initConnection();
   Bloc.observer = MyBlocObserver();
 
   runApp(const MyApp());

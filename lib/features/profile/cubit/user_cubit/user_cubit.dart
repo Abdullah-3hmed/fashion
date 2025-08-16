@@ -6,13 +6,13 @@ import 'package:e_fashion_flutter/core/local/cache_helper.dart';
 import 'package:e_fashion_flutter/core/services/connection_service.dart';
 import 'package:e_fashion_flutter/core/services/service_locator.dart';
 import 'package:e_fashion_flutter/core/utils/app_constants.dart';
-import 'package:e_fashion_flutter/features/profile/cubit/user_state.dart';
+import 'package:e_fashion_flutter/features/profile/cubit/user_cubit/user_state.dart';
 import 'package:e_fashion_flutter/features/profile/data/edit_user_model.dart';
 import 'package:e_fashion_flutter/features/profile/data/message_model.dart';
-import 'package:e_fashion_flutter/features/profile/data/send_message_model.dart';
+import 'package:e_fashion_flutter/features/profile/data/chat/send_message_model.dart';
 import 'package:e_fashion_flutter/features/profile/data/user_model.dart';
 import 'package:e_fashion_flutter/features/profile/data/user_password_model.dart';
-import 'package:e_fashion_flutter/features/profile/repos/user_repo.dart';
+import 'package:e_fashion_flutter/features/profile/repos/user_repo/user_repo.dart';
 import 'package:flutter/material.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:image_picker/image_picker.dart';
@@ -128,83 +128,6 @@ class UserCubit extends HydratedCubit<UserState> {
           state.copyWith(
             changePasswordMessage: message,
             changePasswordRequestStatus: RequestStatus.success,
-          ),
-        );
-      },
-    );
-  }
-
-  Future<void> sendMessage({
-    required String message,
-    required String senderId,
-    required String receiverId,
-  }) async {
-    await ConnectionsService.checkConnection();
-
-    final sendMessageModel = SendMessageModel(
-      content: message,
-      senderId: senderId,
-      receiverId: receiverId,
-      chatId: 0,
-    );
-
-    try {
-      await ConnectionsService.connection.invoke(
-        "MessageSent",
-        args: [sendMessageModel.toJson()],
-      );
-      log("✅ Message sent successfully: ${sendMessageModel.toJson()}");
-    } catch (error, stackTrace) {
-      log("❌ Error sending message: $error");
-      log("StackTrace: $stackTrace");
-    }
-  }
-
-  Future<void> listenToMessage() async {
-    await ConnectionsService.checkConnection();
-    ConnectionsService.connection.off("ReceiveMessage");
-    ConnectionsService.connection.on("ReceiveMessage", (arguments) {
-      try {
-        if (arguments != null && arguments.isNotEmpty) {
-          final data = arguments[0];
-
-          if (data is Map) {
-            final Map<String, dynamic> jsonData = Map<String, dynamic>.from(
-              data,
-            );
-
-            final message = MessageModel.fromJson(jsonData);
-
-            emit(state.copyWith(messageList: [...state.messageList, message]));
-            log("📩 New message received: ${message.toString()}");
-          } else {
-            log("⚠️ Received data is not a valid map: $data");
-          }
-        }
-      } catch (e, stackTrace) {
-        log("❌ Error handling incoming message: $e");
-        log("StackTrace: $stackTrace");
-      }
-    });
-  }
-
-  Future<void> getChatHistory({required String receiverId}) async {
-    if (state.messageList.isNotEmpty) return;
-    final result = await userRepo.getChatHistory(
-      receiverId: receiverId,
-    );
-    result.fold(
-      (failure) => emit(
-        state.copyWith(
-          getChatHistoryErrorMessage: failure.errorMessage,
-          getChatHistoryState: RequestStatus.error,
-        ),
-      ),
-      (messageList) {
-        emit(
-          state.copyWith(
-            getChatHistoryState: RequestStatus.success,
-            messageList: messageList,
           ),
         );
       },

@@ -1,7 +1,7 @@
 import 'package:e_fashion_flutter/core/enums/request_status.dart';
 import 'package:e_fashion_flutter/core/utils/assets_manager.dart';
-import 'package:e_fashion_flutter/features/profile/cubit/map_state.dart';
-import 'package:e_fashion_flutter/features/profile/repos/map_repo.dart';
+import 'package:e_fashion_flutter/features/profile/cubit/map_cubit/map_state.dart';
+import 'package:e_fashion_flutter/features/profile/repos/map_repo/map_repo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';

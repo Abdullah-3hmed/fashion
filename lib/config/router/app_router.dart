@@ -23,7 +23,7 @@ import 'package:e_fashion_flutter/features/home/screens/edit_review_screen.dart'
 import 'package:e_fashion_flutter/features/home/screens/home_screen.dart';
 import 'package:e_fashion_flutter/features/home/screens/product_details_screen.dart';
 import 'package:e_fashion_flutter/features/notification/screens/notification_screen.dart';
-import 'package:e_fashion_flutter/features/profile/cubit/user_cubit.dart';
+import 'package:e_fashion_flutter/features/profile/cubit/user_cubit/user_cubit.dart';
 import 'package:e_fashion_flutter/features/profile/screens/chat_support_screen.dart';
 import 'package:e_fashion_flutter/features/profile/screens/edit_profile_screen.dart';
 import 'package:e_fashion_flutter/features/profile/screens/map_screen.dart';

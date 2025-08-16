@@ -1,9 +1,12 @@
 import 'package:e_fashion_flutter/core/enums/request_status.dart';
 import 'package:e_fashion_flutter/core/utils/app_constants.dart';
-import 'package:e_fashion_flutter/features/profile/cubit/user_cubit.dart';
-import 'package:e_fashion_flutter/features/profile/cubit/user_state.dart';
+import 'package:e_fashion_flutter/features/profile/cubit/chat_cubit/chat_cubit.dart';
+import 'package:e_fashion_flutter/features/profile/cubit/chat_cubit/chat_state.dart';
+import 'package:e_fashion_flutter/features/profile/cubit/user_cubit/user_cubit.dart';
+import 'package:e_fashion_flutter/features/profile/cubit/user_cubit/user_state.dart';
 import 'package:e_fashion_flutter/features/profile/screens/widgets/chat_item.dart';
 import 'package:e_fashion_flutter/features/profile/screens/widgets/my_chat_item.dart';
+import 'package:e_fashion_flutter/features/profile/screens/widgets/no_messages_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -34,7 +37,7 @@ class MessagesList extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 16.0),
-        BlocBuilder<UserCubit, UserState>(
+        BlocBuilder<ChatCubit, ChatState>(
           buildWhen:
               (previous, current) =>
                   previous.getChatHistoryState != current.getChatHistoryState ||
@@ -44,23 +47,28 @@ class MessagesList extends StatelessWidget {
               case RequestStatus.loading:
                 return const Center(child: CircularProgressIndicator());
               case RequestStatus.success:
-                return Expanded(
-                  child: ListView.separated(
-                    physics: const BouncingScrollPhysics(),
-                    itemBuilder: (context, index) {
-                      if (state.messageList[index].senderId ==
-                          AppConstants.userId) {
-                        return MyChatItem(
-                          messageModel: state.messageList[index],
-                        );
-                      } else {
-                        return ChatItem(messageModel: state.messageList[index]);
-                      }
-                    },
-                    separatorBuilder: (_, __) => const SizedBox(height: 16.0),
-                    itemCount: state.messageList.length,
-                  ),
-                );
+                return state.messageList.isEmpty
+                    ? const NoMessagesContent()
+                    : Expanded(
+                      child: ListView.separated(
+                        physics: const BouncingScrollPhysics(),
+                        itemBuilder: (context, index) {
+                          if (state.messageList[index].senderId ==
+                              AppConstants.userId) {
+                            return MyChatItem(
+                              messageModel: state.messageList[index],
+                            );
+                          } else {
+                            return ChatItem(
+                              messageModel: state.messageList[index],
+                            );
+                          }
+                        },
+                        separatorBuilder:
+                            (_, __) => const SizedBox(height: 16.0),
+                        itemCount: state.messageList.length,
+                      ),
+                    );
               case RequestStatus.error:
                 return Center(
                   child: Text(

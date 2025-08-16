@@ -12,7 +12,7 @@ import 'package:e_fashion_flutter/features/profile/data/edit_user_model.dart';
 import 'package:e_fashion_flutter/features/profile/data/message_model.dart';
 import 'package:e_fashion_flutter/features/profile/data/user_model.dart';
 import 'package:e_fashion_flutter/features/profile/data/user_password_model.dart';
-import 'package:e_fashion_flutter/features/profile/repos/user_repo.dart';
+import 'package:e_fashion_flutter/features/profile/repos/user_repo/user_repo.dart';
 import 'package:flutter/material.dart';
 
 class UserRepoImpl implements UserRepo {
@@ -86,56 +86,29 @@ class UserRepoImpl implements UserRepo {
     }
   }
 
-  @override
-  Future<Either<Failure, void>> sendMessage({required String message}) async {
-    try {
-      final response = await dioHelper.post(
-        url: ApiConstants.sendMessageEndpoint,
-        headers: {"Authorization": "Bearer ${AppConstants.token}"},
-        data: {
-          "senderUserId": AppConstants.userId,
-          "receiverUserId": AppConstants.supportId,
-          "content": message,
-          "chatId": 0,
-        },
-      );
-      if (response.statusCode == 200) {
-        return const Right(null);
-      }
-      throw ServerException(errorModel: ErrorModel.fromJson(response.data));
-    } on DioException catch (e) {
-      return Left(ServerFailure.fromDioError(e));
-    } on ServerException catch (e) {
-      return Left(ServerFailure(e.errorModel.errors.join(" \n")));
-    } catch (e) {
-      return Left(ServerFailure(e.toString()));
-    }
-  }
-
-  @override
-  Future<Either<Failure, List<MessageModel>>> getChatHistory({
-    required String receiverId,
-  }) async {
-    try {
-      final response = await dioHelper.get(
-        url: ApiConstants.getChatHistoryEndPoint(receiverId: receiverId),
-        headers: {"Authorization": "Bearer ${AppConstants.token}"},
-      );
-      if (response.statusCode == 200) {
-        return Right(
-          List<MessageModel>.from(
-            (response.data as List? ?? []).map(
-              (message) => MessageModel.fromJson(message),
-            ),
-          ),
-        );
-      } else {
-        throw ServerException(errorModel: ErrorModel.fromJson(response.data));
-      }
-    } on DioException catch (e) {
-      return Left(ServerFailure.fromDioError(e));
-    } catch (e) {
-      return Left(ServerFailure(e.toString()));
-    }
-  }
+  // @override
+  // Future<Either<Failure, void>> sendMessage({required String message}) async {
+  //   try {
+  //     final response = await dioHelper.post(
+  //       url: ApiConstants.sendMessageEndpoint,
+  //       headers: {"Authorization": "Bearer ${AppConstants.token}"},
+  //       data: {
+  //         "senderUserId": AppConstants.userId,
+  //         "receiverUserId": AppConstants.supportId,
+  //         "content": message,
+  //         "chatId": 0,
+  //       },
+  //     );
+  //     if (response.statusCode == 200) {
+  //       return const Right(null);
+  //     }
+  //     throw ServerException(errorModel: ErrorModel.fromJson(response.data));
+  //   } on DioException catch (e) {
+  //     return Left(ServerFailure.fromDioError(e));
+  //   } on ServerException catch (e) {
+  //     return Left(ServerFailure(e.errorModel.errors.join(" \n")));
+  //   } catch (e) {
+  //     return Left(ServerFailure(e.toString()));
+  //   }
+  // }
 }

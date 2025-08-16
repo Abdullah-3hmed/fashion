@@ -4,6 +4,7 @@ import 'package:e_fashion_flutter/core/network/dio_helper.dart';
 import 'package:e_fashion_flutter/core/network/network_info.dart';
 import 'package:e_fashion_flutter/core/notifications/fcm_helper.dart';
 import 'package:e_fashion_flutter/core/services/location_service.dart';
+import 'package:e_fashion_flutter/core/services/signalr_service.dart';
 import 'package:e_fashion_flutter/features/admin/admin_repo/admin_repo.dart';
 import 'package:e_fashion_flutter/features/admin/admin_repo/admin_repo_impl.dart';
 import 'package:e_fashion_flutter/features/admin/cubit/admin_cubit.dart';
@@ -22,12 +23,15 @@ import 'package:e_fashion_flutter/features/home/repos/home_details_repo/home_det
 import 'package:e_fashion_flutter/features/home/repos/home_details_repo/home_details_repo_impl.dart';
 import 'package:e_fashion_flutter/features/home/repos/home_repo/home_repo.dart';
 import 'package:e_fashion_flutter/features/home/repos/home_repo/home_repo_impl.dart';
-import 'package:e_fashion_flutter/features/profile/cubit/map_cubit.dart';
-import 'package:e_fashion_flutter/features/profile/cubit/user_cubit.dart';
-import 'package:e_fashion_flutter/features/profile/repos/map_repo.dart';
-import 'package:e_fashion_flutter/features/profile/repos/map_repo_impl.dart';
-import 'package:e_fashion_flutter/features/profile/repos/user_repo.dart';
-import 'package:e_fashion_flutter/features/profile/repos/user_repo_impl.dart';
+import 'package:e_fashion_flutter/features/profile/cubit/chat_cubit/chat_cubit.dart';
+import 'package:e_fashion_flutter/features/profile/cubit/map_cubit/map_cubit.dart';
+import 'package:e_fashion_flutter/features/profile/cubit/user_cubit/user_cubit.dart';
+import 'package:e_fashion_flutter/features/profile/repos/chat_repo/chat_repo.dart';
+import 'package:e_fashion_flutter/features/profile/repos/chat_repo/chat_repo_impl.dart';
+import 'package:e_fashion_flutter/features/profile/repos/map_repo/map_repo.dart';
+import 'package:e_fashion_flutter/features/profile/repos/map_repo/map_repo_impl.dart';
+import 'package:e_fashion_flutter/features/profile/repos/user_repo/user_repo.dart';
+import 'package:e_fashion_flutter/features/profile/repos/user_repo/user_repo_impl.dart';
 import 'package:e_fashion_flutter/features/search/bloc/search_bloc.dart';
 import 'package:e_fashion_flutter/features/search/repo/search_repo.dart';
 import 'package:e_fashion_flutter/shared/app_cubit/app_cubit.dart';
@@ -46,39 +50,65 @@ class ServiceLocator {
     );
     getIt.registerLazySingleton<CacheHelper>(() => CacheHelper());
     getIt.registerLazySingleton<DioHelper>(() => DioHelper());
-    getIt.registerLazySingleton<AuthRepo>(() => AuthRepoImpl(dioHelper: getIt<DioHelper>()));
+    getIt.registerLazySingleton<AuthRepo>(
+      () => AuthRepoImpl(dioHelper: getIt<DioHelper>()),
+    );
     getIt.registerFactory<AuthCubit>(() => AuthCubit(getIt<AuthRepo>()));
-    getIt.registerLazySingleton<UserRepo>(() => UserRepoImpl(dioHelper: getIt<DioHelper>()));
+    getIt.registerLazySingleton<UserRepo>(
+      () => UserRepoImpl(dioHelper: getIt<DioHelper>()),
+    );
     getIt.registerFactory<UserCubit>(
       () => UserCubit(userRepo: getIt<UserRepo>()),
     );
     getIt.registerLazySingleton<LocationService>(() => LocationService());
     getIt.registerLazySingleton<MapRepo>(() => MapRepoImpl());
     getIt.registerFactory<MapCubit>(() => MapCubit(mapRepo: getIt<MapRepo>()));
-    getIt.registerLazySingleton<HomeRepo>(() => HomeRepoImpl(dioHelper: getIt<DioHelper>()));
-    getIt.registerLazySingleton<HomeDetailsRepo>(() => HomeDetailsRepoImpl(dioHelper: getIt<DioHelper>()));
+    getIt.registerLazySingleton<HomeRepo>(
+      () => HomeRepoImpl(dioHelper: getIt<DioHelper>()),
+    );
+    getIt.registerLazySingleton<HomeDetailsRepo>(
+      () => HomeDetailsRepoImpl(dioHelper: getIt<DioHelper>()),
+    );
     getIt.registerFactory<HomeCubit>(
       () => HomeCubit(homeRepo: getIt<HomeRepo>()),
     );
     getIt.registerFactory<ProductDetailsCubit>(
-          () => ProductDetailsCubit(homeDetailsRepo: getIt<HomeDetailsRepo>()),
+      () => ProductDetailsCubit(homeDetailsRepo: getIt<HomeDetailsRepo>()),
     );
-    getIt.registerLazySingleton<SearchRepo>(() => SearchRepo(dioHelper: getIt<DioHelper>()));
+    getIt.registerLazySingleton<SearchRepo>(
+      () => SearchRepo(dioHelper: getIt<DioHelper>()),
+    );
     getIt.registerFactory<SearchBloc>(
       () => SearchBloc(searchRepo: getIt<SearchRepo>()),
     );
-    getIt.registerLazySingleton<FavoriteRepo>(() => FavoriteRepoImpl(dioHelper: getIt<DioHelper>()));
-    getIt.registerFactory<FavoriteCubit>(
-          () => FavoriteCubit(favoriteRepo: getIt<FavoriteRepo>()),
+    getIt.registerLazySingleton<FavoriteRepo>(
+      () => FavoriteRepoImpl(dioHelper: getIt<DioHelper>()),
     );
-    getIt.registerLazySingleton<CartRepo>(() => CartRepoImpl(dioHelper: getIt<DioHelper>()));
+    getIt.registerFactory<FavoriteCubit>(
+      () => FavoriteCubit(favoriteRepo: getIt<FavoriteRepo>()),
+    );
+    getIt.registerLazySingleton<CartRepo>(
+      () => CartRepoImpl(dioHelper: getIt<DioHelper>()),
+    );
     getIt.registerFactory<CartCubit>(
-          () => CartCubit(cartRepo: getIt<CartRepo>()),
+      () => CartCubit(cartRepo: getIt<CartRepo>()),
     );
     getIt.registerFactory<AppCubit>(() => AppCubit());
-    getIt.registerLazySingleton<AdminRepo>(() => AdminRepoImpl(dioHelper: getIt<DioHelper>()));
+    getIt.registerLazySingleton<AdminRepo>(
+      () => AdminRepoImpl(dioHelper: getIt<DioHelper>()),
+    );
     getIt.registerFactory<AdminCubit>(
-          () => AdminCubit(adminRepo: getIt<AdminRepo>()),
+      () => AdminCubit(adminRepo: getIt<AdminRepo>()),
+    );
+    getIt.registerLazySingleton<SignalrService>(() => SignalrService());
+    getIt.registerLazySingleton<ChatRepo>(
+      () => ChatRepoImpl(dioHelper: getIt<DioHelper>()),
+    );
+    getIt.registerFactory<ChatCubit>(
+      () => ChatCubit(
+        signalrService: getIt<SignalrService>(),
+        chatRepo: getIt<ChatRepo>(),
+      ),
     );
   }
 }
