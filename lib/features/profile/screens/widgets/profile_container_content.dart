@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:e_fashion_flutter/config/router/app_router.dart';
+import 'package:e_fashion_flutter/core/utils/app_constants.dart';
 import 'package:e_fashion_flutter/features/profile/cubit/user_cubit.dart';
 import 'package:e_fashion_flutter/features/profile/screens/widgets/profile_info_item.dart';
 import 'package:e_fashion_flutter/shared/app_cubit/app_cubit.dart';
@@ -66,7 +67,7 @@ class ProfileContainerContent extends StatelessWidget {
           const SizedBox(height: 24.0),
           ProfileInfoItem(
             onTap: () {
-              context.pushRoute(const ChatSupportRoute());
+              context.pushRoute( ChatSupportRoute(receiverId: AppConstants.supportId));
             },
             text: "Chat Support",
             icon: SolarIconsOutline.chatRound,

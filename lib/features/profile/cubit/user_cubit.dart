@@ -188,10 +188,10 @@ class UserCubit extends HydratedCubit<UserState> {
     });
   }
 
-  Future<void> getChatHistory({required String? receiverId}) async {
+  Future<void> getChatHistory({required String receiverId}) async {
     if (state.messageList.isNotEmpty) return;
     final result = await userRepo.getChatHistory(
-      receiverId: receiverId ?? AppConstants.supportId,
+      receiverId: receiverId,
     );
     result.fold(
       (failure) => emit(

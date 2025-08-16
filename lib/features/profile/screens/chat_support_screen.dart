@@ -10,8 +10,8 @@ import 'package:iconsax/iconsax.dart';
 
 @RoutePage()
 class ChatSupportScreen extends StatefulWidget {
-  const ChatSupportScreen({super.key});
-
+  const ChatSupportScreen({super.key, required this.receiverId});
+    final String receiverId;
   @override
   State<ChatSupportScreen> createState() => _ChatSupportScreenState();
 }
@@ -23,7 +23,7 @@ class _ChatSupportScreenState extends State<ChatSupportScreen> {
   @override
   void initState() {
     controller = TextEditingController();
-    context.read<UserCubit>().getChatHistory(receiverId: null);
+    context.read<UserCubit>().getChatHistory(receiverId: widget.receiverId);
     context.read<UserCubit>().listenToMessage();
     super.initState();
   }

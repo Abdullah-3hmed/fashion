@@ -76,18 +76,49 @@ class CartRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [ChatSupportScreen]
-class ChatSupportRoute extends PageRouteInfo<void> {
-  const ChatSupportRoute({List<PageRouteInfo>? children})
-    : super(ChatSupportRoute.name, initialChildren: children);
+class ChatSupportRoute extends PageRouteInfo<ChatSupportRouteArgs> {
+  ChatSupportRoute({
+    Key? key,
+    required String receiverId,
+    List<PageRouteInfo>? children,
+  }) : super(
+         ChatSupportRoute.name,
+         args: ChatSupportRouteArgs(key: key, receiverId: receiverId),
+         initialChildren: children,
+       );
 
   static const String name = 'ChatSupportRoute';
 
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      return const ChatSupportScreen();
+      final args = data.argsAs<ChatSupportRouteArgs>();
+      return ChatSupportScreen(key: args.key, receiverId: args.receiverId);
     },
   );
+}
+
+class ChatSupportRouteArgs {
+  const ChatSupportRouteArgs({this.key, required this.receiverId});
+
+  final Key? key;
+
+  final String receiverId;
+
+  @override
+  String toString() {
+    return 'ChatSupportRouteArgs{key: $key, receiverId: $receiverId}';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! ChatSupportRouteArgs) return false;
+    return key == other.key && receiverId == other.receiverId;
+  }
+
+  @override
+  int get hashCode => key.hashCode ^ receiverId.hashCode;
 }
 
 /// generated route for

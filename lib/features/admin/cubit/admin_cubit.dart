@@ -20,8 +20,10 @@ class AdminCubit extends Cubit<AdminState> {
           ),
         );
       },
-      (result) {
-        emit(state.copyWith(getAllChatsState: RequestStatus.success));
+      (chats) {
+        emit(
+          state.copyWith(getAllChatsState: RequestStatus.success, chats: chats),
+        );
       },
     );
   }

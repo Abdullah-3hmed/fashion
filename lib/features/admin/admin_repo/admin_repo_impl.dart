@@ -7,6 +7,7 @@ import 'package:e_fashion_flutter/core/network/api_constants.dart';
 import 'package:e_fashion_flutter/core/network/dio_helper.dart';
 import 'package:e_fashion_flutter/core/utils/app_constants.dart';
 import 'package:e_fashion_flutter/features/admin/admin_repo/admin_repo.dart';
+import 'package:e_fashion_flutter/features/admin/data/chat_model.dart';
 
 class AdminRepoImpl implements AdminRepo {
   final DioHelper dioHelper;
@@ -14,14 +15,20 @@ class AdminRepoImpl implements AdminRepo {
   AdminRepoImpl({required this.dioHelper});
 
   @override
-  Future<Either<Failure, void>> getAllChats() async {
+  Future<Either<Failure, List<ChatModel>>> getAllChats() async {
     try {
       final response = await dioHelper.get(
         url: ApiConstants.allChatsEndPoint,
         headers: {"Authorization": "Bearer ${AppConstants.token}"},
       );
       if (response.statusCode == 200) {
-        return const Right(null);
+        return Right(
+          List<ChatModel>.from(
+            (response.data as List? ?? []).map(
+              (chat) => ChatModel.fromJson(chat),
+            ),
+          ),
+        );
       } else {
         throw ServerException(errorModel: ErrorModel.fromJson(response.data));
       }

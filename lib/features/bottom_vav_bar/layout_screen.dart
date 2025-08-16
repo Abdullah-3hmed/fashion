@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:e_fashion_flutter/config/router/app_router.dart';
 import 'package:e_fashion_flutter/core/notifications/fcm_init_helper.dart';
 import 'package:e_fashion_flutter/core/services/service_locator.dart';
+import 'package:e_fashion_flutter/core/utils/app_constants.dart';
 import 'package:e_fashion_flutter/shared/app_cubit/app_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -117,7 +118,7 @@ class _LayoutScreenState extends State<LayoutScreen>
       await getIt<AppRouter>().replaceAll([
         const AuthenticatedRoute(children: [LayoutRoute()]),
       ]);
-      getIt<AppRouter>().push(const ChatSupportRoute());
+      getIt<AppRouter>().push( ChatSupportRoute(receiverId: AppConstants.supportId));
     }
   }
 }
