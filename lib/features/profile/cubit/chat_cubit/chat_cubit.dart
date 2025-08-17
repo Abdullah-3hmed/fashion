@@ -2,6 +2,7 @@ import 'package:e_fashion_flutter/core/enums/request_status.dart';
 import 'package:e_fashion_flutter/core/services/connection_service.dart';
 import 'package:e_fashion_flutter/core/services/signalr_service.dart';
 import 'package:e_fashion_flutter/features/profile/cubit/chat_cubit/chat_state.dart';
+import 'package:e_fashion_flutter/features/profile/data/chat/send_message_model.dart';
 import 'package:e_fashion_flutter/features/profile/repos/chat_repo/chat_repo.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -18,6 +19,7 @@ class ChatCubit extends Cubit<ChatState> {
     if (chatRepo.getCachedMessages().isNotEmpty) {
       emit(
         state.copyWith(
+          getChatHistoryState: RequestStatus.success,
           messageList: chatRepo.getCachedMessages(),
         ),
       );
@@ -50,16 +52,8 @@ class ChatCubit extends Cubit<ChatState> {
   }
 
   Future<void> sendChatMessage({
-    required String content,
-    required String senderId,
-    required String receiverId,
-    required int chatId,
+    required SendMessageModel sendMessageModel,
   }) async {
-    await signalrService.sendMessage(
-      message: content,
-      senderId: senderId,
-      receiverId: receiverId,
-      chatId: chatId,
-    );
+    await signalrService.sendMessage(sendMessageModel: sendMessageModel);
   }
 }

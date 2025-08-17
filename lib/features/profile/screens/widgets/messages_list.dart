@@ -37,20 +37,20 @@ class MessagesList extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 16.0),
-        BlocBuilder<ChatCubit, ChatState>(
-          buildWhen:
-              (previous, current) =>
-                  previous.getChatHistoryState != current.getChatHistoryState ||
-                  previous.messageList != current.messageList,
-          builder: (context, state) {
-            switch (state.getChatHistoryState) {
-              case RequestStatus.loading:
-                return const Center(child: CircularProgressIndicator());
-              case RequestStatus.success:
-                return state.messageList.isEmpty
-                    ? const NoMessagesContent()
-                    : Expanded(
-                      child: ListView.separated(
+        Expanded(
+          child: BlocBuilder<ChatCubit, ChatState>(
+            buildWhen:
+                (previous, current) =>
+                    previous.getChatHistoryState != current.getChatHistoryState ||
+                    previous.messageList != current.messageList,
+            builder: (context, state) {
+              switch (state.getChatHistoryState) {
+                case RequestStatus.loading:
+                  return const Center(child: CircularProgressIndicator());
+                case RequestStatus.success:
+                  return state.messageList.isEmpty
+                      ? const NoMessagesContent()
+                      : ListView.separated(
                         physics: const BouncingScrollPhysics(),
                         itemBuilder: (context, index) {
                           if (state.messageList[index].senderId ==
@@ -67,19 +67,19 @@ class MessagesList extends StatelessWidget {
                         separatorBuilder:
                             (_, __) => const SizedBox(height: 16.0),
                         itemCount: state.messageList.length,
-                      ),
-                    );
-              case RequestStatus.error:
-                return Center(
-                  child: Text(
-                    state.getChatHistoryErrorMessage,
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                );
-              default:
-                return const SizedBox.shrink();
-            }
-          },
+                      );
+                case RequestStatus.error:
+                  return Center(
+                    child: Text(
+                      state.getChatHistoryErrorMessage,
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
+                  );
+                default:
+                  return const SizedBox.shrink();
+              }
+            },
+          ),
         ),
       ],
     );

@@ -1,5 +1,7 @@
+import 'package:e_fashion_flutter/core/services/service_locator.dart';
 import 'package:e_fashion_flutter/core/utils/app_constants.dart';
 import 'package:e_fashion_flutter/features/home/data/home/category_model.dart';
+import 'package:e_fashion_flutter/features/home/repos/home_repo/home_repo.dart';
 import 'package:e_fashion_flutter/features/search/screens/widgets/search_filter_category_item.dart';
 import 'package:flutter/material.dart';
 
@@ -16,7 +18,7 @@ class _SearchFilterCategoryItemsState extends State<SearchFilterCategoryItems> {
 
   @override
   Widget build(BuildContext context) {
-   final List<CategoryModel> categories = AppConstants.categories;
+   final List<CategoryModel> categories = getIt<HomeRepo>().getCategoriesList();
     return Wrap(
       spacing: 8.0,
       runSpacing: 8.0,

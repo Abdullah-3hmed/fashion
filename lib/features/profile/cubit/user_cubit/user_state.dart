@@ -1,7 +1,6 @@
 import 'package:e_fashion_flutter/core/enums/request_status.dart';
-import 'package:e_fashion_flutter/features/profile/data/edit_user_model.dart';
-import 'package:e_fashion_flutter/features/profile/data/message_model.dart';
-import 'package:e_fashion_flutter/features/profile/data/user_model.dart';
+import 'package:e_fashion_flutter/features/profile/data/user/edit_user_model.dart';
+import 'package:e_fashion_flutter/features/profile/data/user/user_model.dart';
 import 'package:equatable/equatable.dart';
 
 class UserState extends Equatable {

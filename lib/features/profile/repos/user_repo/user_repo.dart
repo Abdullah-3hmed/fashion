@@ -1,9 +1,8 @@
 import 'package:dartz/dartz.dart';
 import 'package:e_fashion_flutter/core/error/failures.dart';
-import 'package:e_fashion_flutter/features/profile/data/edit_user_model.dart';
-import 'package:e_fashion_flutter/features/profile/data/message_model.dart';
-import 'package:e_fashion_flutter/features/profile/data/user_model.dart';
-import 'package:e_fashion_flutter/features/profile/data/user_password_model.dart';
+import 'package:e_fashion_flutter/features/profile/data/user/edit_user_model.dart';
+import 'package:e_fashion_flutter/features/profile/data/user/user_model.dart';
+import 'package:e_fashion_flutter/features/profile/data/user/user_password_model.dart';
 
 abstract class UserRepo {
   Future<Either<Failure, UserModel>> getUserProfile();

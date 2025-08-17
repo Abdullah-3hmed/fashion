@@ -1,4 +1,4 @@
-import 'package:e_fashion_flutter/features/profile/data/message_model.dart';
+import 'package:e_fashion_flutter/features/profile/data/chat/message_model.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 

@@ -19,6 +19,8 @@ class HomeRepoImpl implements HomeRepo {
 
   HomeRepoImpl({required this.dioHelper});
 
+  List<CategoryModel> _categories = [];
+
   @override
   Future<Either<Failure, List<CollectionModel>>> getCollections() async {
     try {
@@ -78,13 +80,12 @@ class HomeRepoImpl implements HomeRepo {
         headers: {"Authorization": "Bearer ${AppConstants.token}"},
       );
       if (response.statusCode == 200) {
-        return Right(
-          List<CategoryModel>.from(
-            (response.data as List).map(
-              (category) => CategoryModel.fromJson(category),
-            ),
+        _categories = List<CategoryModel>.from(
+          (response.data as List).map(
+            (category) => CategoryModel.fromJson(category),
           ),
         );
+        return Right(_categories);
       }
       throw ServerException(errorModel: ErrorModel.fromJson(response.data));
     } on DioException catch (e) {
@@ -97,7 +98,10 @@ class HomeRepoImpl implements HomeRepo {
   }
 
   @override
-  Future<Either<Failure, ProductsModel>> getProducts({required int? gender,required int? category}) async {
+  Future<Either<Failure, ProductsModel>> getProducts({
+    required int? gender,
+    required int? category,
+  }) async {
     Map<String, dynamic> queryParameters = {};
     if (gender != null) {
       queryParameters['ProductType'] = gender;
@@ -111,8 +115,8 @@ class HomeRepoImpl implements HomeRepo {
         headers: {"Authorization": "Bearer ${AppConstants.token}"},
         queryParameters: queryParameters,
       );
-      if(response.statusCode == 200){
-       return Right( ProductsModel.fromJson(response.data));
+      if (response.statusCode == 200) {
+        return Right(ProductsModel.fromJson(response.data));
       }
       throw ServerException(errorModel: ErrorModel.fromJson(response.data));
     } on DioException catch (e) {
@@ -123,4 +127,7 @@ class HomeRepoImpl implements HomeRepo {
       return Left(ServerFailure(e.toString()));
     }
   }
+
+  @override
+  List<CategoryModel> getCategoriesList() => List.unmodifiable(_categories);
 }

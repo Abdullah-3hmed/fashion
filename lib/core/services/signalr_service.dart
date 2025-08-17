@@ -1,27 +1,13 @@
 import 'dart:developer';
 import 'package:e_fashion_flutter/core/services/connection_service.dart';
+import 'package:e_fashion_flutter/features/profile/data/chat/message_model.dart';
 import 'package:e_fashion_flutter/features/profile/data/chat/send_message_model.dart';
-import 'package:e_fashion_flutter/features/profile/data/message_model.dart';
-
 
 typedef OnMessageReceived = void Function(MessageModel message);
 
 class SignalrService {
-  Future<void> sendMessage({
-    required String message,
-    required String senderId,
-    required String receiverId,
-    required int chatId,
-  }) async {
+  Future<void> sendMessage({required SendMessageModel sendMessageModel}) async {
     await ConnectionsService.checkConnection();
-
-    final sendMessageModel = SendMessageModel(
-      content: message,
-      senderId: senderId,
-      receiverId: receiverId,
-      chatId: chatId,
-    );
-
     try {
       await ConnectionsService.connection.invoke(
         "MessageSent",

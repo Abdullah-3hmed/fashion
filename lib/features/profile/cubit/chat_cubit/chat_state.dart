@@ -1,5 +1,5 @@
 import 'package:e_fashion_flutter/core/enums/request_status.dart';
-import 'package:e_fashion_flutter/features/profile/data/message_model.dart';
+import 'package:e_fashion_flutter/features/profile/data/chat/message_model.dart';
 import 'package:equatable/equatable.dart';
 
 class ChatState extends Equatable {

@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:e_fashion_flutter/features/profile/data/user_model.dart';
 import 'package:equatable/equatable.dart';
 
 class EditUserModel extends Equatable {

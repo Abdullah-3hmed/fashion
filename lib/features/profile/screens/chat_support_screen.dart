@@ -4,6 +4,7 @@ import 'package:e_fashion_flutter/core/utils/app_constants.dart';
 import 'package:e_fashion_flutter/core/utils/assets_manager.dart';
 import 'package:e_fashion_flutter/features/profile/cubit/chat_cubit/chat_cubit.dart';
 import 'package:e_fashion_flutter/features/profile/cubit/user_cubit/user_cubit.dart';
+import 'package:e_fashion_flutter/features/profile/data/chat/send_message_model.dart';
 import 'package:e_fashion_flutter/features/profile/screens/widgets/messages_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,17 +13,23 @@ import 'package:iconsax/iconsax.dart';
 
 @RoutePage()
 class ChatSupportScreen extends StatefulWidget implements AutoRouteWrapper {
+  const ChatSupportScreen({
+    super.key,
+    required this.receiverId,
+    this.chatId = 0,
+  });
 
-  const ChatSupportScreen({super.key, required this.receiverId,this.chatId = 0});
-    final String receiverId;
-    final int chatId;
+  final String receiverId;
+  final int chatId;
+
   @override
   State<ChatSupportScreen> createState() => _ChatSupportScreenState();
 
   @override
   Widget wrappedRoute(BuildContext context) => BlocProvider(
     lazy: false,
-    create: (context) => getIt<ChatCubit>()..getChatHistory(receiverId: receiverId),
+    create:
+        (context) => getIt<ChatCubit>()..getChatHistory(receiverId: receiverId),
     child: this,
   );
 }
@@ -89,11 +96,17 @@ class _ChatSupportScreenState extends State<ChatSupportScreen> {
                 IconButton(
                   onPressed: () async {
                     if (message.isNotEmpty) {
-                      await context.read<ChatCubit>().sendChatMessage(
+                      SendMessageModel sendMessageModel = SendMessageModel(
                         content: message,
-                        senderId: AppConstants.userId,
-                        receiverId: AppConstants.supportId,
+                        senderId:
+                            widget.chatId == 0
+                                ? AppConstants.userId
+                                : AppConstants.supportId,
+                        receiverId: widget.receiverId,
                         chatId: widget.chatId,
+                      );
+                      await context.read<ChatCubit>().sendChatMessage(
+                        sendMessageModel: sendMessageModel,
                       );
                     }
                     message = "";

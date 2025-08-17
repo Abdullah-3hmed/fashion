@@ -12,7 +12,12 @@ class HomeCubit extends Cubit<HomeState> {
   final HomeRepo homeRepo;
 
   Future<void> getCollections() async {
-    emit(state.copyWith(isConnected: true,collectionsStatus: RequestStatus.loading));
+    emit(
+      state.copyWith(
+        isConnected: true,
+        collectionsStatus: RequestStatus.loading,
+      ),
+    );
     final result = await homeRepo.getCollections();
     result.fold(
       (failure) {
@@ -72,15 +77,12 @@ class HomeCubit extends Cubit<HomeState> {
           categoriesStatus: RequestStatus.error,
         ),
       ),
-      (categories) {
-        AppConstants.categories = categories;
-        emit(
-          state.copyWith(
-            categories: categories,
-            categoriesStatus: RequestStatus.success,
-          ),
-        );
-      },
+      (categories) => emit(
+        state.copyWith(
+          categories: categories,
+          categoriesStatus: RequestStatus.success,
+        ),
+      ),
     );
   }
 
@@ -123,6 +125,7 @@ class HomeCubit extends Cubit<HomeState> {
   void changeGender({required int index}) {
     emit(state.copyWith(genderActiveIndex: index));
   }
+
   void changeCategory({required int index}) {
     emit(state.copyWith(categoryActiveIndex: index));
   }

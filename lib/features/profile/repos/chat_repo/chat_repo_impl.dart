@@ -6,7 +6,7 @@ import 'package:e_fashion_flutter/core/error/server_exception.dart';
 import 'package:e_fashion_flutter/core/network/api_constants.dart';
 import 'package:e_fashion_flutter/core/network/dio_helper.dart';
 import 'package:e_fashion_flutter/core/utils/app_constants.dart';
-import 'package:e_fashion_flutter/features/profile/data/message_model.dart';
+import 'package:e_fashion_flutter/features/profile/data/chat/message_model.dart';
 import 'package:e_fashion_flutter/features/profile/repos/chat_repo/chat_repo.dart';
 
 class ChatRepoImpl implements ChatRepo {

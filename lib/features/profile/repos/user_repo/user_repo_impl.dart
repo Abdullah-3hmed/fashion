@@ -8,10 +8,9 @@ import 'package:e_fashion_flutter/core/network/api_constants.dart';
 import 'package:e_fashion_flutter/core/network/dio_helper.dart';
 import 'package:e_fashion_flutter/core/services/service_locator.dart';
 import 'package:e_fashion_flutter/core/utils/app_constants.dart';
-import 'package:e_fashion_flutter/features/profile/data/edit_user_model.dart';
-import 'package:e_fashion_flutter/features/profile/data/message_model.dart';
-import 'package:e_fashion_flutter/features/profile/data/user_model.dart';
-import 'package:e_fashion_flutter/features/profile/data/user_password_model.dart';
+import 'package:e_fashion_flutter/features/profile/data/user/edit_user_model.dart';
+import 'package:e_fashion_flutter/features/profile/data/user/user_model.dart';
+import 'package:e_fashion_flutter/features/profile/data/user/user_password_model.dart';
 import 'package:e_fashion_flutter/features/profile/repos/user_repo/user_repo.dart';
 import 'package:flutter/material.dart';
 

@@ -1,17 +1,15 @@
 import 'dart:developer';
 import 'dart:io';
-
 import 'package:e_fashion_flutter/core/enums/request_status.dart';
 import 'package:e_fashion_flutter/core/local/cache_helper.dart';
 import 'package:e_fashion_flutter/core/services/connection_service.dart';
 import 'package:e_fashion_flutter/core/services/service_locator.dart';
 import 'package:e_fashion_flutter/core/utils/app_constants.dart';
 import 'package:e_fashion_flutter/features/profile/cubit/user_cubit/user_state.dart';
-import 'package:e_fashion_flutter/features/profile/data/edit_user_model.dart';
-import 'package:e_fashion_flutter/features/profile/data/message_model.dart';
 import 'package:e_fashion_flutter/features/profile/data/chat/send_message_model.dart';
-import 'package:e_fashion_flutter/features/profile/data/user_model.dart';
-import 'package:e_fashion_flutter/features/profile/data/user_password_model.dart';
+import 'package:e_fashion_flutter/features/profile/data/user/edit_user_model.dart';
+import 'package:e_fashion_flutter/features/profile/data/user/user_model.dart';
+import 'package:e_fashion_flutter/features/profile/data/user/user_password_model.dart';
 import 'package:e_fashion_flutter/features/profile/repos/user_repo/user_repo.dart';
 import 'package:flutter/material.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';

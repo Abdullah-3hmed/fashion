@@ -15,4 +15,5 @@ abstract class HomeRepo {
     required String collectionId,
   });
   Future<Either<Failure,ProductsModel>> getProducts({required int? gender,required int? category});
+  List<CategoryModel> getCategoriesList();
 }
