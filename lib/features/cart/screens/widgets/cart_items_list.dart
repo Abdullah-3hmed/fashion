@@ -76,7 +76,7 @@ class CartItemsList extends StatelessWidget {
         const SizedBox(height: 8.0),
         PrimaryButton(
           onPressed: () async{
-            await PaymentManager.payWithStripe(amount: 600);
+            await PaymentManager.payWithPaymob(context, 200);
            // context.pushRoute(const PaymentSuccessRoute());
           },
           text: "Checkout",

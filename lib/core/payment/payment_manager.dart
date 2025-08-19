@@ -3,19 +3,15 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:multi_payment_gateway/stripe_payment_kit.dart';
 
 class PaymentManager {
-  static Future<void> payWithStripe({required int amount}) async {
-    StripeSetup.setup(publishableKey: dotenv.env["STRIPE_PUBLISHABLE_KEY"]!);
-    var token = "${dotenv.env["STRIPE_SECRET_KEY"]}";
-    final SetupStripePayment intent = SetupStripePayment(
-      token: token,
-      amount: amount,
-      merchantDisplayName: "Abdullah",
+  static Future<void> payWithPaymob(BuildContext context,int amount) async {
+    final SetupPaymobPayment setupPayment = SetupPaymobPayment(
+        context: context,
+        frameId: "792713",
+        amount: amount,
+        items: [],
+        integrationId: int.parse("${dotenv.env["INTEGRATION_ID"]}"),
+        apiKey: "${dotenv.env["PAYMOB_API_KEY"]}"
     );
-    try {
-      await StripeService.instance.pay(setupPayment: intent);
-      debugPrint("Payment Successful");
-    } catch (e) {
-      debugPrint(e.toString());
-    }
+    await PaymobPaymentService.instance.pay(setupPayment: setupPayment);
   }
 }
