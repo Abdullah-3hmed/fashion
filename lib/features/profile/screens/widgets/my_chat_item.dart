@@ -38,17 +38,17 @@ class MyChatItem extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 4.0),
-        Align(
-          alignment: AlignmentDirectional.centerEnd,
-          child: Text(
-            DateFormat(
-              'hh:mm a',
-            ).format(DateTime.parse(messageModel.createdAt)),
-            style: Theme.of(context).textTheme.labelSmall!.copyWith(
-              color: Theme.of(context).colorScheme.primary,
-            ),
-          ),
-        ),
+        // Align(
+        //   alignment: AlignmentDirectional.centerEnd,
+        //   child: Text(
+        //     DateFormat(
+        //       'hh:mm a',
+        //     ).format(DateTime.parse(messageModel.createdAt)),
+        //     style: Theme.of(context).textTheme.labelSmall!.copyWith(
+        //       color: Theme.of(context).colorScheme.primary,
+        //     ),
+        //   ),
+        // ),
       ],
     );
   }

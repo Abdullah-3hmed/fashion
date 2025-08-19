@@ -67,6 +67,7 @@ class MessagesList extends StatelessWidget {
                         separatorBuilder:
                             (_, __) => const SizedBox(height: 16.0),
                         itemCount: state.messageList.length,
+                    cacheExtent: 200,
                       );
                 case RequestStatus.error:
                   return Center(

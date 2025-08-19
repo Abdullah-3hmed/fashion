@@ -1,25 +1,33 @@
 import 'dart:developer';
 
 import 'package:e_fashion_flutter/core/network/api_constants.dart';
+import 'package:e_fashion_flutter/core/utils/app_constants.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:signalr_netcore/http_connection_options.dart';
 import 'package:signalr_netcore/hub_connection.dart';
 import 'package:signalr_netcore/hub_connection_builder.dart';
+import 'package:signalr_netcore/signalr_client.dart';
 
 class ConnectionsService {
   static late HubConnection connection;
 
   static Future<void> initConnection() async {
     try {
-      final url = "${dotenv.env["API_URL"]!}${ApiConstants.sendMessageEndpoint}";
+      final url = "http://shoping-online.runasp.net/chatHub";
       log("Connecting to: $url");
-      connection = HubConnectionBuilder()
-          .withUrl(
-        url,
-        options: HttpConnectionOptions(requestTimeout: 5000),
-      )
-          .withAutomaticReconnect()
-          .build();
+      connection =
+          HubConnectionBuilder()
+              .withUrl(
+                url,
+                options: HttpConnectionOptions(
+                  requestTimeout: 5000,
+                  accessTokenFactory: () async => AppConstants.token,
+                  transport: HttpTransportType.WebSockets,
+
+                ),
+              )
+              .withAutomaticReconnect()
+              .build();
 
       await connection.start();
       log("✅ Connection started");

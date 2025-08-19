@@ -15,7 +15,7 @@ class SendMessageModel extends Equatable {
 
   Map<String, dynamic> toJson() =>
       {
-        "senderUserId": senderId,
+        //"senderUserId": senderId,
         "receiverUserId": receiverId,
         "content": content,
         "chatId": chatId,

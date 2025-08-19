@@ -10,8 +10,12 @@ class SignalrService {
     await ConnectionsService.checkConnection();
     try {
       await ConnectionsService.connection.invoke(
-        "MessageSent",
-        args: [sendMessageModel.toJson()],
+        "SendMessage",
+        args: [
+          sendMessageModel.senderId,
+          sendMessageModel.receiverId,
+          sendMessageModel.content,
+        ],
       );
       log("✅ Message sent successfully: ${sendMessageModel.toJson()}");
     } catch (error, stackTrace) {
@@ -22,6 +26,7 @@ class SignalrService {
   }
 
   Future<void> listenToMessages(OnMessageReceived onMessage) async {
+    log("Listening to messages...");
     await ConnectionsService.checkConnection();
     ConnectionsService.connection.off("ReceiveMessage");
 
@@ -29,6 +34,7 @@ class SignalrService {
       try {
         if (arguments != null && arguments.isNotEmpty) {
           final data = arguments[0];
+          log("Received data: $data");
 
           if (data is Map) {
             final jsonData = Map<String, dynamic>.from(data);
@@ -46,4 +52,32 @@ class SignalrService {
       }
     });
   }
+  Future<void> listenToSentMessages(OnMessageReceived onMessageSent) async {
+    log("Listening to sent messages...");
+    await ConnectionsService.checkConnection();
+    ConnectionsService.connection.off("MessageSent");
+
+    ConnectionsService.connection.on("MessageSent", (arguments) {
+      try {
+        if (arguments != null && arguments.isNotEmpty) {
+          final data = arguments[0];
+          log("Sent event data: $data");
+
+          if (data is Map) {
+            final jsonData = Map<String, dynamic>.from(data);
+            final message = MessageModel.fromJson(jsonData);
+
+            onMessageSent(message);
+            log("📤 Message confirmed sent: ${message.toString()}");
+          } else {
+            log("⚠️ Sent event is not a valid map: $data");
+          }
+        }
+      } catch (e, stackTrace) {
+        log("❌ Error handling sent message: $e");
+        log("StackTrace: $stackTrace");
+      }
+    });
+  }
+
 }

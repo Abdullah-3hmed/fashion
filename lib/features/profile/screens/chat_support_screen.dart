@@ -42,6 +42,7 @@ class _ChatSupportScreenState extends State<ChatSupportScreen> {
   void initState() {
     controller = TextEditingController();
     context.read<ChatCubit>().listenToMessages();
+    context.read<ChatCubit>().listenToSentMessages();
     super.initState();
   }
 
@@ -108,9 +109,12 @@ class _ChatSupportScreenState extends State<ChatSupportScreen> {
                       await context.read<ChatCubit>().sendChatMessage(
                         sendMessageModel: sendMessageModel,
                       );
+                      message = "";
+                      controller.clear();
+                      await context.read<ChatCubit>().sendMessage(
+                        sendMessageModel: sendMessageModel,
+                      );
                     }
-                    message = "";
-                    controller.clear();
                   },
                   icon: SvgPicture.asset(
                     AssetsManager.sendIcon,

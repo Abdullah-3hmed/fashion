@@ -7,6 +7,7 @@ import 'package:e_fashion_flutter/core/network/api_constants.dart';
 import 'package:e_fashion_flutter/core/network/dio_helper.dart';
 import 'package:e_fashion_flutter/core/utils/app_constants.dart';
 import 'package:e_fashion_flutter/features/profile/data/chat/message_model.dart';
+import 'package:e_fashion_flutter/features/profile/data/chat/send_message_model.dart';
 import 'package:e_fashion_flutter/features/profile/repos/chat_repo/chat_repo.dart';
 
 class ChatRepoImpl implements ChatRepo {
@@ -41,10 +42,34 @@ class ChatRepoImpl implements ChatRepo {
       return Left(ServerFailure(e.toString()));
     }
   }
+
   @override
   List<MessageModel> getCachedMessages() => List.unmodifiable(_messages);
+
   @override
   void addMessage(MessageModel message) {
     _messages.add(message);
+  }
+
+  @override
+  Future<Either<Failure, void>> sendMessage({
+    required SendMessageModel sendMessageModel,
+  }) async {
+    try {
+      final response = await dioHelper.post(
+        url: ApiConstants.sendMessageEndpoint,
+        data: sendMessageModel.toJson(),
+        headers: {"Authorization": "Bearer ${AppConstants.token}"},
+      );
+      if (response.statusCode == 200) {
+        return const Right(null);
+      } else {
+        throw ServerException(errorModel: ErrorModel.fromJson(response.data));
+      }
+    } on DioException catch (e) {
+      return Left(ServerFailure.fromDioError(e));
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
   }
 }

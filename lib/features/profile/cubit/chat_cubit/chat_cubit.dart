@@ -56,4 +56,28 @@ class ChatCubit extends Cubit<ChatState> {
   }) async {
     await signalrService.sendMessage(sendMessageModel: sendMessageModel);
   }
+  Future<void> sendMessage({
+    required SendMessageModel sendMessageModel,
+  }) async {
+    final result = await chatRepo.sendMessage(
+      sendMessageModel: sendMessageModel,
+    );
+    result.fold(
+      (failure) => emit(
+        state.copyWith(
+          sendMessageErrorMessage: failure.errorMessage,
+          sendMessageState: RequestStatus.error,
+        ),
+      ),
+      (_) {
+        emit(state.copyWith(sendMessageState: RequestStatus.success));
+      },
+    );
+  }
+  Future<void> listenToSentMessages() async {
+    await signalrService.listenToSentMessages((message) {
+      chatRepo.addMessage(message);
+      emit(state.copyWith(messageList: [...state.messageList, message]));
+    });
+  }
 }
