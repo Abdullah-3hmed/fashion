@@ -15,8 +15,6 @@ class ChatRepoImpl implements ChatRepo {
 
   ChatRepoImpl({required this.dioHelper});
 
-  List<MessageModel> _messages = [];
-
   @override
   Future<Either<Failure, List<MessageModel>>> getChatHistory({
     required String receiverId,
@@ -27,12 +25,13 @@ class ChatRepoImpl implements ChatRepo {
         headers: {"Authorization": "Bearer ${AppConstants.token}"},
       );
       if (response.statusCode == 200) {
-        _messages = List<MessageModel>.from(
-          (response.data as List? ?? []).map(
-            (message) => MessageModel.fromJson(message),
+        return Right(
+          List<MessageModel>.from(
+            (response.data as List? ?? []).map(
+              (message) => MessageModel.fromJson(message),
+            ),
           ),
         );
-        return Right(_messages);
       } else {
         throw ServerException(errorModel: ErrorModel.fromJson(response.data));
       }
@@ -43,13 +42,6 @@ class ChatRepoImpl implements ChatRepo {
     }
   }
 
-  @override
-  List<MessageModel> getCachedMessages() => List.unmodifiable(_messages);
-
-  @override
-  void addMessage(MessageModel message) {
-    _messages.add(message);
-  }
 
   @override
   Future<Either<Failure, void>> sendMessage({

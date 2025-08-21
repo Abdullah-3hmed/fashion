@@ -31,5 +31,6 @@ void main() async {
   AppConstants.token = await getIt<CacheHelper>().readData(key: "token") ?? "";
   AppConstants.userId = await getIt<CacheHelper>().readData(key: "user_id") ?? "";
   Bloc.observer = MyBlocObserver();
+  await ConnectionsService.initConnection();
   runApp(const MyApp());
 }

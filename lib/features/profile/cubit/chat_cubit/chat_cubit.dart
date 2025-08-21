@@ -1,6 +1,7 @@
 import 'package:e_fashion_flutter/core/enums/request_status.dart';
 import 'package:e_fashion_flutter/core/services/connection_service.dart';
 import 'package:e_fashion_flutter/core/services/signalr_service.dart';
+import 'package:e_fashion_flutter/core/utils/app_constants.dart';
 import 'package:e_fashion_flutter/features/profile/cubit/chat_cubit/chat_state.dart';
 import 'package:e_fashion_flutter/features/profile/data/chat/send_message_model.dart';
 import 'package:e_fashion_flutter/features/profile/repos/chat_repo/chat_repo.dart';
@@ -12,19 +13,13 @@ class ChatCubit extends Cubit<ChatState> {
 
   ChatCubit({required this.chatRepo, required this.signalrService})
     : super(const ChatState()) {
-    ConnectionsService.initConnection();
+    ConnectionsService.checkConnection();
+    _listenToMessages();
+    _listenToSentMessages();
   }
 
   Future<void> getChatHistory({required String receiverId}) async {
-    if (chatRepo.getCachedMessages().isNotEmpty) {
-      emit(
-        state.copyWith(
-          getChatHistoryState: RequestStatus.success,
-          messageList: chatRepo.getCachedMessages(),
-        ),
-      );
-      return;
-    }
+    if (state.messages.isNotEmpty) return;
     final result = await chatRepo.getChatHistory(receiverId: receiverId);
     result.fold(
       (failure) => emit(
@@ -33,21 +28,31 @@ class ChatCubit extends Cubit<ChatState> {
           getChatHistoryState: RequestStatus.error,
         ),
       ),
-      (messageList) {
+      (messages) {
         emit(
           state.copyWith(
             getChatHistoryState: RequestStatus.success,
-            messageList: messageList,
+            messages: messages,
           ),
         );
       },
     );
   }
 
-  Future<void> listenToMessages() async {
-    await signalrService.listenToMessages((message) {
-      chatRepo.addMessage(message);
-      emit(state.copyWith(messageList: [...state.messageList, message]));
+  void _listenToMessages()  {
+     signalrService.listenToMessages((message) {
+      if (message.senderId != AppConstants.userId) {
+        emit(state.copyWith(messages: [...state.messages, message]));
+      }
+    });
+  }
+
+void _listenToSentMessages()  {
+
+     signalrService.listenToSentMessages((message) {
+      if (message.senderId == AppConstants.userId) {
+        emit(state.copyWith(messages: [...state.messages, message]));
+      }
     });
   }
 
@@ -55,8 +60,10 @@ class ChatCubit extends Cubit<ChatState> {
     required SendMessageModel sendMessageModel,
   }) async {
     await signalrService.sendMessage(sendMessageModel: sendMessageModel);
+    await _sendMessage(sendMessageModel: sendMessageModel);
   }
-  Future<void> sendMessage({
+
+  Future<void> _sendMessage({
     required SendMessageModel sendMessageModel,
   }) async {
     final result = await chatRepo.sendMessage(
@@ -73,11 +80,5 @@ class ChatCubit extends Cubit<ChatState> {
         emit(state.copyWith(sendMessageState: RequestStatus.success));
       },
     );
-  }
-  Future<void> listenToSentMessages() async {
-    await signalrService.listenToSentMessages((message) {
-      chatRepo.addMessage(message);
-      emit(state.copyWith(messageList: [...state.messageList, message]));
-    });
   }
 }

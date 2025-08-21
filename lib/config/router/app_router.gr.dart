@@ -98,12 +98,10 @@ class ChatSupportRoute extends PageRouteInfo<ChatSupportRouteArgs> {
     name,
     builder: (data) {
       final args = data.argsAs<ChatSupportRouteArgs>();
-      return WrappedRoute(
-        child: ChatSupportScreen(
-          key: args.key,
-          receiverId: args.receiverId,
-          chatId: args.chatId,
-        ),
+      return ChatSupportScreen(
+        key: args.key,
+        receiverId: args.receiverId,
+        chatId: args.chatId,
       );
     },
   );

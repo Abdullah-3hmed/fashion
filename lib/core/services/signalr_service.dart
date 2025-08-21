@@ -4,10 +4,11 @@ import 'package:e_fashion_flutter/features/profile/data/chat/message_model.dart'
 import 'package:e_fashion_flutter/features/profile/data/chat/send_message_model.dart';
 
 typedef OnMessageReceived = void Function(MessageModel message);
+typedef OnMessageSent = void Function(MessageModel message);
 
 class SignalrService {
+
   Future<void> sendMessage({required SendMessageModel sendMessageModel}) async {
-    await ConnectionsService.checkConnection();
     try {
       await ConnectionsService.connection.invoke(
         "SendMessage",
@@ -25,11 +26,9 @@ class SignalrService {
     }
   }
 
-  Future<void> listenToMessages(OnMessageReceived onMessage) async {
+  void listenToMessages(OnMessageReceived onMessageReceived) async{
     log("Listening to messages...");
     await ConnectionsService.checkConnection();
-    ConnectionsService.connection.off("ReceiveMessage");
-
     ConnectionsService.connection.on("ReceiveMessage", (arguments) {
       try {
         if (arguments != null && arguments.isNotEmpty) {
@@ -40,8 +39,8 @@ class SignalrService {
             final jsonData = Map<String, dynamic>.from(data);
             final message = MessageModel.fromJson(jsonData);
 
-            onMessage(message);
-            log("📩 New message received: ${message.toString()}");
+            onMessageReceived(message);
+            log("📩 New message received: $message");
           } else {
             log("⚠️ Received data is not a valid map: $data");
           }
@@ -52,10 +51,11 @@ class SignalrService {
       }
     });
   }
-  Future<void> listenToSentMessages(OnMessageReceived onMessageSent) async {
+
+  void listenToSentMessages(OnMessageSent onMessageSent) async{
+
     log("Listening to sent messages...");
     await ConnectionsService.checkConnection();
-    ConnectionsService.connection.off("MessageSent");
 
     ConnectionsService.connection.on("MessageSent", (arguments) {
       try {
@@ -68,7 +68,7 @@ class SignalrService {
             final message = MessageModel.fromJson(jsonData);
 
             onMessageSent(message);
-            log("📤 Message confirmed sent: ${message.toString()}");
+            log("📤 Message confirmed sent: $message");
           } else {
             log("⚠️ Sent event is not a valid map: $data");
           }
@@ -79,5 +79,4 @@ class SignalrService {
       }
     });
   }
-
 }

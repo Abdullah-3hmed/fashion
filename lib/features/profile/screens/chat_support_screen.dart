@@ -12,7 +12,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:iconsax/iconsax.dart';
 
 @RoutePage()
-class ChatSupportScreen extends StatefulWidget implements AutoRouteWrapper {
+class ChatSupportScreen extends StatefulWidget  {
   const ChatSupportScreen({
     super.key,
     required this.receiverId,
@@ -24,25 +24,15 @@ class ChatSupportScreen extends StatefulWidget implements AutoRouteWrapper {
 
   @override
   State<ChatSupportScreen> createState() => _ChatSupportScreenState();
-
-  @override
-  Widget wrappedRoute(BuildContext context) => BlocProvider(
-    lazy: false,
-    create:
-        (context) => getIt<ChatCubit>()..getChatHistory(receiverId: receiverId),
-    child: this,
-  );
 }
 
 class _ChatSupportScreenState extends State<ChatSupportScreen> {
-  String message = "";
   late final TextEditingController controller;
 
   @override
   void initState() {
     controller = TextEditingController();
-    context.read<ChatCubit>().listenToMessages();
-    context.read<ChatCubit>().listenToSentMessages();
+    context.read<ChatCubit>().getChatHistory(receiverId: widget.receiverId);
     super.initState();
   }
 
@@ -64,14 +54,13 @@ class _ChatSupportScreenState extends State<ChatSupportScreen> {
         child: Column(
           children: [
             const SizedBox(height: 16.0),
-            //const NoMessagesContent(),
             const Expanded(child: MessagesList()),
             Row(
               children: [
                 Expanded(
                   child: TextField(
                     onChanged: (value) {
-                      message = value;
+                      controller.text = value;
                     },
                     controller: controller,
                     minLines: 1,
@@ -96,25 +85,7 @@ class _ChatSupportScreenState extends State<ChatSupportScreen> {
                 ),
                 IconButton(
                   onPressed: () async {
-                    if (message.isNotEmpty) {
-                      SendMessageModel sendMessageModel = SendMessageModel(
-                        content: message,
-                        senderId:
-                            widget.chatId == 0
-                                ? AppConstants.userId
-                                : AppConstants.supportId,
-                        receiverId: widget.receiverId,
-                        chatId: widget.chatId,
-                      );
-                      await context.read<ChatCubit>().sendChatMessage(
-                        sendMessageModel: sendMessageModel,
-                      );
-                      message = "";
-                      controller.clear();
-                      await context.read<ChatCubit>().sendMessage(
-                        sendMessageModel: sendMessageModel,
-                      );
-                    }
+                    await _sendMessage(context);
                   },
                   icon: SvgPicture.asset(
                     AssetsManager.sendIcon,
@@ -131,5 +102,23 @@ class _ChatSupportScreenState extends State<ChatSupportScreen> {
         ),
       ),
     );
+  }
+
+  Future<void> _sendMessage(BuildContext context) async {
+        if (controller.text.isNotEmpty) {
+      SendMessageModel sendMessageModel = SendMessageModel(
+        content: controller.text,
+        senderId:
+            widget.chatId == 0
+                ? AppConstants.userId
+                : AppConstants.supportId,
+        receiverId: widget.receiverId,
+        chatId: widget.chatId,
+      );
+      controller.clear();
+      await context.read<ChatCubit>().sendChatMessage(
+        sendMessageModel: sendMessageModel,
+      );
+    }
   }
 }
