@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:e_fashion_flutter/core/services/service_locator.dart';
+import 'package:e_fashion_flutter/core/utils/app_constants.dart';
 import 'package:e_fashion_flutter/core/widgets/no_internet_widget.dart';
 import 'package:e_fashion_flutter/features/cart/cubit/cart_cubit.dart';
 import 'package:e_fashion_flutter/features/favourite/cubit/favorite_cubit.dart';
@@ -9,6 +10,7 @@ import 'package:e_fashion_flutter/features/home/screens/widgets/category/categor
 import 'package:e_fashion_flutter/features/home/screens/widgets/home_header/home_header_bloc_builder.dart';
 import 'package:e_fashion_flutter/features/home/screens/widgets/offers/offers_section.dart';
 import 'package:e_fashion_flutter/features/home/screens/widgets/products/products_section.dart';
+import 'package:e_fashion_flutter/features/profile/cubit/chat_cubit/chat_cubit.dart';
 import 'package:e_fashion_flutter/features/profile/cubit/user_cubit/user_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

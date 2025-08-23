@@ -18,9 +18,11 @@ class ChatCubit extends Cubit<ChatState> {
     _listenToSentMessages();
   }
 
-  Future<void> getChatHistory({required String receiverId}) async {
-    if (state.messages.isNotEmpty) return;
-    final result = await chatRepo.getChatHistory(receiverId: receiverId);
+  Future<void> getChatHistory({
+    required String receiverId,
+  }) async {
+    if (state.messages.isNotEmpty ) return;
+    final result = await chatRepo.getChatHistory(receiverId: receiverId,);
     result.fold(
       (failure) => emit(
         state.copyWith(
@@ -39,16 +41,16 @@ class ChatCubit extends Cubit<ChatState> {
     );
   }
 
-  void _listenToMessages()  {
-     signalrService.listenToMessages((message) {
+  void _listenToMessages() {
+    signalrService.listenToMessages((message) {
       if (message.senderId != AppConstants.userId) {
         emit(state.copyWith(messages: [...state.messages, message]));
       }
     });
   }
 
-void _listenToSentMessages()  {
-     signalrService.listenToSentMessages((message) {
+  void _listenToSentMessages() {
+    signalrService.listenToSentMessages((message) {
       if (message.senderId == AppConstants.userId) {
         emit(state.copyWith(messages: [...state.messages, message]));
       }
@@ -79,5 +81,9 @@ void _listenToSentMessages()  {
         emit(state.copyWith(sendMessageState: RequestStatus.success));
       },
     );
+  }
+
+  void clearMessage() {
+    emit(state.copyWith(messages: []));
   }
 }

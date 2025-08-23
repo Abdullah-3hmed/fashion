@@ -3,6 +3,7 @@ import 'package:e_fashion_flutter/config/router/app_router.dart';
 import 'package:e_fashion_flutter/core/notifications/fcm_init_helper.dart';
 import 'package:e_fashion_flutter/core/services/service_locator.dart';
 import 'package:e_fashion_flutter/core/utils/app_constants.dart';
+import 'package:e_fashion_flutter/features/bottom_vav_bar/widgets/cart_icon_animated.dart';
 import 'package:e_fashion_flutter/features/cart/cubit/cart_cubit.dart';
 import 'package:e_fashion_flutter/features/cart/cubit/cart_state.dart';
 import 'package:e_fashion_flutter/shared/app_cubit/app_cubit.dart';
@@ -13,8 +14,16 @@ import 'package:iconsax/iconsax.dart';
 import 'package:solar_icons/solar_icons.dart';
 
 @RoutePage()
-class LayoutScreen extends StatelessWidget {
+class LayoutScreen extends StatefulWidget {
   const LayoutScreen({super.key});
+
+  @override
+  State<LayoutScreen> createState() => _LayoutScreenState();
+}
+
+class _LayoutScreenState extends State<LayoutScreen> {
+  final GlobalKey<CartIconAnimatedState> cartIconKey =
+      GlobalKey<CartIconAnimatedState>();
 
   @override
   Widget build(BuildContext context) {
@@ -49,18 +58,20 @@ class LayoutScreen extends StatelessWidget {
                             : Colors.white,
                   ),
                 ),
-                IconButton(
-                  onPressed: () {
-                    tabsRouter.setActiveIndex(1);
+                BlocListener<CartCubit, CartState>(
+                  listenWhen:
+                      (prev, curr) =>
+                          prev.cartMap.length != curr.cartMap.length &&
+                          prev.cartMap.length < curr.cartMap.length,
+                  listener: (context, state) {
+                    cartIconKey.currentState?.triggerAnimation();
                   },
-                  icon: Icon(
-                    Iconsax.bag_2,
-                    color:
-                        tabsRouter.activeIndex == 1
-                            ? Theme.of(context).colorScheme.primary
-                            : Colors.white,
+                  child: CartIconAnimated(
+                    key: cartIconKey,
+                    onTap: () => tabsRouter.setActiveIndex(1),
                   ),
                 ),
+
                 IconButton(
                   onPressed: () {
                     tabsRouter.setActiveIndex(2);
@@ -91,3 +102,5 @@ class LayoutScreen extends StatelessWidget {
     );
   }
 }
+
+

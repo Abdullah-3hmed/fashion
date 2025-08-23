@@ -12,7 +12,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:iconsax/iconsax.dart';
 
 @RoutePage()
-class ChatSupportScreen extends StatefulWidget  {
+class ChatSupportScreen extends StatefulWidget {
   const ChatSupportScreen({
     super.key,
     required this.receiverId,
@@ -21,6 +21,7 @@ class ChatSupportScreen extends StatefulWidget  {
 
   final String receiverId;
   final int chatId;
+
 
   @override
   State<ChatSupportScreen> createState() => _ChatSupportScreenState();
@@ -32,7 +33,13 @@ class _ChatSupportScreenState extends State<ChatSupportScreen> {
   @override
   void initState() {
     controller = TextEditingController();
-    context.read<ChatCubit>().getChatHistory(receiverId: widget.receiverId);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) {
+        context.read<ChatCubit>()
+          ..clearMessage()
+          ..getChatHistory(receiverId: widget.receiverId);
+      }
+    });
     super.initState();
   }
 
@@ -105,13 +112,11 @@ class _ChatSupportScreenState extends State<ChatSupportScreen> {
   }
 
   Future<void> _sendMessage(BuildContext context) async {
-        if (controller.text.isNotEmpty) {
+    if (controller.text.isNotEmpty) {
       SendMessageModel sendMessageModel = SendMessageModel(
         content: controller.text,
         senderId:
-            widget.chatId == 0
-                ? AppConstants.userId
-                : AppConstants.supportId,
+            widget.chatId == 0 ? AppConstants.userId : AppConstants.supportId,
         receiverId: widget.receiverId,
         chatId: widget.chatId,
       );

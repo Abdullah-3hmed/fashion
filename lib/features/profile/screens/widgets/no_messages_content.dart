@@ -6,20 +6,19 @@ class NoMessagesContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Column(
-        children: [
-          const Spacer(),
-          Image.asset(width: 165.0, height: 160.0, AssetsManager.chatImage),
-          const SizedBox(height: 16.0),
-          Text(
-            "Feel free to tell us \n how to help you",
-            textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.bodyMedium,
-          ),
-          const Spacer(),
-        ],
-      ),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        const Spacer(),
+        Image.asset(width: 165.0, height: 160.0, AssetsManager.chatImage),
+        const SizedBox(height: 16.0),
+        Text(
+          "Feel free to tell us \n how to help you",
+          textAlign: TextAlign.center,
+          style: Theme.of(context).textTheme.bodyMedium,
+        ),
+        const Spacer(),
+      ],
     );
   }
 }
