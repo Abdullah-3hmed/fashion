@@ -65,7 +65,7 @@ class _ChatSupportScreenState extends State<ChatSupportScreen> {
                     controller: controller,
                     minLines: 1,
                     maxLines: 4,
-                    onTapOutside: (event) => FocusScope.of(context).unfocus(),
+                    onTapOutside: (_) => FocusScope.of(context).unfocus(),
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12.0),

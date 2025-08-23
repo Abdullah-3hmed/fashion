@@ -32,5 +32,9 @@ void main() async {
   AppConstants.userId = await getIt<CacheHelper>().readData(key: "user_id") ?? "";
   Bloc.observer = MyBlocObserver();
   await ConnectionsService.initConnection();
+  await FcmInitHelper.getFcmToken();
+  await FcmInitHelper.initFirebaseMessagingListeners();
+  await FcmInitHelper.setAwesomeNotificationListeners();
+  await FcmInitHelper.handleInitialMessage();
   runApp(const MyApp());
 }

@@ -3,7 +3,10 @@ import 'package:e_fashion_flutter/config/router/app_router.dart';
 import 'package:e_fashion_flutter/core/notifications/fcm_init_helper.dart';
 import 'package:e_fashion_flutter/core/services/service_locator.dart';
 import 'package:e_fashion_flutter/core/utils/app_constants.dart';
+import 'package:e_fashion_flutter/features/cart/cubit/cart_cubit.dart';
+import 'package:e_fashion_flutter/features/cart/cubit/cart_state.dart';
 import 'package:e_fashion_flutter/shared/app_cubit/app_cubit.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
@@ -23,9 +26,6 @@ class _LayoutScreenState extends State<LayoutScreen>
   void initState() {
     WidgetsBinding.instance.addObserver(this);
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      await FcmInitHelper.initFirebaseMessagingListeners();
-      await FcmInitHelper.setAwesomeNotificationListeners();
-      await _handleInitialMessage();
     });
 
     super.initState();
@@ -110,15 +110,5 @@ class _LayoutScreenState extends State<LayoutScreen>
             ),
           ),
     );
-  }
-
-  Future<void> _handleInitialMessage() async {
-    final message = await FcmInitHelper.firebaseMessaging.getInitialMessage();
-    if (message != null) {
-      await getIt<AppRouter>().replaceAll([
-        const AuthenticatedRoute(children: [LayoutRoute()]),
-      ]);
-      getIt<AppRouter>().push( ChatSupportRoute(receiverId: AppConstants.supportId));
-    }
   }
 }

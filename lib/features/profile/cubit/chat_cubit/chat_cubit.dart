@@ -48,7 +48,6 @@ class ChatCubit extends Cubit<ChatState> {
   }
 
 void _listenToSentMessages()  {
-
      signalrService.listenToSentMessages((message) {
       if (message.senderId == AppConstants.userId) {
         emit(state.copyWith(messages: [...state.messages, message]));

@@ -2,6 +2,7 @@ import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:e_fashion_flutter/config/router/app_router.dart';
 import 'package:e_fashion_flutter/core/notifications/navigate_to_chat.dart';
 import 'package:e_fashion_flutter/core/notifications/notification_controller.dart';
+import 'package:e_fashion_flutter/core/services/service_locator.dart';
 import 'package:e_fashion_flutter/core/utils/app_constants.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -28,11 +29,11 @@ class FcmInitHelper {
         defaultColor: const Color(0xFF9D50DD),
         ledColor: const Color(0xFF9D50DD),
         importance: NotificationImportance.Max,
+        playSound: true,
       ),
     ]);
   }
 
-  /// Show notification manually (for foreground messages)
   static Future<void> _showAwesomeNotification(RemoteMessage message) async {
     await _awesomeNotifications.createNotification(
       content: NotificationContent(
@@ -50,10 +51,7 @@ class FcmInitHelper {
       onActionReceivedMethod: NotificationController.onActionReceivedMethod,
     );
   }
-
-  /// Initialize FCM listeners
   static Future<void> initFirebaseMessagingListeners() async {
-    // Foreground
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       debugPrint("📩 Foreground message: ${message.data}");
       if (AppConstants.currentRoute == ChatSupportRoute.name) {
@@ -62,11 +60,22 @@ class FcmInitHelper {
       _showAwesomeNotification(message);
     });
 
-    // Background
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) async {
       debugPrint("📲 Notification opened (background): ${message.data}");
       await navigateToChat();
     });
+  }
+ static Future<void> handleInitialMessage() async {
+    final RemoteMessage? message =
+    await FcmInitHelper.firebaseMessaging.getInitialMessage();
+    if (message != null) {
+      await getIt<AppRouter>().replaceAll([
+        const AuthenticatedRoute(children: [LayoutRoute()]),
+      ]);
+      getIt<AppRouter>().push(
+        ChatSupportRoute(receiverId: AppConstants.supportId),
+      );
+    }
   }
 
   static Future<String?> getFcmToken() async {

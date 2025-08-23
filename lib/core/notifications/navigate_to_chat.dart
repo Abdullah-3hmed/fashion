@@ -8,9 +8,13 @@ Future<void> navigateToChat() async {
     await getIt<AppRouter>().replaceAll([
       const AuthenticatedRoute(children: [LayoutRoute()]),
     ]);
-    getIt<AppRouter>().push( ChatSupportRoute(receiverId: AppConstants.supportId));
+    getIt<AppRouter>().push(
+      ChatSupportRoute(receiverId: AppConstants.supportId),
+    );
   } else if (currentRoute == AuthenticatedRoute.name ||
       currentRoute == LayoutRoute.name) {
-    await getIt<AppRouter>().push( ChatSupportRoute(receiverId: AppConstants.supportId));
+    await getIt<AppRouter>().push(
+      ChatSupportRoute(receiverId: AppConstants.supportId),
+    );
   }
 }
