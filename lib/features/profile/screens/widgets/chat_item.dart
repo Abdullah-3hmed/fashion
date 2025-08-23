@@ -36,12 +36,12 @@ class ChatItem extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 4.0),
-        // Text(
-        //   DateFormat('hh:mm a').format(DateTime.parse(messageModel.createdAt)),
-        //   style: Theme.of(context).textTheme.labelSmall!.copyWith(
-        //     color: Theme.of(context).colorScheme.primary,
-        //   ),
-        // ),
+        Text(
+          messageModel.createdAt,
+          style: Theme.of(context).textTheme.labelSmall!.copyWith(
+            color: Theme.of(context).colorScheme.primary,
+          ),
+        ),
       ],
     );
   }

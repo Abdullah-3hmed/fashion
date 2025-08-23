@@ -23,6 +23,8 @@ import 'package:e_fashion_flutter/features/home/repos/home_details_repo/home_det
 import 'package:e_fashion_flutter/features/home/repos/home_details_repo/home_details_repo_impl.dart';
 import 'package:e_fashion_flutter/features/home/repos/home_repo/home_repo.dart';
 import 'package:e_fashion_flutter/features/home/repos/home_repo/home_repo_impl.dart';
+import 'package:e_fashion_flutter/features/notification/repo/notification_repo.dart';
+import 'package:e_fashion_flutter/features/notification/repo/notification_repo_impl.dart';
 import 'package:e_fashion_flutter/features/profile/cubit/chat_cubit/chat_cubit.dart';
 import 'package:e_fashion_flutter/features/profile/cubit/map_cubit/map_cubit.dart';
 import 'package:e_fashion_flutter/features/profile/cubit/user_cubit/user_cubit.dart';
@@ -93,7 +95,12 @@ class ServiceLocator {
     getIt.registerFactory<CartCubit>(
       () => CartCubit(cartRepo: getIt<CartRepo>()),
     );
-    getIt.registerFactory<AppCubit>(() => AppCubit());
+    getIt.registerLazySingleton<NotificationRepo>(
+      () => NotificationRepoImpl(dioHelper: getIt<DioHelper>()),
+    );
+    getIt.registerFactory<AppCubit>(() => AppCubit(
+      notificationRepo: getIt<NotificationRepo>(),
+    ));
     getIt.registerLazySingleton<AdminRepo>(
       () => AdminRepoImpl(dioHelper: getIt<DioHelper>()),
     );

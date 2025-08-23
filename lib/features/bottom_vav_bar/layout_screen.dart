@@ -13,29 +13,8 @@ import 'package:iconsax/iconsax.dart';
 import 'package:solar_icons/solar_icons.dart';
 
 @RoutePage()
-class LayoutScreen extends StatefulWidget {
+class LayoutScreen extends StatelessWidget {
   const LayoutScreen({super.key});
-
-  @override
-  State<LayoutScreen> createState() => _LayoutScreenState();
-}
-
-class _LayoutScreenState extends State<LayoutScreen>
-    with WidgetsBindingObserver {
-  @override
-  void initState() {
-    WidgetsBinding.instance.addObserver(this);
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-    });
-
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {

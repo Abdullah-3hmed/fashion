@@ -1,7 +1,5 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:e_fashion_flutter/core/enums/request_status.dart';
 import 'package:e_fashion_flutter/core/services/service_locator.dart';
-import 'package:e_fashion_flutter/core/utils/app_constants.dart';
 import 'package:e_fashion_flutter/core/widgets/no_internet_widget.dart';
 import 'package:e_fashion_flutter/features/cart/cubit/cart_cubit.dart';
 import 'package:e_fashion_flutter/features/favourite/cubit/favorite_cubit.dart';
@@ -10,16 +8,13 @@ import 'package:e_fashion_flutter/features/home/cubit/home_state.dart';
 import 'package:e_fashion_flutter/features/home/screens/widgets/category/category_section.dart';
 import 'package:e_fashion_flutter/features/home/screens/widgets/home_header/home_header_bloc_builder.dart';
 import 'package:e_fashion_flutter/features/home/screens/widgets/offers/offers_section.dart';
-import 'package:e_fashion_flutter/features/home/screens/widgets/products/brand_section.dart';
-import 'package:e_fashion_flutter/features/home/screens/widgets/products/brand_section_item.dart';
 import 'package:e_fashion_flutter/features/home/screens/widgets/products/products_section.dart';
-import 'package:e_fashion_flutter/shared/data/product_model.dart';
+import 'package:e_fashion_flutter/features/profile/cubit/user_cubit/user_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:skeletonizer/skeletonizer.dart';
 
 @RoutePage()
-class HomeScreen extends StatelessWidget implements AutoRouteWrapper {
+class HomeScreen extends StatefulWidget implements AutoRouteWrapper {
   const HomeScreen({super.key});
 
   @override
@@ -30,6 +25,20 @@ class HomeScreen extends StatelessWidget implements AutoRouteWrapper {
     );
   }
 
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<CartCubit>().getCartItems();
+      context.read<FavoriteCubit>().getFavorites();
+      context.read<UserCubit>().getUserProfile();
+    });
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,17 +61,27 @@ class HomeScreen extends StatelessWidget implements AutoRouteWrapper {
                   (HomeCubit cubit) => cubit.state.collectionsErrorMessage,
                 ),
                 onPressed: () async {
-                  await context.read<HomeCubit>().getAllHomeData();
-                  if (context.mounted) {
-                    await context.read<FavoriteCubit>().getFavorites();
-                  }
-                  if (context.mounted) {
-                    await context.read<CartCubit>().getCartItems();
-                  }
+                  await _getAllAppData(context);
+
                 },
               );
         },
       ),
     );
   }
+
+  Future<void> _getAllAppData(BuildContext context) async {
+    if (!mounted) return;
+
+    final homeCubit = context.read<HomeCubit>();
+    final favoriteCubit = context.read<FavoriteCubit>();
+    final cartCubit = context.read<CartCubit>();
+    final userCubit = context.read<UserCubit>();
+
+    await homeCubit.getAllHomeData();
+    await favoriteCubit.getFavorites();
+    await cartCubit.getCartItems();
+    await userCubit.getUserProfile();
+  }
+
 }

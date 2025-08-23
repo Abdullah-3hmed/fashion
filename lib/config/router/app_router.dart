@@ -142,20 +142,18 @@ class Authenticated extends AutoRouter implements AutoRouteWrapper {
         providers: [
           BlocProvider(
             create: (context) =>
-            getIt<UserCubit>()
-              ..getUserProfile(),
+            getIt<UserCubit>(),
           ),
           BlocProvider(
             create: (context) =>
-            getIt<FavoriteCubit>()
-              ..getFavorites(),
+            getIt<FavoriteCubit>(),
           ),
           BlocProvider(
             create: (context) =>
-            getIt<CartCubit>()
-              ..getCartItems(),
+            getIt<CartCubit>(),
           ),
           BlocProvider(
+            lazy: false,
             create: (context) =>
             getIt<ChatCubit>(),
           ),

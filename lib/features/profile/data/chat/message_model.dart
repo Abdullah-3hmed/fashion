@@ -20,7 +20,7 @@ class MessageModel extends Equatable {
   factory MessageModel.fromJson(Map<String, dynamic> json) => MessageModel(
     messageId: json["id"] ?? 0,
     chatId: json["chatId"] ?? 0,
-    createdAt: json["createdAt"] ?? "",
+    createdAt: json["createdAtFormatted"] ?? "",
     senderId: json["senderUserId"] ?? "",
     receiverId: json["receiverUserId"] ?? "",
     content: json["content"] ?? "",
