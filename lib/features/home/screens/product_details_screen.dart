@@ -12,10 +12,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class ProductDetailsScreen extends StatefulWidget implements AutoRouteWrapper {
   @override
   Widget wrappedRoute(BuildContext context) => BlocProvider(
-    create:
-        (context) =>
-            getIt<ProductDetailsCubit>()
-              ..getProductDetails(productId: productId),
+    create: (context) =>
+    getIt<ProductDetailsCubit>()..getProductDetails(productId: productId),
     child: this,
   );
 
@@ -33,10 +31,10 @@ class ProductDetailsScreen extends StatefulWidget implements AutoRouteWrapper {
 }
 
 class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
-  ValueNotifier<bool> isClipped = ValueNotifier(true);
+  final ValueNotifier<bool> isClipped = ValueNotifier(true);
 
   @override
-  dispose() {
+  void dispose() {
     isClipped.dispose();
     super.dispose();
   }
@@ -51,30 +49,31 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
               imageUrl: widget.imageUrl,
             ),
           ),
-          ValueListenableBuilder<bool>(
-            valueListenable: isClipped,
-            builder: (context, value, child) {
-              return DraggableScrollableSheet(
-                initialChildSize: 0.47,
-                minChildSize: 0.47,
-                builder: (context, scrollController) {
-                  return NotificationListener<DraggableScrollableNotification>(
-                    onNotification: (notification) {
-                      final newIsClipped = notification.extent < 0.65;
-                      if (newIsClipped != value) {
-                        isClipped.value = newIsClipped;
-                      }
-                      return true;
-                    },
-                    child: DetailsClippedContainer(
-                      isClipped:value,
-                      child: DetailsContainerContent(
-                        controller: scrollController,
-                        productId: widget.productId,
-                      ),
-                    ),
-                  );
+          DraggableScrollableSheet(
+            initialChildSize: 0.47,
+            minChildSize: 0.47,
+            builder: (context, scrollController) {
+              return NotificationListener<DraggableScrollableNotification>(
+                onNotification: (notification) {
+                  final newIsClipped = notification.extent < 0.65;
+                  if (newIsClipped != isClipped.value) {
+                    isClipped.value = newIsClipped;
+                  }
+                  return true;
                 },
+                child: ValueListenableBuilder<bool>(
+                  valueListenable: isClipped,
+                  child: DetailsContainerContent(
+                    controller: scrollController,
+                    productId: widget.productId,
+                  ),
+                  builder: (context, value, child) {
+                    return DetailsClippedContainer(
+                      isClipped: value,
+                      child: child!,
+                    );
+                  },
+                ),
               );
             },
           ),

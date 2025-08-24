@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:e_fashion_flutter/core/error/failures.dart';
 import 'package:e_fashion_flutter/core/notifications/fcm_init_helper.dart';
+import 'package:e_fashion_flutter/core/utils/app_constants.dart';
 import 'package:e_fashion_flutter/features/notification/repo/notification_repo.dart';
 import 'package:e_fashion_flutter/shared/app_cubit/app_state.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
@@ -34,7 +35,7 @@ class AppCubit extends HydratedCubit<AppState> {
   Future<void> _syncNotificationStatus() async {
     if (!state.hasPendingNotificationUpdate) return;
     final connectivity = await InternetConnection().hasInternetAccess;
-    if (connectivity == false) return;
+    if (connectivity == false || AppConstants.token.isEmpty) return;
 
     if (state.areNotificationsEnabled) {
       final token = await FcmInitHelper.getFcmToken();

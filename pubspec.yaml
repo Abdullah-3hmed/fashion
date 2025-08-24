@@ -83,6 +83,7 @@ dependencies:
 
 
 
+
 dev_dependencies:
   auto_route_generator: ^10.0.1
   build_runner: ^2.4.15
@@ -140,9 +141,8 @@ flutter:
 
 
 flutter_native_splash:
-  color: "#000000"
-  image: assets/images/app_icon.png
+  background_image: assets/images/splash_background_image.png
 
   android_12:
-    image: assets/images/app_icon.png
-    icon_background_color: "#000000"
+    image: assets/images/light_theme_android_12_splash.png
+    image_dark: assets/images/dark_theme_android_12_splash.png
