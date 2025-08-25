@@ -1,7 +1,7 @@
 import 'package:e_fashion_flutter/core/animations/slide_animation.dart';
 import 'package:e_fashion_flutter/core/widgets/third_button.dart';
-import 'package:e_fashion_flutter/features/home/cubit/home_cubit.dart';
-import 'package:e_fashion_flutter/features/home/cubit/home_state.dart';
+import 'package:e_fashion_flutter/features/home/cubit/home_cubit/home_cubit.dart';
+import 'package:e_fashion_flutter/features/home/cubit/home_cubit/home_state.dart';
 import 'package:e_fashion_flutter/features/home/screens/widgets/category/category_bloc_builder.dart';
 import 'package:e_fashion_flutter/features/home/screens/widgets/filter/filter_gender_section.dart';
 import 'package:flutter/material.dart';

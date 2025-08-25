@@ -1,7 +1,7 @@
 import 'package:e_fashion_flutter/core/enums/request_status.dart';
 import 'package:e_fashion_flutter/core/utils/app_constants.dart';
-import 'package:e_fashion_flutter/features/home/cubit/home_cubit.dart';
-import 'package:e_fashion_flutter/features/home/cubit/home_state.dart';
+import 'package:e_fashion_flutter/features/home/cubit/home_cubit/home_cubit.dart';
+import 'package:e_fashion_flutter/features/home/cubit/home_cubit/home_state.dart';
 import 'package:e_fashion_flutter/features/home/data/home/category_model.dart';
 import 'package:e_fashion_flutter/features/home/screens/widgets/category/category_container.dart';
 import 'package:flutter/material.dart';

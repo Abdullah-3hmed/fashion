@@ -1,6 +1,6 @@
 import 'package:e_fashion_flutter/core/utils/app_constants.dart';
-import 'package:e_fashion_flutter/features/home/cubit/home_cubit.dart';
-import 'package:e_fashion_flutter/features/home/cubit/home_state.dart';
+import 'package:e_fashion_flutter/features/home/cubit/home_cubit/home_cubit.dart';
+import 'package:e_fashion_flutter/features/home/cubit/home_cubit/home_state.dart';
 import 'package:e_fashion_flutter/features/home/data/home/category_model.dart';
 import 'package:e_fashion_flutter/features/home/screens/widgets/filter/filter_section_item.dart';
 import 'package:flutter/material.dart';

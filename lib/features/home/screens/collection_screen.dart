@@ -6,8 +6,10 @@ import 'package:e_fashion_flutter/core/enums/request_status.dart';
 import 'package:e_fashion_flutter/core/services/service_locator.dart';
 import 'package:e_fashion_flutter/core/utils/app_constants.dart';
 import 'package:e_fashion_flutter/core/widgets/secondary_button.dart';
-import 'package:e_fashion_flutter/features/home/cubit/home_cubit.dart';
-import 'package:e_fashion_flutter/features/home/cubit/home_state.dart';
+import 'package:e_fashion_flutter/features/home/cubit/collection_details_cubit/collection_details_cubit.dart';
+import 'package:e_fashion_flutter/features/home/cubit/collection_details_cubit/collection_details_state.dart';
+import 'package:e_fashion_flutter/features/home/cubit/home_cubit/home_cubit.dart';
+import 'package:e_fashion_flutter/features/home/cubit/home_cubit/home_state.dart';
 import 'package:e_fashion_flutter/features/home/data/home/collection_item_model.dart';
 import 'package:e_fashion_flutter/features/home/screens/widgets/collection/collection_container_clipper.dart';
 import 'package:e_fashion_flutter/features/home/screens/widgets/collection/collection_item.dart';
@@ -23,7 +25,7 @@ class CollectionScreen extends StatelessWidget implements AutoRouteWrapper {
   Widget wrappedRoute(BuildContext context) => BlocProvider(
     create:
         (context) =>
-            getIt<HomeCubit>()
+            getIt<CollectionDetailsCubit>()
               ..getCollectionDetails(collectionId: collectionId),
     child: this,
   );
@@ -49,7 +51,7 @@ class CollectionScreen extends StatelessWidget implements AutoRouteWrapper {
       appBar: AppBar(
         title: Text(title, style: Theme.of(context).textTheme.titleMedium),
       ),
-      body: BlocBuilder<HomeCubit, HomeState>(
+      body: BlocBuilder<CollectionDetailsCubit, CollectionDetailsState>(
         buildWhen:
             (previous, current) =>
                 previous.collectionDetailsStatus !=

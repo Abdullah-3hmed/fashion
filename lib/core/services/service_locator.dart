@@ -17,8 +17,9 @@ import 'package:e_fashion_flutter/features/cart/repo/cart_repo_impl.dart';
 import 'package:e_fashion_flutter/features/favourite/cubit/favorite_cubit.dart';
 import 'package:e_fashion_flutter/features/favourite/repos/favorite_repo.dart';
 import 'package:e_fashion_flutter/features/favourite/repos/favorite_repo_impl.dart';
-import 'package:e_fashion_flutter/features/home/cubit/home_cubit.dart';
-import 'package:e_fashion_flutter/features/home/cubit/product_details_cubit.dart';
+import 'package:e_fashion_flutter/features/home/cubit/collection_details_cubit/collection_details_cubit.dart';
+import 'package:e_fashion_flutter/features/home/cubit/home_cubit/home_cubit.dart';
+import 'package:e_fashion_flutter/features/home/cubit/product_details_cubit/product_details_cubit.dart';
 import 'package:e_fashion_flutter/features/home/repos/home_details_repo/home_details_repo.dart';
 import 'package:e_fashion_flutter/features/home/repos/home_details_repo/home_details_repo_impl.dart';
 import 'package:e_fashion_flutter/features/home/repos/home_repo/home_repo.dart';
@@ -76,6 +77,9 @@ class ServiceLocator {
     );
     getIt.registerFactory<ProductDetailsCubit>(
       () => ProductDetailsCubit(homeDetailsRepo: getIt<HomeDetailsRepo>()),
+    );
+    getIt.registerFactory<CollectionDetailsCubit>(
+          () => CollectionDetailsCubit(homeRepoImpl: getIt<HomeRepo>()),
     );
     getIt.registerLazySingleton<SearchRepo>(
       () => SearchRepo(dioHelper: getIt<DioHelper>()),

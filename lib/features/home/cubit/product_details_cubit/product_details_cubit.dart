@@ -1,5 +1,5 @@
 import 'package:e_fashion_flutter/core/enums/request_status.dart';
-import 'package:e_fashion_flutter/features/home/cubit/product_details_state.dart';
+import 'package:e_fashion_flutter/features/home/cubit/product_details_cubit/product_details_state.dart';
 import 'package:e_fashion_flutter/features/home/data/home_details/product_details_model.dart';
 import 'package:e_fashion_flutter/features/home/data/home_details/review_model.dart';
 import 'package:e_fashion_flutter/features/home/repos/home_details_repo/home_details_repo.dart';

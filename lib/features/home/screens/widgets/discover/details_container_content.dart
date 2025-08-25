@@ -1,10 +1,10 @@
 import 'package:e_fashion_flutter/core/enums/request_status.dart';
 import 'package:e_fashion_flutter/core/utils/app_constants.dart';
 import 'package:e_fashion_flutter/core/widgets/primary_button.dart';
-import 'package:e_fashion_flutter/features/home/cubit/home_cubit.dart';
-import 'package:e_fashion_flutter/features/home/cubit/home_state.dart';
-import 'package:e_fashion_flutter/features/home/cubit/product_details_cubit.dart';
-import 'package:e_fashion_flutter/features/home/cubit/product_details_state.dart';
+import 'package:e_fashion_flutter/features/home/cubit/home_cubit/home_cubit.dart';
+import 'package:e_fashion_flutter/features/home/cubit/home_cubit/home_state.dart';
+import 'package:e_fashion_flutter/features/home/cubit/product_details_cubit/product_details_cubit.dart';
+import 'package:e_fashion_flutter/features/home/cubit/product_details_cubit/product_details_state.dart';
 import 'package:e_fashion_flutter/features/home/data/home_details/product_details_model.dart';
 import 'package:e_fashion_flutter/features/home/screens/widgets/details/product_details.dart';
 import 'package:e_fashion_flutter/shared/widgets/colors_available.dart';

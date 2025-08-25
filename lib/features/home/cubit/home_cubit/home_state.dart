@@ -12,9 +12,6 @@ class HomeState extends Equatable {
   final List<CategoryModel> categories;
   final RequestStatus categoriesStatus;
   final String categoriesErrorMessage;
-  final CollectionDetailsModel collectionDetailsModel;
-  final RequestStatus collectionDetailsStatus;
-  final String collectionDetailsErrorMessage;
   final ProductsModel products;
   final RequestStatus productsState;
   final String productsErrorMessage;
@@ -31,9 +28,6 @@ class HomeState extends Equatable {
     this.categories = const [],
     this.categoriesStatus = RequestStatus.loading,
     this.categoriesErrorMessage = "",
-    this.collectionDetailsModel = CollectionDetailsModel.empty,
-    this.collectionDetailsStatus = RequestStatus.loading,
-    this.collectionDetailsErrorMessage = "",
     this.products = ProductsModel.empty,
     this.productsState = RequestStatus.initial,
     this.productsErrorMessage = "",
@@ -51,9 +45,6 @@ class HomeState extends Equatable {
     List<CategoryModel>? categories,
     RequestStatus? categoriesStatus,
     String? categoriesErrorMessage,
-    CollectionDetailsModel? collectionDetailsModel,
-    RequestStatus? collectionDetailsStatus,
-    String? collectionDetailsErrorMessage,
     ProductsModel? products,
     RequestStatus? productsState,
     String? productsErrorMessage,
@@ -72,12 +63,6 @@ class HomeState extends Equatable {
       categoriesStatus: categoriesStatus ?? this.categoriesStatus,
       categoriesErrorMessage:
       categoriesErrorMessage ?? this.categoriesErrorMessage,
-      collectionDetailsModel:
-      collectionDetailsModel ?? this.collectionDetailsModel,
-      collectionDetailsStatus:
-      collectionDetailsStatus ?? this.collectionDetailsStatus,
-      collectionDetailsErrorMessage:
-      collectionDetailsErrorMessage ?? this.collectionDetailsErrorMessage,
       products: products ?? this.products,
       productsState: productsState ?? this.productsState,
       selectedCategoryId: selectedCategoryId ?? this.selectedCategoryId,
@@ -99,9 +84,6 @@ class HomeState extends Equatable {
         categories,
         categoriesStatus,
         categoriesErrorMessage,
-        collectionDetailsModel,
-        collectionDetailsStatus,
-        collectionDetailsErrorMessage,
         products,
         productsState,
         productsErrorMessage,
