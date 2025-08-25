@@ -22,6 +22,7 @@ class DiscoverListItem extends StatelessWidget {
   final ProductModel product;
   final bool isFirstItem;
 
+
   @override
   Widget build(BuildContext context) {
     return InkWell(

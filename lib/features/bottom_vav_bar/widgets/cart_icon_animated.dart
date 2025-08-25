@@ -3,8 +3,13 @@ import 'package:iconsax/iconsax.dart';
 
 class CartIconAnimated extends StatefulWidget {
   final VoidCallback onTap;
+  final bool isSelected;
 
-  const CartIconAnimated({super.key, required this.onTap});
+  const CartIconAnimated({
+    super.key,
+    required this.onTap,
+    required this.isSelected,
+  });
 
   @override
   State<CartIconAnimated> createState() => CartIconAnimatedState();
@@ -46,7 +51,13 @@ class CartIconAnimatedState extends State<CartIconAnimated> {
       children: [
         IconButton(
           onPressed: widget.onTap,
-          icon: const Icon(Iconsax.bag_2, color: Colors.white),
+          icon: Icon(
+            Iconsax.bag_2,
+            color:
+                widget.isSelected
+                    ? Theme.of(context).colorScheme.primary
+                    : Colors.white,
+          ),
         ),
         ValueListenableBuilder<bool>(
           valueListenable: _showBadge,

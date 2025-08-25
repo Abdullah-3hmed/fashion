@@ -46,7 +46,7 @@ final GetIt getIt = GetIt.instance;
 class ServiceLocator {
   void init() {
     getIt.registerSingleton<AppRouter>(AppRouter());
-    getIt.registerLazySingleton<FcmHelper>(() => FcmHelper());
+    //getIt.registerLazySingleton<FcmHelper>(() => FcmHelper());
     getIt.registerLazySingleton<FlutterSecureStorage>(
       () => const FlutterSecureStorage(),
     );

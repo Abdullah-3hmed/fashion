@@ -102,7 +102,6 @@ class _ProductDetailsState extends State<ProductDetails> {
                     );
                   }
                   if (state.cartState.isSuccess) {
-                    context.pop();
                     showToast(
                       message: "Added to cart",
                       state: ToastStates.success,

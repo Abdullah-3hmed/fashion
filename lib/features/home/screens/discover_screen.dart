@@ -7,10 +7,9 @@ import 'package:solar_icons/solar_icons.dart';
 
 @RoutePage()
 class DiscoverScreen extends StatefulWidget {
-  const DiscoverScreen({super.key, required this.productsDiscoverList});
+  const DiscoverScreen({super.key, required this.productsDiscoverList,});
 
   final List<ProductModel> productsDiscoverList;
-
   @override
   State<DiscoverScreen> createState() => _DiscoverScreenState();
 }

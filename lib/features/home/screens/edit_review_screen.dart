@@ -60,8 +60,9 @@ class EditReviewScreen extends StatelessWidget implements AutoRouteWrapper {
               Row(
                 children: [
                   Container(
-                    width: 40.0,
-                    height: 40.0,
+                    width: 50.0,
+                    height: 50.0,
+                    clipBehavior: Clip.antiAliasWithSaveLayer,
                     decoration: const BoxDecoration(
                       shape: BoxShape.circle,
                     ),

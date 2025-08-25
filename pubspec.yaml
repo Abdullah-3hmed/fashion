@@ -56,7 +56,6 @@ dependencies:
   bloc: ^9.0.0
   firebase_core: ^3.15.2
   firebase_messaging: ^15.2.10
-  googleapis_auth: ^2.0.0
   awesome_notifications: ^0.10.1
   flutter_dotenv: ^5.2.1
   flutter_secure_storage: ^9.2.4
@@ -70,7 +69,6 @@ dependencies:
   google_maps_flutter: ^2.12.1
   location: ^8.0.0
   geocoding: ^3.0.0
-  redacted: ^1.0.13
   skeletonizer: ^2.0.1
   path_drawing: ^1.0.1
   dotted_dashed_line: ^0.0.3

@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:e_fashion_flutter/config/router/app_router.dart';
+import 'package:e_fashion_flutter/core/enums/request_status.dart';
 import 'package:e_fashion_flutter/core/notifications/fcm_init_helper.dart';
 import 'package:e_fashion_flutter/core/services/service_locator.dart';
 import 'package:e_fashion_flutter/core/utils/app_constants.dart';
@@ -62,12 +63,14 @@ class _LayoutScreenState extends State<LayoutScreen> {
                   listenWhen:
                       (prev, curr) =>
                           prev.cartMap.length != curr.cartMap.length &&
-                          prev.cartMap.length < curr.cartMap.length,
+                          prev.cartMap.length < curr.cartMap.length &&
+                          !curr.isFirstLoad,
                   listener: (context, state) {
                     cartIconKey.currentState?.triggerAnimation();
                   },
                   child: CartIconAnimated(
                     key: cartIconKey,
+                    isSelected: tabsRouter.activeIndex == 1,
                     onTap: () => tabsRouter.setActiveIndex(1),
                   ),
                 ),
@@ -102,5 +105,3 @@ class _LayoutScreenState extends State<LayoutScreen> {
     );
   }
 }
-
-

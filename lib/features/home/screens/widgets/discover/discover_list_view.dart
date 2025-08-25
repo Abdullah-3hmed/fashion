@@ -1,11 +1,11 @@
-
 import 'package:e_fashion_flutter/features/home/screens/widgets/discover/discover_list/discover_list_tem.dart';
 import 'package:e_fashion_flutter/shared/data/product_model.dart';
 import 'package:flutter/material.dart';
 
 class DiscoverListView extends StatelessWidget {
-  const DiscoverListView({super.key, required this.discoverList,});
-final List<ProductModel> discoverList ;
+  const DiscoverListView({super.key, required this.discoverList});
+
+  final List<ProductModel> discoverList;
 
   @override
   Widget build(BuildContext context) {

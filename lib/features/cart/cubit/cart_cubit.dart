@@ -25,11 +25,15 @@ class CartCubit extends Cubit<CartState> {
         ),
       ),
       (_) {
-        final updatedMap = Map<String, CartModel>.from(state.cartMap)
-          ..update(cartModel.productId, (_) => cartModel, ifAbsent: () => cartModel);
+        final updatedMap = Map<String, CartModel>.from(state.cartMap)..update(
+          cartModel.productId,
+          (_) => cartModel,
+          ifAbsent: () => cartModel,
+        );
         emit(
           state.copyWith(
             cartState: RequestStatus.success,
+            isFirstLoad: false,
             cartMap: updatedMap,
           ),
         );

@@ -29,11 +29,11 @@ class PaymentCardHeader extends StatelessWidget {
           ).textTheme.titleSmall!.copyWith(color: Colors.black),
         ),
         const SizedBox(height: 18.0),
-        Stack(
+        const Stack(
           alignment: AlignmentDirectional.center,
           clipBehavior: Clip.none,
           children: [
-            const Row(
+            Row(
               mainAxisSize: MainAxisSize.min,
               children: [
                 Expanded(
@@ -53,14 +53,14 @@ class PaymentCardHeader extends StatelessWidget {
               start: -16.0,
               child: CircleAvatar(
                 radius: 16.0,
-                backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+                backgroundColor: Colors.black,
               ),
             ),
             PositionedDirectional(
               end: -16.0,
               child: CircleAvatar(
                 radius: 16.0,
-                backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+                backgroundColor: Colors.black,
               ),
             ),
           ],

@@ -39,7 +39,7 @@ The repository applies **Bloc Architecture + Repository Pattern** packaging by F
 
 ### Favorites
 - Save favorite product
-- Remove favorite product
+- Remove products from product list
 
 ### Cart
 - Add to cart
@@ -72,7 +72,6 @@ Before running the app, ensure you have:
 
 - Android Studio (2022.2.1 or higher) or VS Code
 - Flutter 3.13 & Dart 3.0.6 or higher
-- [E-Fashion BackEnd Repository](https://github.com/Bit-Camp-IO/E-Fashion-BackEnd)
 
 ---
 
@@ -120,7 +119,6 @@ Before running the app, ensure you have:
 - flutter_rating_bar
 - easy_stepper
 - iconsax
-- percent_indicator
 - syncfusion_flutter_sliders
 - intl
 - dio
@@ -131,7 +129,6 @@ Before running the app, ensure you have:
 - bloc
 - firebase_core
 - firebase_messaging
-- googleapis_auth
 - awesome_notifications
 - flutter_dotenv
 - flutter_secure_storage
@@ -145,7 +142,6 @@ Before running the app, ensure you have:
 - google_maps_flutter
 - location
 - geocoding
-- redacted
 - skeletonizer
 - path_drawing
 - dotted_dashed_line

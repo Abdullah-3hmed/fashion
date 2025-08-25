@@ -50,12 +50,12 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
             ),
           ),
           DraggableScrollableSheet(
-            initialChildSize: 0.47,
+            initialChildSize: 0.53,
             minChildSize: 0.47,
             builder: (context, scrollController) {
               return NotificationListener<DraggableScrollableNotification>(
                 onNotification: (notification) {
-                  final newIsClipped = notification.extent < 0.65;
+                  final newIsClipped = notification.extent < 0.5;
                   if (newIsClipped != isClipped.value) {
                     isClipped.value = newIsClipped;
                   }
