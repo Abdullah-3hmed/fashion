@@ -2,19 +2,29 @@ import 'package:auto_route/auto_route.dart';
 import 'package:e_fashion_flutter/config/router/app_router.dart';
 import 'package:e_fashion_flutter/core/enums/request_status.dart';
 import 'package:e_fashion_flutter/core/payment/payment_manager.dart';
+import 'package:e_fashion_flutter/core/services/service_locator.dart';
 import 'package:e_fashion_flutter/core/utils/app_constants.dart';
+import 'package:e_fashion_flutter/core/utils/show_toast.dart';
+import 'package:e_fashion_flutter/core/utils/toast_states.dart';
 import 'package:e_fashion_flutter/core/widgets/primary_button.dart';
-import 'package:e_fashion_flutter/features/cart/cubit/cart_cubit.dart';
-import 'package:e_fashion_flutter/features/cart/cubit/cart_state.dart';
-import 'package:e_fashion_flutter/features/cart/data/cart_model.dart';
+import 'package:e_fashion_flutter/features/cart/cubit/cart_cubt/cart_cubit.dart';
+import 'package:e_fashion_flutter/features/cart/cubit/cart_cubt/cart_state.dart';
+import 'package:e_fashion_flutter/features/cart/cubit/payment_cubit/payment_cubit.dart';
+import 'package:e_fashion_flutter/features/cart/cubit/payment_cubit/payment_state.dart';
+import 'package:e_fashion_flutter/features/cart/data/cart/cart_model.dart';
+import 'package:e_fashion_flutter/features/cart/data/payment/payment_model.dart';
 import 'package:e_fashion_flutter/features/cart/screens/widgets/cart_item.dart';
 import 'package:e_fashion_flutter/features/cart/screens/widgets/no_items_in_cart.dart';
+import 'package:e_fashion_flutter/features/profile/cubit/user_cubit/user_cubit.dart';
+import 'package:e_fashion_flutter/features/profile/data/user/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:skeletonizer/skeletonizer.dart';
+import 'package:url_launcher/url_launcher.dart';
 
-class CartItemsList extends StatelessWidget {
+class CartItemsList extends StatelessWidget   {
   const CartItemsList({super.key});
+
 
   static const CartModel dummyCartModel = CartModel(
     size: "**",
@@ -33,7 +43,9 @@ class CartItemsList extends StatelessWidget {
         Expanded(
           child: BlocBuilder<CartCubit, CartState>(
             buildWhen:
-                (previous, current) => previous.cartState != current.cartState || previous.cartMap != current.cartMap,
+                (previous, current) =>
+                    previous.cartState != current.cartState ||
+                    previous.cartMap != current.cartMap,
             builder: (context, state) {
               switch (state.cartState) {
                 case RequestStatus.loading:
@@ -74,24 +86,63 @@ class CartItemsList extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 8.0),
-        PrimaryButton(
-          onPressed: () {
-            //await PaymentManager.payWithPaymob(context, 200);
-            context.pushRoute(const PaymentSuccessRoute());
+        BlocConsumer<PaymentCubit, PaymentState>(
+          listenWhen:
+              (previous, current) =>
+                  previous.paymentState != current.paymentState,
+          listener: (context, state)async {
+            if (state.paymentState.isSuccess) {
+                await launchUrl(Uri.parse(state.paymentToken));
+            }
+            if (state.paymentState.isError) {
+              showToast(
+                message: state.paymentErrorMessage,
+                state: ToastStates.error,
+              );
+            }
           },
-          text: "Checkout",
+          buildWhen:
+              (previous, current) =>
+                  previous.paymentState != current.paymentState,
+          builder: (context, state) {
+            return PrimaryButton(
+              isLoading: state.paymentState.isLoading,
+              onPressed: () async {
+                await _pay(context);
+              },
+              text: "Checkout",
+            );
+          },
         ),
         const SizedBox(height: 140.0),
       ],
     );
   }
 
+  Future<void> _pay(BuildContext context) async {
+    if (context.read<CartCubit>().state.cartMap.isNotEmpty) {
+      final UserModel userModel = context.read<UserCubit>().state.userModel;
+      final parts = userModel.userName.trim().split(" ");
+      final firstName = parts.isNotEmpty ? parts[0] : "N/A";
+      final lastName = parts.length > 1 ? parts.sublist(1).join(" ") : "N/A";
+      PaymentModel paymentModel = PaymentModel(
+        amount: context.read<CartCubit>().state.totalPrice.toInt(),
+        firstName: firstName,
+        lastName: lastName,
+        email: userModel.email,
+        phoneNumber: userModel.phone,
+      );
+      await context.read<PaymentCubit>().payWithPaymobCart(
+        paymentModel: paymentModel,
+      );
+    }
+  }
+
   ListView _buildCartList(CartState state) {
     final cartItems = state.cartMap.values.toList();
     return ListView.separated(
       physics: const BouncingScrollPhysics(),
-      itemBuilder:
-          (context, index) => CartItem(cartModel: cartItems[index]),
+      itemBuilder: (context, index) => CartItem(cartModel: cartItems[index]),
       separatorBuilder: (_, __) => const SizedBox(height: 8.0),
       itemCount: cartItems.length,
     );

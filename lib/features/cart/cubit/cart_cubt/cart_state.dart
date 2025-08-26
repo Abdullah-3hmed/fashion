@@ -1,5 +1,5 @@
 import 'package:e_fashion_flutter/core/enums/request_status.dart';
-import 'package:e_fashion_flutter/features/cart/data/cart_model.dart';
+import 'package:e_fashion_flutter/features/cart/data/cart/cart_model.dart';
 import 'package:equatable/equatable.dart';
 
 class CartState extends Equatable {

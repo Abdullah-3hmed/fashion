@@ -45,7 +45,6 @@ dependencies:
   flutter_rating_bar: ^4.0.1
   easy_stepper: ^0.8.5+1
   iconsax: ^0.0.8
-  percent_indicator: ^4.2.5
   syncfusion_flutter_sliders: ^29.1.38
   intl: ^0.20.2
   dio: ^5.8.0+1
@@ -65,7 +64,6 @@ dependencies:
   hydrated_bloc: ^10.0.0
   path_provider: ^2.1.5
   image_picker: ^1.1.2
-  multi_payment_gateway: ^0.0.3
   google_maps_flutter: ^2.12.1
   location: ^8.0.0
   geocoding: ^3.0.0
@@ -78,6 +76,7 @@ dependencies:
   flutter_native_splash: ^2.4.6
   internet_connection_checker_plus: ^2.7.2
   signalr_netcore: ^1.4.3
+  url_launcher: ^6.3.2
 
 
 

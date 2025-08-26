@@ -41,7 +41,7 @@ class FcmInitHelper {
         channelKey: 'fcm_channel',
         title: message.notification?.title ?? 'No title',
         body: message.notification?.body ?? 'No body',
-        payload: {},
+        payload: {"type": message.notification?.title},
       ),
     );
   }
@@ -51,6 +51,7 @@ class FcmInitHelper {
       onActionReceivedMethod: NotificationController.onActionReceivedMethod,
     );
   }
+
   static Future<void> initFirebaseMessagingListeners() async {
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       debugPrint("📩 Foreground message: ${message.data}");
@@ -65,9 +66,10 @@ class FcmInitHelper {
       await navigateToChat();
     });
   }
- static Future<void> handleInitialMessage() async {
+
+  static Future<void> handleInitialMessage() async {
     final RemoteMessage? message =
-    await FcmInitHelper.firebaseMessaging.getInitialMessage();
+        await FcmInitHelper.firebaseMessaging.getInitialMessage();
     if (message != null) {
       await getIt<AppRouter>().replaceAll([
         const AuthenticatedRoute(children: [LayoutRoute()]),

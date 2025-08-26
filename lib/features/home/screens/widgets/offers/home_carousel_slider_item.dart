@@ -3,7 +3,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:e_fashion_flutter/config/router/app_router.dart';
 import 'package:e_fashion_flutter/core/widgets/custom_cached_network_image.dart';
 import 'package:e_fashion_flutter/core/widgets/modal_bottom_sheet_content.dart';
-import 'package:e_fashion_flutter/features/cart/cubit/cart_cubit.dart';
+import 'package:e_fashion_flutter/features/cart/cubit/cart_cubt/cart_cubit.dart';
 import 'package:e_fashion_flutter/features/favourite/cubit/favorite_cubit.dart';
 import 'package:e_fashion_flutter/features/home/screens/widgets/offers/home_clipped_container.dart';
 import 'package:e_fashion_flutter/shared/data/bottom_sheet_model.dart';

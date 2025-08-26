@@ -35,9 +35,7 @@ class _ChatSupportScreenState extends State<ChatSupportScreen> {
     controller = TextEditingController();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (mounted) {
-        context.read<ChatCubit>()
-          ..clearMessage()
-          ..getChatHistory(receiverId: widget.receiverId);
+        context.read<ChatCubit>().getChatHistory(receiverId: widget.receiverId);
       }
     });
     super.initState();

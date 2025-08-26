@@ -22,6 +22,7 @@ class ChatCubit extends Cubit<ChatState> {
     required String receiverId,
   }) async {
     if (state.messages.isNotEmpty ) return;
+    emit(state.copyWith(getChatHistoryState: RequestStatus.loading));
     final result = await chatRepo.getChatHistory(receiverId: receiverId,);
     result.fold(
       (failure) => emit(
@@ -81,9 +82,5 @@ class ChatCubit extends Cubit<ChatState> {
         emit(state.copyWith(sendMessageState: RequestStatus.success));
       },
     );
-  }
-
-  void clearMessage() {
-    emit(state.copyWith(messages: []));
   }
 }

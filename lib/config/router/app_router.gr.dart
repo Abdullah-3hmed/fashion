@@ -69,7 +69,7 @@ class CartRoute extends PageRouteInfo<void> {
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      return const CartScreen();
+      return WrappedRoute(child: const CartScreen());
     },
   );
 }

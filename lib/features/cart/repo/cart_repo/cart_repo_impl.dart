@@ -6,8 +6,8 @@ import 'package:e_fashion_flutter/core/error/server_exception.dart';
 import 'package:e_fashion_flutter/core/network/api_constants.dart';
 import 'package:e_fashion_flutter/core/network/dio_helper.dart';
 import 'package:e_fashion_flutter/core/utils/app_constants.dart';
-import 'package:e_fashion_flutter/features/cart/data/cart_model.dart';
-import 'package:e_fashion_flutter/features/cart/repo/cart_repo.dart';
+import 'package:e_fashion_flutter/features/cart/data/cart/cart_model.dart';
+import 'package:e_fashion_flutter/features/cart/repo/cart_repo/cart_repo.dart';
 
 class CartRepoImpl implements CartRepo {
   final DioHelper dioHelper;

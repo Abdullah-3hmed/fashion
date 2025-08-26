@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:e_fashion_flutter/core/error/failures.dart';
-import 'package:e_fashion_flutter/features/cart/data/cart_model.dart';
+import 'package:e_fashion_flutter/features/cart/data/cart/cart_model.dart';
 
 abstract class CartRepo {
   Future<Either<Failure, void>> addToCart({

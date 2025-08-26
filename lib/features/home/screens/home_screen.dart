@@ -2,7 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:e_fashion_flutter/core/services/service_locator.dart';
 import 'package:e_fashion_flutter/core/utils/app_constants.dart';
 import 'package:e_fashion_flutter/core/widgets/no_internet_widget.dart';
-import 'package:e_fashion_flutter/features/cart/cubit/cart_cubit.dart';
+import 'package:e_fashion_flutter/features/cart/cubit/cart_cubt/cart_cubit.dart';
 import 'package:e_fashion_flutter/features/favourite/cubit/favorite_cubit.dart';
 import 'package:e_fashion_flutter/features/home/cubit/home_cubit/home_cubit.dart';
 import 'package:e_fashion_flutter/features/home/cubit/home_cubit/home_state.dart';
