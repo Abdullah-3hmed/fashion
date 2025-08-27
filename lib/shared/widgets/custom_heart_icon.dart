@@ -13,9 +13,7 @@ class CustomHeartIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocSelector<FavoriteCubit, FavoriteState, bool>(
-      selector: (state) {
-        return state.inFavorites.contains(productModel.id);
-      },
+      selector: (state) => state.favorites.containsKey(productModel.id),
       builder: (context, inFavorites) {
         return GestureDetector(
           onTap: () async {
@@ -23,9 +21,15 @@ class CustomHeartIcon extends StatelessWidget {
               favoriteModel: productModel.toFavoriteModel(),
             );
           },
-          child: Icon(
-            inFavorites ? SolarIconsBold.heart : SolarIconsOutline.heart,
-            color: Theme.of(context).colorScheme.primary,
+          child: AnimatedSwitcher(
+            duration: const Duration(milliseconds: 300),
+            transitionBuilder: (child, anim) =>
+                ScaleTransition(scale: anim, child: child),
+            child: Icon(
+              inFavorites ? SolarIconsBold.heart : SolarIconsOutline.heart,
+              key: ValueKey(inFavorites),
+              color: Theme.of(context).colorScheme.primary,
+            ),
           ),
         );
       },

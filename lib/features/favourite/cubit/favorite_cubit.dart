@@ -12,28 +12,22 @@ class FavoriteCubit extends Cubit<FavoriteState> {
   Future<void> addAndRemoveFavorite({
     required FavoriteModel favoriteModel,
   }) async {
-    final Set<String> oldInFavorites = {...state.inFavorites};
-    final Set<String> inFavorites = {...state.inFavorites};
-    final Map<String, FavoriteModel> oldFavorites = {...state.favorites};
+    final FavoriteState oldState = state;
     final Map<String, FavoriteModel> favorites = {...state.favorites};
-    if (inFavorites.contains(favoriteModel.id)) {
-      inFavorites.remove(favoriteModel.id);
+    if (favorites.containsKey(favoriteModel.id)) {
       favorites.remove(favoriteModel.id);
     } else {
-      inFavorites.add(favoriteModel.id);
       favorites.putIfAbsent(favoriteModel.id, () => favoriteModel);
     }
-    emit(state.copyWith(inFavorites: inFavorites, favorites: favorites));
+    emit(state.copyWith(favorites: favorites));
     final result = await favoriteRepo.addAndRemoveToFavorite(
       productId: favoriteModel.id,
     );
     result.fold(
       (failure) => emit(
-        state.copyWith(
+        oldState.copyWith(
           favoriteErrorMessage: failure.errorMessage,
           favoriteState: RequestStatus.error,
-          inFavorites: oldInFavorites,
-          favorites: oldFavorites,
         ),
       ),
       (_) {
@@ -53,18 +47,22 @@ class FavoriteCubit extends Cubit<FavoriteState> {
         ),
       ),
       (favorites) {
-        final Set<String> favoriteIds = favorites.map((e) => e.id).toSet();
-        final Map<String, FavoriteModel> favoritesMap = {
-          for (var item in favorites) item.id: item,
-        };
         emit(
           state.copyWith(
-            favorites: favoritesMap,
+            favorites: _generateFavoritesMap(favorites),
             favoriteState: RequestStatus.success,
-            inFavorites: favoriteIds,
           ),
         );
       },
     );
+  }
+
+  Map<String, FavoriteModel> _generateFavoritesMap(
+    List<FavoriteModel> favorites,
+  ) {
+    final Map<String, FavoriteModel> favoritesMap = {
+      for (var item in favorites) item.id: item,
+    };
+    return favoritesMap;
   }
 }

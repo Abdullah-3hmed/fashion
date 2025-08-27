@@ -6,26 +6,22 @@ class FavoriteState extends Equatable {
   final RequestStatus favoriteState;
   final String favoriteErrorMessage;
   final Map<String, FavoriteModel> favorites;
-  final Set<String> inFavorites;
 
   const FavoriteState({
     this.favoriteState = RequestStatus.initial,
     this.favoriteErrorMessage = "",
     this.favorites = const {},
-    this.inFavorites = const {},
   });
 
   FavoriteState copyWith({
     RequestStatus? favoriteState,
     String? favoriteErrorMessage,
     Map<String, FavoriteModel>? favorites,
-    Set<String>? inFavorites,
   }) {
     return FavoriteState(
       favoriteState: favoriteState ?? this.favoriteState,
       favoriteErrorMessage: favoriteErrorMessage ?? this.favoriteErrorMessage,
       favorites: favorites ?? this.favorites,
-      inFavorites: inFavorites ?? this.inFavorites,
     );
   }
 
@@ -34,6 +30,5 @@ class FavoriteState extends Equatable {
     favoriteState,
     favoriteErrorMessage,
     favorites,
-    inFavorites,
   ];
 }

@@ -40,7 +40,7 @@ class FavoriteGridView extends StatelessWidget {
       buildWhen:
           (pre, cur) =>
               pre.favoriteState != cur.favoriteState ||
-              pre.inFavorites != cur.inFavorites,
+              pre.favorites != cur.favorites,
       builder: (context, state) {
         switch (state.favoriteState) {
           case RequestStatus.loading:
