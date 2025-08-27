@@ -11,7 +11,7 @@ import 'package:e_fashion_flutter/features/admin/cubit/admin_cubit.dart';
 import 'package:e_fashion_flutter/features/auth/cubit/auth_cubit.dart';
 import 'package:e_fashion_flutter/features/auth/repos/auth_repo.dart';
 import 'package:e_fashion_flutter/features/auth/repos/auth_repo_impl.dart';
-import 'package:e_fashion_flutter/features/cart/cubit/cart_cubt/cart_cubit.dart';
+import 'package:e_fashion_flutter/features/cart/cubit/cart_cubit/cart_cubit.dart';
 import 'package:e_fashion_flutter/features/cart/cubit/payment_cubit/payment_cubit.dart';
 import 'package:e_fashion_flutter/features/cart/repo/cart_repo/cart_repo.dart';
 import 'package:e_fashion_flutter/features/cart/repo/cart_repo/cart_repo_impl.dart';

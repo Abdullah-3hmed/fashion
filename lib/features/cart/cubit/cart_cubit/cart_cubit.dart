@@ -1,5 +1,5 @@
 import 'package:e_fashion_flutter/core/enums/request_status.dart';
-import 'package:e_fashion_flutter/features/cart/cubit/cart_cubt/cart_state.dart';
+import 'package:e_fashion_flutter/features/cart/cubit/cart_cubit/cart_state.dart';
 import 'package:e_fashion_flutter/features/cart/data/cart/cart_model.dart';
 import 'package:e_fashion_flutter/features/cart/repo/cart_repo/cart_repo.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -25,7 +25,7 @@ class CartCubit extends Cubit<CartState> {
         ),
       ),
       (_) {
-        final updatedMap = Map<String, CartModel>.from(state.cartMap)..update(
+        final updatedMap = {...state.cartMap}..update(
           cartModel.productId,
           (_) => cartModel,
           ifAbsent: () => cartModel,
@@ -61,74 +61,65 @@ class CartCubit extends Cubit<CartState> {
   }
 
   Future<void> incrementQuantity(int quantity, String productId) async {
-    final CartModel? updatedItem = state.cartMap[productId]?.copyWith(quantity: quantity);
+    final CartModel? updatedItem = state.cartMap[productId]?.copyWith(
+      quantity: quantity,
+    );
     if (updatedItem == null) return;
 
-    final updatedMap = Map<String, CartModel>.of(state.cartMap)
-      ..[productId] = updatedItem;
+    final updatedMap = {...state.cartMap}..[productId] = updatedItem;
 
-    emit(
-      state.copyWith(
-        cartMap: updatedMap,
-      ),
-    );
+    emit(state.copyWith(cartMap: updatedMap));
 
     final result = await cartRepo.incrementQuantity(productId: productId);
     result.fold(
-          (failure) => emit(
+      (failure) => emit(
         state.copyWith(
           changeQuantityState: RequestStatus.error,
           cartErrorMessage: failure.errorMessage,
         ),
       ),
-          (success) => null,
+      (success) => null,
     );
   }
 
   Future<void> decrementQuantity(int quantity, String productId) async {
-    final CartModel? updatedItem = state.cartMap[productId]?.copyWith(quantity: quantity);
+    final CartModel? updatedItem = state.cartMap[productId]?.copyWith(
+      quantity: quantity,
+    );
     if (updatedItem == null) return;
 
-    final updatedMap = Map<String, CartModel>.of(state.cartMap)
-      ..[productId] = updatedItem;
+    final updatedMap = {...state.cartMap}..[productId] = updatedItem;
 
-    emit(
-      state.copyWith(
-        cartMap: updatedMap,
-      ),
-    );
+    emit(state.copyWith(cartMap: updatedMap));
 
     final result = await cartRepo.decrementQuantity(productId: productId);
     result.fold(
-          (failure) => emit(
+      (failure) => emit(
         state.copyWith(
           changeQuantityState: RequestStatus.error,
           cartErrorMessage: failure.errorMessage,
         ),
       ),
-          (success) => null,
+      (success) => null,
     );
   }
-
-
 
   Map<String, CartModel> _generateCartMap(List<CartModel> items) => {
     for (var item in items) item.productId: item,
   };
 
   Future<void> deleteFromCart({required String productId}) async {
-    final previousMap = Map<String, CartModel>.from(state.cartMap);
+    final CartState oldState = state;
     final updatedMap = Map<String, CartModel>.from(state.cartMap)
       ..remove(productId);
 
-    emit(state.copyWith(cartMap: updatedMap, cartState: RequestStatus.success));
+    emit(state.copyWith(cartMap: updatedMap));
 
     final result = await cartRepo.deleteFromCart(productId: productId);
 
     result.fold((failure) {
       emit(
-        state.copyWith(
-          cartMap: previousMap,
+        oldState.copyWith(
           cartState: RequestStatus.error,
           cartErrorMessage: failure.errorMessage,
         ),

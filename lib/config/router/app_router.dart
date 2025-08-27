@@ -9,7 +9,7 @@ import 'package:e_fashion_flutter/features/auth/screens/login_screen.dart';
 import 'package:e_fashion_flutter/features/auth/screens/reset_password_screen.dart';
 import 'package:e_fashion_flutter/features/auth/screens/sign_up_screen.dart';
 import 'package:e_fashion_flutter/features/bottom_vav_bar/layout_screen.dart';
-import 'package:e_fashion_flutter/features/cart/cubit/cart_cubt/cart_cubit.dart';
+import 'package:e_fashion_flutter/features/cart/cubit/cart_cubit/cart_cubit.dart';
 import 'package:e_fashion_flutter/features/cart/screens/cart_screen.dart';
 import 'package:e_fashion_flutter/features/cart/screens/payment_success_screen.dart';
 import 'package:e_fashion_flutter/features/favourite/cubit/favorite_cubit.dart';
