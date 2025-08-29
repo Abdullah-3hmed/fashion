@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
+import 'package:e_fashion_flutter/core/network/api_constants.dart';
 import 'package:e_fashion_flutter/core/network/custom_interceptors.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 class DioHelper {
@@ -8,7 +8,7 @@ class DioHelper {
 
   static void init() {
     BaseOptions options = BaseOptions(
-      baseUrl: dotenv.env["API_URL"]!,
+      baseUrl: ApiConstants.baseUrl,
       headers: {
         "Content-Type": "application/json",
       },

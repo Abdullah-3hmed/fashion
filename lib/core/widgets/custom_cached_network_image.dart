@@ -17,7 +17,10 @@ class CustomCachedNetworkImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CachedNetworkImage(
-      imageUrl: imageUrl.isEmpty ? "https://cdn-icons-png.flaticon.com/512/149/149071.png" : imageUrl,
+      imageUrl:
+          imageUrl.isEmpty
+              ? "https://drive.google.com/file/d/1oLoHL2ZYpm0KFwpRWmb2y-g6QGvTKbNi/view?usp=sharing"
+              : imageUrl,
       width: width ?? double.infinity,
       height: height ?? double.infinity,
       fit: BoxFit.cover,

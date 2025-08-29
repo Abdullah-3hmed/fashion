@@ -2,7 +2,6 @@ import 'dart:developer';
 
 import 'package:e_fashion_flutter/core/network/api_constants.dart';
 import 'package:e_fashion_flutter/core/utils/app_constants.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:signalr_netcore/signalr_client.dart';
 
 class ConnectionsService {

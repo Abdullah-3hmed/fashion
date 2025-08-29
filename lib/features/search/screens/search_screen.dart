@@ -34,7 +34,7 @@ class _SearchScreenState extends State<SearchScreen> {
     (index) => const ProductModel(
       colors: "",
       sizes: "",
-      title: "****",
+      title: "*************",
       id: "****",
       discountPrice:  0.0,
       basePrice: 0.0,

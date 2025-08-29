@@ -112,6 +112,7 @@ class HomeCarouselSliderItem extends StatelessWidget {
                     (_) => BlocProvider.value(
                       value: context.read<CartCubit>(),
                       child: ModalBottomSheetContent(
+                        isBottomNav: true,
                         bottomSheetModel: BottomSheetModel.fromProduct(
                           offerModel,
                         ),

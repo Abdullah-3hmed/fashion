@@ -42,57 +42,7 @@ class DetailsContainerContent extends StatelessWidget {
       builder: (context, state) {
         switch (state.productDetailsState) {
           case RequestStatus.loading:
-            return Skeletonizer(
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SizedBox(height: 30.0),
-                    CircleAvatar(
-                      backgroundColor: Theme.of(context).colorScheme.primary,
-                      radius: 24.0,
-                      child: Icon(
-                        Icons.arrow_back,
-                        color: Theme.of(context).colorScheme.onPrimary,
-                      ),
-                    ),
-                    const SizedBox(height: 24.0),
-                    Text(
-                      dummyProductDetailsModel.title,
-                      style: Theme.of(context).textTheme.titleMedium,
-                    ),
-                    Text(
-                      r"$"
-                      "${dummyProductDetailsModel.price}",
-                      style: Theme.of(context).textTheme.bodyLarge,
-                    ),
-                    const SizedBox(height: 24.0),
-                    ColorsAvailable(
-                        colors: const [],
-                      onColorChanged: (color) => debugPrint(color.toString()),
-                    ),
-                    PiecesAvailable(
-                      onPiecesChanged: (int value) {
-                        debugPrint(value.toString());
-                      },
-                    ),
-                    Text(
-                      "**********",
-                      style: Theme.of(context).textTheme.bodySmall,
-                    ),
-                    const SizedBox(height: 24.0),
-                    PrimaryButton(
-                      icon: Icon(
-                        Iconsax.bag_2,
-                        color: Theme.of(context).colorScheme.onPrimary,
-                      ),
-                      onPressed: () {},
-                      text: "Add to bag",
-                    ),
-                  ],
-                ),
-              ),
-            );
+            return _buildLoadingState(context);
           case RequestStatus.success:
             return ProductDetails(
               controller: controller,
@@ -109,6 +59,60 @@ class DetailsContainerContent extends StatelessWidget {
             return const SizedBox.shrink();
         }
       },
+    );
+  }
+
+  Skeletonizer _buildLoadingState(BuildContext context) {
+     return Skeletonizer(
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(height: 30.0),
+            CircleAvatar(
+              backgroundColor: Theme.of(context).colorScheme.primary,
+              radius: 24.0,
+              child: Icon(
+                Icons.arrow_back,
+                color: Theme.of(context).colorScheme.onPrimary,
+              ),
+            ),
+            const SizedBox(height: 24.0),
+            Text(
+              dummyProductDetailsModel.title,
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
+            Text(
+              r"$"
+              "${dummyProductDetailsModel.price}",
+              style: Theme.of(context).textTheme.bodyLarge,
+            ),
+            const SizedBox(height: 24.0),
+            ColorsAvailable(
+                colors: const [],
+              onColorChanged: (color) => debugPrint(color.toString()),
+            ),
+            PiecesAvailable(
+              onPiecesChanged: (int value) {
+                debugPrint(value.toString());
+              },
+            ),
+            Text(
+              "**********",
+              style: Theme.of(context).textTheme.bodySmall,
+            ),
+            const SizedBox(height: 24.0),
+            PrimaryButton(
+              icon: Icon(
+                Iconsax.bag_2,
+                color: Theme.of(context).colorScheme.onPrimary,
+              ),
+              onPressed: () {},
+              text: "Add to bag",
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

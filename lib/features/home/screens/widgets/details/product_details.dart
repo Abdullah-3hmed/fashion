@@ -90,52 +90,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                 style: Theme.of(context).textTheme.bodySmall,
               ),
               const SizedBox(height: 24.0),
-              BlocConsumer<CartCubit, CartState>(
-                listenWhen:
-                    (previous, current) =>
-                        previous.cartState != current.cartState,
-                listener: (context, state) {
-                  if (state.cartState.isError) {
-                    showToast(
-                      message: state.cartErrorMessage,
-                      state: ToastStates.error,
-                    );
-                  }
-                  if (state.cartState.isSuccess) {
-                    showToast(
-                      message: "Added to cart",
-                      state: ToastStates.success,
-                    );
-                  }
-                },
-                buildWhen:
-                    (previous, current) =>
-                        previous.cartState != current.cartState,
-                builder: (context, state) {
-                  return PrimaryButton(
-                    isLoading: state.cartState.isLoading,
-                    icon: Icon(
-                      Iconsax.bag_2,
-                      color: Theme.of(context).colorScheme.onPrimary,
-                    ),
-                    onPressed: () async {
-                      CartModel cartModel = CartModel(
-                        productId: widget.productDetailsModel.id,
-                        name: widget.productDetailsModel.title,
-                        price: widget.productDetailsModel.price,
-                        imageUrl: widget.productDetailsModel.imageUrl,
-                        color: selectedColor,
-                        size: selectedSize,
-                        quantity: pieces,
-                      );
-                      await context.read<CartCubit>().addToCart(
-                        cartModel: cartModel,
-                      );
-                    },
-                    text: "Add to bag",
-                  );
-                },
-              ),
+              _buildBlocConsumer(),
               const SizedBox(height: 24.0),
               Text(
                 "Rate this product",
@@ -153,5 +108,54 @@ class _ProductDetailsState extends State<ProductDetails> {
         ),
       ],
     );
+  }
+
+  BlocConsumer<CartCubit, CartState> _buildBlocConsumer() {
+    return BlocConsumer<CartCubit, CartState>(
+              listenWhen:
+                  (previous, current) =>
+                      previous.cartState != current.cartState,
+              listener: (context, state) {
+                if (state.cartState.isError) {
+                  showToast(
+                    message: state.cartErrorMessage,
+                    state: ToastStates.error,
+                  );
+                }
+                if (state.cartState.isSuccess) {
+                  showToast(
+                    message: "Added to cart",
+                    state: ToastStates.success,
+                  );
+                }
+              },
+              buildWhen:
+                  (previous, current) =>
+                      previous.cartState != current.cartState,
+              builder: (context, state) {
+                return PrimaryButton(
+                  isLoading: state.cartState.isLoading,
+                  icon: Icon(
+                    Iconsax.bag_2,
+                    color: Theme.of(context).colorScheme.onPrimary,
+                  ),
+                  onPressed: () async {
+                    CartModel cartModel = CartModel(
+                      productId: widget.productDetailsModel.id,
+                      name: widget.productDetailsModel.title,
+                      price: widget.productDetailsModel.price,
+                      imageUrl: widget.productDetailsModel.imageUrl,
+                      color: selectedColor,
+                      size: selectedSize,
+                      quantity: pieces,
+                    );
+                    await context.read<CartCubit>().addToCart(
+                      cartModel: cartModel,
+                    );
+                  },
+                  text: "Add to bag",
+                );
+              },
+            );
   }
 }

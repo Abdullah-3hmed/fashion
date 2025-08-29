@@ -37,13 +37,14 @@ class RatingSection extends StatelessWidget {
             context.read<ProductDetailsCubit>().rateProduct(rate: newRating);
             DateTime today = DateTime.now();
             String formattedDate = DateFormat('yyyy-M-d').format(today);
+            final userModel = context.read<UserCubit>().state.userModel;
             ReviewModel reviewModel = ReviewModel(
               reviewId: "",
               review: "",
               rate: newRating.toInt(),
               productId: productDetailsModel.id,
-              imageUrl: context.read<UserCubit>().state.userModel.profileImage,
-              name: "Abdullah",
+              imageUrl: userModel.profileImage,
+              name: userModel.userName,
               createdAt: formattedDate,
             );
             await context.read<ProductDetailsCubit>().addReview(

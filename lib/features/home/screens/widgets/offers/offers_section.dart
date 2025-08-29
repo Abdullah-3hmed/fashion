@@ -60,17 +60,7 @@ class OffersSection extends StatelessWidget {
               ],
             );
           case RequestStatus.success:
-            return state.products.offredProducts.isEmpty
-                ? SizedBox(
-                  height: 180.0,
-                  child: Center(
-                    child: Text(
-                      "There is no products",
-                      style: Theme.of(context).textTheme.titleMedium,
-                    ),
-                  ),
-                )
-                : Column(
+            return  Column(
                   children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,

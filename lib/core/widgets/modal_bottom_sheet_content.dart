@@ -16,9 +16,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
 
 class ModalBottomSheetContent extends StatefulWidget {
-  const ModalBottomSheetContent({super.key, required this.bottomSheetModel});
+  const ModalBottomSheetContent({
+    super.key,
+    required this.bottomSheetModel,
+    this.isBottomNav = false,
+  });
 
   final BottomSheetModel bottomSheetModel;
+  final bool isBottomNav;
 
   @override
   State<ModalBottomSheetContent> createState() =>
@@ -26,15 +31,17 @@ class ModalBottomSheetContent extends StatefulWidget {
 }
 
 class _ModalBottomSheetContentState extends State<ModalBottomSheetContent> {
- late String selectedColor;
+  late String selectedColor;
   late String selectedSize;
   int selectedPieces = 1;
-@override
+
+  @override
   void initState() {
-   selectedColor = widget.bottomSheetModel.colors.first;
+    selectedColor = widget.bottomSheetModel.colors.first;
     selectedSize = widget.bottomSheetModel.sizes.first;
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -91,6 +98,7 @@ class _ModalBottomSheetContentState extends State<ModalBottomSheetContent> {
               }
               if (state.cartState.isSuccess) {
                 context.pop();
+               if(!widget.isBottomNav) showToast(message: "Add To Cart", state: ToastStates.success);
               }
             },
             buildWhen:

@@ -11,7 +11,6 @@ import 'package:e_fashion_flutter/firebase_options.dart';
 import 'package:e_fashion_flutter/my_app.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -26,7 +25,6 @@ void main() async {
 
   ServiceLocator().init();
   await FcmInitHelper.initAwesomeNotification();
-  await dotenv.load(fileName: "lib/.env");
   DioHelper.init();
   AppConstants.token = await getIt<CacheHelper>().readData(key: "token") ?? "";
   AppConstants.userId = await getIt<CacheHelper>().readData(key: "user_id") ?? "";

@@ -10,12 +10,19 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 @RoutePage()
 class EditReviewScreen extends StatelessWidget implements AutoRouteWrapper {
-  const EditReviewScreen({super.key, required this.productDetailsModel, required this.productDetailsCubit});
+  const EditReviewScreen({
+    super.key,
+    required this.productDetailsModel,
+    required this.productDetailsCubit,
+  });
 
   final ProductDetailsModel productDetailsModel;
   final ProductDetailsCubit productDetailsCubit;
+
   @override
-  Widget wrappedRoute(BuildContext context) => BlocProvider.value(value: productDetailsCubit, child: this);
+  Widget wrappedRoute(BuildContext context) =>
+      BlocProvider.value(value: productDetailsCubit, child: this);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,11 +70,14 @@ class EditReviewScreen extends StatelessWidget implements AutoRouteWrapper {
                     width: 50.0,
                     height: 50.0,
                     clipBehavior: Clip.antiAliasWithSaveLayer,
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                    ),
+                    decoration: const BoxDecoration(shape: BoxShape.circle),
                     child: CustomCachedNetworkImage(
-                      imageUrl: context.read<UserCubit>().state.userModel.profileImage,
+                      imageUrl:
+                          context
+                              .read<UserCubit>()
+                              .state
+                              .userModel
+                              .profileImage,
                     ),
                   ),
                   const SizedBox(width: 16.0),
@@ -97,6 +107,4 @@ class EditReviewScreen extends StatelessWidget implements AutoRouteWrapper {
       ),
     );
   }
-
-
 }
