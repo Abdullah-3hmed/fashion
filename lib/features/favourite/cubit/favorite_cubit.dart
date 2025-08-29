@@ -30,9 +30,7 @@ class FavoriteCubit extends Cubit<FavoriteState> {
           favoriteState: RequestStatus.error,
         ),
       ),
-      (_) {
-        emit(state.copyWith(favoriteState: RequestStatus.success));
-      },
+      (_) => null,
     );
   }
 

@@ -28,7 +28,10 @@ class FavoriteGridView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<FavoriteCubit, FavoriteState>(
-      listenWhen: (pre, cur) => pre.favoriteState != cur.favoriteState,
+      listenWhen:
+          (pre, cur) =>
+              pre.favoriteState != cur.favoriteState ||
+              pre.favorites != cur.favorites,
       listener: (context, state) {
         if (state.favoriteState.isError) {
           showToast(
@@ -87,8 +90,7 @@ class FavoriteGridView extends StatelessWidget {
       ),
       itemCount: state.favorites.length,
       itemBuilder:
-          (context, index) =>
-              FavoriteItem(favoriteModel: favorites[index]),
+          (context, index) => FavoriteItem(favoriteModel: favorites[index]),
     );
   }
 }

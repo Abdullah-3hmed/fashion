@@ -5,7 +5,7 @@ import 'package:e_fashion_flutter/features/auth/screens/widgets/login_form.dart'
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
-// TODO : fix issue with get fcm token when there is no internet
+
 @RoutePage()
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});

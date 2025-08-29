@@ -12,15 +12,15 @@ import 'package:e_fashion_flutter/features/cart/cubit/cart_cubit/cart_state.dart
 import 'package:e_fashion_flutter/features/cart/cubit/payment_cubit/payment_cubit.dart';
 import 'package:e_fashion_flutter/features/cart/cubit/payment_cubit/payment_state.dart';
 import 'package:e_fashion_flutter/features/cart/data/cart/cart_model.dart';
-import 'package:e_fashion_flutter/features/cart/data/payment/payment_model.dart';
+import 'package:e_fashion_flutter/features/cart/data/payment/payment_request_model.dart';
 import 'package:e_fashion_flutter/features/cart/screens/widgets/cart_item.dart';
 import 'package:e_fashion_flutter/features/cart/screens/widgets/no_items_in_cart.dart';
+import 'package:e_fashion_flutter/features/cart/screens/widgets/payment/payment_button.dart';
 import 'package:e_fashion_flutter/features/profile/cubit/user_cubit/user_cubit.dart';
 import 'package:e_fashion_flutter/features/profile/data/user/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:skeletonizer/skeletonizer.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class CartItemsList extends StatelessWidget   {
   const CartItemsList({super.key});
@@ -86,57 +86,13 @@ class CartItemsList extends StatelessWidget   {
           ],
         ),
         const SizedBox(height: 8.0),
-        BlocConsumer<PaymentCubit, PaymentState>(
-          listenWhen:
-              (previous, current) =>
-                  previous.paymentState != current.paymentState,
-          listener: (context, state)async {
-            if (state.paymentState.isSuccess) {
-                await launchUrl(Uri.parse(state.paymentToken));
-            }
-            if (state.paymentState.isError) {
-              showToast(
-                message: state.paymentErrorMessage,
-                state: ToastStates.error,
-              );
-            }
-          },
-          buildWhen:
-              (previous, current) =>
-                  previous.paymentState != current.paymentState,
-          builder: (context, state) {
-            return PrimaryButton(
-              isLoading: state.paymentState.isLoading,
-              onPressed: () async {
-                await _pay(context);
-              },
-              text: "Checkout",
-            );
-          },
-        ),
+        const PaymentButton(),
         const SizedBox(height: 140.0),
       ],
     );
   }
 
-  Future<void> _pay(BuildContext context) async {
-    if (context.read<CartCubit>().state.cartMap.isNotEmpty) {
-      final UserModel userModel = context.read<UserCubit>().state.userModel;
-      final parts = userModel.userName.trim().split(" ");
-      final firstName = parts.isNotEmpty ? parts[0] : "N/A";
-      final lastName = parts.length > 1 ? parts.sublist(1).join(" ") : "N/A";
-      PaymentModel paymentModel = PaymentModel(
-        amount: context.read<CartCubit>().state.totalPrice.toInt(),
-        firstName: firstName,
-        lastName: lastName,
-        email: userModel.email,
-        phoneNumber: userModel.phone,
-      );
-      await context.read<PaymentCubit>().payWithPaymobCart(
-        paymentModel: paymentModel,
-      );
-    }
-  }
+
 
   ListView _buildCartList(CartState state) {
     final cartItems = state.cartMap.values.toList();

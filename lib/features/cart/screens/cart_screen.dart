@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:e_fashion_flutter/core/services/service_locator.dart';
 import 'package:e_fashion_flutter/features/cart/cubit/payment_cubit/payment_cubit.dart';
@@ -6,8 +8,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 @RoutePage()
-class CartScreen extends StatelessWidget implements AutoRouteWrapper{
+class CartScreen extends StatelessWidget implements AutoRouteWrapper {
   const CartScreen({super.key});
+
   @override
   Widget wrappedRoute(BuildContext context) {
     return BlocProvider(
@@ -15,6 +18,7 @@ class CartScreen extends StatelessWidget implements AutoRouteWrapper{
       child: this,
     );
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -10,8 +10,11 @@ import 'package:e_fashion_flutter/features/auth/screens/reset_password_screen.da
 import 'package:e_fashion_flutter/features/auth/screens/sign_up_screen.dart';
 import 'package:e_fashion_flutter/features/bottom_vav_bar/layout_screen.dart';
 import 'package:e_fashion_flutter/features/cart/cubit/cart_cubit/cart_cubit.dart';
+import 'package:e_fashion_flutter/features/cart/data/payment/payment_response_model.dart';
+import 'package:e_fashion_flutter/features/cart/data/payment/payment_success_model.dart';
 import 'package:e_fashion_flutter/features/cart/screens/cart_screen.dart';
 import 'package:e_fashion_flutter/features/cart/screens/payment_success_screen.dart';
+import 'package:e_fashion_flutter/features/cart/screens/widgets/payment_screen.dart';
 import 'package:e_fashion_flutter/features/favourite/cubit/favorite_cubit.dart';
 import 'package:e_fashion_flutter/features/favourite/screens/favorite_screen.dart';
 import 'package:e_fashion_flutter/features/home/cubit/home_cubit/home_cubit.dart';
@@ -96,6 +99,7 @@ class AppRouter extends RootStackRouter {
             _buildCustomRoute(page: MapRoute.page),
             _buildCustomRoute(page: PaymentSuccessRoute.page),
             _buildCustomRoute(page: AllChatsRoute.page),
+            _buildCustomRoute(page: PaymentRoute.page),
           ],
         ),
       ];

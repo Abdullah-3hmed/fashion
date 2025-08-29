@@ -1,13 +1,14 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:e_fashion_flutter/core/widgets/secondary_button.dart';
+import 'package:e_fashion_flutter/features/cart/data/payment/payment_success_model.dart';
 import 'package:e_fashion_flutter/features/cart/screens/widgets/payment/payment_card_body.dart';
 import 'package:e_fashion_flutter/features/cart/screens/widgets/payment/payment_card_header.dart';
 import 'package:flutter/material.dart';
 
 @RoutePage()
 class PaymentSuccessScreen extends StatelessWidget {
-  const PaymentSuccessScreen({super.key});
-
+  const PaymentSuccessScreen({super.key, required this.paymentSuccessModel});
+final PaymentSuccessModel paymentSuccessModel;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,7 +27,7 @@ class PaymentSuccessScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     const PaymentCardHeader(),
-                    const PaymentCardBody(),
+                     PaymentCardBody(paymentSuccessModel: paymentSuccessModel,),
                     SecondaryButton(
                       onPressed: () {
                         context.pop();

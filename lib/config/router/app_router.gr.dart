@@ -523,19 +523,112 @@ class OrderStatusRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [PaymentScreen]
+class PaymentRoute extends PageRouteInfo<PaymentRouteArgs> {
+  PaymentRoute({
+    Key? key,
+    required PaymentResponseModel paymentResponseModel,
+    List<PageRouteInfo>? children,
+  }) : super(
+         PaymentRoute.name,
+         args: PaymentRouteArgs(
+           key: key,
+           paymentResponseModel: paymentResponseModel,
+         ),
+         initialChildren: children,
+       );
+
+  static const String name = 'PaymentRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<PaymentRouteArgs>();
+      return WrappedRoute(
+        child: PaymentScreen(
+          key: args.key,
+          paymentResponseModel: args.paymentResponseModel,
+        ),
+      );
+    },
+  );
+}
+
+class PaymentRouteArgs {
+  const PaymentRouteArgs({this.key, required this.paymentResponseModel});
+
+  final Key? key;
+
+  final PaymentResponseModel paymentResponseModel;
+
+  @override
+  String toString() {
+    return 'PaymentRouteArgs{key: $key, paymentResponseModel: $paymentResponseModel}';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! PaymentRouteArgs) return false;
+    return key == other.key &&
+        paymentResponseModel == other.paymentResponseModel;
+  }
+
+  @override
+  int get hashCode => key.hashCode ^ paymentResponseModel.hashCode;
+}
+
+/// generated route for
 /// [PaymentSuccessScreen]
-class PaymentSuccessRoute extends PageRouteInfo<void> {
-  const PaymentSuccessRoute({List<PageRouteInfo>? children})
-    : super(PaymentSuccessRoute.name, initialChildren: children);
+class PaymentSuccessRoute extends PageRouteInfo<PaymentSuccessRouteArgs> {
+  PaymentSuccessRoute({
+    Key? key,
+    required PaymentSuccessModel paymentSuccessModel,
+    List<PageRouteInfo>? children,
+  }) : super(
+         PaymentSuccessRoute.name,
+         args: PaymentSuccessRouteArgs(
+           key: key,
+           paymentSuccessModel: paymentSuccessModel,
+         ),
+         initialChildren: children,
+       );
 
   static const String name = 'PaymentSuccessRoute';
 
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      return const PaymentSuccessScreen();
+      final args = data.argsAs<PaymentSuccessRouteArgs>();
+      return PaymentSuccessScreen(
+        key: args.key,
+        paymentSuccessModel: args.paymentSuccessModel,
+      );
     },
   );
+}
+
+class PaymentSuccessRouteArgs {
+  const PaymentSuccessRouteArgs({this.key, required this.paymentSuccessModel});
+
+  final Key? key;
+
+  final PaymentSuccessModel paymentSuccessModel;
+
+  @override
+  String toString() {
+    return 'PaymentSuccessRouteArgs{key: $key, paymentSuccessModel: $paymentSuccessModel}';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! PaymentSuccessRouteArgs) return false;
+    return key == other.key && paymentSuccessModel == other.paymentSuccessModel;
+  }
+
+  @override
+  int get hashCode => key.hashCode ^ paymentSuccessModel.hashCode;
 }
 
 /// generated route for

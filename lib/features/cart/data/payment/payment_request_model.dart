@@ -1,13 +1,13 @@
 import 'package:equatable/equatable.dart';
 
-class PaymentModel extends Equatable {
+class PaymentRequestModel extends Equatable {
   final int amount;
   final String firstName;
   final String lastName;
   final String email;
   final String phoneNumber;
 
-  const PaymentModel({
+  const PaymentRequestModel({
     required this.amount,
     required this.firstName,
     required this.lastName,

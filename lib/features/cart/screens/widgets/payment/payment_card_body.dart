@@ -1,8 +1,11 @@
 import 'package:dotted_dashed_line/dotted_dashed_line.dart';
+import 'package:e_fashion_flutter/features/cart/data/payment/payment_success_model.dart';
 import 'package:flutter/material.dart';
 
 class PaymentCardBody extends StatelessWidget {
-  const PaymentCardBody({super.key});
+  const PaymentCardBody({super.key, required this.paymentSuccessModel});
+
+  final PaymentSuccessModel paymentSuccessModel;
 
   @override
   Widget build(BuildContext context) {
@@ -15,14 +18,18 @@ class PaymentCardBody extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Ordered by : Abdullah Ahmed",
+                "Ordered by : ${paymentSuccessModel.firstName} ${paymentSuccessModel.lastName}",
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
                 style: Theme.of(
                   context,
                 ).textTheme.bodyMedium!.copyWith(color: Colors.black),
               ),
               const SizedBox(height: 8.0),
               Text(
-                "Date : 20, Oct, 2023",
+               "Date : ${paymentSuccessModel.createdAt}",
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
                 style: Theme.of(
                   context,
                 ).textTheme.bodyMedium!.copyWith(color: Colors.black),
@@ -69,7 +76,7 @@ class PaymentCardBody extends StatelessWidget {
                   ),
                   Text(
                     r"$"
-                    "600",
+                    "${paymentSuccessModel.amount}",
                     style: Theme.of(context).textTheme.titleMedium!.copyWith(
                       color: Colors.black,
                       fontWeight: FontWeight.w600,
