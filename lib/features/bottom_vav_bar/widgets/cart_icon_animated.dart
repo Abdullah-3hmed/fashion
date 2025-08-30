@@ -4,11 +4,13 @@ import 'package:iconsax/iconsax.dart';
 class CartIconAnimated extends StatefulWidget {
   final VoidCallback onTap;
   final bool isSelected;
+  final int length;
 
   const CartIconAnimated({
     super.key,
     required this.onTap,
     required this.isSelected,
+    required this.length,
   });
 
   @override
@@ -16,30 +18,20 @@ class CartIconAnimated extends StatefulWidget {
 }
 
 class CartIconAnimatedState extends State<CartIconAnimated> {
-  final ValueNotifier<bool> _showBadge = ValueNotifier(false);
   final ValueNotifier<double> _leftPosition = ValueNotifier(0);
 
   void triggerAnimation() {
-    _showBadge.value = true;
-    _leftPosition.value = 3;
+    _leftPosition.value = 5;
 
     Future.delayed(const Duration(milliseconds: 500), () {
       if (mounted) {
-        _leftPosition.value = 28;
-      }
-    });
-
-    Future.delayed(const Duration(seconds: 1), () {
-      if (mounted) {
-        _showBadge.value = false;
-        _leftPosition.value = 3;
+        _leftPosition.value = 25;
       }
     });
   }
 
   @override
   void dispose() {
-    _showBadge.dispose();
     _leftPosition.dispose();
     super.dispose();
   }
@@ -59,32 +51,26 @@ class CartIconAnimatedState extends State<CartIconAnimated> {
                     : Colors.white,
           ),
         ),
-        ValueListenableBuilder<bool>(
-          valueListenable: _showBadge,
-          builder: (_, show, __) {
-            if (!show) return const SizedBox.shrink();
-            return ValueListenableBuilder<double>(
-              valueListenable: _leftPosition,
-              child: CircleAvatar(
-                backgroundColor: Colors.red,
-                radius: 10.0,
-                child: Text(
-                  '1',
-                  style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                    fontWeight: FontWeight.w800,
-                    color: Colors.white,
-                  ),
-                ),
+        ValueListenableBuilder<double>(
+          valueListenable: _leftPosition,
+          child: widget.length > 0 ? CircleAvatar(
+            backgroundColor: Colors.red,
+            radius: 10.0,
+            child: Text(
+              widget.length.toString(),
+              style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                fontWeight: FontWeight.w800,
+                color: Colors.white,
               ),
-              builder: (_, left, child) {
-                return AnimatedPositionedDirectional(
-                  duration: const Duration(milliseconds: 300),
-                  curve: Curves.easeIn,
-                  top: 5.0,
-                  start: left,
-                  child: child!,
-                );
-              },
+            ),
+          ):const SizedBox.shrink(),
+          builder: (_, left, child) {
+            return AnimatedPositionedDirectional(
+              duration: const Duration(milliseconds: 300),
+              curve: Curves.easeIn,
+              top: 5.0,
+              start: left,
+              child: child!,
             );
           },
         ),

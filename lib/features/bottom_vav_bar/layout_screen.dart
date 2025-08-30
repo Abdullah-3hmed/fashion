@@ -59,20 +59,23 @@ class _LayoutScreenState extends State<LayoutScreen> {
                             : Colors.white,
                   ),
                 ),
-                BlocListener<CartCubit, CartState>(
+                BlocConsumer<CartCubit, CartState>(
                   listenWhen:
                       (prev, curr) =>
-                          prev.cartMap.length != curr.cartMap.length &&
-                          prev.cartMap.length < curr.cartMap.length &&
-                          !curr.isFirstLoad,
+                          prev.cartMap.length != curr.cartMap.length,
                   listener: (context, state) {
                     cartIconKey.currentState?.triggerAnimation();
                   },
-                  child: CartIconAnimated(
-                    key: cartIconKey,
-                    isSelected: tabsRouter.activeIndex == 1,
-                    onTap: () => tabsRouter.setActiveIndex(1),
-                  ),
+                  buildWhen:
+                      (prev, curr) =>
+                          prev.cartMap.length != curr.cartMap.length,
+                  builder:
+                      (_, state) => CartIconAnimated(
+                        key: cartIconKey,
+                        length: state.cartMap.length,
+                        isSelected: tabsRouter.activeIndex == 1,
+                        onTap: () => tabsRouter.setActiveIndex(1),
+                      ),
                 ),
 
                 IconButton(

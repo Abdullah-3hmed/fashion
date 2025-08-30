@@ -31,6 +31,7 @@ class AppCubit extends HydratedCubit<AppState> {
   Future<void> toggleNotifications({
     required bool isNotificationAllowed,
   }) async {
+    checkNotificationPermission();
     emit(
       state.copyWith(
         areNotificationsEnabled: isNotificationAllowed,

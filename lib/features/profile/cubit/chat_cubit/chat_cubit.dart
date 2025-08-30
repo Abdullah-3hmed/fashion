@@ -21,7 +21,7 @@ class ChatCubit extends Cubit<ChatState> {
   Future<void> getChatHistory({
     required String receiverId,
   }) async {
-    if (state.messages.isNotEmpty ) return;
+    if (state.isFirstLoad ) return;
     emit(state.copyWith(getChatHistoryState: RequestStatus.loading));
     final result = await chatRepo.getChatHistory(receiverId: receiverId,);
     result.fold(
@@ -36,6 +36,7 @@ class ChatCubit extends Cubit<ChatState> {
           state.copyWith(
             getChatHistoryState: RequestStatus.success,
             messages: messages,
+            isFirstLoad: true,
           ),
         );
       },

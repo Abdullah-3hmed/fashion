@@ -16,8 +16,9 @@ class NoItemsInCart extends StatelessWidget {
             size: 120.0,
             color: Theme.of(context).colorScheme.primary,
           ),
+          const SizedBox(height: 12.0),
           Text(
-            "No items in the \n shipping bag",
+            "No items in the \n shopping bag",
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.titleLarge,
           ),

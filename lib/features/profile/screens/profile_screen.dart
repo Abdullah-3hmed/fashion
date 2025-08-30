@@ -28,12 +28,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
         child: SizedBox(
           height: 650.0,
           child: DraggableScrollableSheet(
-            initialChildSize: 0.9,
-            minChildSize: 0.8,
+            initialChildSize: 0.95,
+            minChildSize: 0.85,
             builder: (context, scrollController) {
               return NotificationListener<DraggableScrollableNotification>(
                 onNotification: (notification) {
-                  final newIsClipped = notification.extent < 0.85;
+                  final newIsClipped = notification.extent < 0.9;
                   if (newIsClipped != isClippedNotifier.value) {
                     isClippedNotifier.value = newIsClipped;
                   }

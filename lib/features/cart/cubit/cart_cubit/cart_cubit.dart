@@ -31,11 +31,7 @@ class CartCubit extends Cubit<CartState> {
           ifAbsent: () => cartModel,
         );
         emit(
-          state.copyWith(
-            cartState: RequestStatus.success,
-            isFirstLoad: false,
-            cartMap: updatedMap,
-          ),
+          state.copyWith(cartState: RequestStatus.success, cartMap: updatedMap),
         );
       },
     );

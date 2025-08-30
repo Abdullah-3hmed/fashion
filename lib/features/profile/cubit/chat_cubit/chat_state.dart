@@ -8,6 +8,7 @@ class ChatState extends Equatable {
   final String getChatHistoryErrorMessage;
   final RequestStatus sendMessageState;
   final String sendMessageErrorMessage;
+  final bool isFirstLoad;
 
   const ChatState({
     this.getChatHistoryState = RequestStatus.loading,
@@ -15,6 +16,7 @@ class ChatState extends Equatable {
     this.getChatHistoryErrorMessage = "",
     this.sendMessageState = RequestStatus.loading,
     this.sendMessageErrorMessage = "",
+    this.isFirstLoad = false,
   });
 
   copyWith({
@@ -23,6 +25,7 @@ class ChatState extends Equatable {
     String? getChatHistoryErrorMessage,
     RequestStatus? sendMessageState,
     String? sendMessageErrorMessage,
+    bool? isFirstLoad,
   }) {
     return ChatState(
       getChatHistoryState: getChatHistoryState ?? this.getChatHistoryState,
@@ -32,6 +35,7 @@ class ChatState extends Equatable {
       sendMessageState: sendMessageState ?? this.sendMessageState,
       sendMessageErrorMessage:
           sendMessageErrorMessage ?? this.sendMessageErrorMessage,
+      isFirstLoad: isFirstLoad ?? this.isFirstLoad,
     );
   }
 
@@ -42,5 +46,6 @@ class ChatState extends Equatable {
     getChatHistoryErrorMessage,
     sendMessageState,
     sendMessageErrorMessage,
+    isFirstLoad,
   ];
 }
