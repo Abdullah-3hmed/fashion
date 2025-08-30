@@ -476,18 +476,51 @@ class LoginRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [MapScreen]
-class MapRoute extends PageRouteInfo<void> {
-  const MapRoute({List<PageRouteInfo>? children})
-    : super(MapRoute.name, initialChildren: children);
+class MapRoute extends PageRouteInfo<MapRouteArgs> {
+  MapRoute({
+    Key? key,
+    required UserCubit userCubit,
+    List<PageRouteInfo>? children,
+  }) : super(
+         MapRoute.name,
+         args: MapRouteArgs(key: key, userCubit: userCubit),
+         initialChildren: children,
+       );
 
   static const String name = 'MapRoute';
 
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      return WrappedRoute(child: const MapScreen());
+      final args = data.argsAs<MapRouteArgs>();
+      return WrappedRoute(
+        child: MapScreen(key: args.key, userCubit: args.userCubit),
+      );
     },
   );
+}
+
+class MapRouteArgs {
+  const MapRouteArgs({this.key, required this.userCubit});
+
+  final Key? key;
+
+  final UserCubit userCubit;
+
+  @override
+  String toString() {
+    return 'MapRouteArgs{key: $key, userCubit: $userCubit}';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! MapRouteArgs) return false;
+    return key == other.key && userCubit == other.userCubit;
+  }
+
+  @override
+  int get hashCode => key.hashCode ^ userCubit.hashCode;
 }
 
 /// generated route for
@@ -517,7 +550,7 @@ class OrderStatusRoute extends PageRouteInfo<void> {
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      return const OrderStatusScreen();
+      return WrappedRoute(child: const OrderStatusScreen());
     },
   );
 }

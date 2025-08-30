@@ -12,6 +12,7 @@ class UserState extends Equatable {
   final String editUserErrorMessage;
   final String changePasswordMessage;
   final RequestStatus changePasswordRequestStatus;
+  final String userLocation;
 
   const UserState({
     this.userModel = UserModel.empty,
@@ -22,6 +23,7 @@ class UserState extends Equatable {
     this.editUserErrorMessage = "",
     this.changePasswordMessage = "",
     this.changePasswordRequestStatus = RequestStatus.initial,
+    this.userLocation = "",
   });
 
   UserState copyWith({
@@ -33,6 +35,7 @@ class UserState extends Equatable {
     String? editUserErrorMessage,
     String? changePasswordMessage,
     RequestStatus? changePasswordRequestStatus,
+    String? userLocation,
   }) {
     return UserState(
       userModel: userModel ?? this.userModel,
@@ -46,6 +49,7 @@ class UserState extends Equatable {
           changePasswordMessage ?? this.changePasswordMessage,
       changePasswordRequestStatus:
           changePasswordRequestStatus ?? this.changePasswordRequestStatus,
+      userLocation: userLocation ?? this.userLocation,
     );
   }
 
@@ -59,5 +63,6 @@ class UserState extends Equatable {
     editUserErrorMessage,
     changePasswordMessage,
     changePasswordRequestStatus,
+    userLocation,
   ];
 }

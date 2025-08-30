@@ -3,16 +3,18 @@ import 'package:e_fashion_flutter/core/enums/request_status.dart';
 import 'package:e_fashion_flutter/core/services/service_locator.dart';
 import 'package:e_fashion_flutter/core/utils/show_toast.dart';
 import 'package:e_fashion_flutter/core/utils/toast_states.dart';
+import 'package:e_fashion_flutter/core/widgets/primary_button.dart';
 import 'package:e_fashion_flutter/features/profile/cubit/map_cubit/map_cubit.dart';
 import 'package:e_fashion_flutter/features/profile/cubit/map_cubit/map_state.dart';
+import 'package:e_fashion_flutter/features/profile/cubit/user_cubit/user_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 @RoutePage()
 class MapScreen extends StatefulWidget implements AutoRouteWrapper {
-  const MapScreen({super.key});
-
+  const MapScreen({super.key, required this.userCubit});
+final UserCubit userCubit;
   @override
   State<MapScreen> createState() => _MapScreenState();
 
@@ -56,23 +58,44 @@ class _MapScreenState extends State<MapScreen> {
           }
         },
         builder: (context, state) {
-          return GoogleMap(
-            style: state.mapStyle,
-            markers: state.myLocationMarker,
-            onMapCreated: (controller) async {
-              mapController = controller;
-              await context.read<MapCubit>().getCurrentLocation(
-                mapController: mapController,
-              );
-            },
-            onTap: (LatLng newLocation) async {
-              await context.read<MapCubit>().changeLocation(
-                mapController: mapController,
-                newLocation: newLocation,
-              );
-            },
-            zoomControlsEnabled: false,
-            initialCameraPosition: initialCameraPosition,
+          return Stack(
+            children: [
+              GoogleMap(
+                style: state.mapStyle,
+                markers: state.myLocationMarker,
+                onMapCreated: (controller) async {
+                  mapController = controller;
+                 final String userLocation = await context.read<MapCubit>().getCurrentLocation(
+                    mapController: mapController,
+                  );
+                 widget.userCubit.setUserLocation(location:userLocation);
+                },
+                onTap: (LatLng newLocation) async {
+                final String userLocation =  await context.read<MapCubit>().changeLocation(
+                    mapController: mapController,
+                    newLocation: newLocation,
+                  );
+                  widget.userCubit.setUserLocation(location:userLocation);
+                },
+                zoomControlsEnabled: false,
+                initialCameraPosition: initialCameraPosition,
+              ),
+              PositionedDirectional(
+                bottom: 40,
+                end: 20,
+                start: 20,
+                child: PrimaryButton(
+                  text: "Confirm Location",
+                  onPressed: () {
+                    context.pop();
+                    showToast(
+                      message: "Your Location Confirmed Successfully",
+                      state: ToastStates.success,
+                    );
+                  },
+                ),
+              ),
+            ],
           );
         },
       ),

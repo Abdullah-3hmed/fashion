@@ -1,8 +1,11 @@
 import 'package:e_fashion_flutter/core/utils/assets_manager.dart';
+import 'package:e_fashion_flutter/features/profile/data/order/order_model.dart';
 import 'package:flutter/material.dart';
 
 class OrderItem extends StatelessWidget {
-  const OrderItem({super.key});
+  const OrderItem({super.key, required this.order});
+
+  final OrderModel order;
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +47,7 @@ class OrderItem extends StatelessWidget {
                   ),
                   const SizedBox(width: 10.0),
                   Text(
-                    "#25654568",
+                    "#${order.orderId}",
                     overflow: TextOverflow.ellipsis,
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
@@ -66,7 +69,8 @@ class OrderItem extends StatelessWidget {
                   ),
                   const SizedBox(width: 14.0),
                   Text(
-                    r"$600.00",
+                    r"$"
+                    "${order.orderPrice}",
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
                 ],

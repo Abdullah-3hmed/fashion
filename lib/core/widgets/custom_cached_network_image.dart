@@ -19,14 +19,14 @@ class CustomCachedNetworkImage extends StatelessWidget {
     return CachedNetworkImage(
       imageUrl:
           imageUrl.isEmpty
-              ? "https://drive.google.com/file/d/1oLoHL2ZYpm0KFwpRWmb2y-g6QGvTKbNi/view?usp=sharing"
+              ? "https://drive.google.com/uc?export=view&id=1oLoHL2ZYpm0KFwpRWmb2y-g6QGvTKbNi"
               : imageUrl,
       width: width ?? double.infinity,
       height: height ?? double.infinity,
       fit: BoxFit.cover,
       errorWidget:
           (context, url, error) => Image.asset(
-            AssetsManager.defaultImage,
+            AssetsManager.errorImage,
             height: height ?? double.infinity,
             width: width ?? double.infinity,
             fit: BoxFit.cover,

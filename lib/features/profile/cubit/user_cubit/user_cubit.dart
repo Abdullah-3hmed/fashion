@@ -132,6 +132,11 @@ class UserCubit extends HydratedCubit<UserState> {
     );
   }
 
+  void setUserLocation({required String location}) {
+    emit(state.copyWith(userLocation: location));
+    debugPrint("location>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>: $location");
+  }
+
   @override
   UserState? fromJson(Map<String, dynamic> json) {
     return UserState(userModel: UserModel.fromJson(json["user_model"]));

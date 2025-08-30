@@ -30,11 +30,13 @@ import 'package:e_fashion_flutter/features/notification/repo/notification_repo.d
 import 'package:e_fashion_flutter/features/notification/repo/notification_repo_impl.dart';
 import 'package:e_fashion_flutter/features/profile/cubit/chat_cubit/chat_cubit.dart';
 import 'package:e_fashion_flutter/features/profile/cubit/map_cubit/map_cubit.dart';
+import 'package:e_fashion_flutter/features/profile/cubit/order_cubit/order_cubit.dart';
 import 'package:e_fashion_flutter/features/profile/cubit/user_cubit/user_cubit.dart';
 import 'package:e_fashion_flutter/features/profile/repos/chat_repo/chat_repo.dart';
 import 'package:e_fashion_flutter/features/profile/repos/chat_repo/chat_repo_impl.dart';
 import 'package:e_fashion_flutter/features/profile/repos/map_repo/map_repo.dart';
 import 'package:e_fashion_flutter/features/profile/repos/map_repo/map_repo_impl.dart';
+import 'package:e_fashion_flutter/features/profile/repos/order_repo/order_repo.dart';
 import 'package:e_fashion_flutter/features/profile/repos/user_repo/user_repo.dart';
 import 'package:e_fashion_flutter/features/profile/repos/user_repo/user_repo_impl.dart';
 import 'package:e_fashion_flutter/features/search/bloc/search_bloc.dart';
@@ -81,7 +83,7 @@ class ServiceLocator {
       () => ProductDetailsCubit(homeDetailsRepo: getIt<HomeDetailsRepo>()),
     );
     getIt.registerFactory<CollectionDetailsCubit>(
-          () => CollectionDetailsCubit(homeRepoImpl: getIt<HomeRepo>()),
+      () => CollectionDetailsCubit(homeRepoImpl: getIt<HomeRepo>()),
     );
     getIt.registerLazySingleton<SearchRepo>(
       () => SearchRepo(dioHelper: getIt<DioHelper>()),
@@ -104,9 +106,9 @@ class ServiceLocator {
     getIt.registerLazySingleton<NotificationRepo>(
       () => NotificationRepoImpl(dioHelper: getIt<DioHelper>()),
     );
-    getIt.registerFactory<AppCubit>(() => AppCubit(
-      notificationRepo: getIt<NotificationRepo>(),
-    ));
+    getIt.registerFactory<AppCubit>(
+      () => AppCubit(notificationRepo: getIt<NotificationRepo>()),
+    );
     getIt.registerLazySingleton<AdminRepo>(
       () => AdminRepoImpl(dioHelper: getIt<DioHelper>()),
     );
@@ -123,11 +125,17 @@ class ServiceLocator {
         chatRepo: getIt<ChatRepo>(),
       ),
     );
-    getIt.registerLazySingleton<PaymentRepo>(() => PaymentRepo(
-      dioHelper: getIt<DioHelper>(),
-    ));
-    getIt.registerFactory<PaymentCubit>(() => PaymentCubit(
-      paymentRepo: getIt<PaymentRepo>(),
-    ));
+    getIt.registerLazySingleton<PaymentRepo>(
+      () => PaymentRepo(dioHelper: getIt<DioHelper>()),
+    );
+    getIt.registerFactory<PaymentCubit>(
+      () => PaymentCubit(paymentRepo: getIt<PaymentRepo>()),
+    );
+    getIt.registerLazySingleton<OrderRepo>(
+      () => OrderRepo(dioHelper: getIt<DioHelper>()),
+    );
+    getIt.registerFactory<OrderCubit>(
+      () => OrderCubit(orderRepo: getIt<OrderRepo>()),
+    );
   }
 }

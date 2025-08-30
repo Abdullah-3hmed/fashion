@@ -20,6 +20,14 @@ class AppCubit extends HydratedCubit<AppState> {
     emit(state.copyWith(isDarkMode: !state.isDarkMode));
   }
 
+  Future<void> checkNotificationPermission() async {
+    bool isAllowed = await FcmInitHelper.isNotificationAllowed();
+    if (!isAllowed) {
+      final bool granted = await FcmInitHelper.requestPermission();
+      emit(state.copyWith(areNotificationsEnabled: granted));
+    }
+  }
+
   Future<void> toggleNotifications({
     required bool isNotificationAllowed,
   }) async {

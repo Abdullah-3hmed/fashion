@@ -1,6 +1,11 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:e_fashion_flutter/config/router/app_router.dart';
+import 'package:e_fashion_flutter/core/animations/fade_in_animation.dart';
+import 'package:e_fashion_flutter/core/animations/fade_then_spin_animation.dart';
+import 'package:e_fashion_flutter/core/animations/slide_animation.dart';
 import 'package:e_fashion_flutter/core/notifications/fcm_init_helper.dart';
-import 'package:e_fashion_flutter/features/splash/screens/widgets/splash_screen_body.dart';
+import 'package:e_fashion_flutter/core/utils/app_constants.dart';
+import 'package:e_fashion_flutter/core/utils/assets_manager.dart';
 import 'package:e_fashion_flutter/shared/app_cubit/app_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,63 +21,130 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
-    super.initState();
     _checkNotificationPermission();
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(body: SplashScreenBody());
-  }
-
-  void _checkNotificationPermission() async {
-    bool isAllowed = await FcmInitHelper.isNotificationAllowed();
-    if (!isAllowed && mounted) {
-      WidgetsBinding.instance.addPostFrameCallback((_) async {
-        await showDialog(
-          context: context,
-          builder:
-              (ctx) => AlertDialog(
-                title: const Text("Allow Notifications"),
-                content: const Text(
-                  "Would you like to enable notifications for this app?",
+    return Scaffold(
+      body: GestureDetector(
+        onVerticalDragUpdate: (details) {
+          if (details.delta.dy < 100) {
+            if (AppConstants.token.isNotEmpty) {
+              context.replaceRoute(const AuthenticatedRoute());
+            } else {
+              context.replaceRoute(const AuthRoute());
+            }
+          }
+        },
+        child: Stack(
+          children: [
+            const SizedBox.expand(
+              child: Image(
+                fit: BoxFit.cover,
+                image: AssetImage(AssetsManager.welcomeImage),
+              ),
+            ),
+            const PositionedDirectional(
+              top: 150.0,
+              start: 0.0,
+              end: 0.0,
+              child: FadeInAnimation(
+                duration: Duration(seconds: 2),
+                child: Image(
+                  alignment: AlignmentDirectional.bottomCenter,
+                  width: 200.0,
+                  height: 200.0,
+                  image: AssetImage(AssetsManager.appLogo),
                 ),
-                actions: [
-                  TextButton(
-                    onPressed: () {
-                      Navigator.pop(ctx);
-                      context.read<AppCubit>().toggleNotifications(
-                        isNotificationAllowed: false,
-                      );
-                    },
-                    child: Text(
-                      "No Thanks",
-                      style: TextStyle(
-                        color: Theme.of(context).colorScheme.primary,
+              ),
+            ),
+            PositionedDirectional(
+              bottom: 0.0,
+              start: 0.0,
+              end: 0.0,
+              child: Stack(
+                children: [
+                  SlideAnimation(
+                    begin: const Offset(0.0, 1.0),
+                    duration: const Duration(milliseconds: 600),
+                    child: SizedBox(
+                      width: MediaQuery.sizeOf(context).width,
+                      child: const Image(
+                        fit: BoxFit.cover,
+                        image: AssetImage(AssetsManager.welcomeCurvedContainer),
                       ),
                     ),
                   ),
-                  TextButton(
-                    onPressed: () async {
-                      Navigator.pop(ctx);
-                      final bool granted = await FcmInitHelper.requestPermission();
-                      if (mounted) {
-                        context.read<AppCubit>().toggleNotifications(
-                          isNotificationAllowed: granted,
-                        );
-                      }
-                    },
-                    child: Text(
-                      "Yes",
-                      style: TextStyle(
-                        color: Theme.of(context).colorScheme.primary,
-                      ),
+                  const PositionedDirectional(
+                    top: 60.0,
+                    end: 35.0,
+                    child: Stack(
+                      alignment: AlignmentDirectional.center,
+                      children: [
+                        FadeThenSpinAnimation(
+                          fadeDuration: Duration(seconds: 2),
+                          spinDuration: Duration(seconds: 20),
+                          child: Image(
+                            image: AssetImage(AssetsManager.welcomeCircleImage),
+                          ),
+                        ),
+                        Image(
+                          image: AssetImage(AssetsManager.welcomeCircleArrow),
+                        ),
+                      ],
+                    ),
+                  ),
+                  PositionedDirectional(
+                    start: 24.0,
+                    bottom: 92.0,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SlideAnimation(
+                          begin: const Offset(-1.5, -0.5),
+                          duration: const Duration(seconds: 1),
+                          delay: const Duration(milliseconds: 900),
+                          child: Text(
+                            "Start your new",
+                            style: Theme.of(context).textTheme.titleMedium!
+                                .copyWith(color: Colors.white),
+                          ),
+                        ),
+                        SlideAnimation(
+                          begin: const Offset(-1.5, 0),
+                          duration: const Duration(seconds: 1),
+                          delay: const Duration(milliseconds: 900),
+                          child: Text(
+                            "Shopping experience",
+                            style: Theme.of(context).textTheme.titleMedium!
+                                .copyWith(color: Colors.white),
+                          ),
+                        ),
+                        const SizedBox(height: 8.0),
+                        SlideAnimation(
+                          begin: const Offset(-1.5, 0.5),
+                          duration: const Duration(seconds: 1),
+                          delay: const Duration(milliseconds: 600),
+                          child: Text(
+                            "For fancy clothes and accessories",
+                            style: Theme.of(context).textTheme.bodyMedium!
+                                .copyWith(color: Colors.white),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ],
               ),
-        );
-      });
-    }
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+  Future<void> _checkNotificationPermission() async{
+    if (mounted) await context.read<AppCubit>().checkNotificationPermission();
   }
 }

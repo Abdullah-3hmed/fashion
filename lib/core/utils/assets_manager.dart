@@ -46,5 +46,5 @@ class AssetsManager {
   static const String mapStyle = 'assets/map_style/map_style.json';
   static const String noInternet = 'assets/images/wifi.svg';
   static const String errorImage = 'assets/images/error_image.jpeg';
-  static const String defaultImage = 'assets/images/user.png';
+  //static const String defaultImage = 'assets/images/user.png';
 }
