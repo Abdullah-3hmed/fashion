@@ -23,7 +23,7 @@ class FcmInitHelper {
   static Future<void> initAwesomeNotification() async {
     await _awesomeNotifications.initialize(null, [
       NotificationChannel(
-        channelKey: 'fcm_channel',
+        channelKey: 'high_importance_channel',
         channelName: 'Push Notifications',
         channelDescription: 'Notification channel for app push notifications',
         defaultColor: const Color(0xFF9D50DD),
@@ -38,7 +38,7 @@ class FcmInitHelper {
     await _awesomeNotifications.createNotification(
       content: NotificationContent(
         id: DateTime.now().millisecondsSinceEpoch.remainder(100000),
-        channelKey: 'fcm_channel',
+        channelKey: 'high_importance_channel',
         title: message.notification?.title ?? 'No title',
         body: message.notification?.body ?? 'No body',
         payload: {"type": message.notification?.title},
