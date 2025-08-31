@@ -27,7 +27,7 @@ class PaymentCardBody extends StatelessWidget {
               ),
               const SizedBox(height: 8.0),
               Text(
-               "Date : ${paymentSuccessModel.createdAt}",
+               "Date : ${paymentSuccessModel.date}",
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: Theme.of(
@@ -36,14 +36,14 @@ class PaymentCardBody extends StatelessWidget {
               ),
               const SizedBox(height: 8.0),
               Text(
-                "Time : 12:50 pm",
+                "Time : ${paymentSuccessModel.time}",
                 style: Theme.of(
                   context,
                 ).textTheme.bodyMedium!.copyWith(color: Colors.black),
               ),
               const SizedBox(height: 8.0),
               Text(
-                "Delivery Date : 21, Oct, 2023",
+                "Delivery Date : ${paymentSuccessModel.deliveryDate}",
                 style: Theme.of(
                   context,
                 ).textTheme.bodyMedium!.copyWith(color: Colors.black),

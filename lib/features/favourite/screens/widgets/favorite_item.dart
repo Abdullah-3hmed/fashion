@@ -18,79 +18,79 @@ class FavoriteItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      mainAxisSize: MainAxisSize.min,
       children: [
-        Stack(
-          clipBehavior: Clip.none,
-          alignment: AlignmentDirectional.bottomCenter,
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadiusDirectional.circular(16.0),
-              child: CustomCachedNetworkImage(
-                imageUrl: favoriteModel.image,
-                height: 200.0,
+        Flexible(
+          child: Stack(
+            clipBehavior: Clip.none,
+            alignment: AlignmentDirectional.bottomCenter,
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadiusDirectional.circular(16.0),
+                child: CustomCachedNetworkImage(
+                  imageUrl: favoriteModel.image,
+                ),
               ),
-            ),
-            PositionedDirectional(
-              bottom: -18.0,
-              child: InkWell(
-                onTap: () async {
-                  await showModalBottomSheet(
-                    context: context,
-                    useRootNavigator: true,
-                    builder:
-                        (context) => ModalBottomSheetContent(
-                          bottomSheetModel: BottomSheetModel.fromFav(
-                            favoriteModel,
+              PositionedDirectional(
+                bottom: -18.0,
+                child: InkWell(
+                  onTap: () async {
+                    await showModalBottomSheet(
+                      context: context,
+                      useRootNavigator: true,
+                      builder:
+                          (context) => ModalBottomSheetContent(
+                            bottomSheetModel: BottomSheetModel.fromFav(
+                              favoriteModel,
+                            ),
                           ),
-                        ),
-                  );
-                },
-                child: CircleAvatar(
-                  radius: 18.0,
+                    );
+                  },
                   child: CircleAvatar(
-                    radius: 16.0,
-                    backgroundColor: Theme.of(context).colorScheme.primary,
-                    child: IconButton(
-                      onPressed: () async {
-                        await showModalBottomSheet(
-                          context: context,
-                          builder:
-                              (_) => BlocProvider.value(
-                                value: context.read<CartCubit>(),
-                                child: ModalBottomSheetContent(
-                                  isBottomNav: true,
-                                  bottomSheetModel: BottomSheetModel.fromFav(
-                                    favoriteModel,
+                    radius: 18.0,
+                    child: CircleAvatar(
+                      radius: 16.0,
+                      backgroundColor: Theme.of(context).colorScheme.primary,
+                      child: IconButton(
+                        onPressed: () async {
+                          await showModalBottomSheet(
+                            context: context,
+                            builder:
+                                (_) => BlocProvider.value(
+                                  value: context.read<CartCubit>(),
+                                  child: ModalBottomSheetContent(
+                                    isBottomNav: true,
+                                    bottomSheetModel: BottomSheetModel.fromFav(
+                                      favoriteModel,
+                                    ),
                                   ),
                                 ),
-                              ),
-                        );
-                      },
-                      icon: const Icon(Iconsax.bag_2, size: 16.0),
-                      color: Theme.of(context).colorScheme.onPrimary,
+                          );
+                        },
+                        icon: const Icon(Iconsax.bag_2, size: 16.0),
+                        color: Theme.of(context).colorScheme.onPrimary,
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-            PositionedDirectional(
-              end: 6.0,
-              top: 6.0,
-              child: IconButton(
-                onPressed: () async {
-                  await context.read<FavoriteCubit>().addAndRemoveFavorite(
-                    favoriteModel: favoriteModel,
-                  );
-                },
-                icon: Icon(
-                  SolarIconsBold.heart,
-                  size: 30.0,
-                  color: Theme.of(context).colorScheme.primary,
+              PositionedDirectional(
+                end: 6.0,
+                top: 6.0,
+                child: IconButton(
+                  onPressed: () async {
+                    await context.read<FavoriteCubit>().addAndRemoveFavorite(
+                      favoriteModel: favoriteModel,
+                    );
+                  },
+                  icon: Icon(
+                    SolarIconsBold.heart,
+                    size: 30.0,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
         const SizedBox(height: 20.0),
         Text(

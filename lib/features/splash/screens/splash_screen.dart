@@ -21,8 +21,10 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
-    _checkNotificationPermission();
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await _checkNotificationPermission();
+    });
   }
 
   @override
@@ -144,7 +146,8 @@ class _SplashScreenState extends State<SplashScreen> {
       ),
     );
   }
-  Future<void> _checkNotificationPermission() async{
+
+  Future<void> _checkNotificationPermission() async {
     if (mounted) await context.read<AppCubit>().checkNotificationPermission();
   }
 }

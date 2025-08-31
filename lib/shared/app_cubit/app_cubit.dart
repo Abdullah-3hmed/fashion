@@ -4,8 +4,10 @@ import 'package:e_fashion_flutter/core/notifications/fcm_init_helper.dart';
 import 'package:e_fashion_flutter/core/utils/app_constants.dart';
 import 'package:e_fashion_flutter/features/notification/repo/notification_repo.dart';
 import 'package:e_fashion_flutter/shared/app_cubit/app_state.dart';
+import 'package:flutter/material.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class AppCubit extends HydratedCubit<AppState> {
   final NotificationRepo notificationRepo;
@@ -21,12 +23,15 @@ class AppCubit extends HydratedCubit<AppState> {
   }
 
   Future<void> checkNotificationPermission() async {
-    bool isAllowed = await FcmInitHelper.isNotificationAllowed();
-    if (!isAllowed) {
-      final bool granted = await FcmInitHelper.requestPermission();
-      emit(state.copyWith(areNotificationsEnabled: granted));
+    var status = await Permission.notification.status;
+    if (!status.isGranted) {
+      status = await Permission.notification.request();
     }
+    bool granted = status.isGranted;
+    debugPrint("Permission granted: $granted");
+    emit(state.copyWith(areNotificationsEnabled: granted));
   }
+
 
   Future<void> toggleNotifications({
     required bool isNotificationAllowed,

@@ -8,7 +8,7 @@ class PaymentResponseModel extends Equatable {
 
   factory PaymentResponseModel.fromJson(Map<String, dynamic> json) =>
       PaymentResponseModel(
-        url: json["url"] ?? "",
+        url: json["paymentGate"] ?? "",
         orderId: json["orderId"] ?? "",
       );
   static const PaymentResponseModel empty = PaymentResponseModel(

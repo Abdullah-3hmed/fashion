@@ -6,6 +6,7 @@ import 'package:e_fashion_flutter/core/enums/request_status.dart';
 import 'package:e_fashion_flutter/core/services/service_locator.dart';
 import 'package:e_fashion_flutter/core/utils/show_toast.dart';
 import 'package:e_fashion_flutter/core/utils/toast_states.dart';
+import 'package:e_fashion_flutter/features/cart/cubit/cart_cubit/cart_cubit.dart';
 import 'package:e_fashion_flutter/features/cart/cubit/payment_cubit/payment_cubit.dart';
 import 'package:e_fashion_flutter/features/cart/cubit/payment_cubit/payment_state.dart';
 import 'package:e_fashion_flutter/features/cart/data/payment/payment_response_model.dart';
@@ -35,6 +36,7 @@ class PaymentScreen extends StatelessWidget implements AutoRouteWrapper {
           context.replaceRoute(
             PaymentSuccessRoute(paymentSuccessModel: state.paymentSuccessModel),
           );
+          context.read<CartCubit>().clearCart();
         }
         if (state.getPaymentStatus.isSuccess &&
             !state.paymentSuccessModel.success) {

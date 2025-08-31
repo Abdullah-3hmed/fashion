@@ -6,7 +6,7 @@ Future<bool?> showToast({
   required ToastStates state,
 }) => Fluttertoast.showToast(
   msg: message,
-  toastLength: Toast.LENGTH_LONG,
+  toastLength: Toast.LENGTH_SHORT,
   gravity: ToastGravity.BOTTOM,
   timeInSecForIosWeb: 5,
   backgroundColor: chooseToastColor(state: state),

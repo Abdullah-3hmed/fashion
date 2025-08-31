@@ -6,7 +6,6 @@ class NotificationController {
   static Future<void> onActionReceivedMethod(
     ReceivedAction receivedAction,
   ) async {
-    //if(receivedAction.payload?["type"] == "message") return;
     await navigateToChat();
   }
 }

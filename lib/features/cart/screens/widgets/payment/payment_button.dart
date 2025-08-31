@@ -50,15 +50,15 @@ class PaymentButton extends StatelessWidget {
   }
 
   Future<void> _pay(BuildContext context) async {
-    if (context.read<UserCubit>().state.userLocation.isEmpty) {
-      showToast(
-        message: "You Must Set Your Location In Profile Tab!",
-        state: ToastStates.error,
-      );
-      return;
-    }
     final CartState state = context.read<CartCubit>().state;
     if (state.cartMap.isNotEmpty) {
+      if (context.read<UserCubit>().state.userLocation.isEmpty) {
+        showToast(
+          message: "You Must Set Your Location In Profile Tab!",
+          state: ToastStates.error,
+        );
+        return;
+      }
       final UserModel userModel = context.read<UserCubit>().state.userModel;
       final parts = userModel.userName.trim().split(" ");
       final firstName = parts.isNotEmpty ? parts[0] : "N/A";

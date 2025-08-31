@@ -76,6 +76,7 @@ dependencies:
   internet_connection_checker_plus: ^2.7.2
   signalr_netcore: ^1.4.3
   flutter_inappwebview: ^6.1.5
+  permission_handler: ^12.0.1
 
 
 

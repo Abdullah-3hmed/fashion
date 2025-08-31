@@ -12,14 +12,6 @@ class FcmInitHelper {
   static final AwesomeNotifications _awesomeNotifications =
       AwesomeNotifications();
 
-  static Future<bool> isNotificationAllowed() async {
-    return await _awesomeNotifications.isNotificationAllowed();
-  }
-
-  static Future<bool> requestPermission() async {
-    return await _awesomeNotifications.requestPermissionToSendNotifications();
-  }
-
   static Future<void> initAwesomeNotification() async {
     await _awesomeNotifications.initialize(null, [
       NotificationChannel(
@@ -41,7 +33,6 @@ class FcmInitHelper {
         channelKey: 'high_importance_channel',
         title: message.notification?.title ?? 'No title',
         body: message.notification?.body ?? 'No body',
-        payload: {"type": message.notification?.title},
       ),
     );
   }

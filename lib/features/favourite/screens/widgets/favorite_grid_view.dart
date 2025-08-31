@@ -86,7 +86,7 @@ class FavoriteGridView extends StatelessWidget {
         maxCrossAxisExtent: 200.0,
         crossAxisSpacing: 12.0,
         mainAxisSpacing: 10.0,
-        childAspectRatio: 0.63,
+        childAspectRatio: 0.6,
       ),
       itemCount: state.favorites.length,
       itemBuilder:
