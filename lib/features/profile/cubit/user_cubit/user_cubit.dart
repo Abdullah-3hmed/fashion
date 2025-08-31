@@ -15,7 +15,7 @@ import 'package:flutter/material.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 
-class UserCubit extends HydratedCubit<UserState> {
+class UserCubit extends Cubit<UserState> {
   UserCubit({required this.userRepo}) : super(const UserState());
   final UserRepo userRepo;
 
@@ -137,13 +137,13 @@ class UserCubit extends HydratedCubit<UserState> {
     debugPrint("location>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>: $location");
   }
 
-  @override
-  UserState? fromJson(Map<String, dynamic> json) {
-    return UserState(userModel: UserModel.fromJson(json["user_model"]));
-  }
-
-  @override
-  Map<String, dynamic>? toJson(UserState state) {
-    return {"user_model": state.userModel.toJson()};
-  }
+  // @override
+  // UserState? fromJson(Map<String, dynamic> json) {
+  //   return UserState(userModel: UserModel.fromJson(json["user_model"]));
+  // }
+  //
+  // @override
+  // Map<String, dynamic>? toJson(UserState state) {
+  //   return {"user_model": state.userModel.toJson()};
+  // }
 }

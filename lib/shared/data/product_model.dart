@@ -7,6 +7,7 @@ class ProductModel extends Equatable {
   final String imageUrl;
   final num basePrice;
   final num discountPrice;
+  final bool isOffer;
   final String colors;
   final String sizes;
 
@@ -18,6 +19,7 @@ class ProductModel extends Equatable {
     required this.discountPrice,
     required this.colors,
     required this.sizes,
+    required this.isOffer,
   });
 
   List<String> get parsedColors =>
@@ -38,6 +40,7 @@ class ProductModel extends Equatable {
     discountPrice: json["discountedPrice"] ?? 0,
     colors: json["colors"] ?? "",
     sizes: json["sizes"] ?? "",
+    isOffer: json["isOffred"] ?? false,
   );
 
   FavoriteModel toFavoriteModel() => FavoriteModel(
@@ -58,5 +61,6 @@ class ProductModel extends Equatable {
     discountPrice,
     colors,
     sizes,
+    isOffer,
   ];
 }

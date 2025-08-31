@@ -19,10 +19,10 @@ class BottomSheetModel extends Equatable {
     required this.id,
   });
 
-  factory BottomSheetModel.fromProduct(ProductModel product) {
+  factory BottomSheetModel.fromProduct(ProductModel product,{bool isOffered = false}) {
     return BottomSheetModel(
       title: product.title,
-      basePrice: product.basePrice,
+      basePrice: isOffered ? product.discountPrice : product.basePrice,
       colors: product.parsedColors,
       sizes: product.parsedSizes,
       imageUrl: product.imageUrl,
@@ -30,7 +30,7 @@ class BottomSheetModel extends Equatable {
     );
   }
 
-  factory BottomSheetModel.fromFav(FavoriteModel fav) {
+  factory BottomSheetModel.fromFav(FavoriteModel fav,{bool isOffered = false}) {
     return BottomSheetModel(
       title: fav.title,
       basePrice: fav.price,

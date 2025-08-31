@@ -61,8 +61,7 @@ class SearchListViewItem extends StatelessWidget {
                                 .copyWith(color: Colors.white),
                           ),
                           Text(
-                            r"$"
-                            "${product.basePrice}",
+                            "\$${product.isOffer ? product.discountPrice : product.basePrice}",
                             style: Theme.of(context).textTheme.titleSmall!
                                 .copyWith(color: Colors.white),
                           ),
@@ -81,6 +80,7 @@ class SearchListViewItem extends StatelessWidget {
                               child: ModalBottomSheetContent(
                                 bottomSheetModel: BottomSheetModel.fromProduct(
                                   product,
+                                  isOffered: product.isOffer,
                                 ),
                               ),
                             ),

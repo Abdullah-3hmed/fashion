@@ -70,6 +70,7 @@ class DiscoverGridReverseItem extends StatelessWidget {
                             (context) => ModalBottomSheetContent(
                               bottomSheetModel: BottomSheetModel.fromProduct(
                                 product,
+                                isOffered: product.isOffer,
                               ),
                             ),
                       );
@@ -93,7 +94,7 @@ class DiscoverGridReverseItem extends StatelessWidget {
                         ),
                         Text(
                           r"$"
-                          "${product.basePrice}",
+                          "\$${product.isOffer ? product.discountPrice : product.basePrice}",
                           style: Theme.of(
                             context,
                           ).textTheme.bodyLarge!.copyWith(color: Colors.white),

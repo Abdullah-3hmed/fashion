@@ -20,6 +20,7 @@ class ProductsSection extends StatelessWidget {
     sizes: "",
     id: "",
     title: "",
+    isOffer: false,
   );
 
   @override

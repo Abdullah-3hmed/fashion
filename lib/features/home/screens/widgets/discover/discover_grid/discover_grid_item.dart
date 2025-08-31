@@ -26,7 +26,7 @@ class DiscoverGridItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: (){
+      onTap: () {
         context.pushRoute(
           ProductDetailsRoute(
             productId: product.id,
@@ -67,7 +67,13 @@ class DiscoverGridItem extends StatelessWidget {
                     onTap: () async {
                       await showModalBottomSheet(
                         context: context,
-                        builder: (context) =>  ModalBottomSheetContent(bottomSheetModel: BottomSheetModel.fromProduct(product),),
+                        builder:
+                            (context) => ModalBottomSheetContent(
+                              bottomSheetModel: BottomSheetModel.fromProduct(
+                                product,
+                                isOffered: product.isOffer,
+                              ),
+                            ),
                       );
                     },
                     child: Icon(
@@ -82,7 +88,7 @@ class DiscoverGridItem extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                        product.title,
+                          product.title,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: Theme.of(
@@ -91,7 +97,7 @@ class DiscoverGridItem extends StatelessWidget {
                         ),
                         Text(
                           r"$"
-                          "${product.basePrice}",
+                          "\$${product.isOffer ? product.discountPrice : product.basePrice}",
                           style: Theme.of(
                             context,
                           ).textTheme.bodyLarge!.copyWith(color: Colors.white),

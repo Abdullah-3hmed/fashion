@@ -24,6 +24,7 @@ class OffersSection extends StatelessWidget {
       colors: "",
       discountPrice: 0.0,
       sizes: "",
+      isOffer: true,
     ),
   );
 
@@ -38,15 +39,14 @@ class OffersSection extends StatelessWidget {
           case RequestStatus.loading:
             return Column(
               children: [
-                const SizedBox(
-                  height: 20.0,
-                ),
+                const SizedBox(height: 20.0),
                 Skeletonizer(
                   child: CarouselSlider(
                     items:
                         dummyOffers
                             .map(
-                              (offer) => HomeCarouselSliderItem(offerModel: offer),
+                              (offer) =>
+                                  HomeCarouselSliderItem(offerModel: offer),
                             )
                             .toList(),
                     options: CarouselOptions(
@@ -60,7 +60,9 @@ class OffersSection extends StatelessWidget {
               ],
             );
           case RequestStatus.success:
-            return  Column(
+            return state.products.offredProducts.isEmpty
+                ? const SizedBox.shrink()
+                : Column(
                   children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,

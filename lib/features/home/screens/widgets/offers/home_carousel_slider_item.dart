@@ -115,6 +115,7 @@ class HomeCarouselSliderItem extends StatelessWidget {
                         isBottomNav: true,
                         bottomSheetModel: BottomSheetModel.fromProduct(
                           offerModel,
+                          isOffered: true,
                         ),
                       ),
                     ),

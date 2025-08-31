@@ -28,6 +28,7 @@ class FavoriteItem extends StatelessWidget {
                 borderRadius: BorderRadiusDirectional.circular(16.0),
                 child: CustomCachedNetworkImage(
                   imageUrl: favoriteModel.image,
+                  height: 180.0,
                 ),
               ),
               PositionedDirectional(

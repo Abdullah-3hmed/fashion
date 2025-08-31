@@ -57,8 +57,7 @@ class SearchGridItem extends StatelessWidget {
                           style: Theme.of(context).textTheme.bodyMedium,
                         ),
                         Text(
-                          r"$"
-                          "${productModel.basePrice}",
+                          "\$${productModel.isOffer ? productModel.discountPrice : productModel.basePrice}",
                           maxLines: 1,
                           style: Theme.of(context).textTheme.bodySmall,
                         ),
@@ -75,6 +74,7 @@ class SearchGridItem extends StatelessWidget {
                           child: ModalBottomSheetContent(
                             bottomSheetModel: BottomSheetModel.fromProduct(
                               productModel,
+                              isOffered: productModel.isOffer,
                             ),
                           ),
                         ),

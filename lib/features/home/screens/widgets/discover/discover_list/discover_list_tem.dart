@@ -22,11 +22,10 @@ class DiscoverListItem extends StatelessWidget {
   final ProductModel product;
   final bool isFirstItem;
 
-
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: (){
+      onTap: () {
         context.pushRoute(
           ProductDetailsRoute(
             productId: product.id,
@@ -72,16 +71,13 @@ class DiscoverListItem extends StatelessWidget {
                               product.title,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
-                              style: Theme.of(
-                                context,
-                              ).textTheme.bodyLarge!.copyWith(color: Colors.white),
+                              style: Theme.of(context).textTheme.bodyLarge!
+                                  .copyWith(color: Colors.white),
                             ),
                             Text(
-                              r"$"
-                              "${product.basePrice}",
-                              style: Theme.of(
-                                context,
-                              ).textTheme.bodyLarge!.copyWith(color: Colors.white),
+                              "\$${product.isOffer ? product.discountPrice : product.basePrice}",
+                              style: Theme.of(context).textTheme.bodyLarge!
+                                  .copyWith(color: Colors.white),
                             ),
                             const SizedBox(width: 16.0),
                           ],
@@ -94,8 +90,12 @@ class DiscoverListItem extends StatelessWidget {
                         await showModalBottomSheet(
                           context: context,
                           builder:
-                              (context) =>
-                                  ModalBottomSheetContent(bottomSheetModel: BottomSheetModel.fromProduct(product),),
+                              (context) => ModalBottomSheetContent(
+                                bottomSheetModel: BottomSheetModel.fromProduct(
+                                  product,
+                                  isOffered: product.isOffer,
+                                ),
+                              ),
                         );
                       },
                       child: Icon(
@@ -115,7 +115,7 @@ class DiscoverListItem extends StatelessWidget {
             child: CircleAvatar(
               radius: 18.0,
               backgroundColor: Colors.white.withValues(alpha: 0.15),
-              child: CustomHeartIcon(productModel: product,),
+              child: CustomHeartIcon(productModel: product),
             ),
           ),
         ],
