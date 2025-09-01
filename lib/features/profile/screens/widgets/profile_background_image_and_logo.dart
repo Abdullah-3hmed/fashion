@@ -36,13 +36,20 @@ class ProfileBackgroundImageAndLogo extends StatelessWidget {
                         ) !=
                         null
                     ? Image.file(
-                      context.read<UserCubit>().state.editUserModel.profileImageFile!,
+                      context
+                          .read<UserCubit>()
+                          .state
+                          .editUserModel
+                          .profileImageFile!,
                       fit: BoxFit.cover,
                     )
                     : CustomCachedNetworkImage(
-                      imageUrl: context.select(
-                        (UserCubit cubit) => cubit.state.userModel.profileImage,
-                      ),
+                      imageUrl:
+                          context
+                              .read<UserCubit>()
+                              .state
+                              .userModel
+                              .profileImage,
                     ),
           ),
           PositionedDirectional(
@@ -54,8 +61,7 @@ class ProfileBackgroundImageAndLogo extends StatelessWidget {
                 BlocConsumer<UserCubit, UserState>(
                   listenWhen:
                       (previous, current) =>
-                          previous.editUserModel !=
-                              current.editUserModel &&
+                          previous.editUserModel != current.editUserModel &&
                           isEditProfileScreen,
                   listener: (context, state) {
                     if (state.editUserRequestStatus.isSuccess) {

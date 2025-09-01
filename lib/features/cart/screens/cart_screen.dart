@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 @RoutePage()
-class CartScreen extends StatelessWidget implements AutoRouteWrapper {
+class CartScreen extends StatefulWidget implements AutoRouteWrapper {
   const CartScreen({super.key});
 
   @override
@@ -20,7 +20,17 @@ class CartScreen extends StatelessWidget implements AutoRouteWrapper {
   }
 
   @override
+  State<CartScreen> createState() => _CartScreenState();
+}
+
+class _CartScreenState extends State<CartScreen>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
+
+  @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Scaffold(
       appBar: AppBar(
         title: Text(

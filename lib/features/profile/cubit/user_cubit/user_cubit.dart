@@ -41,6 +41,7 @@ class UserCubit extends Cubit<UserState> {
 
   Future<void> logOut() async {
     AppConstants.token = "";
+    AppConstants.userId = "";
     await getIt<CacheHelper>().deleteAll();
   }
 
@@ -55,7 +56,7 @@ class UserCubit extends Cubit<UserState> {
           ),
         ),
       );
-      // await editProfile();
+      await editProfile();
     } else {
       return;
     }
@@ -88,7 +89,7 @@ class UserCubit extends Cubit<UserState> {
       (editUserModel) {
         emit(
           state.copyWith(
-            editUserModel: EditUserModel.empty,
+            editUserModel: state.editUserModel.copyWith(profileImageFile: null),
             userModel: state.userModel.copyWith(
               profileImage: editUserModel.profileImage,
               userName: editUserModel.userName,
@@ -136,14 +137,4 @@ class UserCubit extends Cubit<UserState> {
     emit(state.copyWith(userLocation: location));
     debugPrint("location>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>: $location");
   }
-
-  // @override
-  // UserState? fromJson(Map<String, dynamic> json) {
-  //   return UserState(userModel: UserModel.fromJson(json["user_model"]));
-  // }
-  //
-  // @override
-  // Map<String, dynamic>? toJson(UserState state) {
-  //   return {"user_model": state.userModel.toJson()};
-  // }
 }

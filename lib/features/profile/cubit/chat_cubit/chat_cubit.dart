@@ -5,6 +5,7 @@ import 'package:e_fashion_flutter/core/utils/app_constants.dart';
 import 'package:e_fashion_flutter/features/profile/cubit/chat_cubit/chat_state.dart';
 import 'package:e_fashion_flutter/features/profile/data/chat/send_message_model.dart';
 import 'package:e_fashion_flutter/features/profile/repos/chat_repo/chat_repo.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ChatCubit extends Cubit<ChatState> {
@@ -18,12 +19,10 @@ class ChatCubit extends Cubit<ChatState> {
     _listenToSentMessages();
   }
 
-  Future<void> getChatHistory({
-    required String receiverId,
-  }) async {
-    if (state.isFirstLoad ) return;
+  Future<void> getChatHistory({required String receiverId}) async {
+    if (state.isFirstLoad) return;
     emit(state.copyWith(getChatHistoryState: RequestStatus.loading));
-    final result = await chatRepo.getChatHistory(receiverId: receiverId,);
+    final result = await chatRepo.getChatHistory(receiverId: receiverId);
     result.fold(
       (failure) => emit(
         state.copyWith(
@@ -45,17 +44,16 @@ class ChatCubit extends Cubit<ChatState> {
 
   void _listenToMessages() {
     signalrService.listenToMessages((message) {
-      if (message.senderId != AppConstants.userId) {
-        emit(state.copyWith(messages: [...state.messages, message]));
-      }
+      debugPrint("_listenToMessages : ${message.content}");
+      emit(state.copyWith(messages: [...state.messages, message]));
     });
   }
 
   void _listenToSentMessages() {
+
     signalrService.listenToSentMessages((message) {
-      if (message.senderId == AppConstants.userId) {
-        emit(state.copyWith(messages: [...state.messages, message]));
-      }
+      debugPrint("_listenToSentMessages : ${message.content}");
+      emit(state.copyWith(messages: [...state.messages, message]));
     });
   }
 

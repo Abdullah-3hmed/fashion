@@ -24,26 +24,35 @@ class AppCubit extends HydratedCubit<AppState> {
 
   Future<void> checkNotificationPermission() async {
     var status = await Permission.notification.status;
-    if (!status.isGranted) {
+
+    if (status.isDenied) {
       status = await Permission.notification.request();
     }
+
+    if (status.isPermanentlyDenied) {
+      debugPrint("Notification permission permanently denied.");
+      openAppSettings();
+    }
+
     bool granted = status.isGranted;
     debugPrint("Permission granted: $granted");
     emit(state.copyWith(areNotificationsEnabled: granted));
   }
 
-
   Future<void> toggleNotifications({
     required bool isNotificationAllowed,
   }) async {
-    checkNotificationPermission();
-    emit(
-      state.copyWith(
-        areNotificationsEnabled: isNotificationAllowed,
-        hasPendingNotificationUpdate: true,
-      ),
-    );
-    await _syncNotificationStatus();
+    if (isNotificationAllowed) {
+      await checkNotificationPermission();
+    } else {
+      emit(
+        state.copyWith(
+          areNotificationsEnabled: false,
+          hasPendingNotificationUpdate: true,
+        ),
+      );
+      await _syncNotificationStatus();
+    }
   }
 
   Future<void> _syncNotificationStatus() async {

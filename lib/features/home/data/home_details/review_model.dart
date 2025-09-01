@@ -25,8 +25,8 @@ class ReviewModel extends Equatable {
       reviewId: json['id'] ?? "",
       review: json['comment'] ?? "",
       rate: json['rate'] ?? 0,
-      name: json["user"]?['userName'] ?? "",
-      imageUrl: json["user"]?['profilePictureUrl'] ?? "",
+      name: json["user"]?['fullName'] ?? "",
+      imageUrl: json["user"]?['profilePicture'] ?? "",
       createdAt: json['date'] ?? "",
 
     );
