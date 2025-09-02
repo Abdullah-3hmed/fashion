@@ -22,17 +22,29 @@ class UserCubit extends Cubit<UserState> {
   Future<void> getUserProfile() async {
     final result = await userRepo.getUserProfile();
     result.fold(
-      (failure) => emit(
-        state.copyWith(
-          userErrorMessage: failure.errorMessage,
-          userRequestStates: RequestStatus.error,
-        ),
-      ),
+      (failure) {
+        if (!failure.isConnected) {
+          emit(
+            state.copyWith(
+              userErrorMessage: failure.errorMessage,
+              userRequestStates: RequestStatus.error,
+              isConnected: false,
+            ),
+          );
+        }
+        emit(
+          state.copyWith(
+            userErrorMessage: failure.errorMessage,
+            userRequestStates: RequestStatus.error,
+          ),
+        );
+      },
       (userModel) {
         emit(
           state.copyWith(
             userModel: userModel,
             userRequestStates: RequestStatus.success,
+            isConnected: true,
           ),
         );
       },

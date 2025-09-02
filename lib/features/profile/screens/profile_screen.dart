@@ -1,8 +1,12 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:e_fashion_flutter/core/widgets/no_internet_widget.dart';
+import 'package:e_fashion_flutter/features/profile/cubit/user_cubit/user_cubit.dart';
+import 'package:e_fashion_flutter/features/profile/cubit/user_cubit/user_state.dart';
 import 'package:e_fashion_flutter/features/profile/screens/widgets/profile_background_image_and_logo.dart';
 import 'package:e_fashion_flutter/features/profile/screens/widgets/profile_clipped_container.dart';
 import 'package:e_fashion_flutter/features/profile/screens/widgets/profile_container_content.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 @RoutePage()
 class ProfileScreen extends StatefulWidget {
@@ -24,37 +28,53 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ProfileBackgroundImageAndLogo(
-        child: SizedBox(
-          height: 650.0,
-          child: DraggableScrollableSheet(
-            initialChildSize: 0.95,
-            minChildSize: 0.85,
-            builder: (context, scrollController) {
-              return NotificationListener<DraggableScrollableNotification>(
-                onNotification: (notification) {
-                  final newIsClipped = notification.extent < 0.9;
-                  if (newIsClipped != isClippedNotifier.value) {
-                    isClippedNotifier.value = newIsClipped;
-                  }
-                  return true;
-                },
-                child: ValueListenableBuilder<bool>(
-                  valueListenable: isClippedNotifier,
-                  child: ProfileContainerContent(
-                    controller: scrollController,
+      body: BlocSelector<UserCubit, UserState, bool>(
+        selector: (state) => state.isConnected,
+        builder: (context, bool isConnected) {
+          return isConnected
+              ? ProfileBackgroundImageAndLogo(
+                child: SizedBox(
+                  height: 650.0,
+                  child: DraggableScrollableSheet(
+                    initialChildSize: 0.95,
+                    minChildSize: 0.85,
+                    builder: (context, scrollController) {
+                      return NotificationListener<
+                        DraggableScrollableNotification
+                      >(
+                        onNotification: (notification) {
+                          final newIsClipped = notification.extent < 0.9;
+                          if (newIsClipped != isClippedNotifier.value) {
+                            isClippedNotifier.value = newIsClipped;
+                          }
+                          return true;
+                        },
+                        child: ValueListenableBuilder<bool>(
+                          valueListenable: isClippedNotifier,
+                          child: ProfileContainerContent(
+                            controller: scrollController,
+                          ),
+                          builder: (context, isClipped, child) {
+                            return ProfileClippedContainer(
+                              isClipped: isClipped,
+                              child: child!,
+                            );
+                          },
+                        ),
+                      );
+                    },
                   ),
-                  builder: (context, isClipped, child) {
-                    return ProfileClippedContainer(
-                      isClipped: isClipped,
-                      child: child!,
-                    );
-                  },
+                ),
+              )
+              : NoInternetWidget(
+                onPressed: () async {
+                  await context.read<UserCubit>().getUserProfile();
+                },
+                errorMessage: context.select(
+                  (UserCubit cubit) => cubit.state.userErrorMessage,
                 ),
               );
-            },
-          ),
-        ),
+        },
       ),
     );
   }

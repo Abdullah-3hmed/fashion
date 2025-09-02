@@ -13,6 +13,8 @@ class UserState extends Equatable {
   final String changePasswordMessage;
   final RequestStatus changePasswordRequestStatus;
   final String userLocation;
+  final bool isConnected;
+  
 
   const UserState({
     this.userModel = UserModel.empty,
@@ -24,6 +26,7 @@ class UserState extends Equatable {
     this.changePasswordMessage = "",
     this.changePasswordRequestStatus = RequestStatus.initial,
     this.userLocation = "",
+    this.isConnected = true,
   });
 
   UserState copyWith({
@@ -36,6 +39,7 @@ class UserState extends Equatable {
     String? changePasswordMessage,
     RequestStatus? changePasswordRequestStatus,
     String? userLocation,
+    bool? isConnected,
   }) {
     return UserState(
       userModel: userModel ?? this.userModel,
@@ -50,11 +54,12 @@ class UserState extends Equatable {
       changePasswordRequestStatus:
           changePasswordRequestStatus ?? this.changePasswordRequestStatus,
       userLocation: userLocation ?? this.userLocation,
+      isConnected: isConnected ?? this.isConnected,
     );
   }
 
   @override
-  List<Object?> get props => [
+  List<Object> get props => [
     userModel,
     userErrorMessage,
     userRequestStates,
@@ -64,5 +69,6 @@ class UserState extends Equatable {
     changePasswordMessage,
     changePasswordRequestStatus,
     userLocation,
+    isConnected,
   ];
 }

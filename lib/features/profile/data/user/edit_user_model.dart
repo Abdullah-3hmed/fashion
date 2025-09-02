@@ -46,7 +46,6 @@ class EditUserModel extends Equatable {
     email: '',
     userName: '',
     phone: '',
-    profileImageFile: null,
   );
 
   EditUserModel copyWith({File? profileImageFile}) => EditUserModel(

@@ -1,8 +1,6 @@
 import 'package:e_fashion_flutter/config/router/app_router.dart';
 import 'package:e_fashion_flutter/core/local/cache_helper.dart';
 import 'package:e_fashion_flutter/core/network/dio_helper.dart';
-import 'package:e_fashion_flutter/core/network/network_info.dart';
-import 'package:e_fashion_flutter/core/notifications/fcm_helper.dart';
 import 'package:e_fashion_flutter/core/services/location_service.dart';
 import 'package:e_fashion_flutter/core/services/signalr_service.dart';
 import 'package:e_fashion_flutter/features/admin/admin_repo/admin_repo.dart';

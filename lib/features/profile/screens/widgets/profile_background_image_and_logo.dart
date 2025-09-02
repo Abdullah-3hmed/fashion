@@ -64,7 +64,8 @@ class ProfileBackgroundImageAndLogo extends StatelessWidget {
                           previous.editUserModel != current.editUserModel &&
                           isEditProfileScreen,
                   listener: (context, state) {
-                    if (state.editUserRequestStatus.isSuccess) {
+                    if (state.editUserRequestStatus.isSuccess &&
+                        isEditProfileScreen) {
                       showToast(
                         message: "Profile Updated Successfully",
                         state: ToastStates.success,
