@@ -1,7 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:e_fashion_flutter/core/enums/request_status.dart';
 import 'package:e_fashion_flutter/core/utils/show_toast.dart';
-import 'package:e_fashion_flutter/core/utils/toast_states.dart';
 import 'package:e_fashion_flutter/core/widgets/primary_button.dart';
 import 'package:e_fashion_flutter/features/cart/cubit/cart_cubit/cart_cubit.dart';
 import 'package:e_fashion_flutter/features/cart/cubit/cart_cubit/cart_state.dart';

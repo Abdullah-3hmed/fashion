@@ -5,7 +5,6 @@ import 'package:e_fashion_flutter/config/router/app_router.dart';
 import 'package:e_fashion_flutter/core/enums/request_status.dart';
 import 'package:e_fashion_flutter/core/services/service_locator.dart';
 import 'package:e_fashion_flutter/core/utils/show_toast.dart';
-import 'package:e_fashion_flutter/core/utils/toast_states.dart';
 import 'package:e_fashion_flutter/features/cart/cubit/cart_cubit/cart_cubit.dart';
 import 'package:e_fashion_flutter/features/cart/cubit/payment_cubit/payment_cubit.dart';
 import 'package:e_fashion_flutter/features/cart/cubit/payment_cubit/payment_state.dart';

@@ -49,7 +49,7 @@ class CollectionsPageViewItem extends StatelessWidget {
                 ),
                 const SizedBox(height: 8.0),
                 Text(
-                  "50% OFF",
+                  collection.description,
                   style: Theme.of(
                     context,
                   ).textTheme.displayLarge!.copyWith(color: Colors.white),

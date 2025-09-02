@@ -7,7 +7,7 @@ import 'package:e_fashion_flutter/features/favourite/cubit/favorite_cubit.dart';
 import 'package:e_fashion_flutter/features/home/cubit/home_cubit/home_cubit.dart';
 import 'package:e_fashion_flutter/features/home/cubit/home_cubit/home_state.dart';
 import 'package:e_fashion_flutter/features/home/screens/widgets/category/category_section.dart';
-import 'package:e_fashion_flutter/features/home/screens/widgets/home_header/home_header_bloc_builder.dart';
+import 'package:e_fashion_flutter/features/home/screens/widgets/home_banner/home_banners.dart';
 import 'package:e_fashion_flutter/features/home/screens/widgets/offers/offers_section.dart';
 import 'package:e_fashion_flutter/features/home/screens/widgets/products/products_section.dart';
 import 'package:e_fashion_flutter/features/profile/cubit/chat_cubit/chat_cubit.dart';
@@ -54,7 +54,7 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
               ? const CustomScrollView(
                 physics: BouncingScrollPhysics(),
                 slivers: [
-                  SliverToBoxAdapter(child: HomeHeaderBlocBuilder()),
+                  SliverToBoxAdapter(child: CollectionSection()),
                   SliverToBoxAdapter(child: CategorySection()),
                   SliverToBoxAdapter(child: OffersSection()),
                   ProductsSection(),
