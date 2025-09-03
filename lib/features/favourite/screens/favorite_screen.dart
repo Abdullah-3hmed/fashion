@@ -16,13 +16,7 @@ class _FavoriteScreenState extends State<FavoriteScreen>
     with AutomaticKeepAliveClientMixin {
   @override
   bool get wantKeepAlive => true;
-@override
-  void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<FavoriteCubit>().getFavorites();
-    });
-    super.initState();
-  }
+
   @override
   Widget build(BuildContext context) {
     super.build(context);

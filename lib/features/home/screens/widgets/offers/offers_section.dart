@@ -32,8 +32,7 @@ class OffersSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<HomeCubit, HomeState>(
       buildWhen:
-          (previous, current) =>
-              previous.offersState != current.offersState,
+          (previous, current) => previous.offersState != current.offersState && previous.offersModel.offers.isEmpty,
       builder: (context, state) {
         switch (state.offersState) {
           case RequestStatus.loading:
@@ -79,10 +78,12 @@ class OffersSection extends StatelessWidget {
                                 ),
                           ),
                           onPressed: () {
-                            context.pushRoute( DiscoverRoute(
-                              isOffer: true,
-                              homeCubit: context.read<HomeCubit>(),
-                            ));
+                            context.pushRoute(
+                              DiscoverRoute(
+                                isOffer: true,
+                                homeCubit: context.read<HomeCubit>(),
+                              ),
+                            );
                           },
                           child: Text(
                             "Discover",

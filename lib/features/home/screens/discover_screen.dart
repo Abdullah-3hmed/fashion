@@ -11,10 +11,15 @@ import 'package:solar_icons/solar_icons.dart';
 
 @RoutePage()
 class DiscoverScreen extends StatefulWidget {
-  const DiscoverScreen({super.key, this.isOffer = false, this.brand = "", required this.homeCubit});
+  const DiscoverScreen({
+    super.key,
+    this.isOffer = false,
+    this.brand = "",
+    required this.homeCubit,
+  });
 
   final bool isOffer;
-final HomeCubit homeCubit;
+  final HomeCubit homeCubit;
   final String brand;
 
   @override
@@ -40,7 +45,7 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
       if (widget.isOffer) {
         widget.homeCubit.loadMoreOffers();
       } else {
-        widget.homeCubit.loadMoreProducts(widget.brand);
+        widget.homeCubit.loadMoreProducts();
       }
     }
   }
@@ -62,7 +67,7 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Discover", style: Theme.of(context).textTheme.titleMedium),
+        title: Text("Discover ${widget.brand}", style: Theme.of(context).textTheme.titleMedium),
         actions: [
           IconButton(
             onPressed: () => isGrid.value = false,
@@ -93,16 +98,14 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
                 child: BlocBuilder<HomeCubit, HomeState>(
                   buildWhen:
                       (prev, curr) =>
-                          prev.productsModel != curr.productsModel ||
                           prev.offersModel != curr.offersModel ||
-                          prev.productsState != curr.productsState ||
                           prev.offersState != curr.offersState,
                   builder: (context, state) {
                     final List<ProductModel> discoverList =
                         widget.isOffer
                             ? state.offersModel.offers
                             : state.productsModel.groupedBrandProducts[widget
-                            .brand] ??
+                                    .brand] ??
                                 [];
 
                     final RequestStatus status =

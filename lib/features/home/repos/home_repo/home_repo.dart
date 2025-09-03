@@ -20,14 +20,12 @@ abstract class HomeRepo {
     required int? gender,
     required int? category,
     int page = 1,
-    int pageSize = 20,
   });
 
   Future<Either<Failure, OffersModel>> getOffers({
     required int? gender,
     required int? category,
     int page = 1,
-    int pageSize = 20,
   });
 
   List<CategoryModel> getCategoriesList();

@@ -40,13 +40,17 @@ class _CategorySectionState extends State<CategorySection> {
                           current.categoryActiveIndex ||
                       previous.genderActiveIndex != current.genderActiveIndex,
               builder: (context, state) {
-                return state.genderActiveIndex != -1 || state.categoryActiveIndex != -1
+                return state.genderActiveIndex != -1 ||
+                        state.categoryActiveIndex != -1
                     ? SlideAnimation(
                       duration: const Duration(milliseconds: 300),
                       begin: const Offset(1.0, 0.0),
                       child: ThirdButton(
                         onPressed: () async {
-                          await context.read<HomeCubit>().getProducts();
+                          await Future.wait([
+                            context.read<HomeCubit>().getOffers(),
+                            context.read<HomeCubit>().getProducts(),
+                          ]);
                         },
                         text: "Apply",
                       ),

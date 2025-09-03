@@ -37,6 +37,18 @@ class _HomeScreenState extends State<HomeScreen>
   bool get wantKeepAlive => true;
 
   @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Future.delayed(const Duration(milliseconds: 300), () {
+       if(mounted){
+         context.read<CartCubit>().getCartItems();
+         context.read<FavoriteCubit>().getFavorites();
+         context.read<UserCubit>().getUserProfile();
+       }
+      });
+    });
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     super.build(context);

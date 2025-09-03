@@ -66,7 +66,7 @@ class HomeCubit extends Cubit<HomeState> {
     );
   }
 
-  Future<void> getProducts({int page = 1, String brand = ""}) async {
+  Future<void> getProducts({int page = 1}) async {
     emit(
       state.copyWith(productsState: RequestStatus.loading, productsPage: page),
     );
@@ -89,7 +89,6 @@ class HomeCubit extends Cubit<HomeState> {
             Map<String, List<ProductModel>>.from(
               state.productsModel.groupedBrandProducts,
             );
-
         if (page == 1) {
           emit(
             state.copyWith(
@@ -99,12 +98,11 @@ class HomeCubit extends Cubit<HomeState> {
             ),
           );
         } else {
-          final oldList = currentGrouped[brand] ?? <ProductModel>[];
-          final List<ProductModel> newList = [
-            ...oldList,
-            ...(products.groupedBrandProducts[brand] ?? <ProductModel>[])
-          ];
-          currentGrouped[brand] = newList;
+          products.groupedBrandProducts.forEach((brand, newList) {
+            final List<ProductModel> oldList = currentGrouped[brand] ?? <ProductModel>[];
+            currentGrouped[brand] = [...oldList, ...newList];
+          });
+
           emit(
             state.copyWith(
               productsModel: state.productsModel.copyWith(
@@ -152,14 +150,14 @@ class HomeCubit extends Cubit<HomeState> {
     );
   }
 
-  Future<void> loadMoreProducts(String brand) async {
-    if (state.productsPage >= state.productsModel.totalPages) return;
+  Future<void> loadMoreProducts() async {
+    if (state.productsPage >= state.productsModel.totalPages || state.productsState.isLoading) return;
 
-    await getProducts(page: state.productsPage + 1, brand: brand);
+    await getProducts(page: state.productsPage + 1);
   }
 
   Future<void> loadMoreOffers() async {
-    if (state.offersPage >= state.offersModel.totalPages) return;
+    if (state.offersPage >= state.offersModel.totalPages || state.offersState.isLoading) return;
 
     await getOffers(page: state.offersPage + 1);
   }

@@ -28,7 +28,7 @@ class ProductsSection extends StatelessWidget {
     return BlocBuilder<HomeCubit, HomeState>(
       buildWhen:
           (previous, current) =>
-              previous.productsState != current.productsState,
+              previous.productsState != current.productsState && previous.productsModel.groupedBrandProducts.isEmpty,
       builder: (context, state) {
         switch (state.productsState) {
           case RequestStatus.loading:

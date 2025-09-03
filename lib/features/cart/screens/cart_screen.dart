@@ -28,13 +28,7 @@ class _CartScreenState extends State<CartScreen>
     with AutomaticKeepAliveClientMixin {
   @override
   bool get wantKeepAlive => true;
-@override
-  void initState() {
- WidgetsBinding.instance.addPostFrameCallback((_) {
-   context.read<CartCubit>().getCartItems();
- });
-    super.initState();
-  }
+
   @override
   Widget build(BuildContext context) {
     super.build(context);
