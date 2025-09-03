@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:e_fashion_flutter/core/services/service_locator.dart';
+import 'package:e_fashion_flutter/features/cart/cubit/cart_cubit/cart_cubit.dart';
 import 'package:e_fashion_flutter/features/cart/cubit/payment_cubit/payment_cubit.dart';
 import 'package:e_fashion_flutter/features/cart/screens/widgets/cart_items_list.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +28,13 @@ class _CartScreenState extends State<CartScreen>
     with AutomaticKeepAliveClientMixin {
   @override
   bool get wantKeepAlive => true;
-
+@override
+  void initState() {
+ WidgetsBinding.instance.addPostFrameCallback((_) {
+   context.read<CartCubit>().getCartItems();
+ });
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     super.build(context);

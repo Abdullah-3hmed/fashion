@@ -5,6 +5,7 @@ import 'package:e_fashion_flutter/core/utils/app_constants.dart';
 import 'package:e_fashion_flutter/features/home/cubit/home_cubit/home_state.dart';
 import 'package:e_fashion_flutter/features/home/data/home_details/review_model.dart';
 import 'package:e_fashion_flutter/features/home/repos/home_repo/home_repo.dart';
+import 'package:e_fashion_flutter/shared/data/product_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomeCubit extends Cubit<HomeState> {
@@ -14,8 +15,8 @@ class HomeCubit extends Cubit<HomeState> {
   Future<void> getCollections() async {
     emit(
       state.copyWith(
-        isConnected: true,
         collectionsStatus: RequestStatus.loading,
+        isConnected: true,
       ),
     );
     final result = await homeRepo.getCollections();
@@ -29,14 +30,13 @@ class HomeCubit extends Cubit<HomeState> {
               isConnected: false,
             ),
           );
-        } else {
-          emit(
-            state.copyWith(
-              collectionsErrorMessage: failure.errorMessage,
-              collectionsStatus: RequestStatus.error,
-            ),
-          );
         }
+        emit(
+          state.copyWith(
+            collectionsErrorMessage: failure.errorMessage,
+            collectionsStatus: RequestStatus.error,
+          ),
+        );
       },
       (collections) => emit(
         state.copyWith(
@@ -66,12 +66,17 @@ class HomeCubit extends Cubit<HomeState> {
     );
   }
 
-  Future<void> getProducts() async {
-    emit(state.copyWith(productsState: RequestStatus.loading));
+  Future<void> getProducts({int page = 1, String brand = ""}) async {
+    emit(
+      state.copyWith(productsState: RequestStatus.loading, productsPage: page),
+    );
+
     final result = await homeRepo.getProducts(
       category: state.selectedCategoryId,
       gender: state.gender,
+      page: page,
     );
+
     result.fold(
       (failure) => emit(
         state.copyWith(
@@ -79,19 +84,93 @@ class HomeCubit extends Cubit<HomeState> {
           productsState: RequestStatus.error,
         ),
       ),
-      (products) => emit(
+      (products) {
+        final Map<String, List<ProductModel>> currentGrouped =
+            Map<String, List<ProductModel>>.from(
+              state.productsModel.groupedBrandProducts,
+            );
+
+        if (page == 1) {
+          emit(
+            state.copyWith(
+              productsModel: products,
+              productsState: RequestStatus.success,
+              productsPage: 1,
+            ),
+          );
+        } else {
+          final oldList = currentGrouped[brand] ?? <ProductModel>[];
+          final List<ProductModel> newList = [
+            ...oldList,
+            ...(products.groupedBrandProducts[brand] ?? <ProductModel>[])
+          ];
+          currentGrouped[brand] = newList;
+          emit(
+            state.copyWith(
+              productsModel: state.productsModel.copyWith(
+                groupedBrandProducts: currentGrouped,
+                totalPages: products.totalPages,
+              ),
+              productsPage: page,
+              productsState: RequestStatus.success,
+            ),
+          );
+        }
+      },
+    );
+  }
+
+  Future<void> getOffers({int page = 1}) async {
+    emit(state.copyWith(offersState: RequestStatus.loading, offersPage: page));
+
+    final result = await homeRepo.getOffers(
+      category: state.selectedCategoryId,
+      gender: state.gender,
+      page: page,
+    );
+
+    result.fold(
+      (failure) => emit(
         state.copyWith(
-          products: products,
-          productsState: RequestStatus.success,
-          genderActiveIndex: -1,
-          categoryActiveIndex: -1,
+          offersErrorMessage: failure.errorMessage,
+          offersState: RequestStatus.error,
+        ),
+      ),
+      (offers) => emit(
+        state.copyWith(
+          offersModel:
+              page == 1
+                  ? offers
+                  : state.offersModel.copyWith(
+                    offers: [...state.offersModel.offers, ...offers.offers],
+                    totalPages: offers.totalPages,
+                  ),
+          offersState: RequestStatus.success,
+          offersPage: page,
         ),
       ),
     );
   }
 
+  Future<void> loadMoreProducts(String brand) async {
+    if (state.productsPage >= state.productsModel.totalPages) return;
+
+    await getProducts(page: state.productsPage + 1, brand: brand);
+  }
+
+  Future<void> loadMoreOffers() async {
+    if (state.offersPage >= state.offersModel.totalPages) return;
+
+    await getOffers(page: state.offersPage + 1);
+  }
+
   Future<void> getAllHomeData() async {
-    await Future.wait([getCollections(), getCategories(), getProducts()]);
+    await Future.wait([
+      getCollections(),
+      getCategories(),
+      getOffers(),
+      getProducts(),
+    ]);
   }
 
   void selectCategory({required int categoryId}) {

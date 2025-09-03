@@ -62,7 +62,7 @@ class ProductsSection extends StatelessWidget {
           case RequestStatus.success:
             return SliverList(
               delegate: SliverChildListDelegate(
-                state.products.groupedBrandProducts.entries
+                state.productsModel.groupedBrandProducts.entries
                     .where((entry) => entry.value.isNotEmpty)
                     .map(
                       (entry) => BrandSection(

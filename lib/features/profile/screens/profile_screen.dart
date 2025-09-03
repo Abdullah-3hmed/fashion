@@ -18,7 +18,11 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   final ValueNotifier<bool> isClippedNotifier = ValueNotifier<bool>(true);
-
+@override
+  void initState() {
+   context.read<UserCubit>().getUserProfile();
+    super.initState();
+  }
   @override
   void dispose() {
     isClippedNotifier.dispose();

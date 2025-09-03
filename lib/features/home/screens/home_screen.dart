@@ -31,18 +31,12 @@ class HomeScreen extends StatefulWidget implements AutoRouteWrapper {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMixin {
+class _HomeScreenState extends State<HomeScreen>
+    with AutomaticKeepAliveClientMixin {
   @override
   bool get wantKeepAlive => true;
+
   @override
-  void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<CartCubit>().getCartItems();
-      context.read<FavoriteCubit>().getFavorites();
-      context.read<UserCubit>().getUserProfile();
-    });
-    super.initState();
-  }
   @override
   Widget build(BuildContext context) {
     super.build(context);
@@ -67,7 +61,6 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
                 ),
                 onPressed: () async {
                   await _getAllAppData(context);
-
                 },
               );
         },
@@ -88,5 +81,4 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
     await cartCubit.getCartItems();
     await userCubit.getUserProfile();
   }
-
 }

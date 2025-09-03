@@ -19,6 +19,7 @@ class ApiConstants {
       "/Products/$productId";
   static const String addReviewEndpoint = "/Products/AddReview";
   static const String getProductsEndPoint = "/Home";
+  static const String getOffersEndPoint = "/Home/offeredProducts";
 
   /// profile endpoints >>>>>>>>>>>>>>>>>>>>
   static const String getProfileEndpoint = "/Profile/get-user";

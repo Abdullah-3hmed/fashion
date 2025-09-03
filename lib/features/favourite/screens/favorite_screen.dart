@@ -1,6 +1,8 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:e_fashion_flutter/features/favourite/cubit/favorite_cubit.dart';
 import 'package:e_fashion_flutter/features/favourite/screens/widgets/favorite_grid_view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 @RoutePage()
 class FavoriteScreen extends StatefulWidget {
@@ -14,7 +16,13 @@ class _FavoriteScreenState extends State<FavoriteScreen>
     with AutomaticKeepAliveClientMixin {
   @override
   bool get wantKeepAlive => true;
-
+@override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<FavoriteCubit>().getFavorites();
+    });
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     super.build(context);

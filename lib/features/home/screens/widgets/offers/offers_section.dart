@@ -33,9 +33,9 @@ class OffersSection extends StatelessWidget {
     return BlocBuilder<HomeCubit, HomeState>(
       buildWhen:
           (previous, current) =>
-              previous.productsState != current.productsState,
+              previous.offersState != current.offersState,
       builder: (context, state) {
-        switch (state.productsState) {
+        switch (state.offersState) {
           case RequestStatus.loading:
             return Column(
               children: [
@@ -60,7 +60,7 @@ class OffersSection extends StatelessWidget {
               ],
             );
           case RequestStatus.success:
-            return state.products.offredProducts.isEmpty
+            return state.offersModel.offers.isEmpty
                 ? const SizedBox.shrink()
                 : Column(
                   children: [
@@ -79,12 +79,10 @@ class OffersSection extends StatelessWidget {
                                 ),
                           ),
                           onPressed: () {
-                            context.pushRoute(
-                              DiscoverRoute(
-                                productsDiscoverList:
-                                    state.products.offredProducts,
-                              ),
-                            );
+                            context.pushRoute( DiscoverRoute(
+                              isOffer: true,
+                              homeCubit: context.read<HomeCubit>(),
+                            ));
                           },
                           child: Text(
                             "Discover",
@@ -99,7 +97,7 @@ class OffersSection extends StatelessWidget {
                     ),
                     CarouselSlider(
                       items:
-                          state.products.offredProducts
+                          state.offersModel.offers
                               .map(
                                 (offer) =>
                                     HomeCarouselSliderItem(offerModel: offer),
@@ -107,7 +105,7 @@ class OffersSection extends StatelessWidget {
                               .toList(),
                       options: CarouselOptions(
                         enlargeCenterPage: true,
-                        initialPage: state.products.offredProducts.length ~/ 2,
+                        initialPage: state.offersModel.offers.length ~/ 2,
                         viewportFraction: 0.70,
                         enableInfiniteScroll: false,
                       ),

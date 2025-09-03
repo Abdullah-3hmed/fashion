@@ -1,24 +1,42 @@
+import 'package:e_fashion_flutter/core/enums/request_status.dart';
 import 'package:e_fashion_flutter/features/home/screens/widgets/discover/discover_list/discover_list_tem.dart';
 import 'package:e_fashion_flutter/shared/data/product_model.dart';
 import 'package:flutter/material.dart';
 
 class DiscoverListView extends StatelessWidget {
-  const DiscoverListView({super.key, required this.discoverList});
+  const DiscoverListView({
+    super.key,
+    required this.discoverList,
+    required this.controller,
+    required this.status,
+  });
 
   final List<ProductModel> discoverList;
+  final ScrollController controller;
+  final RequestStatus status;
 
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
-      key: const ValueKey('list'),
+      controller: controller,
       physics: const BouncingScrollPhysics(),
-      itemBuilder:
-          (context, index) => DiscoverListItem(
-            isFirstItem: index == 0,
-            product: discoverList[index],
-          ),
+      itemCount: discoverList.length + 1,
+      itemBuilder: (context, index) {
+        if (index == discoverList.length) {
+          if (status.isLoading) {
+            return const Padding(
+              padding: EdgeInsets.all(16.0),
+              child: Center(child: CircularProgressIndicator()),
+            );
+          }
+          return const SizedBox.shrink();
+        }
+        return DiscoverListItem(
+          isFirstItem: index == 0,
+          product: discoverList[index],
+        );
+      },
       separatorBuilder: (_, __) => const SizedBox(height: 16.0),
-      itemCount: discoverList.length,
     );
   }
 }

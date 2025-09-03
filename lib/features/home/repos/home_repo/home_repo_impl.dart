@@ -10,6 +10,7 @@ import 'package:e_fashion_flutter/core/utils/app_constants.dart';
 import 'package:e_fashion_flutter/features/home/data/home/category_model.dart';
 import 'package:e_fashion_flutter/features/home/data/home/collection_details_model.dart';
 import 'package:e_fashion_flutter/features/home/data/home/collection_model.dart';
+import 'package:e_fashion_flutter/features/home/data/home/offers_model.dart';
 import 'package:e_fashion_flutter/features/home/data/home/products_model.dart';
 import 'package:e_fashion_flutter/features/home/data/home_details/review_model.dart';
 import 'package:e_fashion_flutter/features/home/repos/home_repo/home_repo.dart';
@@ -101,8 +102,13 @@ class HomeRepoImpl implements HomeRepo {
   Future<Either<Failure, ProductsModel>> getProducts({
     required int? gender,
     required int? category,
+    int page = 1,
+    int pageSize = 20,
   }) async {
-    Map<String, dynamic> queryParameters = {};
+    Map<String, dynamic> queryParameters = {
+      "pageIndex": page,
+      "pageSize": pageSize,
+    };
     if (gender != null) {
       queryParameters['ProductType'] = gender;
     }
@@ -117,6 +123,41 @@ class HomeRepoImpl implements HomeRepo {
       );
       if (response.statusCode == 200) {
         return Right(ProductsModel.fromJson(response.data));
+      }
+      throw ServerException(errorModel: ErrorModel.fromJson(response.data));
+    } on DioException catch (e) {
+      return Left(ServerFailure.fromDioError(e));
+    } on ServerException catch (e) {
+      return Left(ServerFailure(e.errorModel.errors.join(" \n")));
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
+  @override
+  Future<Either<Failure, OffersModel>> getOffers({
+    required int? gender,
+    required int? category,
+    int page = 1,
+    int pageSize = 20,
+  }) async {
+    Map<String, dynamic> queryParameters = {
+      "pageIndex": page,
+      "pageSize": pageSize,
+    };
+    if (gender != null) {
+      queryParameters['ProductType'] = gender;
+    }
+    if (category != null) {
+      queryParameters['CategoryId'] = category;
+    }
+    try {
+      final response = await dioHelper.get(
+        url: ApiConstants.getOffersEndPoint,
+        headers: {"Authorization": "Bearer ${AppConstants.token}"},
+        queryParameters: queryParameters,
+      );
+      if (response.statusCode == 200) {
+        return Right(OffersModel.fromJson(response.data));
       }
       throw ServerException(errorModel: ErrorModel.fromJson(response.data));
     } on DioException catch (e) {

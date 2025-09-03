@@ -1,24 +1,59 @@
 import 'package:auto_route/annotations.dart';
+import 'package:e_fashion_flutter/core/enums/request_status.dart';
+import 'package:e_fashion_flutter/features/home/cubit/home_cubit/home_cubit.dart';
+import 'package:e_fashion_flutter/features/home/cubit/home_cubit/home_state.dart';
 import 'package:e_fashion_flutter/features/home/screens/widgets/discover/discover_grid_view.dart';
 import 'package:e_fashion_flutter/features/home/screens/widgets/discover/discover_list_view.dart';
 import 'package:e_fashion_flutter/shared/data/product_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:solar_icons/solar_icons.dart';
 
 @RoutePage()
 class DiscoverScreen extends StatefulWidget {
-  const DiscoverScreen({super.key, required this.productsDiscoverList,});
+  const DiscoverScreen({super.key, this.isOffer = false, this.brand = "", required this.homeCubit});
 
-  final List<ProductModel> productsDiscoverList;
+  final bool isOffer;
+final HomeCubit homeCubit;
+  final String brand;
+
   @override
   State<DiscoverScreen> createState() => _DiscoverScreenState();
 }
 
 class _DiscoverScreenState extends State<DiscoverScreen> {
   final ValueNotifier<bool> isGrid = ValueNotifier<bool>(false);
+  late final ScrollController _scrollController;
+  bool _isLoadingMore = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController = ScrollController()..addListener(_onScroll);
+  }
+
+  void _onScroll() {
+    if (_isLoadingMore || !_scrollController.hasClients) return;
+    if (_scrollController.position.pixels >=
+        _scrollController.position.maxScrollExtent - 200) {
+      _isLoadingMore = true;
+      if (widget.isOffer) {
+        widget.homeCubit.loadMoreOffers();
+      } else {
+        widget.homeCubit.loadMoreProducts(widget.brand);
+      }
+    }
+  }
+
+  void _resetLoading(RequestStatus status) {
+    if (_isLoadingMore && (status.isSuccess || status.isError)) {
+      _isLoadingMore = false;
+    }
+  }
 
   @override
   void dispose() {
+    _scrollController.dispose();
     isGrid.dispose();
     super.dispose();
   }
@@ -30,15 +65,11 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
         title: Text("Discover", style: Theme.of(context).textTheme.titleMedium),
         actions: [
           IconButton(
-            onPressed: () {
-              isGrid.value = false;
-            },
+            onPressed: () => isGrid.value = false,
             icon: const Icon(SolarIconsOutline.stop),
           ),
           IconButton(
-            onPressed: () {
-              isGrid.value = true;
-            },
+            onPressed: () => isGrid.value = true,
             icon: const Icon(SolarIconsOutline.pause),
           ),
         ],
@@ -57,14 +88,47 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
                 ).animate(animation);
                 return SlideTransition(position: offsetAnimation, child: child);
               },
-              child: value
-                  ? DiscoverGridView(
-                key: const ValueKey('grid'),
-                discoverList: widget.productsDiscoverList,
-              )
-                  : DiscoverListView(
-                key: const ValueKey('list'),
-                discoverList: widget.productsDiscoverList,
+              child: BlocProvider.value(
+                value: widget.homeCubit,
+                child: BlocBuilder<HomeCubit, HomeState>(
+                  buildWhen:
+                      (prev, curr) =>
+                          prev.productsModel != curr.productsModel ||
+                          prev.offersModel != curr.offersModel ||
+                          prev.productsState != curr.productsState ||
+                          prev.offersState != curr.offersState,
+                  builder: (context, state) {
+                    final List<ProductModel> discoverList =
+                        widget.isOffer
+                            ? state.offersModel.offers
+                            : state.productsModel.groupedBrandProducts[widget
+                            .brand] ??
+                                [];
+
+                    final RequestStatus status =
+                        widget.isOffer
+                            ? state.offersState
+                            : state.productsState;
+
+                    _resetLoading(status);
+
+                    if (value) {
+                      return DiscoverGridView(
+                        key: const ValueKey('grid'),
+                        discoverList: discoverList,
+                        controller: _scrollController,
+                        status: status,
+                      );
+                    } else {
+                      return DiscoverListView(
+                        key: const ValueKey('list'),
+                        discoverList: discoverList,
+                        controller: _scrollController,
+                        status: status,
+                      );
+                    }
+                  },
+                ),
               ),
             );
           },
