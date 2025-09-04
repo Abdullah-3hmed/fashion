@@ -19,7 +19,7 @@ class DioHelper {
     _dio = Dio(options);
     _dio.interceptors.addAll([
       CustomInterceptors(),
-      PrettyDioLogger(requestHeader: true, requestBody: true),
+      PrettyDioLogger(requestHeader: true, requestBody: true,),
     ]);
   }
 

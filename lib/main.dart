@@ -11,10 +11,18 @@ import 'package:e_fashion_flutter/firebase_options.dart';
 import 'package:e_fashion_flutter/my_app.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
 
 void main() async {
+  await appSetup();
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+  ]).then((_) => runApp(const MyApp()));
+}
+
+Future<void> appSetup() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   HydratedBloc.storage = await HydratedStorage.build(
@@ -26,19 +34,13 @@ void main() async {
   ServiceLocator().init();
   await FcmInitHelper.initAwesomeNotification();
   DioHelper.init();
-  final cache = getIt<CacheHelper>();
 
-  final storedToken = await cache.readData(key: "token");
-  final storedUserId = await cache.readData(key: "user_id");
+  AppConstants.token = await getIt<CacheHelper>().readData(key: "token") ?? "";
+  AppConstants.userId =
+      await getIt<CacheHelper>().readData(key: "user_id") ?? "";
 
-  AppConstants.token = storedToken ?? "";
-  AppConstants.userId = storedUserId ?? "";
-
-  debugPrint("Init userId: ${AppConstants.userId}");
-  debugPrint("Init user token: ${AppConstants.token}");
   Bloc.observer = MyBlocObserver();
   await FcmInitHelper.initFirebaseMessagingListeners();
   await FcmInitHelper.setAwesomeNotificationListeners();
   await FcmInitHelper.handleInitialMessage();
-  runApp(const MyApp());
 }

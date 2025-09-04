@@ -45,7 +45,7 @@ dependencies:
   flutter_rating_bar: ^4.0.1
   easy_stepper: ^0.8.5+1
   iconsax: ^0.0.8
-  syncfusion_flutter_sliders: ^29.1.38
+  syncfusion_flutter_sliders: ^30.2.7
   intl: ^0.20.2
   dio: ^5.8.0+1
   pretty_dio_logger: ^1.4.0
@@ -53,8 +53,8 @@ dependencies:
   dartz: ^0.10.1
   flutter_bloc: ^9.1.0
   bloc: ^9.0.0
-  firebase_core: ^3.15.2
-  firebase_messaging: ^15.2.10
+  firebase_core: ^4.1.0
+  firebase_messaging: ^16.0.1
   awesome_notifications: ^0.10.1
   flutter_secure_storage: ^9.2.4
   flutter_spinkit: ^5.2.1
@@ -65,7 +65,7 @@ dependencies:
   image_picker: ^1.1.2
   google_maps_flutter: ^2.12.1
   location: ^8.0.0
-  geocoding: ^3.0.0
+  geocoding: ^4.0.0
   skeletonizer: ^2.0.1
   path_drawing: ^1.0.1
   dotted_dashed_line: ^0.0.3
@@ -92,7 +92,7 @@ dev_dependencies:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^5.0.0
+  flutter_lints: ^6.0.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
