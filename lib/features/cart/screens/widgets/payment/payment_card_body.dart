@@ -18,7 +18,7 @@ class PaymentCardBody extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Ordered by : ${paymentSuccessModel.firstName} ${paymentSuccessModel.lastName}",
+                "Ordered by : ${(paymentSuccessModel.firstName) == "N/A" ? "" : paymentSuccessModel.firstName} ${(paymentSuccessModel.lastName) == "N/A" ? "" : paymentSuccessModel.lastName}",
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: Theme.of(
@@ -27,7 +27,7 @@ class PaymentCardBody extends StatelessWidget {
               ),
               const SizedBox(height: 8.0),
               Text(
-               "Date : ${paymentSuccessModel.date}",
+                "Date : ${paymentSuccessModel.date}",
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: Theme.of(

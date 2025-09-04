@@ -7,26 +7,28 @@ import 'package:e_fashion_flutter/core/network/api_constants.dart';
 import 'package:e_fashion_flutter/core/network/dio_helper.dart';
 import 'package:e_fashion_flutter/core/utils/app_constants.dart';
 import 'package:e_fashion_flutter/core/utils/safe_api_call.dart';
-import 'package:e_fashion_flutter/features/home/data/home_details/product_details_model.dart';
-import 'package:e_fashion_flutter/features/home/data/home_details/review_model.dart';
-import 'package:e_fashion_flutter/features/home/repos/home_details_repo/home_details_repo.dart';
+import 'package:e_fashion_flutter/features/cart/data/payment/payment_request_model.dart';
+import 'package:e_fashion_flutter/features/cart/data/payment/payment_response_model.dart';
+import 'package:e_fashion_flutter/features/cart/data/payment/payment_success_model.dart';
+import 'package:e_fashion_flutter/features/cart/repo/payment_repo/payment_repo.dart';
 
-class HomeDetailsRepoImpl implements HomeDetailsRepo {
+class PaymentRepoImpl implements PaymentRepo {
   final DioHelper dioHelper;
 
-  HomeDetailsRepoImpl({required this.dioHelper});
+  PaymentRepoImpl({required this.dioHelper});
 
   @override
-  Future<Either<Failure, ProductDetailsModel>> getProductDetails({
-    required String productId,
+  Future<Either<Failure, PaymentResponseModel>> payWithPaymobCart({
+    required PaymentRequestModel paymentModel,
   }) async {
-    return safeApiCall<ProductDetailsModel>(() async {
-      final response = await dioHelper.get(
-        url: ApiConstants.getProductDetailsEndpoint(productId: productId),
+    return safeApiCall<PaymentResponseModel>(() async {
+      final response = await dioHelper.post(
+        url: ApiConstants.payWithPaymobEndpoint,
+        data: paymentModel.toJson(),
         headers: {"Authorization": "Bearer ${AppConstants.token}"},
       );
       if (response.statusCode == 200) {
-        return ProductDetailsModel.fromJson(response.data);
+        return PaymentResponseModel.fromJson(response.data);
       } else {
         throw ServerException(errorModel: ErrorModel.fromJson(response.data));
       }
@@ -34,23 +36,17 @@ class HomeDetailsRepoImpl implements HomeDetailsRepo {
   }
 
   @override
-  Future<Either<Failure, ReviewModel>> addReview({
-    required String productId,
-    required String review,
-    required int rate,
+  Future<Either<Failure, PaymentSuccessModel>> getPaymentStatus({
+    required int orderId,
   }) async {
-    return safeApiCall<ReviewModel>(() async {
+    return safeApiCall<PaymentSuccessModel>(() async {
       final response = await dioHelper.post(
-        url: ApiConstants.addReviewEndpoint,
+        url: ApiConstants.getPaymentStatusEndpoint,
         headers: {"Authorization": "Bearer ${AppConstants.token}"},
-        data: {
-          "productId": productId,
-          "comment": review,
-          "rate": rate,
-        },
+        query: {"OrderId": orderId},
       );
       if (response.statusCode == 200) {
-        return ReviewModel.fromJson(response.data);
+        return PaymentSuccessModel.fromJson(response.data);
       } else {
         throw ServerException(errorModel: ErrorModel.fromJson(response.data));
       }

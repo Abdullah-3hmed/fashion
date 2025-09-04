@@ -16,7 +16,7 @@ class CustomCachedNetworkImage extends StatelessWidget {
 
   String _applyQuality(String url) {
     if (url.contains("res.cloudinary.com")) {
-      return url.replaceFirst("/upload/", "/upload/q_10,f_auto/");
+      return url.replaceFirst("/upload/", "/upload/q_15,f_auto/");
     }
     return url;
   }
@@ -24,7 +24,7 @@ class CustomCachedNetworkImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final finalUrl = imageUrl.isEmpty
-        ? "https://res.cloudinary.com/doz1vpcgr/image/upload/q_5,f_auto/v1756802120/ian-dooley-d1UPkiFd04A-unsplash_qy7eue.jpg"
+        ? "https://res.cloudinary.com/doz1vpcgr/image/upload/q_15,f_auto/v1756802120/ian-dooley-d1UPkiFd04A-unsplash_qy7eue.jpg"
         : _applyQuality(imageUrl);
 
     return CachedNetworkImage(

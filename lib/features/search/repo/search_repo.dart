@@ -21,27 +21,21 @@ class SearchRepo {
   }) async {
     try {
       Map<String, dynamic> queryParameters = {"Qurey": query};
-      if (brand != null) {
-        queryParameters['Brand'] = brand;
-      }
-      if (categoryId != null) {
-        queryParameters['CategoryId'] = categoryId;
-      }
-      if (minPrice != null) {
-        queryParameters['minPrice'] = minPrice;
-      }
-      if (maxPrice != null) {
-        queryParameters['maxPrice'] = maxPrice;
-      }
+      if (brand != null) queryParameters['Brand'] = brand;
+      if (categoryId != null) queryParameters['CategoryId'] = categoryId;
+      if (minPrice != null) queryParameters['minPrice'] = minPrice;
+      if (maxPrice != null) queryParameters['maxPrice'] = maxPrice;
+
       final response = await dioHelper.get(
         url: ApiConstants.searchEndpoint,
         queryParameters: queryParameters,
       );
+
       if (response.statusCode == 200) {
         return Right(
           List<ProductModel>.from(
             (response.data["data"] as List? ?? []).map(
-              (x) => ProductModel.fromJson(x),
+                  (x) => ProductModel.fromJson(x),
             ),
           ),
         );

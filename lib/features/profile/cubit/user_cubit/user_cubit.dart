@@ -20,6 +20,7 @@ class UserCubit extends Cubit<UserState> {
   final UserRepo userRepo;
 
   Future<void> getUserProfile() async {
+    emit(state.copyWith(userRequestStates: RequestStatus.loading));
     final result = await userRepo.getUserProfile();
     result.fold(
       (failure) {

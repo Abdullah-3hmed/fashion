@@ -14,6 +14,7 @@ import 'package:e_fashion_flutter/features/cart/cubit/payment_cubit/payment_cubi
 import 'package:e_fashion_flutter/features/cart/repo/cart_repo/cart_repo.dart';
 import 'package:e_fashion_flutter/features/cart/repo/cart_repo/cart_repo_impl.dart';
 import 'package:e_fashion_flutter/features/cart/repo/payment_repo/payment_repo.dart';
+import 'package:e_fashion_flutter/features/cart/repo/payment_repo/payment_repo_impl.dart';
 import 'package:e_fashion_flutter/features/favourite/cubit/favorite_cubit.dart';
 import 'package:e_fashion_flutter/features/favourite/repos/favorite_repo.dart';
 import 'package:e_fashion_flutter/features/favourite/repos/favorite_repo_impl.dart';
@@ -124,7 +125,7 @@ class ServiceLocator {
       ),
     );
     getIt.registerLazySingleton<PaymentRepo>(
-      () => PaymentRepo(dioHelper: getIt<DioHelper>()),
+      () => PaymentRepoImpl(dioHelper: getIt<DioHelper>()),
     );
     getIt.registerFactory<PaymentCubit>(
       () => PaymentCubit(paymentRepo: getIt<PaymentRepo>()),

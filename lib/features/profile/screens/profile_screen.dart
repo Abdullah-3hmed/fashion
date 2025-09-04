@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:e_fashion_flutter/core/enums/request_status.dart';
 import 'package:e_fashion_flutter/core/widgets/no_internet_widget.dart';
 import 'package:e_fashion_flutter/features/profile/cubit/user_cubit/user_cubit.dart';
 import 'package:e_fashion_flutter/features/profile/cubit/user_cubit/user_state.dart';
@@ -36,7 +37,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 child: SizedBox(
                   height: 650.0,
                   child: DraggableScrollableSheet(
-                    initialChildSize: 0.95,
+                    initialChildSize: 0.9,
                     minChildSize: 0.85,
                     builder: (context, scrollController) {
                       return NotificationListener<
@@ -67,6 +68,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
               )
               : NoInternetWidget(
+                isLoading: context.select(
+                  (UserCubit cubit) => cubit.state.userRequestStates.isLoading,
+                ),
                 onPressed: () async {
                   await context.read<UserCubit>().getUserProfile();
                 },

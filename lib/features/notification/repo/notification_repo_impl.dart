@@ -6,6 +6,7 @@ import 'package:e_fashion_flutter/core/error/server_exception.dart';
 import 'package:e_fashion_flutter/core/network/api_constants.dart';
 import 'package:e_fashion_flutter/core/network/dio_helper.dart';
 import 'package:e_fashion_flutter/core/utils/app_constants.dart';
+import 'package:e_fashion_flutter/core/utils/safe_api_call.dart';
 import 'package:e_fashion_flutter/features/notification/repo/notification_repo.dart';
 
 class NotificationRepoImpl implements NotificationRepo {
@@ -17,22 +18,16 @@ class NotificationRepoImpl implements NotificationRepo {
   Future<Either<Failure, void>> toggleNotification({
     required String fcmToken,
   }) async {
-    try {
+    return safeApiCall<void>(() async {
       final response = await dioHelper.patch(
         url: ApiConstants.updateFcmTokenEndpoint(fcmToken: fcmToken),
         headers: {"Authorization": "Bearer ${AppConstants.token}"},
       );
       if (response.statusCode == 200) {
-        return const Right(null);
+        return;
       } else {
         throw ServerException(errorModel: ErrorModel.fromJson(response.data));
       }
-    } on DioException catch (e) {
-      return Left(ServerFailure.fromDioError(e));
-    } on ServerException catch (e) {
-      return Left(ServerFailure(e.errorModel.errors.join(" \n")));
-    } catch (e) {
-      return Left(ServerFailure(e.toString()));
-    }
+    });
   }
 }

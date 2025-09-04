@@ -5,14 +5,13 @@ import 'package:e_fashion_flutter/core/error/failures.dart';
 import 'package:e_fashion_flutter/core/error/server_exception.dart';
 import 'package:e_fashion_flutter/core/network/api_constants.dart';
 import 'package:e_fashion_flutter/core/network/dio_helper.dart';
-import 'package:e_fashion_flutter/core/services/service_locator.dart';
 import 'package:e_fashion_flutter/core/utils/app_constants.dart';
+import 'package:e_fashion_flutter/core/utils/safe_api_call.dart';
 import 'package:e_fashion_flutter/features/home/data/home/category_model.dart';
 import 'package:e_fashion_flutter/features/home/data/home/collection_details_model.dart';
 import 'package:e_fashion_flutter/features/home/data/home/collection_model.dart';
 import 'package:e_fashion_flutter/features/home/data/home/offers_model.dart';
 import 'package:e_fashion_flutter/features/home/data/home/products_model.dart';
-import 'package:e_fashion_flutter/features/home/data/home_details/review_model.dart';
 import 'package:e_fashion_flutter/features/home/repos/home_repo/home_repo.dart';
 
 class HomeRepoImpl implements HomeRepo {
@@ -24,35 +23,28 @@ class HomeRepoImpl implements HomeRepo {
 
   @override
   Future<Either<Failure, List<CollectionModel>>> getCollections() async {
-    try {
+    return safeApiCall<List<CollectionModel>>(() async {
       final response = await dioHelper.get(
         url: ApiConstants.getCollectionsEndpoint,
         headers: {"Authorization": "Bearer ${AppConstants.token}"},
       );
       if (response.statusCode == 200) {
-        return Right(
-          List<CollectionModel>.from(
-            (response.data as List).map(
-              (collection) => CollectionModel.fromJson(collection),
-            ),
+        return List<CollectionModel>.from(
+          (response.data as List).map(
+            (collection) => CollectionModel.fromJson(collection),
           ),
         );
+      } else {
+        throw ServerException(errorModel: ErrorModel.fromJson(response.data));
       }
-      throw ServerException(errorModel: ErrorModel.fromJson(response.data));
-    } on DioException catch (e) {
-      return Left(ServerFailure.fromDioError(e));
-    } on ServerException catch (e) {
-      return Left(ServerFailure(e.errorModel.errors.join(" \n")));
-    } catch (e) {
-      return Left(ServerFailure(e.toString()));
-    }
+    });
   }
 
   @override
   Future<Either<Failure, CollectionDetailsModel>> getCollectionDetails({
     required String collectionId,
   }) async {
-    try {
+    return safeApiCall<CollectionDetailsModel>(() async {
       final response = await dioHelper.get(
         url: ApiConstants.getCollectionDetailsEndpoint(
           collectionId: collectionId,
@@ -60,22 +52,16 @@ class HomeRepoImpl implements HomeRepo {
         headers: {"Authorization": "Bearer ${AppConstants.token}"},
       );
       if (response.statusCode == 200) {
-        return Right(CollectionDetailsModel.fromJson(response.data));
+        return CollectionDetailsModel.fromJson(response.data);
+      } else {
+        throw ServerException(errorModel: ErrorModel.fromJson(response.data));
       }
-
-      throw ServerException(errorModel: ErrorModel.fromJson(response.data));
-    } on DioException catch (e) {
-      return Left(ServerFailure.fromDioError(e));
-    } on ServerException catch (e) {
-      return Left(ServerFailure(e.errorModel.errors.join(" \n")));
-    } catch (e) {
-      return Left(ServerFailure(e.toString()));
-    }
+    });
   }
 
   @override
   Future<Either<Failure, List<CategoryModel>>> getCategories() async {
-    try {
+    return safeApiCall<List<CategoryModel>>(() async {
       final response = await dioHelper.get(
         url: ApiConstants.getCategoriesEndpoint,
         headers: {"Authorization": "Bearer ${AppConstants.token}"},
@@ -86,16 +72,11 @@ class HomeRepoImpl implements HomeRepo {
             (category) => CategoryModel.fromJson(category),
           ),
         );
-        return Right(_categories);
+        return _categories;
+      } else {
+        throw ServerException(errorModel: ErrorModel.fromJson(response.data));
       }
-      throw ServerException(errorModel: ErrorModel.fromJson(response.data));
-    } on DioException catch (e) {
-      return Left(ServerFailure.fromDioError(e));
-    } on ServerException catch (e) {
-      return Left(ServerFailure(e.errorModel.errors.join(" \n")));
-    } catch (e) {
-      return Left(ServerFailure(e.toString()));
-    }
+    });
   }
 
   @override
@@ -104,67 +85,52 @@ class HomeRepoImpl implements HomeRepo {
     required int? category,
     int page = 1,
   }) async {
-    Map<String, dynamic> queryParameters = {
-      "pageIndex": page,
-      "pageSize": 10,
-    };
-    if (gender != null) {
-      queryParameters['ProductType'] = gender;
-    }
-    if (category != null) {
-      queryParameters['CategoryId'] = category;
-    }
-    try {
+    return safeApiCall<ProductsModel>(() async {
+      Map<String, dynamic> queryParameters = {
+        "pageIndex": page,
+        "pageSize": 20,
+      };
+      if (gender != null) queryParameters['ProductType'] = gender;
+      if (category != null) queryParameters['CategoryId'] = category;
+
       final response = await dioHelper.get(
         url: ApiConstants.getProductsEndPoint,
         headers: {"Authorization": "Bearer ${AppConstants.token}"},
         queryParameters: queryParameters,
       );
       if (response.statusCode == 200) {
-        return Right(ProductsModel.fromJson(response.data));
+        return ProductsModel.fromJson(response.data);
+      } else {
+        throw ServerException(errorModel: ErrorModel.fromJson(response.data));
       }
-      throw ServerException(errorModel: ErrorModel.fromJson(response.data));
-    } on DioException catch (e) {
-      return Left(ServerFailure.fromDioError(e));
-    } on ServerException catch (e) {
-      return Left(ServerFailure(e.errorModel.errors.join(" \n")));
-    } catch (e) {
-      return Left(ServerFailure(e.toString()));
-    }
+    });
   }
+
   @override
   Future<Either<Failure, OffersModel>> getOffers({
     required int? gender,
     required int? category,
     int page = 1,
   }) async {
-    Map<String, dynamic> queryParameters = {
-      "pageIndex": page,
-      "pageSize": 10,
-    };
-    if (gender != null) {
-      queryParameters['ProductType'] = gender;
-    }
-    if (category != null) {
-      queryParameters['CategoryId'] = category;
-    }
-    try {
+    return safeApiCall<OffersModel>(() async {
+      Map<String, dynamic> queryParameters = {
+        "pageIndex": page,
+        "pageSize": 10,
+      };
+      if (gender != null) queryParameters['ProductType'] = gender;
+      if (category != null) queryParameters['CategoryId'] = category;
+
       final response = await dioHelper.get(
         url: ApiConstants.getOffersEndPoint,
         headers: {"Authorization": "Bearer ${AppConstants.token}"},
         queryParameters: queryParameters,
       );
       if (response.statusCode == 200) {
-        return Right(OffersModel.fromJson(response.data));
+        return OffersModel.fromJson(response.data);
+      } else {
+        throw ServerException(errorModel: ErrorModel.fromJson(response.data));
       }
-      throw ServerException(errorModel: ErrorModel.fromJson(response.data));
-    } on DioException catch (e) {
-      return Left(ServerFailure.fromDioError(e));
-    } on ServerException catch (e) {
-      return Left(ServerFailure(e.errorModel.errors.join(" \n")));
-    } catch (e) {
-      return Left(ServerFailure(e.toString()));
-    }
+    });
   }
 
   @override

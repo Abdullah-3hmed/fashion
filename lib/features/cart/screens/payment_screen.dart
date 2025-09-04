@@ -35,7 +35,6 @@ class PaymentScreen extends StatelessWidget implements AutoRouteWrapper {
           context.replaceRoute(
             PaymentSuccessRoute(paymentSuccessModel: state.paymentSuccessModel),
           );
-          context.read<CartCubit>().clearCart();
         }
         if (state.getPaymentStatus.isSuccess &&
             !state.paymentSuccessModel.success) {

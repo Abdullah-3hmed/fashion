@@ -6,6 +6,7 @@ import 'package:e_fashion_flutter/core/error/server_exception.dart';
 import 'package:e_fashion_flutter/core/network/api_constants.dart';
 import 'package:e_fashion_flutter/core/network/dio_helper.dart';
 import 'package:e_fashion_flutter/core/utils/app_constants.dart';
+import 'package:e_fashion_flutter/core/utils/safe_api_call.dart';
 import 'package:e_fashion_flutter/features/profile/data/chat/message_model.dart';
 import 'package:e_fashion_flutter/features/profile/data/chat/send_message_model.dart';
 import 'package:e_fashion_flutter/features/profile/repos/chat_repo/chat_repo.dart';
@@ -19,49 +20,38 @@ class ChatRepoImpl implements ChatRepo {
   Future<Either<Failure, List<MessageModel>>> getChatHistory({
     required String receiverId,
   }) async {
-    try {
+    return safeApiCall<List<MessageModel>>(() async {
       final response = await dioHelper.get(
         url: ApiConstants.getChatHistoryEndPoint(receiverId: receiverId),
         headers: {"Authorization": "Bearer ${AppConstants.token}"},
       );
       if (response.statusCode == 200) {
-        return Right(
-          List<MessageModel>.from(
-            (response.data as List? ?? []).map(
-              (message) => MessageModel.fromJson(message),
-            ),
+        return List<MessageModel>.from(
+          (response.data as List? ?? []).map(
+                (message) => MessageModel.fromJson(message),
           ),
         );
       } else {
         throw ServerException(errorModel: ErrorModel.fromJson(response.data));
       }
-    } on DioException catch (e) {
-      return Left(ServerFailure.fromDioError(e));
-    } catch (e) {
-      return Left(ServerFailure(e.toString()));
-    }
+    });
   }
-
 
   @override
   Future<Either<Failure, void>> sendMessage({
     required SendMessageModel sendMessageModel,
   }) async {
-    try {
+    return safeApiCall<void>(() async {
       final response = await dioHelper.post(
         url: ApiConstants.sendMessageEndpoint,
         data: sendMessageModel.toJson(),
         headers: {"Authorization": "Bearer ${AppConstants.token}"},
       );
       if (response.statusCode == 200) {
-        return const Right(null);
+        return;
       } else {
         throw ServerException(errorModel: ErrorModel.fromJson(response.data));
       }
-    } on DioException catch (e) {
-      return Left(ServerFailure.fromDioError(e));
-    } catch (e) {
-      return Left(ServerFailure(e.toString()));
-    }
+    });
   }
 }
