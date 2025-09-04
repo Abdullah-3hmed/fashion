@@ -95,6 +95,8 @@ class HomeCubit extends Cubit<HomeState> {
               productsModel: products,
               productsState: RequestStatus.success,
               productsPage: 1,
+              genderActiveIndex: -1,
+              categoryActiveIndex: -1,
             ),
           );
         } else {
@@ -111,6 +113,9 @@ class HomeCubit extends Cubit<HomeState> {
               ),
               productsPage: page,
               productsState: RequestStatus.success,
+              genderActiveIndex: -1,
+              categoryActiveIndex: -1,
+
             ),
           );
         }

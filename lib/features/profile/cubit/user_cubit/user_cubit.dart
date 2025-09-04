@@ -54,6 +54,7 @@ class UserCubit extends Cubit<UserState> {
   Future<void> logOut() async {
     AppConstants.token = "";
     AppConstants.userId = "";
+    ConnectionsService.closeConnection();
     await getIt<CacheHelper>().deleteAll();
   }
 

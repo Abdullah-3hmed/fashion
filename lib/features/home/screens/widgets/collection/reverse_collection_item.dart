@@ -51,6 +51,7 @@ class ReverseCollectionItem extends StatelessWidget {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(16.0),
               child: CachedNetworkImage(
+                height: 180.0,
                 imageUrl: collectionItemModel.imageUrl,
                 fit: BoxFit.cover,
                 errorWidget: (context, url, error) => const Icon(Icons.error),

@@ -29,6 +29,7 @@ class CollectionItem extends StatelessWidget {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(16.0),
               child: CustomCachedNetworkImage(
+                height: 180.0,
                 imageUrl: collectionItemModel.imageUrl,
               ),
             ),

@@ -106,7 +106,7 @@ class HomeRepoImpl implements HomeRepo {
   }) async {
     Map<String, dynamic> queryParameters = {
       "pageIndex": page,
-      "pageSize": 20,
+      "pageSize": 10,
     };
     if (gender != null) {
       queryParameters['ProductType'] = gender;
@@ -140,7 +140,7 @@ class HomeRepoImpl implements HomeRepo {
   }) async {
     Map<String, dynamic> queryParameters = {
       "pageIndex": page,
-      "pageSize": 20,
+      "pageSize": 10,
     };
     if (gender != null) {
       queryParameters['ProductType'] = gender;

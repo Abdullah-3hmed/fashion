@@ -10,7 +10,7 @@ class SignalrService {
 
   Future<void> sendMessage({required SendMessageModel sendMessageModel}) async {
     try {
-      await ConnectionsService.connection.invoke(
+      await ConnectionsService.connection?.invoke(
         "SendMessage",
         args: [
           sendMessageModel.senderId,
@@ -29,7 +29,7 @@ class SignalrService {
   void listenToMessages(OnMessageReceived onMessageReceived) async{
     log("Listening to messages...");
     await ConnectionsService.checkConnection();
-    ConnectionsService.connection.on("ReceiveMessage", (arguments) {
+    ConnectionsService.connection?.on("ReceiveMessage", (arguments) {
       try {
         if (arguments != null && arguments.isNotEmpty) {
           final data = arguments[0];
@@ -40,7 +40,7 @@ class SignalrService {
             final message = MessageModel.fromJson(jsonData);
 
             onMessageReceived(message);
-            log("📩 New message received: $message");
+            log("📩 New message received >>>>>>>>>>>>>>>>>>>>>>>>>>>: $message");
           } else {
             log("⚠️ Received data is not a valid map: $data");
           }
@@ -57,7 +57,7 @@ class SignalrService {
     log("Listening to sent messages...");
     await ConnectionsService.checkConnection();
 
-    ConnectionsService.connection.on("MessageSent", (arguments) {
+    ConnectionsService.connection?.on("MessageSent", (arguments) {
       try {
         if (arguments != null && arguments.isNotEmpty) {
           final data = arguments[0];
@@ -68,7 +68,7 @@ class SignalrService {
             final message = MessageModel.fromJson(jsonData);
 
             onMessageSent(message);
-            log("📤 Message confirmed sent: $message");
+            log("📤 Message sent >>>>>>>>>>>>>>>>>>>>>>>>>>>: $message");
           } else {
             log("⚠️ Sent event is not a valid map: $data");
           }

@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:collection/collection.dart';
+import 'package:e_fashion_flutter/core/services/connection_service.dart';
 import 'package:e_fashion_flutter/core/services/service_locator.dart';
 import 'package:e_fashion_flutter/features/admin/screens/all_chats_screen.dart';
 import 'package:e_fashion_flutter/features/auth/cubit/auth_cubit.dart';
@@ -48,61 +49,60 @@ class AppRouter extends RootStackRouter {
   RouteType get defaultRouteType => const RouteType.material();
 
   @override
-  List<AutoRoute> get routes =>
-      [
-        AutoRoute(
-          initial: true,
-          page: SplashTabRoute.page,
-          children: [AutoRoute(initial: true, page: SplashRoute.page)],
-        ),
-        AutoRoute(
-          page: AuthRoute.page,
-          children: [
-            _buildCustomRoute(initial: true, page: LoginRoute.page),
-            _buildCustomRoute(page: SignUpRoute.page),
-            _buildCustomRoute(page: ForgetPasswordRoute.page),
-            _buildCustomRoute(page: EmailVerificationRoute.page),
-            _buildCustomRoute(page: ResetPasswordRoute.page),
-          ],
-        ),
+  List<AutoRoute> get routes => [
+    AutoRoute(
+      initial: true,
+      page: SplashTabRoute.page,
+      children: [AutoRoute(initial: true, page: SplashRoute.page)],
+    ),
+    AutoRoute(
+      page: AuthRoute.page,
+      children: [
+        _buildCustomRoute(initial: true, page: LoginRoute.page),
+        _buildCustomRoute(page: SignUpRoute.page),
+        _buildCustomRoute(page: ForgetPasswordRoute.page),
+        _buildCustomRoute(page: EmailVerificationRoute.page),
+        _buildCustomRoute(page: ResetPasswordRoute.page),
+      ],
+    ),
+    _buildCustomRoute(
+      page: AuthenticatedRoute.page,
+      children: [
+        _buildCustomRoute(page: ChatSupportRoute.page),
         _buildCustomRoute(
-          page: AuthenticatedRoute.page,
+          initial: true,
+          page: LayoutRoute.page,
           children: [
-            _buildCustomRoute(page: ChatSupportRoute.page),
-            _buildCustomRoute(
-              initial: true,
-              page: LayoutRoute.page,
-              children: [
-                // _buildCustomRoute(
-                //   initial: true,
-                //   page: HomeTabRoute.page,
-                //   children: [
-                //     _buildCustomRoute(initial: true, page: HomeRoute.page),
-                //     _buildCustomRoute(page: CollectionRoute.page),
-                //   ],
-                // ),
-                _buildCustomRoute(initial: true, page: HomeRoute.page),
-                _buildCustomRoute(page: CartRoute.page),
-                _buildCustomRoute(page: FavoriteRoute.page),
-                _buildCustomRoute(page: ProfileRoute.page),
-              ],
-            ),
-            _buildCustomRoute(page: CollectionRoute.page),
-            _buildCustomRoute(page: ProductDetailsRoute.page),
-            _buildCustomRoute(page: EditProfileRoute.page),
-            _buildCustomRoute(page: ProfileChangePasswordRoute.page),
-            _buildCustomRoute(page: OrderStatusRoute.page),
-            _buildCustomRoute(page: EditReviewRoute.page),
-            _buildCustomRoute(page: DiscoverRoute.page),
-            _buildCustomRoute(page: SearchRoute.page),
-            _buildCustomRoute(page: NotificationRoute.page),
-            _buildCustomRoute(page: MapRoute.page),
-            _buildCustomRoute(page: PaymentSuccessRoute.page),
-            _buildCustomRoute(page: AllChatsRoute.page),
-            _buildCustomRoute(page: PaymentRoute.page),
+            // _buildCustomRoute(
+            //   initial: true,
+            //   page: HomeTabRoute.page,
+            //   children: [
+            //     _buildCustomRoute(initial: true, page: HomeRoute.page),
+            //     _buildCustomRoute(page: CollectionRoute.page),
+            //   ],
+            // ),
+            _buildCustomRoute(initial: true, page: HomeRoute.page),
+            _buildCustomRoute(page: CartRoute.page),
+            _buildCustomRoute(page: FavoriteRoute.page),
+            _buildCustomRoute(page: ProfileRoute.page),
           ],
         ),
-      ];
+        _buildCustomRoute(page: CollectionRoute.page),
+        _buildCustomRoute(page: ProductDetailsRoute.page),
+        _buildCustomRoute(page: EditProfileRoute.page),
+        _buildCustomRoute(page: ProfileChangePasswordRoute.page),
+        _buildCustomRoute(page: OrderStatusRoute.page),
+        _buildCustomRoute(page: EditReviewRoute.page),
+        _buildCustomRoute(page: DiscoverRoute.page),
+        _buildCustomRoute(page: SearchRoute.page),
+        _buildCustomRoute(page: NotificationRoute.page),
+        _buildCustomRoute(page: MapRoute.page),
+        _buildCustomRoute(page: PaymentSuccessRoute.page),
+        _buildCustomRoute(page: AllChatsRoute.page),
+        _buildCustomRoute(page: PaymentRoute.page),
+      ],
+    ),
+  ];
 
   CustomRoute _buildCustomRoute({
     bool initial = false,
@@ -130,10 +130,7 @@ class Auth extends AutoRouter implements AutoRouteWrapper {
 
   @override
   Widget wrappedRoute(BuildContext context) =>
-      BlocProvider(
-        create: (context) => getIt<AuthCubit>(),
-        child: this,
-      );
+      BlocProvider(create: (context) => getIt<AuthCubit>(), child: this);
 }
 
 @RoutePage(name: 'AuthenticatedRoute')
@@ -141,29 +138,17 @@ class Authenticated extends AutoRouter implements AutoRouteWrapper {
   const Authenticated({super.key});
 
   @override
-  Widget wrappedRoute(BuildContext context) =>
-      MultiBlocProvider(
-        providers: [
-          BlocProvider(
-            create: (context) =>
-            getIt<UserCubit>(),
-          ),
-          BlocProvider(
-            create: (context) =>
-            getIt<FavoriteCubit>(),
-          ),
-          BlocProvider(
-            create: (context) =>
-            getIt<CartCubit>(),
-          ),
-          BlocProvider(
-            lazy: false,
-            create: (context) =>
-            getIt<ChatCubit>(),
-          ),
-        ],
-        child: this,
-      );
+  Widget wrappedRoute(BuildContext context) {
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => getIt<UserCubit>()),
+        BlocProvider(create: (context) => getIt<FavoriteCubit>()),
+        BlocProvider(create: (context) => getIt<CartCubit>()),
+        BlocProvider(create: (context) => getIt<ChatCubit>()),
+      ],
+      child: this,
+    );
+  }
 }
 
 // @RoutePage(name: 'HomeTabRoute')

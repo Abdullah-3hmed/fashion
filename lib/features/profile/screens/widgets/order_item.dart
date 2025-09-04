@@ -1,6 +1,8 @@
 import 'package:e_fashion_flutter/core/utils/assets_manager.dart';
+import 'package:e_fashion_flutter/core/utils/show_toast.dart';
 import 'package:e_fashion_flutter/features/profile/data/order/order_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class OrderItem extends StatelessWidget {
   const OrderItem({super.key, required this.order});
@@ -52,7 +54,12 @@ class OrderItem extends StatelessWidget {
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
                   IconButton(
-                    onPressed: () {},
+                    onPressed: ()async {
+                      await Clipboard.setData(
+                        ClipboardData(text: order.orderId.toString()),
+                      );
+                     showToast(message: "Copied to Clipboard", state: ToastStates.success);
+                    },
                     padding: EdgeInsets.zero,
                     icon: Icon(
                       Icons.copy,

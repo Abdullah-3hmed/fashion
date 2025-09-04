@@ -48,7 +48,7 @@ class FilterCategorySection extends StatelessWidget {
                   ),
                 ),
             separatorBuilder: (context, index) => const SizedBox(width: 16.0),
-            itemCount: categories.length,
+            itemCount: categories.length - 1,
           );
         },
       ),

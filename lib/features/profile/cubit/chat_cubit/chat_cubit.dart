@@ -14,9 +14,10 @@ class ChatCubit extends Cubit<ChatState> {
 
   ChatCubit({required this.chatRepo, required this.signalrService})
     : super(const ChatState()) {
-    ConnectionsService.checkConnection();
-    _listenToMessages();
-    _listenToSentMessages();
+    Future.microtask(() {
+      _listenToMessages();
+      _listenToSentMessages();
+    });
   }
 
   Future<void> getChatHistory({required String receiverId}) async {
@@ -45,12 +46,12 @@ class ChatCubit extends Cubit<ChatState> {
   void _listenToMessages() {
     signalrService.listenToMessages((message) {
       debugPrint("_listenToMessages : ${message.content}");
+      if (isClosed) return;
       emit(state.copyWith(messages: [...state.messages, message]));
     });
   }
 
   void _listenToSentMessages() {
-
     signalrService.listenToSentMessages((message) {
       debugPrint("_listenToSentMessages : ${message.content}");
       emit(state.copyWith(messages: [...state.messages, message]));
@@ -82,4 +83,5 @@ class ChatCubit extends Cubit<ChatState> {
       },
     );
   }
+
 }

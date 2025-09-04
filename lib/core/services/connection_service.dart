@@ -5,9 +5,13 @@ import 'package:e_fashion_flutter/core/utils/app_constants.dart';
 import 'package:signalr_netcore/signalr_client.dart';
 
 class ConnectionsService {
-  static late HubConnection connection;
+  static  HubConnection? connection;
+  static bool _isInitializing = false;
 
   static Future<void> initConnection() async {
+    if (connection != null && connection!.state == HubConnectionState.Connected) return;
+    if (_isInitializing) return;
+    _isInitializing = true;
     try {
       final url = "http://shoping-online.runasp.net/chatHub";
       log("Connecting to: $url");
@@ -25,10 +29,10 @@ class ConnectionsService {
               .withAutomaticReconnect()
               .build();
 
-      await connection.start();
+      await connection?.start();
       log("✅ Connection started");
 
-      connection.onclose(({error}) {
+      connection?.onclose(({error}) {
         log("⚠️ Connection closed${error != null ? ': $error' : ''}");
       });
     } catch (e, stackTrace) {
@@ -38,9 +42,13 @@ class ConnectionsService {
   }
 
   static Future<void> checkConnection() async {
-    if (connection.state != HubConnectionState.Connected) {
+    if (connection?.state != HubConnectionState.Connected) {
       log("🔄 Re-initializing connection...");
       await initConnection();
     }
+  }
+  static Future<void> closeConnection() async {
+    await connection?.stop();
+    connection = null;
   }
 }

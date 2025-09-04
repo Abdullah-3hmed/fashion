@@ -26,10 +26,17 @@ void main() async {
   ServiceLocator().init();
   await FcmInitHelper.initAwesomeNotification();
   DioHelper.init();
-  AppConstants.token = await getIt<CacheHelper>().readData(key: "token") ?? "";
-  AppConstants.userId = await getIt<CacheHelper>().readData(key: "user_id") ?? "";
+  final cache = getIt<CacheHelper>();
+
+  final storedToken = await cache.readData(key: "token");
+  final storedUserId = await cache.readData(key: "user_id");
+
+  AppConstants.token = storedToken ?? "";
+  AppConstants.userId = storedUserId ?? "";
+
+  debugPrint("Init userId: ${AppConstants.userId}");
+  debugPrint("Init user token: ${AppConstants.token}");
   Bloc.observer = MyBlocObserver();
-  await ConnectionsService.initConnection();
   await FcmInitHelper.initFirebaseMessagingListeners();
   await FcmInitHelper.setAwesomeNotificationListeners();
   await FcmInitHelper.handleInitialMessage();

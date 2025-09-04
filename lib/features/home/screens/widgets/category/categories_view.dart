@@ -81,7 +81,6 @@ class CategoryContainer extends StatelessWidget {
       alignment: AlignmentDirectional.centerStart,
       children: [
         Container(
-
           padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
           decoration: BoxDecoration(
             color: Theme.of(context).colorScheme.surfaceContainerHighest,

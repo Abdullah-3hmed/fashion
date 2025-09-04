@@ -39,11 +39,13 @@ class _HomeScreenState extends State<HomeScreen>
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      Future.delayed(const Duration(milliseconds: 300), () {
+      Future.delayed(const Duration(milliseconds: 100), () {
        if(mounted){
-         context.read<CartCubit>().getCartItems();
-         context.read<FavoriteCubit>().getFavorites();
-         context.read<UserCubit>().getUserProfile();
+        Future.wait([
+        context.read<FavoriteCubit>().getFavorites(),
+        context.read<CartCubit>().getCartItems(),
+        context.read<UserCubit>().getUserProfile(),
+        ]);
        }
       });
     });

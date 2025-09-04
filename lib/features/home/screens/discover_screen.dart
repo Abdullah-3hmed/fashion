@@ -98,7 +98,7 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
                 child: BlocBuilder<HomeCubit, HomeState>(
                   buildWhen:
                       (prev, curr) =>
-                          prev.offersModel != curr.offersModel ||
+                          prev.productsState != curr.productsState ||
                           prev.offersState != curr.offersState,
                   builder: (context, state) {
                     final List<ProductModel> discoverList =

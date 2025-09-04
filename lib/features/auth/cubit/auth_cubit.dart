@@ -10,6 +10,7 @@ import 'package:e_fashion_flutter/features/auth/data/login_request_model.dart';
 import 'package:e_fashion_flutter/features/auth/data/reset_password_request_model.dart';
 import 'package:e_fashion_flutter/features/auth/data/sign_up_request_model.dart';
 import 'package:e_fashion_flutter/features/auth/repos/auth_repo.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AuthCubit extends Cubit<AuthState> {
@@ -53,6 +54,7 @@ class AuthCubit extends Cubit<AuthState> {
           key: "token",
           value: authResponseModel.token,
         );
+        debugPrint("Saved user ID: ${authResponseModel.userId}");
         await getIt<CacheHelper>().saveData(
           key: "user_id",
           value: authResponseModel.userId,
@@ -94,6 +96,7 @@ class AuthCubit extends Cubit<AuthState> {
           key: "token",
           value: authResponseModel.token,
         );
+        debugPrint("Saved user ID: ${authResponseModel.userId}");
         await getIt<CacheHelper>().saveData(
           key: "user_id",
           value: authResponseModel.userId,

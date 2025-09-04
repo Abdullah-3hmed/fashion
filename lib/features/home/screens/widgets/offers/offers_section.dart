@@ -32,7 +32,7 @@ class OffersSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<HomeCubit, HomeState>(
       buildWhen:
-          (previous, current) => previous.offersState != current.offersState && previous.offersModel.offers.isEmpty,
+          (previous, current) => previous.offersState != current.offersState,
       builder: (context, state) {
         switch (state.offersState) {
           case RequestStatus.loading:

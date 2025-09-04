@@ -1,4 +1,5 @@
 import 'package:e_fashion_flutter/core/enums/request_status.dart';
+import 'package:e_fashion_flutter/core/utils/app_constants.dart';
 import 'package:e_fashion_flutter/features/home/screens/widgets/discover/discover_list/discover_list_tem.dart';
 import 'package:e_fashion_flutter/shared/data/product_model.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +22,7 @@ class DiscoverListView extends StatelessWidget {
         (index) => const ProductModel(
       id: "",
       title: "*********",
-      imageUrl: "",
+      imageUrl: AppConstants.imageUrl,
       basePrice: 0.0,
       discountPrice: 0.0,
       colors: "",

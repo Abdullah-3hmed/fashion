@@ -36,7 +36,7 @@ class AppCubit extends HydratedCubit<AppState> {
 
     bool granted = status.isGranted;
     debugPrint("Permission granted: $granted");
-    emit(state.copyWith(areNotificationsEnabled: granted));
+    emit(state.copyWith(areNotificationsEnabled: granted,));
   }
 
   Future<void> toggleNotifications({
@@ -44,6 +44,14 @@ class AppCubit extends HydratedCubit<AppState> {
   }) async {
     if (isNotificationAllowed) {
       await checkNotificationPermission();
+      if (state.areNotificationsEnabled) {
+        emit(
+          state.copyWith(
+            hasPendingNotificationUpdate: true,
+          ),
+        );
+        await _syncNotificationStatus();
+      }
     } else {
       emit(
         state.copyWith(
@@ -54,6 +62,7 @@ class AppCubit extends HydratedCubit<AppState> {
       await _syncNotificationStatus();
     }
   }
+
 
   Future<void> _syncNotificationStatus() async {
     if (!state.hasPendingNotificationUpdate) return;

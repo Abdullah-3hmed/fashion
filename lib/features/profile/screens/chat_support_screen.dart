@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:e_fashion_flutter/core/services/connection_service.dart';
 import 'package:e_fashion_flutter/core/services/service_locator.dart';
 import 'package:e_fashion_flutter/core/utils/app_constants.dart';
 import 'package:e_fashion_flutter/core/utils/assets_manager.dart';
@@ -36,6 +37,7 @@ class _ChatSupportScreenState extends State<ChatSupportScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (mounted) {
         context.read<ChatCubit>().getChatHistory(receiverId: widget.receiverId);
+        ConnectionsService.initConnection();
       }
     });
     super.initState();

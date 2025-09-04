@@ -41,6 +41,8 @@ class ProfileBackgroundImageAndLogo extends StatelessWidget {
                           .editUserModel
                           .profileImageFile!,
                       fit: BoxFit.cover,
+                  width: double.infinity,
+                  height: double.infinity,
                     )
                     : CustomCachedNetworkImage(
                       imageUrl:
@@ -49,6 +51,7 @@ class ProfileBackgroundImageAndLogo extends StatelessWidget {
                               .state
                               .userModel
                               .profileImage,
+                  height: double.infinity,
                     ),
           ),
           PositionedDirectional(

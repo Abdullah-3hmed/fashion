@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
+import 'package:e_fashion_flutter/core/error/error_model.dart';
 import 'package:e_fashion_flutter/core/error/failures.dart';
 import 'package:e_fashion_flutter/core/error/server_exception.dart';
 import 'package:e_fashion_flutter/core/network/api_constants.dart';
@@ -36,11 +37,17 @@ class SearchRepo {
         url: ApiConstants.searchEndpoint,
         queryParameters: queryParameters,
       );
-      return Right(
-        List<ProductModel>.from(
-          response.data.map((x) => ProductModel.fromJson(x)),
-        ),
-      );
+      if (response.statusCode == 200) {
+        return Right(
+          List<ProductModel>.from(
+            (response.data["data"] as List? ?? []).map(
+              (x) => ProductModel.fromJson(x),
+            ),
+          ),
+        );
+      } else {
+        throw ServerException(errorModel: ErrorModel.fromJson(response.data));
+      }
     } on DioException catch (e) {
       return Left(ServerFailure.fromDioError(e));
     } on ServerException catch (e) {
