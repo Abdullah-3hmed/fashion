@@ -2,7 +2,8 @@
 [![Ask DeepWiki](https://devin.ai/assets/askdeepwiki.png)](https://deepwiki.com/Abdullah-3hmed/fashion)
 
 eFashion is a comprehensive e-commerce application for fashion, built with Flutter. It provides a seamless shopping experience with a rich feature set for both users and administrators, including real-time chat support, payment integration, and a full-featured product catalog.
-![header](https://i.postimg.cc/8cT5V8rX/2025-09-05-184758.png)
+
+
 
 ## 📸 Screenshots
 
