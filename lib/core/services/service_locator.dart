@@ -108,12 +108,12 @@ class ServiceLocator {
     getIt.registerFactory<AppCubit>(
       () => AppCubit(notificationRepo: getIt<NotificationRepo>()),
     );
-    getIt.registerLazySingleton<AdminRepo>(
-      () => AdminRepoImpl(dioHelper: getIt<DioHelper>()),
-    );
-    getIt.registerFactory<AdminCubit>(
-      () => AdminCubit(adminRepo: getIt<AdminRepo>()),
-    );
+    // getIt.registerLazySingleton<AdminRepo>(
+    //   () => AdminRepoImpl(dioHelper: getIt<DioHelper>()),
+    // );
+    // getIt.registerFactory<AdminCubit>(
+    //   () => AdminCubit(adminRepo: getIt<AdminRepo>()),
+    // );
     getIt.registerLazySingleton<SignalrService>(() => SignalrService());
     getIt.registerLazySingleton<ChatRepo>(
       () => ChatRepoImpl(dioHelper: getIt<DioHelper>()),
