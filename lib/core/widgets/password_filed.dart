@@ -31,6 +31,25 @@ class _PasswordFieldState extends State<PasswordField> {
     super.dispose();
   }
 
+  String? _validatePassword(String? value) {
+    if (value == null || value.isEmpty) {
+      return "Password is required";
+    }
+
+    final hasUppercase = value.contains(RegExp(r'[A-Z]'));
+    final hasLowercase = value.contains(RegExp(r'[a-z]'));
+    final hasDigit = value.contains(RegExp(r'\d'));
+
+    final minLength = value.length >= 8;
+
+    if (!hasUppercase) return "Password must contain at least one uppercase letter";
+    if (!hasLowercase) return "Password must contain at least one lowercase letter";
+    if (!hasDigit) return "Password must contain at least one number";
+    if (!minLength) return "Password must be at least 8 characters long";
+
+    return null;
+  }
+
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder<bool>(
@@ -52,8 +71,10 @@ class _PasswordFieldState extends State<PasswordField> {
           ),
           onSaved: widget.onSaved,
           onSubmit: widget.onSubmit,
+          validator: _validatePassword,
         );
       },
     );
   }
 }
+

@@ -17,25 +17,8 @@ class DiscoverGridView extends StatelessWidget {
   final ScrollController controller;
   final RequestStatus status;
 
-  static List<ProductModel> dummyList = List<ProductModel>.generate(
-    6,
-        (index) => const ProductModel(
-      id: "",
-      title: "*********",
-      imageUrl: "",
-      basePrice: 0.0,
-      discountPrice: 0.0,
-      colors: "",
-      sizes: "",
-      isOffer: false,
-    ),
-  );
-
   @override
   Widget build(BuildContext context) {
-    final List<ProductModel> data =
-    status.isLoading ? dummyList : discoverList;
-
     return Skeletonizer(
       enabled: status.isLoading,
       child: GridView.builder(
@@ -47,9 +30,9 @@ class DiscoverGridView extends StatelessWidget {
           mainAxisSpacing: 16.0,
           childAspectRatio: 0.75,
         ),
-        itemCount: data.length,
+        itemCount: discoverList.length,
         itemBuilder: (context, index) {
-          final ProductModel model = data[index];
+          final ProductModel model = discoverList[index];
           final bool isFirstItem = index < 2;
 
           return index.isEven

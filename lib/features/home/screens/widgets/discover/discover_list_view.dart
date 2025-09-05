@@ -17,38 +17,21 @@ class DiscoverListView extends StatelessWidget {
   final ScrollController controller;
   final RequestStatus status;
 
-  static List<ProductModel> dummyList = List<ProductModel>.generate(
-    6,
-        (index) => const ProductModel(
-      id: "",
-      title: "*********",
-      imageUrl: AppConstants.imageUrl,
-      basePrice: 0.0,
-      discountPrice: 0.0,
-      colors: "",
-      sizes: "",
-      isOffer: false,
-    ),
-  );
-
   @override
   Widget build(BuildContext context) {
-    final List<ProductModel> data =
-    status.isLoading ? dummyList : discoverList;
-
     return Skeletonizer(
       enabled: status.isLoading,
       child: ListView.separated(
         controller: controller,
         physics: const BouncingScrollPhysics(),
-        itemCount: data.length,
+        itemCount: discoverList.length,
         itemBuilder: (context, index) {
           return DiscoverListItem(
             isFirstItem: index == 0,
-            product: data[index],
+            product: discoverList[index],
           );
         },
-        separatorBuilder: (_, __) => const SizedBox(height: 16.0),
+        separatorBuilder: (_, _) => const SizedBox(height: 16.0),
       ),
     );
   }

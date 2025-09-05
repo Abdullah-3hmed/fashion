@@ -19,6 +19,7 @@ class CustomTextFormField extends StatelessWidget {
     this.fillColor,
     this.textInputAction,
     this.contentPadding = 20.0,
+    this.validator,
   });
 
   final TextEditingController? controller;
@@ -37,6 +38,7 @@ class CustomTextFormField extends StatelessWidget {
   final Color? fillColor;
   final double contentPadding;
   final TextInputAction? textInputAction;
+  final String? Function(String?)? validator;
 
   @override
   Widget build(BuildContext context) {
@@ -85,12 +87,14 @@ class CustomTextFormField extends StatelessWidget {
           ),
         ),
       ),
-      validator: (value) {
-        if (value!.isEmpty) {
-          return '$label required';
-        }
-        return null;
-      },
+      validator:
+          validator ??
+          (value) {
+            if (value!.isEmpty) {
+              return '$label required';
+            }
+            return null;
+          },
     );
   }
 }

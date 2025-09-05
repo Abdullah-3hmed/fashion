@@ -50,28 +50,26 @@ class PaymentButton extends StatelessWidget {
 
   Future<void> _pay(BuildContext context) async {
     final CartState state = context.read<CartCubit>().state;
-    if (state.cartMap.isNotEmpty) {
-      if (context.read<UserCubit>().state.userLocation.isEmpty) {
-        showToast(
-          message: "You Must Set Your Location In Profile Tab!",
-          state: ToastStates.error,
-        );
-        return;
-      }
-      final UserModel userModel = context.read<UserCubit>().state.userModel;
-      final parts = userModel.userName.trim().split(" ");
-      final firstName = parts.isNotEmpty ? parts[0] : "N/A";
-      final lastName = parts.length > 1 ? parts.sublist(1).join(" ") : "N/A";
-      PaymentRequestModel paymentModel = PaymentRequestModel(
-        amount: state.totalPrice.toInt(),
-        firstName: firstName,
-        lastName: lastName,
-        email: userModel.email,
-        phoneNumber: userModel.phone,
+    if (context.read<UserCubit>().state.userLocation.isEmpty) {
+      showToast(
+        message: "You Must Set Your Location In Profile Tab!",
+        state: ToastStates.error,
       );
-      await context.read<PaymentCubit>().payWithPaymobCart(
-        paymentModel: paymentModel,
-      );
+      return;
     }
+    final UserModel userModel = context.read<UserCubit>().state.userModel;
+    final parts = userModel.userName.trim().split(" ");
+    final firstName = parts.isNotEmpty ? parts[0] : "N/A";
+    final lastName = parts.length > 1 ? parts.sublist(1).join(" ") : "N/A";
+    PaymentRequestModel paymentModel = PaymentRequestModel(
+      amount: state.totalPrice.toInt(),
+      firstName: firstName,
+      lastName: lastName,
+      email: userModel.email,
+      phoneNumber: userModel.phone,
+    );
+    await context.read<PaymentCubit>().payWithPaymobCart(
+      paymentModel: paymentModel,
+    );
   }
 }
