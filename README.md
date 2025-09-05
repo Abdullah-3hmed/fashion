@@ -3,7 +3,6 @@
 
 eFashion is a comprehensive e-commerce application for fashion, built with Flutter. It provides a seamless shopping experience with a rich feature set for both users and administrators, including real-time chat support, payment integration, and a full-featured product catalog.
 ![header](https://i.postimg.cc/8cT5V8rX/2025-09-05-184758.png)
-![header]()
 
 ## 📸 Screenshots
 
@@ -25,7 +24,6 @@ eFashion is a comprehensive e-commerce application for fashion, built with Flutt
 - **Secure Checkout**: Integrated with Paymob for a secure and easy payment process.
 - **User Profile Management**: Users can edit their profile details, manage their shipping location via Google Maps, and view their order history.
 - **Real-time Chat Support**: Built with SignalR for instant communication between users and support.
-- **Admin Chat View**: Admins can view all ongoing user support chats.
 - **Push Notifications**: Uses Firebase Cloud Messaging (FCM) to keep users informed about their orders and messages.
 - **Theme Support**: Includes both light and dark modes for a personalized user experience.
 
