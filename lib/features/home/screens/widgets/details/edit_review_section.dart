@@ -112,9 +112,9 @@ class _EditReviewSectionState extends State<EditReviewSection> {
     );
   }
 
-  Future<void>   _onPressed() async {
+  Future<void> _onPressed() async {
     final UserModel userModel = context.read<UserCubit>().state.userModel;
-   final DateTime today = DateTime.now();
+    final DateTime today = DateTime.now();
     String formattedDate = DateFormat('yyyy-M-d').format(today);
 
     ReviewModel reviewModel = ReviewModel(
@@ -124,7 +124,7 @@ class _EditReviewSectionState extends State<EditReviewSection> {
       imageUrl: userModel.profileImage,
       name: userModel.userName,
       reviewId: "",
-      createdAt: formattedDate
+      createdAt: formattedDate,
     );
     await context.read<ProductDetailsCubit>().addReview(
       reviewModel: reviewModel,

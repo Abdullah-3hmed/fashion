@@ -26,7 +26,10 @@ class ProfileContainerClipper extends CustomClipper<Path> {
       size.width * endX,
       size.height * endY,
     );
-    path.lineTo(size.width * 0.9086056, size.height * 0.1738071 * (1 - curvedValue));
+    path.lineTo(
+      size.width * 0.9086056,
+      size.height * 0.1738071 * (1 - curvedValue),
+    );
     path.cubicTo(
       size.width * 0.9634778,
       size.height * 0.1865514 * (1 - curvedValue),

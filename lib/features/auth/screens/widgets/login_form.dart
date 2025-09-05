@@ -55,7 +55,9 @@ class _LoginFormState extends State<LoginForm> {
               label: "Email",
               prefixIcon: Icon(
                 FontAwesomeIcons.envelope,
-                color: Theme.of(context).colorScheme.onSurfaceVariant.withAlpha(153),
+                color: Theme.of(
+                  context,
+                ).colorScheme.onSurfaceVariant.withAlpha(153),
               ),
               onSaved: (value) => email = value!,
             ),
@@ -97,10 +99,12 @@ class _LoginFormState extends State<LoginForm> {
             ),
             const SizedBox(height: 48.0),
             BlocConsumer<AuthCubit, AuthState>(
-              buildWhen: (previous, current) =>
-              previous.loginRequestStatus != current.loginRequestStatus,
-              listenWhen: (previous, current) =>
-              previous.loginRequestStatus != current.loginRequestStatus,
+              buildWhen:
+                  (previous, current) =>
+                      previous.loginRequestStatus != current.loginRequestStatus,
+              listenWhen:
+                  (previous, current) =>
+                      previous.loginRequestStatus != current.loginRequestStatus,
               listener: (context, state) {
                 if (state.loginRequestStatus.isSuccess) {
                   showToast(
@@ -118,8 +122,7 @@ class _LoginFormState extends State<LoginForm> {
               },
               builder: (context, state) {
                 return PrimaryButton(
-                  isLoading:
-                  state.loginRequestStatus.isLoading,
+                  isLoading: state.loginRequestStatus.isLoading,
                   onPressed: () => _onSubmit(),
                   text: "Log in",
                 );
@@ -134,7 +137,10 @@ class _LoginFormState extends State<LoginForm> {
   void _onSubmit() {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
-      context.read<AuthCubit>().userLogin(email: email.trim(), password: password.trim());
+      context.read<AuthCubit>().userLogin(
+        email: email.trim(),
+        password: password.trim(),
+      );
     } else {
       setState(() {
         _autovalidateMode = AutovalidateMode.always;
@@ -143,4 +149,3 @@ class _LoginFormState extends State<LoginForm> {
     }
   }
 }
-

@@ -122,6 +122,7 @@ class CartCubit extends Cubit<CartState> {
       );
     }, (_) => null);
   }
+
   void clearCart() {
     emit(state.copyWith(cartMap: {}));
   }

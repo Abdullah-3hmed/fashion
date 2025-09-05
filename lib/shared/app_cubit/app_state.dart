@@ -11,7 +11,11 @@ class AppState extends Equatable {
     this.hasPendingNotificationUpdate = false,
   });
 
-  AppState copyWith({bool? isDarkMode, bool? areNotificationsEnabled, bool? hasPendingNotificationUpdate}) {
+  AppState copyWith({
+    bool? isDarkMode,
+    bool? areNotificationsEnabled,
+    bool? hasPendingNotificationUpdate,
+  }) {
     return AppState(
       isDarkMode: isDarkMode ?? this.isDarkMode,
       areNotificationsEnabled:
@@ -22,5 +26,9 @@ class AppState extends Equatable {
   }
 
   @override
-  List<Object?> get props => [isDarkMode, areNotificationsEnabled, hasPendingNotificationUpdate];
+  List<Object?> get props => [
+    isDarkMode,
+    areNotificationsEnabled,
+    hasPendingNotificationUpdate,
+  ];
 }

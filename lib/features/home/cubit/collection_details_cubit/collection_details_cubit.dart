@@ -5,21 +5,20 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CollectionDetailsCubit extends Cubit<CollectionDetailsState> {
   final HomeRepo homeRepoImpl;
-  CollectionDetailsCubit({
-    required this.homeRepoImpl,
-}) : super(const CollectionDetailsState());
+  CollectionDetailsCubit({required this.homeRepoImpl})
+    : super(const CollectionDetailsState());
   Future<void> getCollectionDetails({required String collectionId}) async {
     final result = await homeRepoImpl.getCollectionDetails(
       collectionId: collectionId,
     );
     result.fold(
-          (failure) => emit(
+      (failure) => emit(
         state.copyWith(
           collectionDetailsErrorMessage: failure.errorMessage,
           collectionDetailsStatus: RequestStatus.error,
         ),
       ),
-          (collectionDetails) => emit(
+      (collectionDetails) => emit(
         state.copyWith(
           collectionDetailsModel: collectionDetails,
           collectionDetailsStatus: RequestStatus.success,

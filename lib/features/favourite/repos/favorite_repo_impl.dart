@@ -15,14 +15,16 @@ class FavoriteRepoImpl implements FavoriteRepo {
   FavoriteRepoImpl({required this.dioHelper});
 
   @override
-  Future<Either<Failure, void>> addAndRemoveToFavorite({required String productId}) async {
+  Future<Either<Failure, void>> addAndRemoveToFavorite({
+    required String productId,
+  }) async {
     return safeApiCall<void>(() async {
       final response = await dioHelper.post(
         url: ApiConstants.addToFavoriteEndpoint(productId: productId),
         headers: {"Authorization": "Bearer ${AppConstants.token}"},
       );
       if (response.statusCode == 200) {
-        return ;
+        return;
       } else {
         throw ServerException(errorModel: ErrorModel.fromJson(response.data));
       }
@@ -38,7 +40,9 @@ class FavoriteRepoImpl implements FavoriteRepo {
       );
       if (response.statusCode == 200) {
         return List<FavoriteModel>.from(
-          (response.data as List? ?? []).map((favorite) => FavoriteModel.fromJson(favorite)),
+          (response.data as List? ?? []).map(
+            (favorite) => FavoriteModel.fromJson(favorite),
+          ),
         );
       } else {
         throw ServerException(errorModel: ErrorModel.fromJson(response.data));

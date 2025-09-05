@@ -12,8 +12,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class ProductDetailsScreen extends StatefulWidget implements AutoRouteWrapper {
   @override
   Widget wrappedRoute(BuildContext context) => BlocProvider(
-    create: (context) =>
-    getIt<ProductDetailsCubit>()..getProductDetails(productId: productId),
+    create:
+        (context) =>
+            getIt<ProductDetailsCubit>()
+              ..getProductDetails(productId: productId),
     child: this,
   );
 
@@ -45,9 +47,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
       body: Stack(
         children: [
           Positioned.fill(
-            child: CustomCachedNetworkImage(
-              imageUrl: widget.imageUrl,
-            ),
+            child: CustomCachedNetworkImage(imageUrl: widget.imageUrl),
           ),
           DraggableScrollableSheet(
             initialChildSize: 0.53,

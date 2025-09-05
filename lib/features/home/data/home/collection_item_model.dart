@@ -15,10 +15,10 @@ class CollectionItemModel extends Equatable {
 
   factory CollectionItemModel.fromJson(Map<String, dynamic> json) {
     return CollectionItemModel(
-      id: json['id']??"",
-      title: json['title']??"",
-      description: json['description']??"",
-      imageUrl: json['pictureUrl']??"",
+      id: json['id'] ?? "",
+      title: json['title'] ?? "",
+      description: json['description'] ?? "",
+      imageUrl: json['pictureUrl'] ?? "",
     );
   }
 

@@ -1,6 +1,7 @@
 class ApiConstants {
   ////base url
   static const String baseUrl = "http://shoping-online.runasp.net/api";
+
   /// auth and user endpoints >>>>>>>>>>>>>>>
   static const String singUpEndpoint = "/Account/Register";
   static const String loginEndpoint = "/Account/Login";

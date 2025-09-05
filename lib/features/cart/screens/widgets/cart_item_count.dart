@@ -8,7 +8,8 @@ class CartItemCounter extends StatefulWidget {
     required this.numberOfPieces,
   });
 
-  final void Function({required int value, required bool isIncrement}) onChanged;
+  final void Function({required int value, required bool isIncrement})
+  onChanged;
   final int numberOfPieces;
 
   @override
@@ -47,10 +48,7 @@ class _CartItemCounterState extends State<CartItemCounter> {
               },
               icon: const Icon(SolarIconsOutline.minusCircle),
             ),
-            Text(
-              "$value",
-              style: Theme.of(context).textTheme.bodyLarge,
-            ),
+            Text("$value", style: Theme.of(context).textTheme.bodyLarge),
             IconButton(
               padding: EdgeInsets.zero,
               onPressed: () {

@@ -51,7 +51,7 @@ class SearchGridItem extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                           productModel.title ,
+                          productModel.title,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: Theme.of(context).textTheme.bodyMedium,
@@ -65,19 +65,19 @@ class SearchGridItem extends StatelessWidget {
                     ),
                   ),
                   IconButton(
-                    onPressed: () async{
+                    onPressed: () async {
                       await showModalBottomSheet(
                         context: context,
                         builder:
                             (_) => BlocProvider.value(
-                          value: context.read<CartCubit>(),
-                          child: ModalBottomSheetContent(
-                            bottomSheetModel: BottomSheetModel.fromProduct(
-                              productModel,
-                              isOffered: productModel.isOffer,
+                              value: context.read<CartCubit>(),
+                              child: ModalBottomSheetContent(
+                                bottomSheetModel: BottomSheetModel.fromProduct(
+                                  productModel,
+                                  isOffered: productModel.isOffer,
+                                ),
+                              ),
                             ),
-                          ),
-                        ),
                       );
                     },
                     padding: EdgeInsets.zero,
@@ -94,9 +94,7 @@ class SearchGridItem extends StatelessWidget {
           child: CircleAvatar(
             radius: 16.0,
             backgroundColor: Colors.white.withValues(alpha: 0.15),
-            child:CustomHeartIcon(
-              productModel: productModel,
-            ),
+            child: CustomHeartIcon(productModel: productModel),
           ),
         ),
       ],

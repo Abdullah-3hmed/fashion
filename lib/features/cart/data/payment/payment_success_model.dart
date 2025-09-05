@@ -40,5 +40,13 @@ class PaymentSuccessModel extends Equatable {
   );
 
   @override
-  List<Object> get props => [success, date, firstName, lastName, amount, deliveryDate, time];
+  List<Object> get props => [
+    success,
+    date,
+    firstName,
+    lastName,
+    amount,
+    deliveryDate,
+    time,
+  ];
 }

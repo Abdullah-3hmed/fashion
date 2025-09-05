@@ -101,7 +101,8 @@ class HomeCubit extends Cubit<HomeState> {
           );
         } else {
           products.groupedBrandProducts.forEach((brand, newList) {
-            final List<ProductModel> oldList = currentGrouped[brand] ?? <ProductModel>[];
+            final List<ProductModel> oldList =
+                currentGrouped[brand] ?? <ProductModel>[];
             currentGrouped[brand] = [...oldList, ...newList];
           });
 
@@ -115,7 +116,6 @@ class HomeCubit extends Cubit<HomeState> {
               productsState: RequestStatus.success,
               genderActiveIndex: -1,
               categoryActiveIndex: -1,
-
             ),
           );
         }
@@ -156,13 +156,17 @@ class HomeCubit extends Cubit<HomeState> {
   }
 
   Future<void> loadMoreProducts() async {
-    if (state.productsPage >= state.productsModel.totalPages || state.productsState.isLoading) return;
+    if (state.productsPage >= state.productsModel.totalPages ||
+        state.productsState.isLoading)
+      return;
 
     await getProducts(page: state.productsPage + 1);
   }
 
   Future<void> loadMoreOffers() async {
-    if (state.offersPage >= state.offersModel.totalPages || state.offersState.isLoading) return;
+    if (state.offersPage >= state.offersModel.totalPages ||
+        state.offersState.isLoading)
+      return;
 
     await getOffers(page: state.offersPage + 1);
   }

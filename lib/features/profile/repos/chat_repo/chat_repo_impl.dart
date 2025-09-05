@@ -28,7 +28,7 @@ class ChatRepoImpl implements ChatRepo {
       if (response.statusCode == 200) {
         return List<MessageModel>.from(
           (response.data as List? ?? []).map(
-                (message) => MessageModel.fromJson(message),
+            (message) => MessageModel.fromJson(message),
           ),
         );
       } else {

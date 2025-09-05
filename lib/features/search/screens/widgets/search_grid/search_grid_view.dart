@@ -16,8 +16,7 @@ class SearchGridView extends StatelessWidget {
         childAspectRatio: 0.86,
       ),
       itemBuilder:
-          (context, index) =>
-              SearchGridItem(productModel: products[index]),
+          (context, index) => SearchGridItem(productModel: products[index]),
       itemCount: products.length,
     );
   }

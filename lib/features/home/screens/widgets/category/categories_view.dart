@@ -13,25 +13,23 @@ class CategoriesView extends StatelessWidget {
 
   final ValueNotifier<double> genderWidth;
 
-  static final List<CategoryModel> dummyCategories =
-  List.generate(5, (index) => CategoryModel(
-    id: index,
-    name: "jeans",
-    image: AppConstants.imageUrl,
-  ));
+  static final List<CategoryModel> dummyCategories = List.generate(
+    5,
+    (index) =>
+        CategoryModel(id: index, name: "jeans", image: AppConstants.imageUrl),
+  );
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<HomeCubit, HomeState>(
-      buildWhen: (previous, current) =>
-      previous.categoriesStatus != current.categoriesStatus,
+      buildWhen:
+          (previous, current) =>
+              previous.categoriesStatus != current.categoriesStatus,
       builder: (context, state) {
         switch (state.categoriesStatus) {
           case RequestStatus.loading:
             return Skeletonizer(
-              child: CategoryContainer(
-                categories: dummyCategories,
-              ),
+              child: CategoryContainer(categories: dummyCategories),
             );
 
           case RequestStatus.success:
@@ -41,8 +39,7 @@ class CategoriesView extends StatelessWidget {
                     .clamp(0.0, 145.0);
               },
               onHorizontalDragEnd: (_) {
-                genderWidth.value =
-                genderWidth.value >= 72.5 ? 145.0 : 0.0;
+                genderWidth.value = genderWidth.value >= 72.5 ? 145.0 : 0.0;
               },
               child: CategoryContainer(
                 categories: state.categories,
@@ -70,7 +67,8 @@ class CategoryContainer extends StatelessWidget {
   const CategoryContainer({
     super.key,
     required this.categories,
-    this.isScroll = true,});
+    this.isScroll = true,
+  });
 
   final List<CategoryModel> categories;
   final bool isScroll;

@@ -35,7 +35,7 @@ class SearchRepo {
         return Right(
           List<ProductModel>.from(
             (response.data["data"] as List? ?? []).map(
-                  (x) => ProductModel.fromJson(x),
+              (x) => ProductModel.fromJson(x),
             ),
           ),
         );

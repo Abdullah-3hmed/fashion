@@ -10,13 +10,7 @@ abstract class CartRepo {
     required String color,
   });
   Future<Either<Failure, List<CartModel>>> getCartItems();
-  Future<Either<Failure, void>> incrementQuantity({
-    required String productId,
-  });
-  Future<Either<Failure, void>> decrementQuantity({
-    required String productId,
-  });
-  Future<Either<Failure, void>> deleteFromCart({
-    required String productId,
-  });
+  Future<Either<Failure, void>> incrementQuantity({required String productId});
+  Future<Either<Failure, void>> decrementQuantity({required String productId});
+  Future<Either<Failure, void>> deleteFromCart({required String productId});
 }

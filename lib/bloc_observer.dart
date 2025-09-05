@@ -5,7 +5,7 @@ class MyBlocObserver extends BlocObserver {
   @override
   void onCreate(BlocBase bloc) {
     super.onCreate(bloc);
-    if(kDebugMode){
+    if (kDebugMode) {
       print('onCreate -- ${bloc.runtimeType}');
     }
   }
@@ -13,15 +13,15 @@ class MyBlocObserver extends BlocObserver {
   @override
   void onChange(BlocBase bloc, Change change) {
     super.onChange(bloc, change);
-    if(kDebugMode){
-    print('onChange -- ${bloc.runtimeType}, $change');
+    if (kDebugMode) {
+      print('onChange -- ${bloc.runtimeType}, $change');
     }
   }
 
   @override
   void onError(BlocBase bloc, Object error, StackTrace stackTrace) {
-    if(kDebugMode){
-    print('onError -- ${bloc.runtimeType}, $error');
+    if (kDebugMode) {
+      print('onError -- ${bloc.runtimeType}, $error');
     }
     super.onError(bloc, error, stackTrace);
   }
@@ -29,8 +29,8 @@ class MyBlocObserver extends BlocObserver {
   @override
   void onClose(BlocBase bloc) {
     super.onClose(bloc);
-    if(kDebugMode){
-    print('onClose -- ${bloc.runtimeType}');
+    if (kDebugMode) {
+      print('onClose -- ${bloc.runtimeType}');
     }
   }
 }

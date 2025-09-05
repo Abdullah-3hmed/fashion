@@ -41,23 +41,26 @@ class _ColorsAvailableState extends State<ColorsAvailable> {
                   physics: const NeverScrollableScrollPhysics(),
                   scrollDirection: Axis.horizontal,
                   itemCount: widget.colors.length,
-                  itemBuilder: (context, index) => CircleAvatar(
-                    radius: value == index ? 14.0 : 12.0,
-                    backgroundColor: Theme.of(context).colorScheme.primary,
-                    child: InkWell(
-                      onTap: () {
-                        selectedColor.value = index;
-                        widget.onColorChanged(widget.colors[index]);
-                      },
-                      child: CircleAvatar(
-                        radius: 12.0,
-                        backgroundColor:
-                        Color(colorHexMap[widget.colors[index]]!),
+                  itemBuilder:
+                      (context, index) => CircleAvatar(
+                        radius: value == index ? 14.0 : 12.0,
+                        backgroundColor: Theme.of(context).colorScheme.primary,
+                        child: InkWell(
+                          onTap: () {
+                            selectedColor.value = index;
+                            widget.onColorChanged(widget.colors[index]);
+                          },
+                          child: CircleAvatar(
+                            radius: 12.0,
+                            backgroundColor: Color(
+                              colorHexMap[widget.colors[index]]!,
+                            ),
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                  separatorBuilder: (BuildContext context, int index) =>
-                  const SizedBox(width: 18.0),
+                  separatorBuilder:
+                      (BuildContext context, int index) =>
+                          const SizedBox(width: 18.0),
                 );
               },
             ),

@@ -97,7 +97,8 @@ class _ModalBottomSheetContentState extends State<ModalBottomSheetContent> {
               }
               if (state.cartState.isSuccess) {
                 context.pop();
-               if(!widget.isBottomNav) showToast(message: "Add To Cart", state: ToastStates.success);
+                if (!widget.isBottomNav)
+                  showToast(message: "Add To Cart", state: ToastStates.success);
               }
             },
             buildWhen:

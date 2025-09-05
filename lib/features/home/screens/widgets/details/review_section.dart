@@ -28,11 +28,9 @@ class ReviewSection extends StatelessWidget {
               Row(
                 children: [
                   Container(
-                   width: 40.0,
+                    width: 40.0,
                     height: 40.0,
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                    ),
+                    decoration: const BoxDecoration(shape: BoxShape.circle),
                     child: CustomCachedNetworkImage(
                       imageUrl: reviews[index].imageUrl,
                     ),
@@ -60,7 +58,9 @@ class ReviewSection extends StatelessWidget {
               Align(
                 alignment: AlignmentDirectional.centerStart,
                 child: Text(
-                  reviews[index].review.isEmpty?"No Comments Available":reviews[index].review,
+                  reviews[index].review.isEmpty
+                      ? "No Comments Available"
+                      : reviews[index].review,
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
               ),

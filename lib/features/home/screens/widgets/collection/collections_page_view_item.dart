@@ -69,7 +69,10 @@ class CollectionsPageViewItem extends StatelessWidget {
             child: SecondaryButton(
               onPressed: () async {
                 context.pushRoute(
-                  CollectionRoute(collectionId: collection.id,title: collection.title),
+                  CollectionRoute(
+                    collectionId: collection.id,
+                    title: collection.title,
+                  ),
                 );
               },
               text: "Shop now",

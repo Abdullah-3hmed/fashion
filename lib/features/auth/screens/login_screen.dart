@@ -5,7 +5,6 @@ import 'package:e_fashion_flutter/features/auth/screens/widgets/login_form.dart'
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
-
 @RoutePage()
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});

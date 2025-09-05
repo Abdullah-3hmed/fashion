@@ -30,8 +30,10 @@ class CartItem extends StatelessWidget {
         ),
         child: const Icon(Iconsax.trash, color: Colors.white, size: 24.0),
       ),
-      onDismissed: (_) async{
-        await context.read<CartCubit>().deleteFromCart(productId: cartModel.productId);
+      onDismissed: (_) async {
+        await context.read<CartCubit>().deleteFromCart(
+          productId: cartModel.productId,
+        );
       },
       key: ValueKey(cartModel.productId),
       child: Container(
@@ -74,9 +76,11 @@ class CartItem extends StatelessWidget {
                   children: [
                     Text("Color", style: Theme.of(context).textTheme.bodySmall),
                     const SizedBox(width: 8.0),
-                     CircleAvatar(
+                    CircleAvatar(
                       radius: 8.0,
-                      backgroundColor: Color(colorHexMap[cartModel.color]??0xFF000000),
+                      backgroundColor: Color(
+                        colorHexMap[cartModel.color] ?? 0xFF000000,
+                      ),
                     ),
                   ],
                 ),
@@ -98,11 +102,20 @@ class CartItem extends StatelessWidget {
                     const SizedBox(width: 16.0),
                     CartItemCounter(
                       numberOfPieces: cartModel.quantity,
-                      onChanged: ({required int value, required bool isIncrement})  {
+                      onChanged: ({
+                        required int value,
+                        required bool isIncrement,
+                      }) {
                         if (isIncrement) {
-                          context.read<CartCubit>().incrementQuantity(value, cartModel.productId);
+                          context.read<CartCubit>().incrementQuantity(
+                            value,
+                            cartModel.productId,
+                          );
                         } else {
-                          context.read<CartCubit>().decrementQuantity(value, cartModel.productId);
+                          context.read<CartCubit>().decrementQuantity(
+                            value,
+                            cartModel.productId,
+                          );
                         }
                       },
                     ),

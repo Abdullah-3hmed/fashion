@@ -5,13 +5,11 @@ import 'package:e_fashion_flutter/core/utils/app_constants.dart';
 import 'package:signalr_netcore/signalr_client.dart';
 
 class ConnectionsService {
-  static  HubConnection? connection;
-  static bool _isInitializing = false;
+  static HubConnection? connection;
 
   static Future<void> initConnection() async {
-    if (connection != null && connection!.state == HubConnectionState.Connected) return;
-    if (_isInitializing) return;
-    _isInitializing = true;
+    if (connection != null && connection!.state == HubConnectionState.Connected)
+      return;
     try {
       final url = "http://shoping-online.runasp.net/chatHub";
       log("Connecting to: $url");
@@ -23,7 +21,6 @@ class ConnectionsService {
                   requestTimeout: 5000,
                   accessTokenFactory: () async => AppConstants.token,
                   transport: HttpTransportType.WebSockets,
-
                 ),
               )
               .withAutomaticReconnect()
@@ -47,6 +44,7 @@ class ConnectionsService {
       await initConnection();
     }
   }
+
   static Future<void> closeConnection() async {
     await connection?.stop();
     connection = null;

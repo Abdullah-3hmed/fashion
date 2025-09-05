@@ -13,13 +13,12 @@ class SendMessageModel extends Equatable {
     required this.chatId,
   });
 
-  Map<String, dynamic> toJson() =>
-      {
-        //"senderUserId": senderId,
-        "receiverUserId": receiverId,
-        "content": content,
-        "chatId": chatId,
-      };
+  Map<String, dynamic> toJson() => {
+    //"senderUserId": senderId,
+    "receiverUserId": receiverId,
+    "content": content,
+    "chatId": chatId,
+  };
 
   @override
   List<Object> get props => [senderId, receiverId, content, chatId];

@@ -23,8 +23,8 @@ class CustomHeartIcon extends StatelessWidget {
           },
           child: AnimatedSwitcher(
             duration: const Duration(milliseconds: 300),
-            transitionBuilder: (child, anim) =>
-                ScaleTransition(scale: anim, child: child),
+            transitionBuilder:
+                (child, anim) => ScaleTransition(scale: anim, child: child),
             child: Icon(
               inFavorites ? SolarIconsBold.heart : SolarIconsOutline.heart,
               key: ValueKey(inFavorites),

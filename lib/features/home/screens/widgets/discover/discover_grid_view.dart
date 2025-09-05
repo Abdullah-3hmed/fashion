@@ -38,9 +38,9 @@ class DiscoverGridView extends StatelessWidget {
           return index.isEven
               ? DiscoverGridItem(product: model, isFirstItem: isFirstItem)
               : DiscoverGridReverseItem(
-            product: model,
-            isFirstItem: isFirstItem,
-          );
+                product: model,
+                isFirstItem: isFirstItem,
+              );
         },
       ),
     );

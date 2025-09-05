@@ -91,9 +91,9 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                           message: state.authResponseModel.message,
                           state: ToastStates.success,
                         );
-                        context.navigateTo( EmailVerificationRoute(
-                          email: email.trim(),
-                        ));
+                        context.navigateTo(
+                          EmailVerificationRoute(email: email.trim()),
+                        );
                       }
                       if (state.forgetPasswordRequestStatus.isError) {
                         showToast(
@@ -104,8 +104,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                     },
                     builder: (context, state) {
                       return PrimaryButton(
-                        isLoading:
-                            state.forgetPasswordRequestStatus.isLoading,
+                        isLoading: state.forgetPasswordRequestStatus.isLoading,
                         onPressed: () async {
                           await _onSubmit();
                         },

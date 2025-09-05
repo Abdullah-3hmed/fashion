@@ -54,28 +54,26 @@ class AuthState extends Equatable {
     String? verifyOtpErrorMessage,
     String? verifyOtpMessage,
     String? resetPasswordMessage,
-  }) =>
-      AuthState(
-        authResponseModel: authResponseModel ?? this.authResponseModel,
-        loginRequestStatus: loginRequestStatus ?? this.loginRequestStatus,
-        signUpRequestStatus: signUpRequestStatus ?? this.signUpRequestStatus,
-        forgetPasswordRequestStatus:
+  }) => AuthState(
+    authResponseModel: authResponseModel ?? this.authResponseModel,
+    loginRequestStatus: loginRequestStatus ?? this.loginRequestStatus,
+    signUpRequestStatus: signUpRequestStatus ?? this.signUpRequestStatus,
+    forgetPasswordRequestStatus:
         forgetPasswordRequestStatus ?? this.forgetPasswordRequestStatus,
-        resetPasswordRequestStatus:
+    resetPasswordRequestStatus:
         resetPasswordRequestStatus ?? this.resetPasswordRequestStatus,
-        verifyOtpRequestStatus:
+    verifyOtpRequestStatus:
         verifyOtpRequestStatus ?? this.verifyOtpRequestStatus,
-        loginErrorMessage: loginErrorMessage ?? this.loginErrorMessage,
-        signUpErrorMessage: signUpErrorMessage ?? this.signUpErrorMessage,
-        forgetPasswordErrorMessage:
+    loginErrorMessage: loginErrorMessage ?? this.loginErrorMessage,
+    signUpErrorMessage: signUpErrorMessage ?? this.signUpErrorMessage,
+    forgetPasswordErrorMessage:
         forgetPasswordErrorMessage ?? this.forgetPasswordErrorMessage,
-        resetPasswordErrorMessage:
+    resetPasswordErrorMessage:
         resetPasswordErrorMessage ?? this.resetPasswordErrorMessage,
-        verifyOtpErrorMessage:
-        verifyOtpErrorMessage ?? this.verifyOtpErrorMessage,
-        verifyOtpMessage: verifyOtpMessage ?? this.verifyOtpMessage,
-        resetPasswordMessage: resetPasswordMessage ?? this.resetPasswordMessage,
-      );
+    verifyOtpErrorMessage: verifyOtpErrorMessage ?? this.verifyOtpErrorMessage,
+    verifyOtpMessage: verifyOtpMessage ?? this.verifyOtpMessage,
+    resetPasswordMessage: resetPasswordMessage ?? this.resetPasswordMessage,
+  );
 
   @override
   List<Object> get props => [

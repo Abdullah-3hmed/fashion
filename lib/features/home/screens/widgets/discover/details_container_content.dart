@@ -23,22 +23,21 @@ class DetailsContainerContent extends StatelessWidget {
   final String productId;
   final ScrollController controller;
   static const ProductDetailsModel dummyProductDetailsModel =
-  ProductDetailsModel(
-    id: "",
-    imageUrl: AppConstants.imageUrl,
-    title: "Product Name",
-    colors: "*****",
-    price: 0.0,
-    sizes: "*****",
-    reviews: [],
-
-  );
+      ProductDetailsModel(
+        id: "",
+        imageUrl: AppConstants.imageUrl,
+        title: "Product Name",
+        colors: "*****",
+        price: 0.0,
+        sizes: "*****",
+        reviews: [],
+      );
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ProductDetailsCubit, ProductDetailsState>(
       buildWhen:
           (previous, current) =>
-      previous.productDetailsState != current.productDetailsState,
+              previous.productDetailsState != current.productDetailsState,
       builder: (context, state) {
         switch (state.productDetailsState) {
           case RequestStatus.loading:
@@ -63,7 +62,7 @@ class DetailsContainerContent extends StatelessWidget {
   }
 
   Skeletonizer _buildLoadingState(BuildContext context) {
-     return Skeletonizer(
+    return Skeletonizer(
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -89,7 +88,7 @@ class DetailsContainerContent extends StatelessWidget {
             ),
             const SizedBox(height: 24.0),
             ColorsAvailable(
-                colors: const [],
+              colors: const [],
               onColorChanged: (color) => debugPrint(color.toString()),
             ),
             PiecesAvailable(
@@ -97,10 +96,7 @@ class DetailsContainerContent extends StatelessWidget {
                 debugPrint(value.toString());
               },
             ),
-            Text(
-              "**********",
-              style: Theme.of(context).textTheme.bodySmall,
-            ),
+            Text("**********", style: Theme.of(context).textTheme.bodySmall),
             const SizedBox(height: 24.0),
             PrimaryButton(
               icon: Icon(

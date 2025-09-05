@@ -13,7 +13,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 @RoutePage()
 class ResetPasswordScreen extends StatefulWidget {
   const ResetPasswordScreen({super.key, required this.email});
-final String email;
+  final String email;
   @override
   State<ResetPasswordScreen> createState() => _ResetPasswordScreenState();
 }
@@ -100,8 +100,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                     },
                     builder: (context, state) {
                       return PrimaryButton(
-                        isLoading:
-                            state.resetPasswordRequestStatus.isLoading,
+                        isLoading: state.resetPasswordRequestStatus.isLoading,
                         onPressed: () async {
                           await _onSubmit();
                         },

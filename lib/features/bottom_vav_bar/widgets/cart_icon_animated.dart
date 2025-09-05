@@ -53,17 +53,20 @@ class CartIconAnimatedState extends State<CartIconAnimated> {
         ),
         ValueListenableBuilder<double>(
           valueListenable: _leftPosition,
-          child: widget.length > 0 ? CircleAvatar(
-            backgroundColor: Colors.red,
-            radius: 10.0,
-            child: Text(
-              widget.length.toString(),
-              style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                fontWeight: FontWeight.w800,
-                color: Colors.white,
-              ),
-            ),
-          ):const SizedBox.shrink(),
+          child:
+              widget.length > 0
+                  ? CircleAvatar(
+                    backgroundColor: Colors.red,
+                    radius: 10.0,
+                    child: Text(
+                      widget.length.toString(),
+                      style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                        fontWeight: FontWeight.w800,
+                        color: Colors.white,
+                      ),
+                    ),
+                  )
+                  : const SizedBox.shrink(),
           builder: (_, left, child) {
             return AnimatedPositionedDirectional(
               duration: const Duration(milliseconds: 300),

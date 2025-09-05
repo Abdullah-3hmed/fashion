@@ -32,9 +32,10 @@ class CustomCachedNetworkImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final url = imageUrl.isEmpty
-        ? "https://res.cloudinary.com/doz1vpcgr/image/upload/q_80,f_auto,w_300/v1756802120/ian-dooley-d1UPkiFd04A-unsplash_qy7eue.jpg"
-        : _applyQuality(imageUrl);
+    final url =
+        imageUrl.isEmpty
+            ? "https://res.cloudinary.com/doz1vpcgr/image/upload/q_80,f_auto,w_300/v1756802120/ian-dooley-d1UPkiFd04A-unsplash_qy7eue.jpg"
+            : _applyQuality(imageUrl);
 
     return CachedNetworkImage(
       cacheManager: _customCacheManager,
@@ -44,12 +45,13 @@ class CustomCachedNetworkImage extends StatelessWidget {
       fit: BoxFit.cover,
       memCacheWidth: 400,
       memCacheHeight: 400,
-      errorWidget: (context, url, error) => Image.asset(
-        AssetsManager.errorImage,
-        height: height ?? double.infinity,
-        width: width ?? double.infinity,
-        fit: BoxFit.cover,
-      ),
+      errorWidget:
+          (context, url, error) => Image.asset(
+            AssetsManager.errorImage,
+            height: height ?? double.infinity,
+            width: width ?? double.infinity,
+            fit: BoxFit.cover,
+          ),
     );
   }
 }

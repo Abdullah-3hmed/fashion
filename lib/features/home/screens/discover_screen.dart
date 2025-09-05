@@ -99,17 +99,22 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
               child: BlocProvider.value(
                 value: widget.homeCubit,
                 child: BlocBuilder<HomeCubit, HomeState>(
-                  buildWhen: (prev, curr) =>
-                  prev.productsState != curr.productsState ||
-                      prev.offersState != curr.offersState,
+                  buildWhen:
+                      (prev, curr) =>
+                          prev.productsState != curr.productsState ||
+                          prev.offersState != curr.offersState,
                   builder: (context, state) {
                     final List<ProductModel> discoverList =
-                    widget.isOffer
-                        ? state.offersModel.offers
-                        : state.productsModel.groupedBrandProducts[widget.brand] ?? [];
+                        widget.isOffer
+                            ? state.offersModel.offers
+                            : state.productsModel.groupedBrandProducts[widget
+                                    .brand] ??
+                                [];
 
                     final RequestStatus status =
-                    widget.isOffer ? state.offersState : state.productsState;
+                        widget.isOffer
+                            ? state.offersState
+                            : state.productsState;
 
                     _resetLoading(status);
                     if (value) {
@@ -137,4 +142,3 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
     );
   }
 }
-

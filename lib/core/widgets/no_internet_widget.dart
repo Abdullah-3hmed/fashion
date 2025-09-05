@@ -7,7 +7,8 @@ class NoInternetWidget extends StatelessWidget {
   const NoInternetWidget({
     super.key,
     required this.onPressed,
-    this.isLoading = false, required this.errorMessage,
+    this.isLoading = false,
+    required this.errorMessage,
   });
 
   final void Function() onPressed;

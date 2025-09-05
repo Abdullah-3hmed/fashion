@@ -23,7 +23,6 @@ class ChatSupportScreen extends StatefulWidget {
   final String receiverId;
   final int chatId;
 
-
   @override
   State<ChatSupportScreen> createState() => _ChatSupportScreenState();
 }

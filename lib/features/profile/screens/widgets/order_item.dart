@@ -54,11 +54,14 @@ class OrderItem extends StatelessWidget {
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
                   IconButton(
-                    onPressed: ()async {
+                    onPressed: () async {
                       await Clipboard.setData(
                         ClipboardData(text: order.orderId.toString()),
                       );
-                     showToast(message: "Copied to Clipboard", state: ToastStates.success);
+                      showToast(
+                        message: "Copied to Clipboard",
+                        state: ToastStates.success,
+                      );
                     },
                     padding: EdgeInsets.zero,
                     icon: Icon(

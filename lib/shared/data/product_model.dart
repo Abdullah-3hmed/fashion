@@ -32,38 +32,35 @@ class ProductModel extends Equatable {
   List<String> get parsedSizes =>
       sizes.split(',').map((e) => e.trim()).where((e) => e.isNotEmpty).toList();
 
-  factory ProductModel.fromJson(Map<String, dynamic> json) =>
-      ProductModel(
-        id: json["id"] ?? "",
-        title: json["title"] ?? "",
-        imageUrl: json["pictureUrl"] ?? "",
-        basePrice: json["basePrice"] ?? 0,
-        discountPrice: json["discountedPrice"] ?? 0,
-        colors: json["colors"] ?? "",
-        sizes: json["sizes"] ?? "",
-        isOffer: json["isOffred"] ?? false,
-      );
+  factory ProductModel.fromJson(Map<String, dynamic> json) => ProductModel(
+    id: json["id"] ?? "",
+    title: json["title"] ?? "",
+    imageUrl: json["pictureUrl"] ?? "",
+    basePrice: json["basePrice"] ?? 0,
+    discountPrice: json["discountedPrice"] ?? 0,
+    colors: json["colors"] ?? "",
+    sizes: json["sizes"] ?? "",
+    isOffer: json["isOffred"] ?? false,
+  );
 
-  FavoriteModel toFavoriteModel() =>
-      FavoriteModel(
-        id: id,
-        title: title,
-        image: imageUrl,
-        price: isOffer ? discountPrice : basePrice,
-        colors: colors,
-        sizes: sizes,
-      );
+  FavoriteModel toFavoriteModel() => FavoriteModel(
+    id: id,
+    title: title,
+    image: imageUrl,
+    price: isOffer ? discountPrice : basePrice,
+    colors: colors,
+    sizes: sizes,
+  );
 
   @override
-  List<Object> get props =>
-      [
-        id,
-        title,
-        imageUrl,
-        basePrice,
-        discountPrice,
-        colors,
-        sizes,
-        isOffer,
-      ];
+  List<Object> get props => [
+    id,
+    title,
+    imageUrl,
+    basePrice,
+    discountPrice,
+    colors,
+    sizes,
+    isOffer,
+  ];
 }

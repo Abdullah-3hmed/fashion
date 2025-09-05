@@ -42,10 +42,7 @@ class _PiecesAvailableState extends State<PiecesAvailable> {
                   },
                   icon: const Icon(SolarIconsOutline.minusCircle),
                 ),
-                Text(
-                  "$value",
-                  style: Theme.of(context).textTheme.bodyLarge,
-                ),
+                Text("$value", style: Theme.of(context).textTheme.bodyLarge),
                 IconButton(
                   padding: EdgeInsets.zero,
                   onPressed: () {

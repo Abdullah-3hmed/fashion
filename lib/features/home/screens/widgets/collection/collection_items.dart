@@ -72,10 +72,10 @@ class CollectionItems extends StatelessWidget {
               ),
               const SizedBox(width: 16.0),
               SecondaryButton(
-                onPressed: ()  {
-                context.pushRoute(
-                  const AllChatsRoute(),
-                );
+                onPressed: () {
+                  // context.pushRoute(
+                  //   const AllChatsRoute(),
+                  // );
                 },
                 text: "Buy collection",
                 backgroundColor: Theme.of(context).colorScheme.primary,

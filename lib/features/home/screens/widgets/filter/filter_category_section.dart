@@ -21,19 +21,19 @@ class FilterCategorySection extends StatelessWidget {
     return SizedBox(
       height: 70.0,
       child: BlocBuilder<HomeCubit, HomeState>(
-        buildWhen: (previous, current) =>
-        previous.categoryActiveIndex != current.categoryActiveIndex,
+        buildWhen:
+            (previous, current) =>
+                previous.categoryActiveIndex != current.categoryActiveIndex,
         builder: (context, state) {
           return ListView.separated(
             physics:
-            isScroll
-                ? const ScrollPhysics()
-                : const NeverScrollableScrollPhysics(),
+                isScroll
+                    ? const ScrollPhysics()
+                    : const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
             scrollDirection: Axis.horizontal,
             itemBuilder:
-                (context, index) =>
-                InkWell(
+                (context, index) => InkWell(
                   onTap: () {
                     context.read<HomeCubit>().changeCategory(index: index);
                     context.read<HomeCubit>().selectCategory(

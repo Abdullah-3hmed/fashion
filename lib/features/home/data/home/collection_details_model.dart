@@ -14,7 +14,7 @@ class CollectionDetailsModel extends Equatable {
     return CollectionDetailsModel(
       totalPrice: json['price'],
       collectionProducts: List<CollectionItemModel>.from(
-       ( json["items"]as List? ??[]).map(
+        (json["items"] as List? ?? []).map(
           (item) => CollectionItemModel.fromJson(item),
         ),
       ),

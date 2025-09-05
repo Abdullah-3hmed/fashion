@@ -43,11 +43,7 @@ class HomeDetailsRepoImpl implements HomeDetailsRepo {
       final response = await dioHelper.post(
         url: ApiConstants.addReviewEndpoint,
         headers: {"Authorization": "Bearer ${AppConstants.token}"},
-        data: {
-          "productId": productId,
-          "comment": review,
-          "rate": rate,
-        },
+        data: {"productId": productId, "comment": review, "rate": rate},
       );
       if (response.statusCode == 200) {
         return ReviewModel.fromJson(response.data);

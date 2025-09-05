@@ -20,24 +20,17 @@ class DetailsContainerClipper extends CustomClipper<Path> {
     double lineToX = lerpDouble(size.width * 0.8876194, size.width, progress)!;
     double lineToY = lerpDouble(size.height * 0.1143276, 0, progress)!;
 
-    double control3X = lerpDouble(size.width * 0.9528833, size.width, progress)!;
+    double control3X =
+        lerpDouble(size.width * 0.9528833, size.width, progress)!;
     double control3Y = lerpDouble(size.height * 0.1243461, 0, progress)!;
     double control4X = lerpDouble(size.width, size.width, progress)!;
     double control4Y = lerpDouble(size.height * 0.1694728, 0, progress)!;
     double end2Y = lerpDouble(size.height * 0.2219605, 0, progress)!;
 
     path.moveTo(0, startY);
-    path.cubicTo(
-      control1X, control1Y,
-      control2X, control2Y,
-      end1X, end1Y,
-    );
+    path.cubicTo(control1X, control1Y, control2X, control2Y, end1X, end1Y);
     path.lineTo(lineToX, lineToY);
-    path.cubicTo(
-      control3X, control3Y,
-      control4X, control4Y,
-      size.width, end2Y,
-    );
+    path.cubicTo(control3X, control3Y, control4X, control4Y, size.width, end2Y);
     path.lineTo(size.width, size.height);
     path.lineTo(0, size.height);
     path.close();

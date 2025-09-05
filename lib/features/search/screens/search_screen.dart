@@ -37,7 +37,7 @@ class _SearchScreenState extends State<SearchScreen> {
       isOffer: false,
       title: "*************",
       id: "****",
-      discountPrice:  0.0,
+      discountPrice: 0.0,
       basePrice: 0.0,
       imageUrl: AppConstants.imageUrl,
     ),

@@ -82,9 +82,10 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
                   Pinput(
                     length: 6,
                     onCompleted: (value) async {
-                      await context
-                          .read<AuthCubit>()
-                          .verifyOtp(email: widget.email, otp: value);
+                      await context.read<AuthCubit>().verifyOtp(
+                        email: widget.email,
+                        otp: value,
+                      );
                     },
                     defaultPinTheme: PinTheme(
                       width: 40.0,
@@ -100,12 +101,14 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
                   ),
                   const SizedBox(height: 70.0),
                   BlocConsumer<AuthCubit, AuthState>(
-                    buildWhen: (previous, current) =>
-                    previous.forgetPasswordRequestStatus !=
-                        current.forgetPasswordRequestStatus,
-                    listenWhen: (previous, current) =>
-                    previous.verifyOtpRequestStatus !=
-                        current.verifyOtpRequestStatus,
+                    buildWhen:
+                        (previous, current) =>
+                            previous.forgetPasswordRequestStatus !=
+                            current.forgetPasswordRequestStatus,
+                    listenWhen:
+                        (previous, current) =>
+                            previous.verifyOtpRequestStatus !=
+                            current.verifyOtpRequestStatus,
                     listener: (context, state) {
                       if (state.verifyOtpRequestStatus.isError) {
                         showToast(
@@ -118,9 +121,9 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
                           message: state.verifyOtpMessage,
                           state: ToastStates.success,
                         );
-                        context.navigateTo( ResetPasswordRoute(
-                          email: widget.email,
-                        ));
+                        context.navigateTo(
+                          ResetPasswordRoute(email: widget.email),
+                        );
                       }
                     },
                     builder: (context, state) {
@@ -129,25 +132,22 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
                         builder: (context, value, _) {
                           return value > 0
                               ? Text(
-                            "RESEND OTP IN 00:${value.toString().padLeft(2, '0')}",
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyMedium!
-                                .copyWith(
-                              color: Theme.of(context)
-                                  .colorScheme
-                                  .primary,
-                            ),
-                          )
+                                "RESEND OTP IN 00:${value.toString().padLeft(2, '0')}",
+                                style: Theme.of(
+                                  context,
+                                ).textTheme.bodyMedium!.copyWith(
+                                  color: Theme.of(context).colorScheme.primary,
+                                ),
+                              )
                               : PrimaryButton(
-                            isLoading: state
-                                .forgetPasswordRequestStatus.isLoading,
-                            onPressed: () async {
-                              await _onSubmit();
-                              _startTimer();
-                            },
-                            text: "Resend OTP",
-                          );
+                                isLoading:
+                                    state.forgetPasswordRequestStatus.isLoading,
+                                onPressed: () async {
+                                  await _onSubmit();
+                                  _startTimer();
+                                },
+                                text: "Resend OTP",
+                              );
                         },
                       );
                     },

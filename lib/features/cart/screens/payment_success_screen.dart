@@ -10,7 +10,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 @RoutePage()
 class PaymentSuccessScreen extends StatefulWidget {
   const PaymentSuccessScreen({super.key, required this.paymentSuccessModel});
-final PaymentSuccessModel paymentSuccessModel;
+  final PaymentSuccessModel paymentSuccessModel;
 
   @override
   State<PaymentSuccessScreen> createState() => _PaymentSuccessScreenState();
@@ -19,11 +19,12 @@ final PaymentSuccessModel paymentSuccessModel;
 class _PaymentSuccessScreenState extends State<PaymentSuccessScreen> {
   @override
   void initState() {
-   WidgetsBinding.instance.addPostFrameCallback((_) {
-    context.read<CartCubit>().clearCart();
-   });
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<CartCubit>().clearCart();
+    });
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,7 +43,9 @@ class _PaymentSuccessScreenState extends State<PaymentSuccessScreen> {
                 child: Column(
                   children: [
                     const PaymentCardHeader(),
-                     PaymentCardBody(paymentSuccessModel: widget.paymentSuccessModel,),
+                    PaymentCardBody(
+                      paymentSuccessModel: widget.paymentSuccessModel,
+                    ),
                     SecondaryButton(
                       onPressed: () {
                         context.pop();

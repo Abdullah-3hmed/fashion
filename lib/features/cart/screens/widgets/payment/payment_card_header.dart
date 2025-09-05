@@ -51,17 +51,11 @@ class PaymentCardHeader extends StatelessWidget {
             ),
             PositionedDirectional(
               start: -16.0,
-              child: CircleAvatar(
-                radius: 16.0,
-                backgroundColor: Colors.black,
-              ),
+              child: CircleAvatar(radius: 16.0, backgroundColor: Colors.black),
             ),
             PositionedDirectional(
               end: -16.0,
-              child: CircleAvatar(
-                radius: 16.0,
-                backgroundColor: Colors.black,
-              ),
+              child: CircleAvatar(radius: 16.0, backgroundColor: Colors.black),
             ),
           ],
         ),

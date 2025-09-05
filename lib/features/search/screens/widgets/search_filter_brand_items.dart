@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class SearchFilterBrandItems extends StatefulWidget {
   const SearchFilterBrandItems({super.key, required this.onBrandChanged});
-final ValueChanged<String> onBrandChanged;
+  final ValueChanged<String> onBrandChanged;
   @override
   State<SearchFilterBrandItems> createState() => _SearchFilterBrandItemsState();
 }

@@ -12,7 +12,8 @@ class ProfileClippedContainer extends StatefulWidget {
   final bool isClipped;
 
   @override
-  State<ProfileClippedContainer> createState() => _ProfileClippedContainerState();
+  State<ProfileClippedContainer> createState() =>
+      _ProfileClippedContainerState();
 }
 
 class _ProfileClippedContainerState extends State<ProfileClippedContainer>
@@ -68,18 +69,20 @@ class _ProfileClippedContainerState extends State<ProfileClippedContainer>
             curve: Curves.easeInOut,
             width: double.infinity,
             padding: const EdgeInsets.symmetric(horizontal: 24.0),
-            decoration: widget.isClipped
-                ? null
-                : BoxDecoration(
-              color: Theme.of(context).colorScheme.onInverseSurface,
-              borderRadius: const BorderRadiusDirectional.only(
-                topEnd: Radius.circular(32.0),
-                topStart: Radius.circular(32.0),
-              ),
-            ),
-            color: widget.isClipped
-                ? Theme.of(context).colorScheme.onInverseSurface
-                : null,
+            decoration:
+                widget.isClipped
+                    ? null
+                    : BoxDecoration(
+                      color: Theme.of(context).colorScheme.onInverseSurface,
+                      borderRadius: const BorderRadiusDirectional.only(
+                        topEnd: Radius.circular(32.0),
+                        topStart: Radius.circular(32.0),
+                      ),
+                    ),
+            color:
+                widget.isClipped
+                    ? Theme.of(context).colorScheme.onInverseSurface
+                    : null,
             child: child,
           ),
         );

@@ -13,8 +13,8 @@ class FavoriteModel extends Equatable {
     required this.title,
     required this.image,
     required this.price,
-    required this.colors ,
-    required this.sizes ,
+    required this.colors,
+    required this.sizes,
   });
 
   List<String> get parsedColors =>

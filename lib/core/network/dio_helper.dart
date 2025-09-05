@@ -9,9 +9,7 @@ class DioHelper {
   static void init() {
     BaseOptions options = BaseOptions(
       baseUrl: ApiConstants.baseUrl,
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: {"Content-Type": "application/json"},
       connectTimeout: const Duration(seconds: 20),
       receiveTimeout: const Duration(seconds: 20),
       receiveDataWhenStatusError: true,
@@ -19,7 +17,7 @@ class DioHelper {
     _dio = Dio(options);
     _dio.interceptors.addAll([
       CustomInterceptors(),
-      PrettyDioLogger(requestHeader: true, requestBody: true,),
+      PrettyDioLogger(requestHeader: true, requestBody: true),
     ]);
   }
 

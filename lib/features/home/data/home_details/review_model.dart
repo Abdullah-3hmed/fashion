@@ -28,11 +28,17 @@ class ReviewModel extends Equatable {
       name: json["user"]?['fullName'] ?? "",
       imageUrl: json["user"]?['profilePicture'] ?? "",
       createdAt: json['date'] ?? "",
-
     );
   }
 
   @override
-  List<Object> get props =>
-      [productId, reviewId, review, rate, name, imageUrl, createdAt];
+  List<Object> get props => [
+    productId,
+    reviewId,
+    review,
+    rate,
+    name,
+    imageUrl,
+    createdAt,
+  ];
 }

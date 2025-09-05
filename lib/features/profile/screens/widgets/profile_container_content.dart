@@ -51,9 +51,7 @@ class ProfileContainerContent extends StatelessWidget {
           const SizedBox(height: 24.0),
           ProfileInfoItem(
             onTap: () {
-              context.pushRoute( MapRoute(
-                userCubit: context.read<UserCubit>(),
-              ));
+              context.pushRoute(MapRoute(userCubit: context.read<UserCubit>()));
             },
             text: "Location",
             icon: SolarIconsOutline.mapPoint,
@@ -69,7 +67,9 @@ class ProfileContainerContent extends StatelessWidget {
           const SizedBox(height: 24.0),
           ProfileInfoItem(
             onTap: () {
-              context.pushRoute( ChatSupportRoute(receiverId: AppConstants.supportId));
+              context.pushRoute(
+                ChatSupportRoute(receiverId: AppConstants.supportId),
+              );
             },
             text: "Chat Support",
             icon: SolarIconsOutline.chatRound,
@@ -92,8 +92,10 @@ class ProfileContainerContent extends StatelessWidget {
               value: context.select(
                 (AppCubit cubit) => cubit.state.areNotificationsEnabled,
               ),
-              onChanged: (value)  {
-                context.read<AppCubit>().toggleNotifications(isNotificationAllowed: value);
+              onChanged: (value) {
+                context.read<AppCubit>().toggleNotifications(
+                  isNotificationAllowed: value,
+                );
               },
             ),
           ),

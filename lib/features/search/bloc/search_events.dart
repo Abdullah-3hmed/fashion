@@ -12,8 +12,13 @@ class SearchProductEvent extends SearchEvent {
   final int? minPrice;
   final int? maxPrice;
 
-  SearchProductEvent(
-      {required this.query, this.brand, this.categoryId, this.minPrice, this.maxPrice});
+  SearchProductEvent({
+    required this.query,
+    this.brand,
+    this.categoryId,
+    this.minPrice,
+    this.maxPrice,
+  });
 
   @override
   List<Object?> get props => [query, brand, categoryId, minPrice, maxPrice];

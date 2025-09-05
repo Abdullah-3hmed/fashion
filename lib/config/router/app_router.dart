@@ -98,7 +98,7 @@ class AppRouter extends RootStackRouter {
         _buildCustomRoute(page: NotificationRoute.page),
         _buildCustomRoute(page: MapRoute.page),
         _buildCustomRoute(page: PaymentSuccessRoute.page),
-        //_buildCustomRoute(page: AllChatsRoute.page),
+        // _buildCustomRoute(page: AllChatsRoute.page),
         _buildCustomRoute(page: PaymentRoute.page),
       ],
     ),

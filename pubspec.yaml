@@ -107,7 +107,6 @@ flutter:
   uses-material-design: true
   assets:
     - assets/images/
-    - assets/notifications_key/
     - assets/map_style/map_style.json
 
   fonts:

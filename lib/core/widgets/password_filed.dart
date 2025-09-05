@@ -42,8 +42,10 @@ class _PasswordFieldState extends State<PasswordField> {
 
     final minLength = value.length >= 8;
 
-    if (!hasUppercase) return "Password must contain at least one uppercase letter";
-    if (!hasLowercase) return "Password must contain at least one lowercase letter";
+    if (!hasUppercase)
+      return "Password must contain at least one uppercase letter";
+    if (!hasLowercase)
+      return "Password must contain at least one lowercase letter";
     if (!hasDigit) return "Password must contain at least one number";
     if (!minLength) return "Password must be at least 8 characters long";
 
@@ -65,9 +67,13 @@ class _PasswordFieldState extends State<PasswordField> {
           obscureText: isObscured,
           suffixIcon: IconButton(
             onPressed: () => _obscureTextNotifier.value = !isObscured,
-            icon: isObscured
-                ? const Icon(Icons.visibility_outlined)
-                : const Icon(Icons.visibility_off, color: Color(0xFFC9CECF)),
+            icon:
+                isObscured
+                    ? const Icon(Icons.visibility_outlined)
+                    : const Icon(
+                      Icons.visibility_off,
+                      color: Color(0xFFC9CECF),
+                    ),
           ),
           onSaved: widget.onSaved,
           onSubmit: widget.onSubmit,
@@ -77,4 +83,3 @@ class _PasswordFieldState extends State<PasswordField> {
     );
   }
 }
-

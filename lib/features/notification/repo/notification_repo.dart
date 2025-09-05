@@ -2,7 +2,5 @@ import 'package:dartz/dartz.dart';
 import 'package:e_fashion_flutter/core/error/failures.dart';
 
 abstract class NotificationRepo {
-  Future<Either<Failure, void>> toggleNotification({
-    required String fcmToken,
-});
+  Future<Either<Failure, void>> toggleNotification({required String fcmToken});
 }

@@ -33,7 +33,8 @@ class PaymentState extends Equatable {
       paymentErrorMessage: paymentErrorMessage ?? this.paymentErrorMessage,
       paymentResponseModel: paymentResponseModel ?? this.paymentResponseModel,
       getPaymentStatus: getPaymentStatus ?? this.getPaymentStatus,
-      getPaymentStatusErrorMessage: getPaymentStatusErrorMessage ?? this.getPaymentStatusErrorMessage,
+      getPaymentStatusErrorMessage:
+          getPaymentStatusErrorMessage ?? this.getPaymentStatusErrorMessage,
       paymentSuccessModel: paymentSuccessModel ?? this.paymentSuccessModel,
     );
   }

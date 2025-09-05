@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 
 class SearchFilterCategoryItems extends StatefulWidget {
   const SearchFilterCategoryItems({super.key, required this.onCategoryChanged});
-final ValueChanged<int> onCategoryChanged;
+  final ValueChanged<int> onCategoryChanged;
   @override
   State<SearchFilterCategoryItems> createState() =>
       _SearchFilterCategoryItemsState();
@@ -18,7 +18,8 @@ class _SearchFilterCategoryItemsState extends State<SearchFilterCategoryItems> {
 
   @override
   Widget build(BuildContext context) {
-   final List<CategoryModel> categories = getIt<HomeRepo>().getCategoriesList();
+    final List<CategoryModel> categories =
+        getIt<HomeRepo>().getCategoriesList();
     return Wrap(
       spacing: 8.0,
       runSpacing: 8.0,

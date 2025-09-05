@@ -16,7 +16,7 @@ class CollectionSection extends StatelessWidget {
 
   static final dummyCollections = List<CollectionModel>.generate(
     5,
-        (index) => const CollectionModel(
+    (index) => const CollectionModel(
       id: "",
       title: '•••••• ••••••',
       imageUrl: "",
@@ -28,8 +28,9 @@ class CollectionSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<HomeCubit, HomeState>(
-      buildWhen: (previous, current) =>
-      previous.collectionsStatus != current.collectionsStatus,
+      buildWhen:
+          (previous, current) =>
+              previous.collectionsStatus != current.collectionsStatus,
       builder: (context, state) {
         switch (state.collectionsStatus) {
           case RequestStatus.loading:
@@ -89,8 +90,9 @@ class _HomeBannersState extends State<HomeBanners> {
           PageView.builder(
             controller: controller,
             itemCount: collections.length,
-            itemBuilder: (context, index) =>
-                CollectionsPageViewItem(collection: collections[index]),
+            itemBuilder:
+                (context, index) =>
+                    CollectionsPageViewItem(collection: collections[index]),
           ),
           PositionedDirectional(
             bottom: 24.0,

@@ -7,7 +7,6 @@ typedef OnMessageReceived = void Function(MessageModel message);
 typedef OnMessageSent = void Function(MessageModel message);
 
 class SignalrService {
-
   Future<void> sendMessage({required SendMessageModel sendMessageModel}) async {
     try {
       await ConnectionsService.connection?.invoke(
@@ -26,7 +25,7 @@ class SignalrService {
     }
   }
 
-  void listenToMessages(OnMessageReceived onMessageReceived) async{
+  void listenToMessages(OnMessageReceived onMessageReceived) async {
     log("Listening to messages...");
     await ConnectionsService.checkConnection();
     ConnectionsService.connection?.on("ReceiveMessage", (arguments) {
@@ -40,7 +39,9 @@ class SignalrService {
             final message = MessageModel.fromJson(jsonData);
 
             onMessageReceived(message);
-            log("📩 New message received >>>>>>>>>>>>>>>>>>>>>>>>>>>: $message");
+            log(
+              "📩 New message received >>>>>>>>>>>>>>>>>>>>>>>>>>>: $message",
+            );
           } else {
             log("⚠️ Received data is not a valid map: $data");
           }
@@ -52,8 +53,7 @@ class SignalrService {
     });
   }
 
-  void listenToSentMessages(OnMessageSent onMessageSent) async{
-
+  void listenToSentMessages(OnMessageSent onMessageSent) async {
     log("Listening to sent messages...");
     await ConnectionsService.checkConnection();
 

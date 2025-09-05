@@ -12,7 +12,6 @@ class CartState extends Equatable {
     this.cartErrorMessage = '',
     this.changeQuantityState = RequestStatus.initial,
     this.cartMap = const {},
-
   });
 
   num get totalPrice =>
@@ -23,14 +22,12 @@ class CartState extends Equatable {
     String? cartErrorMessage,
     changeQuantityState,
     Map<String, CartModel>? cartMap,
-
   }) {
     return CartState(
       cartState: cartState ?? this.cartState,
       cartErrorMessage: cartErrorMessage ?? this.cartErrorMessage,
       changeQuantityState: changeQuantityState ?? this.changeQuantityState,
       cartMap: cartMap ?? this.cartMap,
-
     );
   }
 
@@ -40,6 +37,5 @@ class CartState extends Equatable {
     cartErrorMessage,
     changeQuantityState,
     cartMap,
-
   ];
 }

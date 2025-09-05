@@ -4,7 +4,7 @@ class ProfileInfoItem extends StatelessWidget {
   const ProfileInfoItem({
     super.key,
     required this.text,
-     this.onTap,
+    this.onTap,
     required this.icon,
     this.suffixWidget,
   });

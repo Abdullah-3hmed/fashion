@@ -48,7 +48,7 @@ class ProductDetailsCubit extends Cubit<ProductDetailsState> {
     );
 
     response.fold(
-          (failure) {
+      (failure) {
         emit(
           state.copyWith(
             addReviewErrorMessage: failure.errorMessage,
@@ -59,7 +59,7 @@ class ProductDetailsCubit extends Cubit<ProductDetailsState> {
           ),
         );
       },
-          (newReviewModel) {
+      (newReviewModel) {
         final updatedReviews = [...oldReviews, newReviewModel];
         emit(
           state.copyWith(
@@ -72,7 +72,6 @@ class ProductDetailsCubit extends Cubit<ProductDetailsState> {
       },
     );
   }
-
 
   void rateProduct({required double rate}) {
     emit(state.copyWith(rate: rate));

@@ -13,7 +13,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 @RoutePage()
 class MapScreen extends StatefulWidget implements AutoRouteWrapper {
   const MapScreen({super.key, required this.userCubit});
-final UserCubit userCubit;
+  final UserCubit userCubit;
   @override
   State<MapScreen> createState() => _MapScreenState();
 
@@ -64,17 +64,19 @@ class _MapScreenState extends State<MapScreen> {
                 markers: state.myLocationMarker,
                 onMapCreated: (controller) async {
                   mapController = controller;
-                 final String userLocation = await context.read<MapCubit>().getCurrentLocation(
-                    mapController: mapController,
-                  );
-                 widget.userCubit.setUserLocation(location:userLocation);
+                  final String userLocation = await context
+                      .read<MapCubit>()
+                      .getCurrentLocation(mapController: mapController);
+                  widget.userCubit.setUserLocation(location: userLocation);
                 },
                 onTap: (LatLng newLocation) async {
-                final String userLocation =  await context.read<MapCubit>().changeLocation(
-                    mapController: mapController,
-                    newLocation: newLocation,
-                  );
-                  widget.userCubit.setUserLocation(location:userLocation);
+                  final String userLocation = await context
+                      .read<MapCubit>()
+                      .changeLocation(
+                        mapController: mapController,
+                        newLocation: newLocation,
+                      );
+                  widget.userCubit.setUserLocation(location: userLocation);
                 },
                 zoomControlsEnabled: false,
                 initialCameraPosition: initialCameraPosition,

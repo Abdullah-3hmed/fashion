@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 
 class SizesAvailable extends StatefulWidget {
-  const SizesAvailable({super.key, required this.onSizeChanged, required this.sizes});
+  const SizesAvailable({
+    super.key,
+    required this.onSizeChanged,
+    required this.sizes,
+  });
   final ValueChanged<String> onSizeChanged;
   final List<String> sizes;
   @override

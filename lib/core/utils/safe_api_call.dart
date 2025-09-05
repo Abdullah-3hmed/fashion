@@ -3,8 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:e_fashion_flutter/core/error/failures.dart';
 import 'package:e_fashion_flutter/core/error/server_exception.dart';
 
-Future<Either<Failure, T>> safeApiCall<T>(
-    Future<T> Function() apiCall) async {
+Future<Either<Failure, T>> safeApiCall<T>(Future<T> Function() apiCall) async {
   try {
     final result = await apiCall();
     return Right(result);

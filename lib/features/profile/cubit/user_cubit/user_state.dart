@@ -14,7 +14,6 @@ class UserState extends Equatable {
   final RequestStatus changePasswordRequestStatus;
   final String userLocation;
   final bool isConnected;
-  
 
   const UserState({
     this.userModel = UserModel.empty,

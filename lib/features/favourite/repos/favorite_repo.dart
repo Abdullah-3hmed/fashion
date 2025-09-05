@@ -6,5 +6,5 @@ abstract class FavoriteRepo {
   Future<Either<Failure, void>> addAndRemoveToFavorite({
     required String productId,
   });
-  Future<Either<Failure,List<FavoriteModel>>> getFavorites();
+  Future<Either<Failure, List<FavoriteModel>>> getFavorites();
 }

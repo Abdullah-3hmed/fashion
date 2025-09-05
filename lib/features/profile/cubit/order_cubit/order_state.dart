@@ -8,9 +8,9 @@ class OrderState extends Equatable {
   final String orderErrorMessage;
 
   const OrderState({
-     this.orderState = RequestStatus.loading,
-     this.orders = const [],
-     this.orderErrorMessage= "",
+    this.orderState = RequestStatus.loading,
+    this.orders = const [],
+    this.orderErrorMessage = "",
   });
 
   OrderState copyWith({
