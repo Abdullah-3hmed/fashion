@@ -8,8 +8,7 @@ class ConnectionsService {
   static HubConnection? connection;
 
   static Future<void> initConnection() async {
-    if (connection != null && connection!.state == HubConnectionState.Connected)
-      return;
+    if (connection != null && connection!.state == HubConnectionState.Connected) return;
     try {
       final url = "http://shoping-online.runasp.net/chatHub";
       log("Connecting to: $url");

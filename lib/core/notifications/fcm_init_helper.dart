@@ -1,6 +1,5 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:e_fashion_flutter/config/router/app_router.dart';
-import 'package:e_fashion_flutter/core/notifications/navigate_to_chat.dart';
 import 'package:e_fashion_flutter/core/notifications/notification_controller.dart';
 import 'package:e_fashion_flutter/core/services/service_locator.dart';
 import 'package:e_fashion_flutter/core/utils/app_constants.dart';
@@ -65,7 +64,7 @@ class FcmInitHelper {
       await getIt<AppRouter>().replaceAll([
         const AuthenticatedRoute(children: [LayoutRoute()]),
       ]);
-      getIt<AppRouter>().push(
+      await getIt<AppRouter>().push(
         ChatSupportRoute(receiverId: AppConstants.supportId),
       );
     }
@@ -75,5 +74,21 @@ class FcmInitHelper {
     final token = await firebaseMessaging.getToken();
     debugPrint("📱 Device FCM Token: $token");
     return token;
+  }
+ static Future<void> navigateToChat() async {
+    final String currentRoute = getIt<AppRouter>().current.name;
+    if (currentRoute == SplashTabRoute.name) {
+      await getIt<AppRouter>().replaceAll([
+        const AuthenticatedRoute(children: [LayoutRoute()]),
+      ]);
+      getIt<AppRouter>().navigate(
+        ChatSupportRoute(receiverId: AppConstants.supportId),
+      );
+    } else if (currentRoute == AuthenticatedRoute.name ||
+        currentRoute == LayoutRoute.name) {
+      await getIt<AppRouter>().navigate(
+        ChatSupportRoute(receiverId: AppConstants.supportId),
+      );
+    }
   }
 }

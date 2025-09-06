@@ -97,7 +97,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                       }
                       if (state.forgetPasswordRequestStatus.isError) {
                         showToast(
-                          message: state.forgetPasswordErrorMessage,
+                          message: state.authErrorMessage,
                           state: ToastStates.error,
                         );
                       }

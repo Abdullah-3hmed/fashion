@@ -19,7 +19,7 @@ class ChatState extends Equatable {
     this.isFirstLoad = false,
   });
 
-  copyWith({
+  ChatState copyWith({
     RequestStatus? getChatHistoryState,
     List<MessageModel>? messages,
     String? getChatHistoryErrorMessage,

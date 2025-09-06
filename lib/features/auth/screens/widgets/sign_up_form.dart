@@ -161,7 +161,7 @@ class _SignUpFormState extends State<SignUpForm> {
                 }
                 if (state.signUpRequestStatus.isError) {
                   showToast(
-                    message: state.signUpErrorMessage,
+                    message: state.authErrorMessage,
                     state: ToastStates.error,
                   );
                 }

@@ -157,16 +157,18 @@ class HomeCubit extends Cubit<HomeState> {
 
   Future<void> loadMoreProducts() async {
     if (state.productsPage >= state.productsModel.totalPages ||
-        state.productsState.isLoading)
+        state.productsState.isLoading) {
       return;
+    }
 
     await getProducts(page: state.productsPage + 1);
   }
 
   Future<void> loadMoreOffers() async {
     if (state.offersPage >= state.offersModel.totalPages ||
-        state.offersState.isLoading)
+        state.offersState.isLoading) {
       return;
+    }
 
     await getOffers(page: state.offersPage + 1);
   }

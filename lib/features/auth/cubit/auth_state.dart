@@ -14,11 +14,8 @@ class AuthState extends Equatable {
   final RequestStatus verifyOtpRequestStatus;
 
   // Error Messages
-  final String loginErrorMessage;
-  final String signUpErrorMessage;
-  final String forgetPasswordErrorMessage;
-  final String resetPasswordErrorMessage;
-  final String verifyOtpErrorMessage;
+  final String authErrorMessage;
+
 
   // Success Messages
   final String verifyOtpMessage;
@@ -31,11 +28,7 @@ class AuthState extends Equatable {
     this.forgetPasswordRequestStatus = RequestStatus.initial,
     this.resetPasswordRequestStatus = RequestStatus.initial,
     this.verifyOtpRequestStatus = RequestStatus.initial,
-    this.loginErrorMessage = '',
-    this.signUpErrorMessage = '',
-    this.forgetPasswordErrorMessage = '',
-    this.resetPasswordErrorMessage = '',
-    this.verifyOtpErrorMessage = '',
+    this.authErrorMessage = '',
     this.verifyOtpMessage = '',
     this.resetPasswordMessage = '',
   });
@@ -47,11 +40,7 @@ class AuthState extends Equatable {
     RequestStatus? forgetPasswordRequestStatus,
     RequestStatus? resetPasswordRequestStatus,
     RequestStatus? verifyOtpRequestStatus,
-    String? loginErrorMessage,
-    String? signUpErrorMessage,
-    String? forgetPasswordErrorMessage,
-    String? resetPasswordErrorMessage,
-    String? verifyOtpErrorMessage,
+    String?authErrorMessage,
     String? verifyOtpMessage,
     String? resetPasswordMessage,
   }) => AuthState(
@@ -64,13 +53,7 @@ class AuthState extends Equatable {
         resetPasswordRequestStatus ?? this.resetPasswordRequestStatus,
     verifyOtpRequestStatus:
         verifyOtpRequestStatus ?? this.verifyOtpRequestStatus,
-    loginErrorMessage: loginErrorMessage ?? this.loginErrorMessage,
-    signUpErrorMessage: signUpErrorMessage ?? this.signUpErrorMessage,
-    forgetPasswordErrorMessage:
-        forgetPasswordErrorMessage ?? this.forgetPasswordErrorMessage,
-    resetPasswordErrorMessage:
-        resetPasswordErrorMessage ?? this.resetPasswordErrorMessage,
-    verifyOtpErrorMessage: verifyOtpErrorMessage ?? this.verifyOtpErrorMessage,
+    authErrorMessage: authErrorMessage??this.authErrorMessage,
     verifyOtpMessage: verifyOtpMessage ?? this.verifyOtpMessage,
     resetPasswordMessage: resetPasswordMessage ?? this.resetPasswordMessage,
   );
@@ -83,11 +66,7 @@ class AuthState extends Equatable {
     forgetPasswordRequestStatus,
     resetPasswordRequestStatus,
     verifyOtpRequestStatus,
-    loginErrorMessage,
-    signUpErrorMessage,
-    forgetPasswordErrorMessage,
-    resetPasswordErrorMessage,
-    verifyOtpErrorMessage,
+    authErrorMessage,
     verifyOtpMessage,
     resetPasswordMessage,
   ];

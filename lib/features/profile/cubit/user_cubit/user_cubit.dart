@@ -103,7 +103,10 @@ class UserCubit extends Cubit<UserState> {
       (editUserModel) {
         emit(
           state.copyWith(
-            editUserModel: state.editUserModel.copyWith(profileImageFile: null),
+            editUserModel: state.editUserModel.copyWith(
+              // ignore: avoid_redundant_argument_values
+              profileImageFile: null,
+            ),
             userModel: state.userModel.copyWith(
               profileImage: editUserModel.profileImage,
               userName: editUserModel.userName,

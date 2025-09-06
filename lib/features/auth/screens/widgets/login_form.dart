@@ -115,7 +115,7 @@ class _LoginFormState extends State<LoginForm> {
                 }
                 if (state.loginRequestStatus.isError) {
                   showToast(
-                    message: state.loginErrorMessage,
+                    message: state.authErrorMessage,
                     state: ToastStates.error,
                   );
                 }

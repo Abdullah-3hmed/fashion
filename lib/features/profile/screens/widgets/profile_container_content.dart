@@ -87,7 +87,7 @@ class ProfileContainerContent extends StatelessWidget {
             text: "Notification",
             icon: Iconsax.notification,
             suffixWidget: Switch(
-              activeColor: Colors.white,
+              activeThumbColor: Colors.white,
               activeTrackColor: Colors.red,
               value: context.select(
                 (AppCubit cubit) => cubit.state.areNotificationsEnabled,
@@ -105,7 +105,7 @@ class ProfileContainerContent extends StatelessWidget {
             text: "Theme Mode",
             icon: SolarIconsOutline.sun,
             suffixWidget: Switch(
-              activeColor: Colors.white,
+              activeThumbColor: Colors.white,
               activeTrackColor: Colors.green,
               value: context.read<AppCubit>().state.isDarkMode,
               onChanged: (_) {

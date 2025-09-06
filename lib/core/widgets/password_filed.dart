@@ -42,10 +42,12 @@ class _PasswordFieldState extends State<PasswordField> {
 
     final minLength = value.length >= 8;
 
-    if (!hasUppercase)
+    if (!hasUppercase) {
       return "Password must contain at least one uppercase letter";
-    if (!hasLowercase)
+    }
+    if (!hasLowercase) {
       return "Password must contain at least one lowercase letter";
+    }
     if (!hasDigit) return "Password must contain at least one number";
     if (!minLength) return "Password must be at least 8 characters long";
 

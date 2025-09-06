@@ -112,7 +112,7 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
                     listener: (context, state) {
                       if (state.verifyOtpRequestStatus.isError) {
                         showToast(
-                          message: state.verifyOtpErrorMessage,
+                          message: state.authErrorMessage,
                           state: ToastStates.error,
                         );
                       }

@@ -93,7 +93,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                       }
                       if (state.resetPasswordRequestStatus.isError) {
                         showToast(
-                          message: state.resetPasswordErrorMessage,
+                          message: state.authErrorMessage,
                           state: ToastStates.error,
                         );
                       }
