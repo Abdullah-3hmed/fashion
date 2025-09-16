@@ -1,7 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:e_fashion_flutter/core/enums/request_status.dart';
 import 'package:e_fashion_flutter/core/utils/show_toast.dart';
-import 'package:e_fashion_flutter/core/widgets/password_filed.dart';
+import 'package:e_fashion_flutter/core/widgets/password_field.dart';
 import 'package:e_fashion_flutter/core/widgets/primary_button.dart';
 import 'package:e_fashion_flutter/core/widgets/secondary_button.dart';
 import 'package:e_fashion_flutter/features/profile/cubit/user_cubit/user_cubit.dart';

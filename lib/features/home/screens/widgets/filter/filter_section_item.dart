@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:e_fashion_flutter/core/widgets/custom_cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class FilterSectionItem extends StatelessWidget {
@@ -21,8 +22,8 @@ class FilterSectionItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final imageProvider =
         isCategory
-            ? CachedNetworkImageProvider(image)
-            : AssetImage(image) as ImageProvider;
+            ? CustomCachedNetworkImage(imageUrl:image)
+            : Image(image: AssetImage(image),);
 
     return Column(
       children: [
@@ -39,10 +40,14 @@ class FilterSectionItem extends StatelessWidget {
                     )
                     : null,
           ),
-          child: CircleAvatar(
-            radius: 20.0,
-            backgroundColor: Colors.transparent,
-            backgroundImage: imageProvider,
+          child: Container(
+          width: 40.0,
+            height: 40.0,
+            clipBehavior: Clip.antiAliasWithSaveLayer,
+            decoration: const BoxDecoration(
+              shape: BoxShape.circle,
+            ),
+            child: imageProvider,
           ),
         ),
         const SizedBox(height: 8.0),

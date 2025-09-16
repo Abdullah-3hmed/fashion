@@ -50,7 +50,6 @@ class _PasswordFieldState extends State<PasswordField> {
     }
     if (!hasDigit) return "Password must contain at least one number";
     if (!minLength) return "Password must be at least 8 characters long";
-
     return null;
   }
 
