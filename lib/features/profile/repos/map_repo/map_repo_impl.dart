@@ -7,12 +7,14 @@ import 'package:geocoding/geocoding.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class MapRepoImpl implements MapRepo {
+  final LocationService locationService;
+  MapRepoImpl({required this.locationService});
   @override
   Future<Either<Failure, Marker>> getCurrentLocation({
     required GoogleMapController mapController,
   }) async {
     try {
-      final locationData = await getIt<LocationService>().getCurrentLocation();
+      final locationData = await locationService.getCurrentLocation();
       final LatLng currentLocation = LatLng(
         locationData.latitude!,
         locationData.longitude!,

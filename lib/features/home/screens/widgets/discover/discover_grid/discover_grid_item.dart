@@ -96,7 +96,6 @@ class DiscoverGridItem extends StatelessWidget {
                           ).textTheme.bodyLarge!.copyWith(color: Colors.white),
                         ),
                         Text(
-                          r"$"
                           "\$${product.isOffer ? product.discountPrice : product.basePrice}",
                           style: Theme.of(
                             context,

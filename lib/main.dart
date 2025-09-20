@@ -30,15 +30,11 @@ Future<void> appSetup() async {
       (await getTemporaryDirectory()).path,
     ),
   );
-
   ServiceLocator().init();
   await FcmInitHelper.initAwesomeNotification();
-  DioHelper.init();
-
   AppConstants.token = await getIt<CacheHelper>().readData(key: "token") ?? "";
   AppConstants.userId =
       await getIt<CacheHelper>().readData(key: "user_id") ?? "";
-
   Bloc.observer = MyBlocObserver();
   await FcmInitHelper.initFirebaseMessagingListeners();
   await FcmInitHelper.setAwesomeNotificationListeners();

@@ -93,7 +93,6 @@ class DiscoverGridReverseItem extends StatelessWidget {
                               .copyWith(color: Colors.white, height: 1.0),
                         ),
                         Text(
-                          r"$"
                           "\$${product.isOffer ? product.discountPrice : product.basePrice}",
                           style: Theme.of(
                             context,

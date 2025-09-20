@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:e_fashion_flutter/core/widgets/custom_cached_network_image.dart';
 import 'package:e_fashion_flutter/features/home/data/home/collection_item_model.dart';
 import 'package:flutter/material.dart';
 
@@ -50,11 +51,9 @@ class ReverseCollectionItem extends StatelessWidget {
           Expanded(
             child: ClipRRect(
               borderRadius: BorderRadius.circular(16.0),
-              child: CachedNetworkImage(
+              child: CustomCachedNetworkImage(
                 height: 180.0,
                 imageUrl: collectionItemModel.imageUrl,
-                fit: BoxFit.cover,
-                errorWidget: (context, url, error) => const Icon(Icons.error),
               ),
             ),
           ),

@@ -4,17 +4,18 @@ import 'package:e_fashion_flutter/core/network/custom_interceptors.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 class DioHelper {
-  static late Dio _dio;
+  final Dio _dio;
 
-  static void init() {
-    BaseOptions options = BaseOptions(
-      baseUrl: ApiConstants.baseUrl,
-      headers: {"Content-Type": "application/json"},
-      connectTimeout: const Duration(seconds: 20),
-      receiveTimeout: const Duration(seconds: 20),
-      receiveDataWhenStatusError: true,
-    );
-    _dio = Dio(options);
+  DioHelper()
+    : _dio = Dio(
+        BaseOptions(
+          baseUrl: ApiConstants.baseUrl,
+          headers: {"Content-Type": "application/json"},
+          connectTimeout: const Duration(seconds: 20),
+          receiveTimeout: const Duration(seconds: 20),
+          receiveDataWhenStatusError: true,
+        ),
+      ) {
     _dio.interceptors.addAll([
       CustomInterceptors(),
       PrettyDioLogger(requestHeader: true, requestBody: true),
