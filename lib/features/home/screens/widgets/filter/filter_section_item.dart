@@ -22,8 +22,8 @@ class FilterSectionItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final imageProvider =
         isCategory
-            ? CustomCachedNetworkImage(imageUrl:image)
-            : Image(image: AssetImage(image),);
+            ? CustomCachedNetworkImage(imageUrl: image)
+            : Image(image: AssetImage(image));
 
     return Column(
       children: [
@@ -41,12 +41,10 @@ class FilterSectionItem extends StatelessWidget {
                     : null,
           ),
           child: Container(
-          width: 40.0,
+            width: 40.0,
             height: 40.0,
             clipBehavior: Clip.antiAliasWithSaveLayer,
-            decoration: const BoxDecoration(
-              shape: BoxShape.circle,
-            ),
+            decoration: const BoxDecoration(shape: BoxShape.circle),
             child: imageProvider,
           ),
         ),

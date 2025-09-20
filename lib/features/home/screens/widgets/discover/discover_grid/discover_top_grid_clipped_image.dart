@@ -10,11 +10,16 @@ class DiscoverTopGridClippedImage extends CustomClipper<Path> {
     final Path path = parseSvgPathData(svgPathData);
     Rect bounds = path.getBounds();
     Matrix4 matrix4 = Matrix4.identity();
-    matrix4.scale(size.width / bounds.width, size.height / bounds.height);
+    matrix4.scaleByDouble(
+      size.width / bounds.width,
+      size.height / bounds.height,
+      1.0,
+      1.0,
+    );
 
     return path.transform(matrix4.storage);
   }
 
   @override
-  bool shouldReclip(CustomClipper<Path> oldClipper) => true;
+  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
 }

@@ -67,9 +67,9 @@ class ServiceLocator {
       () => UserCubit(userRepo: getIt<UserRepo>()),
     );
     getIt.registerLazySingleton<LocationService>(() => LocationService());
-    getIt.registerLazySingleton<MapRepo>(() => MapRepoImpl(
-      locationService: getIt<LocationService>(),
-    ));
+    getIt.registerLazySingleton<MapRepo>(
+      () => MapRepoImpl(locationService: getIt<LocationService>()),
+    );
     getIt.registerFactory<MapCubit>(() => MapCubit(mapRepo: getIt<MapRepo>()));
     getIt.registerLazySingleton<HomeRepo>(
       () => HomeRepoImpl(dioHelper: getIt<DioHelper>()),

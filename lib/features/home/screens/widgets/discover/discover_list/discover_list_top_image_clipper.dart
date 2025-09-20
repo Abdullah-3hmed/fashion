@@ -9,16 +9,16 @@ class DiscoverListTopImageClipper extends CustomClipper<Path> {
     Path originalPath = parseSvgPathData(svgPathData);
     Rect originalBounds = originalPath.getBounds();
     Matrix4 matrix4 = Matrix4.identity();
-    matrix4.scale(
+    matrix4.scaleByDouble(
       size.width / originalBounds.width,
       size.height / originalBounds.height,
+      1.0,
+      1.0,
     );
 
     return originalPath.transform(matrix4.storage);
   }
 
   @override
-  bool shouldReclip(CustomClipper<Path> oldClipper) {
-    return true;
-  }
+  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
 }

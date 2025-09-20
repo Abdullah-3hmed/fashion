@@ -11,11 +11,16 @@ class SearchListContainerClipper extends CustomClipper<Path> {
     final Rect bounds = originalPath.getBounds();
 
     final Matrix4 matrix4 = Matrix4.identity();
-    matrix4.scale(size.width / bounds.width, size.height / bounds.height);
+    matrix4.scaleByDouble(
+      size.width / bounds.width,
+      size.height / bounds.height,
+      1.0,
+      1.0,
+    );
 
     return originalPath.transform(matrix4.storage);
   }
 
   @override
-  bool shouldReclip(CustomClipper<Path> oldClipper) => true;
+  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
 }

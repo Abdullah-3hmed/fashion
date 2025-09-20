@@ -82,7 +82,7 @@ class MessagesList extends StatelessWidget {
               );
             }
           },
-          separatorBuilder: (_,_) => const SizedBox(height: 16.0),
+          separatorBuilder: (_, _) => const SizedBox(height: 16.0),
           itemCount: state.messages.length,
           cacheExtent: 200,
         );

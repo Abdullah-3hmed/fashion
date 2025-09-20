@@ -10,23 +10,24 @@ class DiscoverTopGridClippedReverseImage extends CustomClipper<Path> {
     final Path path = parseSvgPathData(svgPathData);
     Rect bounds = path.getBounds();
 
-    // Scale to fit size
     final Matrix4 scaleMatrix =
-        Matrix4.identity()
-          ..scale(size.width / bounds.width, size.height / bounds.height);
+        Matrix4.identity()..scaleByDouble(
+          size.width / bounds.width,
+          size.height / bounds.height,
+          1.0,
+          1.0,
+        );
 
-    // Apply the scale
     final Path scaledPath = path.transform(scaleMatrix.storage);
 
-    // Now apply horizontal flip around center
     final Matrix4 flipMatrix =
         Matrix4.identity()
-          ..translate(size.width)
-          ..scale(-1.0, 1.0); // Flip X
+          ..translateByDouble(size.width, 0.0, 0.0, 1.0)
+          ..scaleByDouble(-1.0, 1.0, 1.0, 1.0);
 
     return scaledPath.transform(flipMatrix.storage);
   }
 
   @override
-  bool shouldReclip(CustomClipper<Path> oldClipper) => true;
+  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
 }

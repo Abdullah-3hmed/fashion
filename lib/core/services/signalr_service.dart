@@ -39,9 +39,7 @@ class SignalrService {
             final message = MessageModel.fromJson(jsonData);
 
             onMessageReceived(message);
-            log(
-              "📩 New message received : $message",
-            );
+            log("📩 New message received : $message");
           } else {
             log("⚠️ Received data is not a valid map: $data");
           }

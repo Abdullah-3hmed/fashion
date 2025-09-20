@@ -88,7 +88,7 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
           valueListenable: isGrid,
           builder: (context, value, _) {
             return AnimatedSwitcher(
-              duration: const Duration(milliseconds: 250),
+              duration: const Duration(milliseconds: 400),
               transitionBuilder: (child, animation) {
                 final offsetAnimation = Tween<Offset>(
                   begin: const Offset(1.0, 0.0),
@@ -97,6 +97,7 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
                 return SlideTransition(position: offsetAnimation, child: child);
               },
               child: BlocProvider.value(
+                key: ValueKey(value),
                 value: widget.homeCubit,
                 child: BlocBuilder<HomeCubit, HomeState>(
                   buildWhen:

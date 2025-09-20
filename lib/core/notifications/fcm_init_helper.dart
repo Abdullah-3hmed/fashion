@@ -75,7 +75,8 @@ class FcmInitHelper {
     debugPrint("📱 Device FCM Token: $token");
     return token;
   }
- static Future<void> navigateToChat() async {
+
+  static Future<void> navigateToChat() async {
     final String currentRoute = getIt<AppRouter>().current.name;
     if (currentRoute == SplashTabRoute.name) {
       await getIt<AppRouter>().replaceAll([
